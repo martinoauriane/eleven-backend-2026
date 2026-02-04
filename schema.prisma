@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client"
+  output   = "./generated"
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  firstName String
+  lastName String 
+  email String @unique
+  picture String?  // URL ou chemin vers l'image (optionnel)
+  passwordHash String
+  homeAddress String 
+  isOnline Boolean
+  status String // Wants to go Out / is Partying / is Bored at Party
+  lastLogin DateTime
+  partyAddress String?
+  partyLat Float?
+  partyLng Float?
+  friendsNumber Int
+  sentJoinRequests     JoinRequest[]    @relation("EmitterJoinRequest")
+  receivedJoinRequests JoinRequest[]    @relation("ReceiverJoinRequest")
+  sentFriendRequests    FriendRequest[]   @relation("EmitterFriendRequest")
+  receivedFriendRequests FriendRequest[]   @relation("ReceiverFriendRequest")
+  groups           Group[]  @relation("UsersPartying")
+}
+
+model Party {
+  id Int @id @default(autoincrement())
+  partyCoords Json?   
+  partyAddress String 
+  partyPictures String[]
+  partyTags String[]
+  partyType String
+  City String 
+  Country String 
+  groups Group[] @relation("Party")
+}
+
+model Group {
+  id Int @id @default(autoincrement())
+  members User[] @relation("UsersPartying")
+  party Party @relation("Party", fields: [partyId], references: [id])
+  partyId Int
+  isFull Boolean @default(false)
+}
+
+model JoinRequest {
+  id Int @id @default(autoincrement())
+  sentAt DateTime
+  emitter User @relation("EmitterJoinRequest", fields: [emitterId], references: [id])
+  emitterId  Int
+  receiver   User    @relation("ReceiverJoinRequest", fields: [receiverId], references: [id])
+  receiverId Int 
+}
+
+model FriendRequest {
+  id Int @id @default(autoincrement())
+  sentAt DateTime
+  emitter User @relation("EmitterFriendRequest", fields: [emitterId], references: [id])
+  emitterId  Int
+  receiver   User    @relation("ReceiverFriendRequest", fields: [receiverId], references: [id])
+  receiverId Int
+}
