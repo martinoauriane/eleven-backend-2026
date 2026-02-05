@@ -1,3 +1,6 @@
+Installer Express:
+npm install express
+
 PSQL 
 
 Se connecter à la db: 
@@ -9,3 +12,8 @@ Afficher les tables:
 Tester la connexion à GitHub: 
 ssh -T git@github.com
 
+prisma migration: 
+npx prisma generate
+
+BCRYPT
+npm i bcryptjs

@@ -54,7 +54,8 @@ export const ModelName = {
   User: 'User',
   Party: 'Party',
   Group: 'Group',
-  JoinRequest: 'JoinRequest'
+  JoinRequest: 'JoinRequest',
+  FriendRequest: 'FriendRequest'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -85,7 +86,8 @@ export const UserScalarFieldEnum = {
   status: 'status',
   lastLogin: 'lastLogin',
   partyAddress: 'partyAddress',
-  partyCoords: 'partyCoords',
+  partyLat: 'partyLat',
+  partyLng: 'partyLng',
   friendsNumber: 'friendsNumber'
 } as const
 
@@ -119,10 +121,21 @@ export const JoinRequestScalarFieldEnum = {
   id: 'id',
   sentAt: 'sentAt',
   emitterId: 'emitterId',
-  receiverId: 'receiverId'
+  receiverId: 'receiverId',
+  status: 'status'
 } as const
 
 export type JoinRequestScalarFieldEnum = (typeof JoinRequestScalarFieldEnum)[keyof typeof JoinRequestScalarFieldEnum]
+
+
+export const FriendRequestScalarFieldEnum = {
+  id: 'id',
+  sentAt: 'sentAt',
+  emitterId: 'emitterId',
+  receiverId: 'receiverId'
+} as const
+
+export type FriendRequestScalarFieldEnum = (typeof FriendRequestScalarFieldEnum)[keyof typeof FriendRequestScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -149,6 +162,14 @@ export const QueryMode = {
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
 export const JsonNullValueFilter = {
   DbNull: DbNull,
   JsonNull: JsonNull,
@@ -156,12 +177,4 @@ export const JsonNullValueFilter = {
 } as const
 
 export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
-
-
-export const NullsOrder = {
-  first: 'first',
-  last: 'last'
-} as const
-
-export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

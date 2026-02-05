@@ -62,6 +62,7 @@ model JoinRequest {
   emitterId  Int
   receiver   User    @relation("ReceiverJoinRequest", fields: [receiverId], references: [id])
   receiverId Int 
+  status Int // accepted = 0, declined = 1
 }
 
 model FriendRequest {

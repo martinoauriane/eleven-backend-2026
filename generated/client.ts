@@ -59,3 +59,8 @@ export type Group = Prisma.GroupModel
  * 
  */
 export type JoinRequest = Prisma.JoinRequestModel
+/**
+ * Model FriendRequest
+ * 
+ */
+export type FriendRequest = Prisma.FriendRequestModel
