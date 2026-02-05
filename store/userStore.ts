@@ -11,7 +11,7 @@ interface UserStore {
 }
 
 class UserStore {
-    async createUser(data: UserData) {
+    async createUser(data: UserCreate) {
         return await prisma.user.create({ data });
     }
 

@@ -4,7 +4,6 @@ export interface UserCreate {
     email: string;
     picture?: string;
     passwordHash: string;
-    homeAddress: string;
 }
 
 export interface UserUpdate {
@@ -13,8 +12,11 @@ export interface UserUpdate {
   email : string 
   picture?: string
   passwordHash : string
-  homeAddress : string 
+  homeAddress? : string 
   isOnline : boolean
+  isOnMap : boolean
+  userLat? : number
+  userLon? : number
   status : string // Wants to go     Out / is Partying / is Bored at Party
   lastLogin : Date
   partyAddress: string
@@ -23,14 +25,13 @@ export interface UserUpdate {
   friendsNumber : number  
 }
 
-
 export interface UserData {
   firstName : string
   lastName : string 
   email : string 
   picture?: string
   passwordHash : string
-  homeAddress : string 
+  homeAddress? : string 
   isOnline : boolean
   isOnMap : boolean
   userLat : number

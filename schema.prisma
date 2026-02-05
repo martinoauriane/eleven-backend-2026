@@ -19,22 +19,25 @@ model User {
   lastName String 
   email String @unique
   picture String?  // URL ou chemin vers l'image (optionnel)
+  homeAddress String?
   passwordHash String
-  homeAddress String 
-  isOnline Boolean
-  isOnMap Boolean 
+  isOnline Boolean @default(false)
+  isOnMap Boolean @default(false)
   userLat Float?
   userLng Float?
-  status String // Wants to go Out / is Partying / is Bored at Party
-  lastLogin DateTime
+  status String @default("Offline") // Wants to go Out / is Partying / is Bored at Party
+  lastLogin DateTime @default(now())
   partyAddress String?
   partyLat Float?
   partyLng Float?
-  friendsNumber Int
+  friendsNumber Int @default(0)
+  
   sentJoinRequests     JoinRequest[]    @relation("EmitterJoinRequest")
   receivedJoinRequests JoinRequest[]    @relation("ReceiverJoinRequest")
+  
   sentFriendRequests    FriendRequest[]   @relation("EmitterFriendRequest")
   receivedFriendRequests FriendRequest[]   @relation("ReceiverFriendRequest")
+  
   groups           Group[]  @relation("UsersPartying")
 }
 

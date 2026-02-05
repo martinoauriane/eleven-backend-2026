@@ -50,8 +50,8 @@ export type UserMinAggregateOutputType = {
   lastName: string | null
   email: string | null
   picture: string | null
-  passwordHash: string | null
   homeAddress: string | null
+  passwordHash: string | null
   isOnline: boolean | null
   isOnMap: boolean | null
   userLat: number | null
@@ -70,8 +70,8 @@ export type UserMaxAggregateOutputType = {
   lastName: string | null
   email: string | null
   picture: string | null
-  passwordHash: string | null
   homeAddress: string | null
+  passwordHash: string | null
   isOnline: boolean | null
   isOnMap: boolean | null
   userLat: number | null
@@ -90,8 +90,8 @@ export type UserCountAggregateOutputType = {
   lastName: number
   email: number
   picture: number
-  passwordHash: number
   homeAddress: number
+  passwordHash: number
   isOnline: number
   isOnMap: number
   userLat: number
@@ -130,8 +130,8 @@ export type UserMinAggregateInputType = {
   lastName?: true
   email?: true
   picture?: true
-  passwordHash?: true
   homeAddress?: true
+  passwordHash?: true
   isOnline?: true
   isOnMap?: true
   userLat?: true
@@ -150,8 +150,8 @@ export type UserMaxAggregateInputType = {
   lastName?: true
   email?: true
   picture?: true
-  passwordHash?: true
   homeAddress?: true
+  passwordHash?: true
   isOnline?: true
   isOnMap?: true
   userLat?: true
@@ -170,8 +170,8 @@ export type UserCountAggregateInputType = {
   lastName?: true
   email?: true
   picture?: true
-  passwordHash?: true
   homeAddress?: true
+  passwordHash?: true
   isOnline?: true
   isOnMap?: true
   userLat?: true
@@ -277,8 +277,8 @@ export type UserGroupByOutputType = {
   lastName: string
   email: string
   picture: string | null
+  homeAddress: string | null
   passwordHash: string
-  homeAddress: string
   isOnline: boolean
   isOnMap: boolean
   userLat: number | null
@@ -320,8 +320,8 @@ export type UserWhereInput = {
   lastName?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
   picture?: Prisma.StringNullableFilter<"User"> | string | null
+  homeAddress?: Prisma.StringNullableFilter<"User"> | string | null
   passwordHash?: Prisma.StringFilter<"User"> | string
-  homeAddress?: Prisma.StringFilter<"User"> | string
   isOnline?: Prisma.BoolFilter<"User"> | boolean
   isOnMap?: Prisma.BoolFilter<"User"> | boolean
   userLat?: Prisma.FloatNullableFilter<"User"> | number | null
@@ -345,8 +345,8 @@ export type UserOrderByWithRelationInput = {
   lastName?: Prisma.SortOrder
   email?: Prisma.SortOrder
   picture?: Prisma.SortOrderInput | Prisma.SortOrder
+  homeAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
-  homeAddress?: Prisma.SortOrder
   isOnline?: Prisma.SortOrder
   isOnMap?: Prisma.SortOrder
   userLat?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -373,8 +373,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   firstName?: Prisma.StringFilter<"User"> | string
   lastName?: Prisma.StringFilter<"User"> | string
   picture?: Prisma.StringNullableFilter<"User"> | string | null
+  homeAddress?: Prisma.StringNullableFilter<"User"> | string | null
   passwordHash?: Prisma.StringFilter<"User"> | string
-  homeAddress?: Prisma.StringFilter<"User"> | string
   isOnline?: Prisma.BoolFilter<"User"> | boolean
   isOnMap?: Prisma.BoolFilter<"User"> | boolean
   userLat?: Prisma.FloatNullableFilter<"User"> | number | null
@@ -398,8 +398,8 @@ export type UserOrderByWithAggregationInput = {
   lastName?: Prisma.SortOrder
   email?: Prisma.SortOrder
   picture?: Prisma.SortOrderInput | Prisma.SortOrder
+  homeAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
-  homeAddress?: Prisma.SortOrder
   isOnline?: Prisma.SortOrder
   isOnMap?: Prisma.SortOrder
   userLat?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -426,8 +426,8 @@ export type UserScalarWhereWithAggregatesInput = {
   lastName?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   picture?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  homeAddress?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   passwordHash?: Prisma.StringWithAggregatesFilter<"User"> | string
-  homeAddress?: Prisma.StringWithAggregatesFilter<"User"> | string
   isOnline?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   isOnMap?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   userLat?: Prisma.FloatNullableWithAggregatesFilter<"User"> | number | null
@@ -445,18 +445,18 @@ export type UserCreateInput = {
   lastName: string
   email: string
   picture?: string | null
+  homeAddress?: string | null
   passwordHash: string
-  homeAddress: string
-  isOnline: boolean
-  isOnMap: boolean
+  isOnline?: boolean
+  isOnMap?: boolean
   userLat?: number | null
   userLng?: number | null
-  status: string
-  lastLogin: Date | string
+  status?: string
+  lastLogin?: Date | string
   partyAddress?: string | null
   partyLat?: number | null
   partyLng?: number | null
-  friendsNumber: number
+  friendsNumber?: number
   sentJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutEmitterInput
   receivedJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutReceiverInput
   sentFriendRequests?: Prisma.FriendRequestCreateNestedManyWithoutEmitterInput
@@ -470,18 +470,18 @@ export type UserUncheckedCreateInput = {
   lastName: string
   email: string
   picture?: string | null
+  homeAddress?: string | null
   passwordHash: string
-  homeAddress: string
-  isOnline: boolean
-  isOnMap: boolean
+  isOnline?: boolean
+  isOnMap?: boolean
   userLat?: number | null
   userLng?: number | null
-  status: string
-  lastLogin: Date | string
+  status?: string
+  lastLogin?: Date | string
   partyAddress?: string | null
   partyLat?: number | null
   partyLng?: number | null
-  friendsNumber: number
+  friendsNumber?: number
   sentJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutEmitterInput
   receivedJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutReceiverInput
   sentFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutEmitterInput
@@ -494,8 +494,8 @@ export type UserUpdateInput = {
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  homeAddress?: Prisma.StringFieldUpdateOperationsInput | string
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOnMap?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -519,8 +519,8 @@ export type UserUncheckedUpdateInput = {
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  homeAddress?: Prisma.StringFieldUpdateOperationsInput | string
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOnMap?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -544,18 +544,18 @@ export type UserCreateManyInput = {
   lastName: string
   email: string
   picture?: string | null
+  homeAddress?: string | null
   passwordHash: string
-  homeAddress: string
-  isOnline: boolean
-  isOnMap: boolean
+  isOnline?: boolean
+  isOnMap?: boolean
   userLat?: number | null
   userLng?: number | null
-  status: string
-  lastLogin: Date | string
+  status?: string
+  lastLogin?: Date | string
   partyAddress?: string | null
   partyLat?: number | null
   partyLng?: number | null
-  friendsNumber: number
+  friendsNumber?: number
 }
 
 export type UserUpdateManyMutationInput = {
@@ -563,8 +563,8 @@ export type UserUpdateManyMutationInput = {
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  homeAddress?: Prisma.StringFieldUpdateOperationsInput | string
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOnMap?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -583,8 +583,8 @@ export type UserUncheckedUpdateManyInput = {
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  homeAddress?: Prisma.StringFieldUpdateOperationsInput | string
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOnMap?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -603,8 +603,8 @@ export type UserCountOrderByAggregateInput = {
   lastName?: Prisma.SortOrder
   email?: Prisma.SortOrder
   picture?: Prisma.SortOrder
-  passwordHash?: Prisma.SortOrder
   homeAddress?: Prisma.SortOrder
+  passwordHash?: Prisma.SortOrder
   isOnline?: Prisma.SortOrder
   isOnMap?: Prisma.SortOrder
   userLat?: Prisma.SortOrder
@@ -632,8 +632,8 @@ export type UserMaxOrderByAggregateInput = {
   lastName?: Prisma.SortOrder
   email?: Prisma.SortOrder
   picture?: Prisma.SortOrder
-  passwordHash?: Prisma.SortOrder
   homeAddress?: Prisma.SortOrder
+  passwordHash?: Prisma.SortOrder
   isOnline?: Prisma.SortOrder
   isOnMap?: Prisma.SortOrder
   userLat?: Prisma.SortOrder
@@ -652,8 +652,8 @@ export type UserMinOrderByAggregateInput = {
   lastName?: Prisma.SortOrder
   email?: Prisma.SortOrder
   picture?: Prisma.SortOrder
-  passwordHash?: Prisma.SortOrder
   homeAddress?: Prisma.SortOrder
+  passwordHash?: Prisma.SortOrder
   isOnline?: Prisma.SortOrder
   isOnMap?: Prisma.SortOrder
   userLat?: Prisma.SortOrder
@@ -821,18 +821,18 @@ export type UserCreateWithoutGroupsInput = {
   lastName: string
   email: string
   picture?: string | null
+  homeAddress?: string | null
   passwordHash: string
-  homeAddress: string
-  isOnline: boolean
-  isOnMap: boolean
+  isOnline?: boolean
+  isOnMap?: boolean
   userLat?: number | null
   userLng?: number | null
-  status: string
-  lastLogin: Date | string
+  status?: string
+  lastLogin?: Date | string
   partyAddress?: string | null
   partyLat?: number | null
   partyLng?: number | null
-  friendsNumber: number
+  friendsNumber?: number
   sentJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutEmitterInput
   receivedJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutReceiverInput
   sentFriendRequests?: Prisma.FriendRequestCreateNestedManyWithoutEmitterInput
@@ -845,18 +845,18 @@ export type UserUncheckedCreateWithoutGroupsInput = {
   lastName: string
   email: string
   picture?: string | null
+  homeAddress?: string | null
   passwordHash: string
-  homeAddress: string
-  isOnline: boolean
-  isOnMap: boolean
+  isOnline?: boolean
+  isOnMap?: boolean
   userLat?: number | null
   userLng?: number | null
-  status: string
-  lastLogin: Date | string
+  status?: string
+  lastLogin?: Date | string
   partyAddress?: string | null
   partyLat?: number | null
   partyLng?: number | null
-  friendsNumber: number
+  friendsNumber?: number
   sentJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutEmitterInput
   receivedJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutReceiverInput
   sentFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutEmitterInput
@@ -893,8 +893,8 @@ export type UserScalarWhereInput = {
   lastName?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
   picture?: Prisma.StringNullableFilter<"User"> | string | null
+  homeAddress?: Prisma.StringNullableFilter<"User"> | string | null
   passwordHash?: Prisma.StringFilter<"User"> | string
-  homeAddress?: Prisma.StringFilter<"User"> | string
   isOnline?: Prisma.BoolFilter<"User"> | boolean
   isOnMap?: Prisma.BoolFilter<"User"> | boolean
   userLat?: Prisma.FloatNullableFilter<"User"> | number | null
@@ -912,18 +912,18 @@ export type UserCreateWithoutSentJoinRequestsInput = {
   lastName: string
   email: string
   picture?: string | null
+  homeAddress?: string | null
   passwordHash: string
-  homeAddress: string
-  isOnline: boolean
-  isOnMap: boolean
+  isOnline?: boolean
+  isOnMap?: boolean
   userLat?: number | null
   userLng?: number | null
-  status: string
-  lastLogin: Date | string
+  status?: string
+  lastLogin?: Date | string
   partyAddress?: string | null
   partyLat?: number | null
   partyLng?: number | null
-  friendsNumber: number
+  friendsNumber?: number
   receivedJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutReceiverInput
   sentFriendRequests?: Prisma.FriendRequestCreateNestedManyWithoutEmitterInput
   receivedFriendRequests?: Prisma.FriendRequestCreateNestedManyWithoutReceiverInput
@@ -936,18 +936,18 @@ export type UserUncheckedCreateWithoutSentJoinRequestsInput = {
   lastName: string
   email: string
   picture?: string | null
+  homeAddress?: string | null
   passwordHash: string
-  homeAddress: string
-  isOnline: boolean
-  isOnMap: boolean
+  isOnline?: boolean
+  isOnMap?: boolean
   userLat?: number | null
   userLng?: number | null
-  status: string
-  lastLogin: Date | string
+  status?: string
+  lastLogin?: Date | string
   partyAddress?: string | null
   partyLat?: number | null
   partyLng?: number | null
-  friendsNumber: number
+  friendsNumber?: number
   receivedJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutReceiverInput
   sentFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutEmitterInput
   receivedFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutReceiverInput
@@ -964,18 +964,18 @@ export type UserCreateWithoutReceivedJoinRequestsInput = {
   lastName: string
   email: string
   picture?: string | null
+  homeAddress?: string | null
   passwordHash: string
-  homeAddress: string
-  isOnline: boolean
-  isOnMap: boolean
+  isOnline?: boolean
+  isOnMap?: boolean
   userLat?: number | null
   userLng?: number | null
-  status: string
-  lastLogin: Date | string
+  status?: string
+  lastLogin?: Date | string
   partyAddress?: string | null
   partyLat?: number | null
   partyLng?: number | null
-  friendsNumber: number
+  friendsNumber?: number
   sentJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutEmitterInput
   sentFriendRequests?: Prisma.FriendRequestCreateNestedManyWithoutEmitterInput
   receivedFriendRequests?: Prisma.FriendRequestCreateNestedManyWithoutReceiverInput
@@ -988,18 +988,18 @@ export type UserUncheckedCreateWithoutReceivedJoinRequestsInput = {
   lastName: string
   email: string
   picture?: string | null
+  homeAddress?: string | null
   passwordHash: string
-  homeAddress: string
-  isOnline: boolean
-  isOnMap: boolean
+  isOnline?: boolean
+  isOnMap?: boolean
   userLat?: number | null
   userLng?: number | null
-  status: string
-  lastLogin: Date | string
+  status?: string
+  lastLogin?: Date | string
   partyAddress?: string | null
   partyLat?: number | null
   partyLng?: number | null
-  friendsNumber: number
+  friendsNumber?: number
   sentJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutEmitterInput
   sentFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutEmitterInput
   receivedFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutReceiverInput
@@ -1027,8 +1027,8 @@ export type UserUpdateWithoutSentJoinRequestsInput = {
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  homeAddress?: Prisma.StringFieldUpdateOperationsInput | string
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOnMap?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1051,8 +1051,8 @@ export type UserUncheckedUpdateWithoutSentJoinRequestsInput = {
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  homeAddress?: Prisma.StringFieldUpdateOperationsInput | string
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOnMap?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1085,8 +1085,8 @@ export type UserUpdateWithoutReceivedJoinRequestsInput = {
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  homeAddress?: Prisma.StringFieldUpdateOperationsInput | string
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOnMap?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1109,8 +1109,8 @@ export type UserUncheckedUpdateWithoutReceivedJoinRequestsInput = {
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  homeAddress?: Prisma.StringFieldUpdateOperationsInput | string
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOnMap?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1132,18 +1132,18 @@ export type UserCreateWithoutSentFriendRequestsInput = {
   lastName: string
   email: string
   picture?: string | null
+  homeAddress?: string | null
   passwordHash: string
-  homeAddress: string
-  isOnline: boolean
-  isOnMap: boolean
+  isOnline?: boolean
+  isOnMap?: boolean
   userLat?: number | null
   userLng?: number | null
-  status: string
-  lastLogin: Date | string
+  status?: string
+  lastLogin?: Date | string
   partyAddress?: string | null
   partyLat?: number | null
   partyLng?: number | null
-  friendsNumber: number
+  friendsNumber?: number
   sentJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutEmitterInput
   receivedJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutReceiverInput
   receivedFriendRequests?: Prisma.FriendRequestCreateNestedManyWithoutReceiverInput
@@ -1156,18 +1156,18 @@ export type UserUncheckedCreateWithoutSentFriendRequestsInput = {
   lastName: string
   email: string
   picture?: string | null
+  homeAddress?: string | null
   passwordHash: string
-  homeAddress: string
-  isOnline: boolean
-  isOnMap: boolean
+  isOnline?: boolean
+  isOnMap?: boolean
   userLat?: number | null
   userLng?: number | null
-  status: string
-  lastLogin: Date | string
+  status?: string
+  lastLogin?: Date | string
   partyAddress?: string | null
   partyLat?: number | null
   partyLng?: number | null
-  friendsNumber: number
+  friendsNumber?: number
   sentJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutEmitterInput
   receivedJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutReceiverInput
   receivedFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutReceiverInput
@@ -1184,18 +1184,18 @@ export type UserCreateWithoutReceivedFriendRequestsInput = {
   lastName: string
   email: string
   picture?: string | null
+  homeAddress?: string | null
   passwordHash: string
-  homeAddress: string
-  isOnline: boolean
-  isOnMap: boolean
+  isOnline?: boolean
+  isOnMap?: boolean
   userLat?: number | null
   userLng?: number | null
-  status: string
-  lastLogin: Date | string
+  status?: string
+  lastLogin?: Date | string
   partyAddress?: string | null
   partyLat?: number | null
   partyLng?: number | null
-  friendsNumber: number
+  friendsNumber?: number
   sentJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutEmitterInput
   receivedJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutReceiverInput
   sentFriendRequests?: Prisma.FriendRequestCreateNestedManyWithoutEmitterInput
@@ -1208,18 +1208,18 @@ export type UserUncheckedCreateWithoutReceivedFriendRequestsInput = {
   lastName: string
   email: string
   picture?: string | null
+  homeAddress?: string | null
   passwordHash: string
-  homeAddress: string
-  isOnline: boolean
-  isOnMap: boolean
+  isOnline?: boolean
+  isOnMap?: boolean
   userLat?: number | null
   userLng?: number | null
-  status: string
-  lastLogin: Date | string
+  status?: string
+  lastLogin?: Date | string
   partyAddress?: string | null
   partyLat?: number | null
   partyLng?: number | null
-  friendsNumber: number
+  friendsNumber?: number
   sentJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutEmitterInput
   receivedJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutReceiverInput
   sentFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutEmitterInput
@@ -1247,8 +1247,8 @@ export type UserUpdateWithoutSentFriendRequestsInput = {
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  homeAddress?: Prisma.StringFieldUpdateOperationsInput | string
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOnMap?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1271,8 +1271,8 @@ export type UserUncheckedUpdateWithoutSentFriendRequestsInput = {
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  homeAddress?: Prisma.StringFieldUpdateOperationsInput | string
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOnMap?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1305,8 +1305,8 @@ export type UserUpdateWithoutReceivedFriendRequestsInput = {
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  homeAddress?: Prisma.StringFieldUpdateOperationsInput | string
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOnMap?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1329,8 +1329,8 @@ export type UserUncheckedUpdateWithoutReceivedFriendRequestsInput = {
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  homeAddress?: Prisma.StringFieldUpdateOperationsInput | string
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOnMap?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1352,8 +1352,8 @@ export type UserUpdateWithoutGroupsInput = {
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  homeAddress?: Prisma.StringFieldUpdateOperationsInput | string
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOnMap?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1376,8 +1376,8 @@ export type UserUncheckedUpdateWithoutGroupsInput = {
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  homeAddress?: Prisma.StringFieldUpdateOperationsInput | string
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOnMap?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1400,8 +1400,8 @@ export type UserUncheckedUpdateManyWithoutGroupsInput = {
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  homeAddress?: Prisma.StringFieldUpdateOperationsInput | string
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOnMap?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1487,8 +1487,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   lastName?: boolean
   email?: boolean
   picture?: boolean
-  passwordHash?: boolean
   homeAddress?: boolean
+  passwordHash?: boolean
   isOnline?: boolean
   isOnMap?: boolean
   userLat?: boolean
@@ -1513,8 +1513,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   lastName?: boolean
   email?: boolean
   picture?: boolean
-  passwordHash?: boolean
   homeAddress?: boolean
+  passwordHash?: boolean
   isOnline?: boolean
   isOnMap?: boolean
   userLat?: boolean
@@ -1533,8 +1533,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   lastName?: boolean
   email?: boolean
   picture?: boolean
-  passwordHash?: boolean
   homeAddress?: boolean
+  passwordHash?: boolean
   isOnline?: boolean
   isOnMap?: boolean
   userLat?: boolean
@@ -1553,8 +1553,8 @@ export type UserSelectScalar = {
   lastName?: boolean
   email?: boolean
   picture?: boolean
-  passwordHash?: boolean
   homeAddress?: boolean
+  passwordHash?: boolean
   isOnline?: boolean
   isOnMap?: boolean
   userLat?: boolean
@@ -1567,7 +1567,7 @@ export type UserSelectScalar = {
   friendsNumber?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "picture" | "passwordHash" | "homeAddress" | "isOnline" | "isOnMap" | "userLat" | "userLng" | "status" | "lastLogin" | "partyAddress" | "partyLat" | "partyLng" | "friendsNumber", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "picture" | "homeAddress" | "passwordHash" | "isOnline" | "isOnMap" | "userLat" | "userLng" | "status" | "lastLogin" | "partyAddress" | "partyLat" | "partyLng" | "friendsNumber", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sentJoinRequests?: boolean | Prisma.User$sentJoinRequestsArgs<ExtArgs>
   receivedJoinRequests?: boolean | Prisma.User$receivedJoinRequestsArgs<ExtArgs>
@@ -1594,8 +1594,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     lastName: string
     email: string
     picture: string | null
+    homeAddress: string | null
     passwordHash: string
-    homeAddress: string
     isOnline: boolean
     isOnMap: boolean
     userLat: number | null
@@ -2039,8 +2039,8 @@ export interface UserFieldRefs {
   readonly lastName: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly picture: Prisma.FieldRef<"User", 'String'>
-  readonly passwordHash: Prisma.FieldRef<"User", 'String'>
   readonly homeAddress: Prisma.FieldRef<"User", 'String'>
+  readonly passwordHash: Prisma.FieldRef<"User", 'String'>
   readonly isOnline: Prisma.FieldRef<"User", 'Boolean'>
   readonly isOnMap: Prisma.FieldRef<"User", 'Boolean'>
   readonly userLat: Prisma.FieldRef<"User", 'Float'>
