@@ -17,10 +17,10 @@ export interface UserUpdate {
   isOnMap : boolean
   userLat? : number
   userLon? : number
-  status : string // Wants to go     Out / is Partying / is Bored at Party
+  status? : string // Wants to go     Out / is Partying / is Bored at Party
   lastLogin : Date
-  partyAddress: string
-  partyLat : number
+  partyAddress?: string
+  partyLat? : number
   partyLon : number  
   friendsNumber : number  
 }
