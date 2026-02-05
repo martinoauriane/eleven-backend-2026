@@ -22,6 +22,9 @@ model User {
   passwordHash String
   homeAddress String 
   isOnline Boolean
+  isOnMap Boolean 
+  userLat Float?
+  userLng Float?
   status String // Wants to go Out / is Partying / is Bored at Party
   lastLogin DateTime
   partyAddress String?

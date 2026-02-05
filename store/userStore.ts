@@ -1,53 +1,7 @@
 import 'dotenv/config';  // ⚡ force le chargement de ton .env
 import { prisma } from "../prisma";
+import {UserCreate, UserUpdate, UserData} from "./interfaces/userInterfaces";
 
-interface PartyCoords{
-    lat: number
-    lng: number
-}
-
-interface UserData {
-  firstName : string
-  lastName : string 
-  email : string 
-  picture?: string
-  passwordHash : string
-  homeAddress : string 
-  isOnline : boolean
-  status : string // Wants to go     Out / is Partying / is Bored at Party
-  lastLogin : Date
-  partyAddress: string
-  partyLat : number
-  partyLon : number  
-  friendsNumber : number  
-}
-
-
-interface UserUpdate {
-  firstName : string
-  lastName : string 
-  email : string 
-  picture?: string
-  passwordHash : string
-  homeAddress : string 
-  isOnline : boolean
-  status : string // Wants to go     Out / is Partying / is Bored at Party
-  lastLogin : Date
-  partyAddress: string
-  partyLat : number
-  partyLon : number  
-  friendsNumber : number  
-}
-
-
-interface UserCreate {
-  firstName : string
-  lastName : string 
-  email : string 
-  picture?: string
-  passwordHash : string
-  homeAddress : string 
-}
 
 interface UserStore {
     createUser(data: UserCreate): Promise<any>;
@@ -69,7 +23,7 @@ class UserStore {
         return await prisma.user.update({ where: { id }, data });
     }
 
-    async deleteUser(id) {
+    async deleteUser(id: number) {
         return await prisma.user.delete({ where: { id } });
     }
 }
