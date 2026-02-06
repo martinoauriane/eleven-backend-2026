@@ -8,9 +8,9 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/User.ts'
-export type * from './models/Party.ts'
-export type * from './models/Group.ts'
-export type * from './models/JoinRequest.ts'
-export type * from './models/FriendRequest.ts'
-export type * from './commonInputTypes.ts'
+export type * from './models/User'
+export type * from './models/Party'
+export type * from './models/Group'
+export type * from './models/JoinRequest'
+export type * from './models/FriendRequest'
+export type * from './commonInputTypes'
