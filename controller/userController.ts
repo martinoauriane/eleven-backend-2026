@@ -1,8 +1,6 @@
 
-import { User } from "../generated/client";
 import { UserService } from "../service/userService";
 import { Request, Response } from "express";
-import {UserCreate} from "../store/interfaces/userInterfaces";
 
 const userService = new UserService();
 
@@ -10,12 +8,13 @@ class UserController {
     
     async newUser(req: Request, res: Response) {
     const user: any = {
-    firstName: String(req.query.firstName),
-    lastName: String(req.query.lastName),
+    firstName: String(req.body.firstName),
+    lastName: String(req.body.lastName),
     email: req.body.email,
-    passwordHash: String(req.query.password),
-    homeAddress: String(req.query.homeAddress),
+    password: String(req.body.password),
+    homeAddress: String(req.body.homeAddress),
     };
+    console.log("data well received", user);
     try {
         const userCreated = await userService.createUser(user);
         res.status(200).json(userCreated);
@@ -25,7 +24,7 @@ class UserController {
     }
 
     async returnUser(req: Request, res: Response) {
-        const id = Number(req.params.id);
+        const id = Number(req.body.id);
         try {
             const user = await userService.getUserById(id);
             if (user) {
@@ -39,13 +38,21 @@ class UserController {
     }
 
     async updateUser(req: Request, res: Response) {
-        const id = Number(req.params.id);
         const data = req.body;
+        const id = Number(req.query.id);
+        if (isNaN(id)) {
+            return res.status(400).json({ error: "Invalid id" });
+        }
         try {
-            const updatedUser = await userService.updateUser(id, data);
+            const updatedUser = await userService.updateUser(data, id);
             res.status(200).json(updatedUser);
-        } catch (error) {
-            res.status(500).json({ error: "Error updating user" });
+        } catch (error: any) {
+            console.error("Prisma update error:", error); 
+            
+            res.status(500).json({ 
+                error: "Error updating user",
+                details: error.message // 🔥 envoie le message réel au front
+            });
         }
     }
 

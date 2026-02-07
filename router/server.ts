@@ -16,18 +16,22 @@ app.use(router);
 const userService = new UserService();  
 const userController = new UserController;
 
+// operationnal
 router.get("/", async(req:Request, res:Response) =>{
   res.status(200).json("Welcome");
 })
 
+// operationnal
 router.post("/new-user", async (req: Request, res: Response) => {
    await userController.newUser(req, res);
 });
 
+// operationnal
 router.post("/get-user", async(req:Request, res:Response) => {
   await userController.returnUser(req, res);
 })
 
+// ongoing testing
 router.post("/user-update", async(req:Request, res:Response) => {
   await userController.updateUser(req, res);
 })

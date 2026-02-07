@@ -1,11 +1,18 @@
 import {UserStore} from "../store/userStore";
 import { hashPassword } from "./utils/hash";
-import { UserCreate } from "../store/interfaces/userInterfaces";
-import { C } from "vue-router/dist/router-CWoNjPRp.mjs";
+import { UserCreate, UserUpdate } from "../store/interfaces/userInterfaces";
 
 const userStore = new UserStore();
 
+interface UserService {
+    createUser(data: UserCreate): Promise<any>;
+    getUserById(id: number): Promise<any>;
+    updateUser(id: number, data:any): Promise<any>;
+    deleteUser(id: number): Promise<any>;
+}
+
 class UserService {
+
     async createUser(data:any) {
         const password = String(data.password);
         const passwordHash = await hashPassword(password);
@@ -13,18 +20,19 @@ class UserService {
             firstName: data.firstName,
             lastName: data.lastName,
             email: data.email,
-            picture: data.picture,
-            passwordHash: passwordHash
+            homeAddress: data.homeAddress,
+            password: passwordHash
         };
-        return await userStore.createUser(data);
+        return await userStore.createUser(userData);
     }
 
     async getUserById(id: number) {
         return await userStore.getUserById(id);
     }
 
-    async updateUser(id: number, data:any) {
-        return await userStore.updateUser(id, data);
+    async updateUser(data:any, id: number) {
+        const updateData : UserUpdate = data;
+        return await userStore.updateUser(id, updateData);
     }
 
     async deleteUser(id:number) {

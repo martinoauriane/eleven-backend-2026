@@ -204,16 +204,16 @@ export type GroupWhereInput = {
   id?: Prisma.IntFilter<"Group"> | number
   partyId?: Prisma.IntFilter<"Group"> | number
   isFull?: Prisma.BoolFilter<"Group"> | boolean
-  members?: Prisma.UserListRelationFilter
   party?: Prisma.XOR<Prisma.PartyScalarRelationFilter, Prisma.PartyWhereInput>
+  members?: Prisma.UserListRelationFilter
 }
 
 export type GroupOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   partyId?: Prisma.SortOrder
   isFull?: Prisma.SortOrder
-  members?: Prisma.UserOrderByRelationAggregateInput
   party?: Prisma.PartyOrderByWithRelationInput
+  members?: Prisma.UserOrderByRelationAggregateInput
 }
 
 export type GroupWhereUniqueInput = Prisma.AtLeast<{
@@ -223,8 +223,8 @@ export type GroupWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.GroupWhereInput | Prisma.GroupWhereInput[]
   partyId?: Prisma.IntFilter<"Group"> | number
   isFull?: Prisma.BoolFilter<"Group"> | boolean
-  members?: Prisma.UserListRelationFilter
   party?: Prisma.XOR<Prisma.PartyScalarRelationFilter, Prisma.PartyWhereInput>
+  members?: Prisma.UserListRelationFilter
 }, "id">
 
 export type GroupOrderByWithAggregationInput = {
@@ -249,8 +249,8 @@ export type GroupScalarWhereWithAggregatesInput = {
 
 export type GroupCreateInput = {
   isFull?: boolean
-  members?: Prisma.UserCreateNestedManyWithoutGroupsInput
   party: Prisma.PartyCreateNestedOneWithoutGroupsInput
+  members?: Prisma.UserCreateNestedManyWithoutGroupsInput
 }
 
 export type GroupUncheckedCreateInput = {
@@ -262,8 +262,8 @@ export type GroupUncheckedCreateInput = {
 
 export type GroupUpdateInput = {
   isFull?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  members?: Prisma.UserUpdateManyWithoutGroupsNestedInput
   party?: Prisma.PartyUpdateOneRequiredWithoutGroupsNestedInput
+  members?: Prisma.UserUpdateManyWithoutGroupsNestedInput
 }
 
 export type GroupUncheckedUpdateInput = {
@@ -558,8 +558,8 @@ export type GroupSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   id?: boolean
   partyId?: boolean
   isFull?: boolean
-  members?: boolean | Prisma.Group$membersArgs<ExtArgs>
   party?: boolean | Prisma.PartyDefaultArgs<ExtArgs>
+  members?: boolean | Prisma.Group$membersArgs<ExtArgs>
   _count?: boolean | Prisma.GroupCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["group"]>
 
@@ -585,8 +585,8 @@ export type GroupSelectScalar = {
 
 export type GroupOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "partyId" | "isFull", ExtArgs["result"]["group"]>
 export type GroupInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  members?: boolean | Prisma.Group$membersArgs<ExtArgs>
   party?: boolean | Prisma.PartyDefaultArgs<ExtArgs>
+  members?: boolean | Prisma.Group$membersArgs<ExtArgs>
   _count?: boolean | Prisma.GroupCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type GroupIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -599,8 +599,8 @@ export type GroupIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type $GroupPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Group"
   objects: {
-    members: Prisma.$UserPayload<ExtArgs>[]
     party: Prisma.$PartyPayload<ExtArgs>
+    members: Prisma.$UserPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1000,8 +1000,8 @@ readonly fields: GroupFieldRefs;
  */
 export interface Prisma__GroupClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  members<T extends Prisma.Group$membersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Group$membersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   party<T extends Prisma.PartyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PartyDefaultArgs<ExtArgs>>): Prisma.Prisma__PartyClient<runtime.Types.Result.GetResult<Prisma.$PartyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  members<T extends Prisma.Group$membersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Group$membersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

@@ -2,27 +2,27 @@ export interface UserCreate {
     firstName: string;
     lastName: string;
     email: string;
-    picture?: string;
-    passwordHash: string;
+    homeAddress: string;
+    password: string;
 }
 
 export interface UserUpdate {
-  firstName : string
-  lastName : string 
-  email : string 
+  firstName?: string
+  lastName?: string 
+  email?: string 
   picture?: string
-  passwordHash : string
-  homeAddress? : string 
-  isOnline : boolean
-  isOnMap : boolean
-  userLat? : number
-  userLon? : number
-  status? : string // Wants to go     Out / is Partying / is Bored at Party
-  lastLogin : Date
+  password?: string
+  homeAddress?: string 
+  isOnline?: boolean
+  isOnMap?: boolean
+  userLat?: number
+  userLon?: number
+  status?: string // Wants to go out / is Partying / is Bored at Party
+  lastLogin?: Date | string
   partyAddress?: string
-  partyLat? : number
-  partyLon : number  
-  friendsNumber : number  
+  partyLat?: number
+  partyLon?: number  
+  friendsNumber?: number  
 }
 
 export interface UserData {
@@ -30,7 +30,7 @@ export interface UserData {
   lastName : string 
   email : string 
   picture?: string
-  passwordHash : string
+  password : string
   homeAddress? : string 
   isOnline : boolean
   isOnMap : boolean

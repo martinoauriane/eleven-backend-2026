@@ -80,17 +80,17 @@ export const UserScalarFieldEnum = {
   lastName: 'lastName',
   email: 'email',
   picture: 'picture',
+  password: 'password',
   homeAddress: 'homeAddress',
-  passwordHash: 'passwordHash',
   isOnline: 'isOnline',
   isOnMap: 'isOnMap',
   userLat: 'userLat',
-  userLng: 'userLng',
+  userLon: 'userLon',
   status: 'status',
   lastLogin: 'lastLogin',
   partyAddress: 'partyAddress',
   partyLat: 'partyLat',
-  partyLng: 'partyLng',
+  partyLon: 'partyLon',
   friendsNumber: 'friendsNumber'
 } as const
 
@@ -124,8 +124,7 @@ export const JoinRequestScalarFieldEnum = {
   id: 'id',
   sentAt: 'sentAt',
   emitterId: 'emitterId',
-  receiverId: 'receiverId',
-  status: 'status'
+  receiverId: 'receiverId'
 } as const
 
 export type JoinRequestScalarFieldEnum = (typeof JoinRequestScalarFieldEnum)[keyof typeof JoinRequestScalarFieldEnum]
