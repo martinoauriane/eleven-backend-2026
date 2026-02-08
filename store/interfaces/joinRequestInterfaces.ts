@@ -1,5 +1,3 @@
-import { UserData } from "./userInterfaces";
-
 export interface JoinRequestCreate {
   emitterId: number;
   receiverId: number;  

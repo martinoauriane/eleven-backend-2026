@@ -867,7 +867,8 @@ export const JoinRequestScalarFieldEnum = {
   id: 'id',
   sentAt: 'sentAt',
   emitterId: 'emitterId',
-  receiverId: 'receiverId'
+  receiverId: 'receiverId',
+  isAccepted: 'isAccepted'
 } as const
 
 export type JoinRequestScalarFieldEnum = (typeof JoinRequestScalarFieldEnum)[keyof typeof JoinRequestScalarFieldEnum]

@@ -1,8 +1,8 @@
 // server.ts
 import express, { Request, Response } from "express";
 import cors from "cors";
-import { UserService } from "../service/userService";
-import {UserController} from "../controller/userController";
+import { UserController } from "../controller/userController";
+import { JoinRequestController } from "../controller/joinRequestController";
 
 const app = express();
 const router = express.Router();
@@ -13,6 +13,7 @@ app.use(express.json());
 app.use(router);
 
 const userController = new UserController;
+const joinRequestController = new JoinRequestController;
 
 // USER ENDPOINTS
 // operationnal
@@ -41,8 +42,10 @@ router.post("/user-delete", async(req:Request, res:Response) => {
 })
 
 // JOIN REQUEST ENDPOINTS
-router.post("/user/request", async(req:Request, res:Response) => {
-  await 
+
+// operationnal
+router.post("/user/join-request/:emitter_id/:receiver_id", async(req:Request, res:Response) => {
+  await joinRequestController.newJoinRequest(req, res);
 })
 
 app.listen(process.env.SERVER_PORT, () => {

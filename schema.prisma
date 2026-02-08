@@ -55,6 +55,7 @@ model Group {
 model JoinRequest {
   id         Int      @id @default(autoincrement())
   sentAt     DateTime? @default(now())
+  isAccepted Boolean  @default(false)
   emitterId  Int
   receiverId Int
   emitter    User     @relation("EmitterJoinRequest", fields: [emitterId], references: [id])

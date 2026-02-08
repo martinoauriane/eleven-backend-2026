@@ -14,7 +14,7 @@ class UserStore implements IUserStore {
     try {
       return await prisma.user.create({ data });
     } catch (error) {
-      console.error("Prisma update error:", error);
+      console.error("Prisma creation error:", error);
     }
   }
 
@@ -22,7 +22,7 @@ class UserStore implements IUserStore {
     try {
       return await prisma.user.findUnique({ where: { id } });
     } catch (error) {
-      console.error("Prisma update error:", error);
+      console.error("Prisma retrieve error:", error);
     }
   }
 
@@ -42,7 +42,7 @@ class UserStore implements IUserStore {
     try {
       return await prisma.user.delete({ where: { id } });
     } catch (error) {
-      console.error("Prisma update error:", error);
+      console.error("Prisma delete error:", error);
     }
   }
 }
