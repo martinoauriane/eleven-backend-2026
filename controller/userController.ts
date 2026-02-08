@@ -14,7 +14,6 @@ class UserController {
     password: String(req.body.password),
     homeAddress: String(req.body.homeAddress),
     };
-    console.log("data well received", user);
     try {
         const userCreated = await userService.createUser(user);
         res.status(200).json(userCreated);

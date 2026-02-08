@@ -31,7 +31,7 @@ router.post("/get-user", async(req:Request, res:Response) => {
   await userController.returnUser(req, res);
 })
 
-// ongoing testing
+// operationnal
 router.post("/user-update", async(req:Request, res:Response) => {
   await userController.updateUser(req, res);
 })
