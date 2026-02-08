@@ -12,17 +12,16 @@ app.use(cors());
 app.use(express.json());
 app.use(router);
 
-
-const userService = new UserService();  
 const userController = new UserController;
 
+// USER ENDPOINTS
 // operationnal
 router.get("/", async(req:Request, res:Response) =>{
   res.status(200).json("Welcome");
 })
 
 // operationnal
-router.post("/new-user", async (req: Request, res: Response) => {
+router.post("/user-create", async (req: Request, res: Response) => {
    await userController.newUser(req, res);
 });
 
@@ -36,10 +35,15 @@ router.post("/user-update", async(req:Request, res:Response) => {
   await userController.updateUser(req, res);
 })
 
-router.post("/user-delete", async(req:Request, res:Response) =>{
+// operationnal
+router.post("/user-delete", async(req:Request, res:Response) => {
   await userController.deleteUser(req, res);
 })
 
+// JOIN REQUEST ENDPOINTS
+router.post("/user/request", async(req:Request, res:Response) => {
+  await 
+})
 
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);

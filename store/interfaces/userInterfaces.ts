@@ -41,6 +41,6 @@ export interface UserData {
   partyAddress: string
   partyLat : number
   partyLon : number  
-  friendsNumber : number  
+  friendsNumber : number 
 }
 

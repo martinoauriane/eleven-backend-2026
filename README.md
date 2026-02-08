@@ -11,11 +11,11 @@ Afficher les tables:
 \l
 
 PRISMA 
+Faire une migration: 
+npx prisma migrate dev
+
 générer le client: 
 npx prisma generate
-
-Faire une migration: 
-npx prisma migrate
 
 Vérifier que Prisma est bien connectée à la db: 
 npx prisma db pull
@@ -27,5 +27,10 @@ ssh -T git@github.com
 BCRYPT
 npm i bcryptjs
 
+DONE: 
+- test user endpoints (DONE)
+
 NEXT STEPS: 
-- test user endpoints
+- gérer le processus pour joinRequestStore 
+- tester les endpoints pour joinRequestStore dans Postman
+- Ironic front-end interface in to modelize Figma

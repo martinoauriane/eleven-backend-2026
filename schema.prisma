@@ -54,12 +54,13 @@ model Group {
 
 model JoinRequest {
   id         Int      @id @default(autoincrement())
-  sentAt     DateTime
+  sentAt     DateTime? @default(now())
   emitterId  Int
   receiverId Int
   emitter    User     @relation("EmitterJoinRequest", fields: [emitterId], references: [id])
   receiver   User     @relation("ReceiverJoinRequest", fields: [receiverId], references: [id])
 }
+// emitter et receiver sont des relations Prisma et ne devraient pas être passées lors de la création
 
 model FriendRequest {
   id         Int      @id @default(autoincrement())

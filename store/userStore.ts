@@ -2,14 +2,14 @@ import "dotenv/config"; // ⚡ force le chargement de ton .env
 import { prisma } from "../prisma";
 import { UserCreate, UserUpdate, UserData } from "./interfaces/userInterfaces";
 
-interface UserStore {
+interface IUserStore {
   createUser(data: UserCreate): Promise<any>;
   getUserById(id: number): Promise<any>;
   updateUser(id: number, data: UserData): Promise<any>;
   deleteUser(id: number): Promise<any>;
 }
 
-class UserStore {
+class UserStore implements IUserStore {
   async createUser(data: UserCreate) {
     try {
       return await prisma.user.create({ data });

@@ -1,26 +1,25 @@
 import {UserStore} from "../store/userStore";
 import { hashPassword } from "./utils/hash";
-import { UserCreate, UserUpdate } from "../store/interfaces/userInterfaces";
+import { UserCreate, UserData, UserUpdate } from "../store/interfaces/userInterfaces";
 
 const userStore = new UserStore();
 
 interface UserService {
     createUser(data: UserCreate): Promise<any>;
     getUserById(id: number): Promise<any>;
-    updateUser(id: number, data:any): Promise<any>;
+    updateUser(data:UserUpdate, id: number): Promise<any>;
     deleteUser(id: number): Promise<any>;
 }
 
 class UserService {
 
-    async createUser(data:any) {
-        const password = String(data.password);
-        const passwordHash = await hashPassword(password);
+    async createUser(user:UserCreate): Promise<any> {
+        const passwordHash = await hashPassword(String(user.password));
         const userData: UserCreate = {
-            firstName: data.firstName,
-            lastName: data.lastName,
-            email: data.email,
-            homeAddress: data.homeAddress,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            homeAddress: user.homeAddress,
             password: passwordHash
         };
         return await userStore.createUser(userData);
@@ -30,12 +29,11 @@ class UserService {
         return await userStore.getUserById(id);
     }
 
-    async updateUser(data:any, id: number) {
-        const updateData : UserUpdate = data;
-        return await userStore.updateUser(id, updateData);
+    async updateUser(data: UserUpdate, id: number) {
+        return await userStore.updateUser(id, data);
     }
 
-    async deleteUser(id:number) {
+    async deleteUser(id: number) {
         return await userStore.deleteUser(id);
     }
 }

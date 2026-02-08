@@ -1,23 +1,24 @@
 import 'dotenv/config';  // ⚡ force le chargement de ton .env
 import { prisma } from "../prisma";
-import {userStore} from "./userStore";
-import { JoinRequestData } from '../service/interfaces/serviceInterfaces';
-import { isJsonNull } from '@prisma/client/runtime/client';
+import {UserStore} from "./userStore";
+import { JoinRequestCreate, JoinRequestSuccessCreate } from './interfaces/joinRequestInterfaces';
+
+const userStore = new UserStore();
 
 interface IJoinRequestStore {
-  CreateJoinRequest(data: JoinRequestData): Promise<any>;
+  CreateJoinRequest(data: JoinRequestCreate): Promise<any>;
 }
 
-class JoinRequestStore {
+class JoinRequestStore implements IJoinRequestStore{
 
-    async CreateJoinRequest(data: JoinRequestData) {
+    async CreateJoinRequest(data: JoinRequestCreate): Promise<any> {
         return await prisma.joinRequest.create({ data });
     }
-    async getJoinRequest(id) {
+    async getJoinRequest(id: number) {
         return await prisma.joinRequest.findUnique({ where: { id } });
     }
 
-    async deleteJoinRequest(id) {
+    async deleteJoinRequest(id: number) {
         return await prisma.joinRequest.delete({ where: { id } });
     }
 }

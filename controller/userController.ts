@@ -1,13 +1,14 @@
 
 import { UserService } from "../service/userService";
 import { Request, Response } from "express";
+import { UserCreate } from "../store/interfaces/userInterfaces";
 
 const userService = new UserService();
 
 class UserController {
     
     async newUser(req: Request, res: Response) {
-    const user: any = {
+    const user: UserCreate = {
     firstName: String(req.body.firstName),
     lastName: String(req.body.lastName),
     email: req.body.email,
@@ -56,7 +57,8 @@ class UserController {
     }
 
     async deleteUser(req: Request, res: Response) {
-        const id = Number(req.params.id);
+        const id = Number(req.query.id);
+        console.log("id", id);
         try {
             await userService.deleteUser(id);
             res.status(200).json({ message: "User deleted successfully" });
