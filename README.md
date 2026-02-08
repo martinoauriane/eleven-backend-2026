@@ -11,6 +11,10 @@ Afficher les tables:
 \l
 
 PRISMA 
+bonnes pratiques: 
+// - delete n'en supprime qu'un seul à la fois 
+// - deleteMany en supprime plusieurs
+
 Faire une migration: 
 npx prisma migrate dev
 
@@ -28,9 +32,9 @@ BCRYPT
 npm i bcryptjs
 
 DONE: 
-- test user endpoints (DONE)
+// - test user endpoints (DONE)
 
 NEXT STEPS: 
-- gérer le processus pour joinRequestStore 
-- tester les endpoints pour joinRequestStore dans Postman
-- Ironic front-end interface in to modelize Figma
+// - gérer le processus pour joinRequestStore 
+// - tester les endpoints pour joinRequestStore dans Postman
+// - Ironic front-end interface in to modelize Figma

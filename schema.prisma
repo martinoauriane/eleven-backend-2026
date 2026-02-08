@@ -15,16 +15,16 @@ model User {
   picture                String?
   password               String
   homeAddress            String?
-  isOnline               Boolean @default(false)
-  isOnMap                Boolean @default(false)
+  isOnline               Boolean         @default(false)
+  isOnMap                Boolean         @default(false)
   userLat                Float?
   userLon                Float?
-  status                 String  @default("Wants to go out")
-  lastLogin              DateTime @default(now())
-  partyAddress           String? 
-  partyLat               Float? 
+  status                 String          @default("Wants to go out")
+  lastLogin              DateTime        @default(now())
+  partyAddress           String?
+  partyLat               Float?
   partyLon               Float?
-  friendsNumber          Int @default(0)
+  friendsNumber          Int             @default(0)
   sentFriendRequests     FriendRequest[] @relation("EmitterFriendRequest")
   receivedFriendRequests FriendRequest[] @relation("ReceiverFriendRequest")
   sentJoinRequests       JoinRequest[]   @relation("EmitterJoinRequest")
@@ -53,14 +53,15 @@ model Group {
 }
 
 model JoinRequest {
-  id         Int      @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   sentAt     DateTime? @default(now())
-  isAccepted Boolean  @default(false)
+  isAccepted Boolean   @default(false)
   emitterId  Int
   receiverId Int
-  emitter    User     @relation("EmitterJoinRequest", fields: [emitterId], references: [id])
-  receiver   User     @relation("ReceiverJoinRequest", fields: [receiverId], references: [id])
+  emitter    User      @relation("EmitterJoinRequest", fields: [emitterId], references: [id])
+  receiver   User      @relation("ReceiverJoinRequest", fields: [receiverId], references: [id])
 }
+
 // emitter et receiver sont des relations Prisma et ne devraient pas être passées lors de la création
 
 model FriendRequest {
