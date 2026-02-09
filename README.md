@@ -38,3 +38,22 @@ NEXT STEPS:
 // - gérer le processus pour joinRequestStore 
 // - tester les endpoints pour joinRequestStore dans Postman
 // - Ironic front-end interface in to modelize Figma
+
+
+
+
+PRISMA QUERY METHODS
+const qry = <GUID value>
+
+const data = await prisma.user.findUnique({
+    where: {
+        id: qry,
+    },
+    select: {
+        id: true,
+        username: true,
+        email: true,
+        firstName: true,
+        lastName: true
+    },
+});

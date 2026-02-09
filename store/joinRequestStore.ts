@@ -1,6 +1,7 @@
 import "dotenv/config"; // ⚡ force le chargement de ton .env
 import { prisma } from "../prisma";
-import { JoinRequestCreate } from "./interfaces/joinRequestInterfaces";
+import { JoinRequestCreate, JoinRequestData } from "./interfaces/joinRequestInterfaces";
+import { JoinRequest } from "../generated/client";
 
 interface IJoinRequestStore {
   CreateJoinRequest(data: JoinRequestCreate): Promise<any>;
@@ -19,16 +20,18 @@ class JoinRequestStore implements IJoinRequestStore {
     }
   }
 
-  async getJoinRequest(emitter_id: number, receiver_id: number) {
+  async getJoinRequest(emitter_id: number, receiver_id: number): Promise< JoinRequestData | null> {
     try {
-      return await prisma.joinRequest.findFirst({
+      const response : JoinRequestData | null = await prisma.joinRequest.findFirst({
         where: {
           emitterId: emitter_id,
           receiverId: receiver_id,
         },
       });
+      return response;
     } catch (error) {
-      console.error("prisma error trying to retrieve specific joinRequest");
+      console.error("prisma error trying to retrieve specific joinRequest", error);
+      throw error;
     }
   }
 
@@ -36,14 +39,15 @@ class JoinRequestStore implements IJoinRequestStore {
     // delete n'en supprime qu'un seul à la fois
     // deleteMany en supprime plusieurs
     try {
-      return await prisma.joinRequest.deleteMany({
+      const result = await prisma.joinRequest.deleteMany({
         where: {
           emitterId: emitter_id,
           receiverId: receiver_id,
         },
       });
+      return result;
     } catch (error) {
-      console.error("prisma error trying to delete specific joinRequest");
+      console.error("prisma error trying to delete specific joinRequest", error);
     }
   }
 }

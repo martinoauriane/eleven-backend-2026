@@ -26,8 +26,7 @@ class JoinRequestController {
         emitterId: Number(req.params.emitter_id),
         receiverId: Number(req.params.receiver_id),
       };
-      const retrievedJoinRequest =
-        joinRequestService.getJoinRequest(joinRequest);
+      const retrievedJoinRequest = await joinRequestService.getJoinRequest(joinRequest);
       res.status(200).json(retrievedJoinRequest);
     } catch (error) {
       res.status(500).json({ error: "Error creating new Join Request" });

@@ -866,9 +866,9 @@ export type GroupScalarFieldEnum = (typeof GroupScalarFieldEnum)[keyof typeof Gr
 export const JoinRequestScalarFieldEnum = {
   id: 'id',
   sentAt: 'sentAt',
+  isAccepted: 'isAccepted',
   emitterId: 'emitterId',
-  receiverId: 'receiverId',
-  isAccepted: 'isAccepted'
+  receiverId: 'receiverId'
 } as const
 
 export type JoinRequestScalarFieldEnum = (typeof JoinRequestScalarFieldEnum)[keyof typeof JoinRequestScalarFieldEnum]

@@ -41,25 +41,25 @@ export type JoinRequestSumAggregateOutputType = {
 export type JoinRequestMinAggregateOutputType = {
   id: number | null
   sentAt: Date | null
+  isAccepted: boolean | null
   emitterId: number | null
   receiverId: number | null
-  isAccepted: boolean | null
 }
 
 export type JoinRequestMaxAggregateOutputType = {
   id: number | null
   sentAt: Date | null
+  isAccepted: boolean | null
   emitterId: number | null
   receiverId: number | null
-  isAccepted: boolean | null
 }
 
 export type JoinRequestCountAggregateOutputType = {
   id: number
   sentAt: number
+  isAccepted: number
   emitterId: number
   receiverId: number
-  isAccepted: number
   _all: number
 }
 
@@ -79,25 +79,25 @@ export type JoinRequestSumAggregateInputType = {
 export type JoinRequestMinAggregateInputType = {
   id?: true
   sentAt?: true
+  isAccepted?: true
   emitterId?: true
   receiverId?: true
-  isAccepted?: true
 }
 
 export type JoinRequestMaxAggregateInputType = {
   id?: true
   sentAt?: true
+  isAccepted?: true
   emitterId?: true
   receiverId?: true
-  isAccepted?: true
 }
 
 export type JoinRequestCountAggregateInputType = {
   id?: true
   sentAt?: true
+  isAccepted?: true
   emitterId?: true
   receiverId?: true
-  isAccepted?: true
   _all?: true
 }
 
@@ -189,10 +189,10 @@ export type JoinRequestGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 
 export type JoinRequestGroupByOutputType = {
   id: number
-  sentAt: Date | null
+  sentAt: Date
+  isAccepted: boolean
   emitterId: number
   receiverId: number
-  isAccepted: boolean
   _count: JoinRequestCountAggregateOutputType | null
   _avg: JoinRequestAvgAggregateOutputType | null
   _sum: JoinRequestSumAggregateOutputType | null
@@ -220,20 +220,20 @@ export type JoinRequestWhereInput = {
   OR?: Prisma.JoinRequestWhereInput[]
   NOT?: Prisma.JoinRequestWhereInput | Prisma.JoinRequestWhereInput[]
   id?: Prisma.IntFilter<"JoinRequest"> | number
-  sentAt?: Prisma.DateTimeNullableFilter<"JoinRequest"> | Date | string | null
+  sentAt?: Prisma.DateTimeFilter<"JoinRequest"> | Date | string
+  isAccepted?: Prisma.BoolFilter<"JoinRequest"> | boolean
   emitterId?: Prisma.IntFilter<"JoinRequest"> | number
   receiverId?: Prisma.IntFilter<"JoinRequest"> | number
-  isAccepted?: Prisma.BoolFilter<"JoinRequest"> | boolean
   emitter?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   receiver?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type JoinRequestOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  sentAt?: Prisma.SortOrder
+  isAccepted?: Prisma.SortOrder
   emitterId?: Prisma.SortOrder
   receiverId?: Prisma.SortOrder
-  isAccepted?: Prisma.SortOrder
   emitter?: Prisma.UserOrderByWithRelationInput
   receiver?: Prisma.UserOrderByWithRelationInput
 }
@@ -243,20 +243,20 @@ export type JoinRequestWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.JoinRequestWhereInput | Prisma.JoinRequestWhereInput[]
   OR?: Prisma.JoinRequestWhereInput[]
   NOT?: Prisma.JoinRequestWhereInput | Prisma.JoinRequestWhereInput[]
-  sentAt?: Prisma.DateTimeNullableFilter<"JoinRequest"> | Date | string | null
+  sentAt?: Prisma.DateTimeFilter<"JoinRequest"> | Date | string
+  isAccepted?: Prisma.BoolFilter<"JoinRequest"> | boolean
   emitterId?: Prisma.IntFilter<"JoinRequest"> | number
   receiverId?: Prisma.IntFilter<"JoinRequest"> | number
-  isAccepted?: Prisma.BoolFilter<"JoinRequest"> | boolean
   emitter?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   receiver?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
 export type JoinRequestOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  sentAt?: Prisma.SortOrder
+  isAccepted?: Prisma.SortOrder
   emitterId?: Prisma.SortOrder
   receiverId?: Prisma.SortOrder
-  isAccepted?: Prisma.SortOrder
   _count?: Prisma.JoinRequestCountOrderByAggregateInput
   _avg?: Prisma.JoinRequestAvgOrderByAggregateInput
   _max?: Prisma.JoinRequestMaxOrderByAggregateInput
@@ -269,14 +269,14 @@ export type JoinRequestScalarWhereWithAggregatesInput = {
   OR?: Prisma.JoinRequestScalarWhereWithAggregatesInput[]
   NOT?: Prisma.JoinRequestScalarWhereWithAggregatesInput | Prisma.JoinRequestScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"JoinRequest"> | number
-  sentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"JoinRequest"> | Date | string | null
+  sentAt?: Prisma.DateTimeWithAggregatesFilter<"JoinRequest"> | Date | string
+  isAccepted?: Prisma.BoolWithAggregatesFilter<"JoinRequest"> | boolean
   emitterId?: Prisma.IntWithAggregatesFilter<"JoinRequest"> | number
   receiverId?: Prisma.IntWithAggregatesFilter<"JoinRequest"> | number
-  isAccepted?: Prisma.BoolWithAggregatesFilter<"JoinRequest"> | boolean
 }
 
 export type JoinRequestCreateInput = {
-  sentAt?: Date | string | null
+  sentAt?: Date | string
   isAccepted?: boolean
   emitter: Prisma.UserCreateNestedOneWithoutSentJoinRequestsInput
   receiver: Prisma.UserCreateNestedOneWithoutReceivedJoinRequestsInput
@@ -284,14 +284,14 @@ export type JoinRequestCreateInput = {
 
 export type JoinRequestUncheckedCreateInput = {
   id?: number
-  sentAt?: Date | string | null
+  sentAt?: Date | string
+  isAccepted?: boolean
   emitterId: number
   receiverId: number
-  isAccepted?: boolean
 }
 
 export type JoinRequestUpdateInput = {
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   emitter?: Prisma.UserUpdateOneRequiredWithoutSentJoinRequestsNestedInput
   receiver?: Prisma.UserUpdateOneRequiredWithoutReceivedJoinRequestsNestedInput
@@ -299,31 +299,31 @@ export type JoinRequestUpdateInput = {
 
 export type JoinRequestUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   emitterId?: Prisma.IntFieldUpdateOperationsInput | number
   receiverId?: Prisma.IntFieldUpdateOperationsInput | number
-  isAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type JoinRequestCreateManyInput = {
   id?: number
-  sentAt?: Date | string | null
+  sentAt?: Date | string
+  isAccepted?: boolean
   emitterId: number
   receiverId: number
-  isAccepted?: boolean
 }
 
 export type JoinRequestUpdateManyMutationInput = {
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type JoinRequestUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   emitterId?: Prisma.IntFieldUpdateOperationsInput | number
   receiverId?: Prisma.IntFieldUpdateOperationsInput | number
-  isAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type JoinRequestListRelationFilter = {
@@ -339,9 +339,9 @@ export type JoinRequestOrderByRelationAggregateInput = {
 export type JoinRequestCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
+  isAccepted?: Prisma.SortOrder
   emitterId?: Prisma.SortOrder
   receiverId?: Prisma.SortOrder
-  isAccepted?: Prisma.SortOrder
 }
 
 export type JoinRequestAvgOrderByAggregateInput = {
@@ -353,17 +353,17 @@ export type JoinRequestAvgOrderByAggregateInput = {
 export type JoinRequestMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
+  isAccepted?: Prisma.SortOrder
   emitterId?: Prisma.SortOrder
   receiverId?: Prisma.SortOrder
-  isAccepted?: Prisma.SortOrder
 }
 
 export type JoinRequestMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
+  isAccepted?: Prisma.SortOrder
   emitterId?: Prisma.SortOrder
   receiverId?: Prisma.SortOrder
-  isAccepted?: Prisma.SortOrder
 }
 
 export type JoinRequestSumOrderByAggregateInput = {
@@ -456,21 +456,17 @@ export type JoinRequestUncheckedUpdateManyWithoutReceiverNestedInput = {
   deleteMany?: Prisma.JoinRequestScalarWhereInput | Prisma.JoinRequestScalarWhereInput[]
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type JoinRequestCreateWithoutEmitterInput = {
-  sentAt?: Date | string | null
+  sentAt?: Date | string
   isAccepted?: boolean
   receiver: Prisma.UserCreateNestedOneWithoutReceivedJoinRequestsInput
 }
 
 export type JoinRequestUncheckedCreateWithoutEmitterInput = {
   id?: number
-  sentAt?: Date | string | null
-  receiverId: number
+  sentAt?: Date | string
   isAccepted?: boolean
+  receiverId: number
 }
 
 export type JoinRequestCreateOrConnectWithoutEmitterInput = {
@@ -484,16 +480,16 @@ export type JoinRequestCreateManyEmitterInputEnvelope = {
 }
 
 export type JoinRequestCreateWithoutReceiverInput = {
-  sentAt?: Date | string | null
+  sentAt?: Date | string
   isAccepted?: boolean
   emitter: Prisma.UserCreateNestedOneWithoutSentJoinRequestsInput
 }
 
 export type JoinRequestUncheckedCreateWithoutReceiverInput = {
   id?: number
-  sentAt?: Date | string | null
-  emitterId: number
+  sentAt?: Date | string
   isAccepted?: boolean
+  emitterId: number
 }
 
 export type JoinRequestCreateOrConnectWithoutReceiverInput = {
@@ -527,10 +523,10 @@ export type JoinRequestScalarWhereInput = {
   OR?: Prisma.JoinRequestScalarWhereInput[]
   NOT?: Prisma.JoinRequestScalarWhereInput | Prisma.JoinRequestScalarWhereInput[]
   id?: Prisma.IntFilter<"JoinRequest"> | number
-  sentAt?: Prisma.DateTimeNullableFilter<"JoinRequest"> | Date | string | null
+  sentAt?: Prisma.DateTimeFilter<"JoinRequest"> | Date | string
+  isAccepted?: Prisma.BoolFilter<"JoinRequest"> | boolean
   emitterId?: Prisma.IntFilter<"JoinRequest"> | number
   receiverId?: Prisma.IntFilter<"JoinRequest"> | number
-  isAccepted?: Prisma.BoolFilter<"JoinRequest"> | boolean
 }
 
 export type JoinRequestUpsertWithWhereUniqueWithoutReceiverInput = {
@@ -551,56 +547,56 @@ export type JoinRequestUpdateManyWithWhereWithoutReceiverInput = {
 
 export type JoinRequestCreateManyEmitterInput = {
   id?: number
-  sentAt?: Date | string | null
-  receiverId: number
+  sentAt?: Date | string
   isAccepted?: boolean
+  receiverId: number
 }
 
 export type JoinRequestCreateManyReceiverInput = {
   id?: number
-  sentAt?: Date | string | null
-  emitterId: number
+  sentAt?: Date | string
   isAccepted?: boolean
+  emitterId: number
 }
 
 export type JoinRequestUpdateWithoutEmitterInput = {
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   receiver?: Prisma.UserUpdateOneRequiredWithoutReceivedJoinRequestsNestedInput
 }
 
 export type JoinRequestUncheckedUpdateWithoutEmitterInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  receiverId?: Prisma.IntFieldUpdateOperationsInput | number
+  sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receiverId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type JoinRequestUncheckedUpdateManyWithoutEmitterInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  receiverId?: Prisma.IntFieldUpdateOperationsInput | number
+  sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  receiverId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type JoinRequestUpdateWithoutReceiverInput = {
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   emitter?: Prisma.UserUpdateOneRequiredWithoutSentJoinRequestsNestedInput
 }
 
 export type JoinRequestUncheckedUpdateWithoutReceiverInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  emitterId?: Prisma.IntFieldUpdateOperationsInput | number
+  sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emitterId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type JoinRequestUncheckedUpdateManyWithoutReceiverInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  emitterId?: Prisma.IntFieldUpdateOperationsInput | number
+  sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emitterId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -608,9 +604,9 @@ export type JoinRequestUncheckedUpdateManyWithoutReceiverInput = {
 export type JoinRequestSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   sentAt?: boolean
+  isAccepted?: boolean
   emitterId?: boolean
   receiverId?: boolean
-  isAccepted?: boolean
   emitter?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   receiver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["joinRequest"]>
@@ -618,9 +614,9 @@ export type JoinRequestSelect<ExtArgs extends runtime.Types.Extensions.InternalA
 export type JoinRequestSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   sentAt?: boolean
+  isAccepted?: boolean
   emitterId?: boolean
   receiverId?: boolean
-  isAccepted?: boolean
   emitter?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   receiver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["joinRequest"]>
@@ -628,9 +624,9 @@ export type JoinRequestSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
 export type JoinRequestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   sentAt?: boolean
+  isAccepted?: boolean
   emitterId?: boolean
   receiverId?: boolean
-  isAccepted?: boolean
   emitter?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   receiver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["joinRequest"]>
@@ -638,12 +634,12 @@ export type JoinRequestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
 export type JoinRequestSelectScalar = {
   id?: boolean
   sentAt?: boolean
+  isAccepted?: boolean
   emitterId?: boolean
   receiverId?: boolean
-  isAccepted?: boolean
 }
 
-export type JoinRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sentAt" | "emitterId" | "receiverId" | "isAccepted", ExtArgs["result"]["joinRequest"]>
+export type JoinRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sentAt" | "isAccepted" | "emitterId" | "receiverId", ExtArgs["result"]["joinRequest"]>
 export type JoinRequestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   emitter?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   receiver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -665,10 +661,10 @@ export type $JoinRequestPayload<ExtArgs extends runtime.Types.Extensions.Interna
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    sentAt: Date | null
+    sentAt: Date
+    isAccepted: boolean
     emitterId: number
     receiverId: number
-    isAccepted: boolean
   }, ExtArgs["result"]["joinRequest"]>
   composites: {}
 }
@@ -1096,9 +1092,9 @@ export interface Prisma__JoinRequestClient<T, Null = never, ExtArgs extends runt
 export interface JoinRequestFieldRefs {
   readonly id: Prisma.FieldRef<"JoinRequest", 'Int'>
   readonly sentAt: Prisma.FieldRef<"JoinRequest", 'DateTime'>
+  readonly isAccepted: Prisma.FieldRef<"JoinRequest", 'Boolean'>
   readonly emitterId: Prisma.FieldRef<"JoinRequest", 'Int'>
   readonly receiverId: Prisma.FieldRef<"JoinRequest", 'Int'>
-  readonly isAccepted: Prisma.FieldRef<"JoinRequest", 'Boolean'>
 }
     
 

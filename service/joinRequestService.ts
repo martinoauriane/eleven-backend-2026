@@ -1,6 +1,6 @@
 import "dotenv/config"; // ⚡ force le chargement de ton .env
 import { JoinRequestStore } from "../store/joinRequestStore";
-import { JoinRequestCreate } from "../store/interfaces/joinRequestInterfaces";
+import { JoinRequestCreate, JoinRequestData } from "../store/interfaces/joinRequestInterfaces";
 
 const joinRequestStore = new JoinRequestStore();
 
@@ -10,12 +10,12 @@ class JoinRequestService {
     return await joinRequestStore.CreateJoinRequest(data);
   }
 
-  async getJoinRequest(data: JoinRequestCreate): Promise<any> {
-    console.log("service data", data);
-    return await joinRequestStore.getJoinRequest(
+  async getJoinRequest(data: JoinRequestCreate): Promise<JoinRequestData | null> {
+    const response : JoinRequestData | null = await joinRequestStore.getJoinRequest(
       data.emitterId,
       data.receiverId,
     );
+    return response;
   }
 
   async deleteJoinRequest(data: JoinRequestCreate): Promise<any> {

@@ -51,6 +51,7 @@ router.post(
   },
 );
 
+// operationnal
 router.post(
   "/get/join-request/:emitter_id/:receiver_id",
   async (req: Request, res: Response) => {
@@ -58,8 +59,9 @@ router.post(
   },
 );
 
+// operationnal
 router.post(
-  "/user/join-request/delete/:emitter_id/:received_id",
+  "/delete/join-request/:emitter_id/:receiver_id",
   async (req: Request, res: Response) => {
     await joinRequestController.deleteJoinRequest(req, res);
   },
