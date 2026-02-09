@@ -134,6 +134,7 @@ export type JoinRequestScalarFieldEnum = (typeof JoinRequestScalarFieldEnum)[key
 export const FriendRequestScalarFieldEnum = {
   id: 'id',
   sentAt: 'sentAt',
+  isAccepted: 'isAccepted',
   emitterId: 'emitterId',
   receiverId: 'receiverId'
 } as const

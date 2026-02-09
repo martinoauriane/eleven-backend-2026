@@ -41,6 +41,7 @@ export type FriendRequestSumAggregateOutputType = {
 export type FriendRequestMinAggregateOutputType = {
   id: number | null
   sentAt: Date | null
+  isAccepted: boolean | null
   emitterId: number | null
   receiverId: number | null
 }
@@ -48,6 +49,7 @@ export type FriendRequestMinAggregateOutputType = {
 export type FriendRequestMaxAggregateOutputType = {
   id: number | null
   sentAt: Date | null
+  isAccepted: boolean | null
   emitterId: number | null
   receiverId: number | null
 }
@@ -55,6 +57,7 @@ export type FriendRequestMaxAggregateOutputType = {
 export type FriendRequestCountAggregateOutputType = {
   id: number
   sentAt: number
+  isAccepted: number
   emitterId: number
   receiverId: number
   _all: number
@@ -76,6 +79,7 @@ export type FriendRequestSumAggregateInputType = {
 export type FriendRequestMinAggregateInputType = {
   id?: true
   sentAt?: true
+  isAccepted?: true
   emitterId?: true
   receiverId?: true
 }
@@ -83,6 +87,7 @@ export type FriendRequestMinAggregateInputType = {
 export type FriendRequestMaxAggregateInputType = {
   id?: true
   sentAt?: true
+  isAccepted?: true
   emitterId?: true
   receiverId?: true
 }
@@ -90,6 +95,7 @@ export type FriendRequestMaxAggregateInputType = {
 export type FriendRequestCountAggregateInputType = {
   id?: true
   sentAt?: true
+  isAccepted?: true
   emitterId?: true
   receiverId?: true
   _all?: true
@@ -184,6 +190,7 @@ export type FriendRequestGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 export type FriendRequestGroupByOutputType = {
   id: number
   sentAt: Date
+  isAccepted: boolean
   emitterId: number
   receiverId: number
   _count: FriendRequestCountAggregateOutputType | null
@@ -214,6 +221,7 @@ export type FriendRequestWhereInput = {
   NOT?: Prisma.FriendRequestWhereInput | Prisma.FriendRequestWhereInput[]
   id?: Prisma.IntFilter<"FriendRequest"> | number
   sentAt?: Prisma.DateTimeFilter<"FriendRequest"> | Date | string
+  isAccepted?: Prisma.BoolFilter<"FriendRequest"> | boolean
   emitterId?: Prisma.IntFilter<"FriendRequest"> | number
   receiverId?: Prisma.IntFilter<"FriendRequest"> | number
   emitter?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -223,6 +231,7 @@ export type FriendRequestWhereInput = {
 export type FriendRequestOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
+  isAccepted?: Prisma.SortOrder
   emitterId?: Prisma.SortOrder
   receiverId?: Prisma.SortOrder
   emitter?: Prisma.UserOrderByWithRelationInput
@@ -235,6 +244,7 @@ export type FriendRequestWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.FriendRequestWhereInput[]
   NOT?: Prisma.FriendRequestWhereInput | Prisma.FriendRequestWhereInput[]
   sentAt?: Prisma.DateTimeFilter<"FriendRequest"> | Date | string
+  isAccepted?: Prisma.BoolFilter<"FriendRequest"> | boolean
   emitterId?: Prisma.IntFilter<"FriendRequest"> | number
   receiverId?: Prisma.IntFilter<"FriendRequest"> | number
   emitter?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -244,6 +254,7 @@ export type FriendRequestWhereUniqueInput = Prisma.AtLeast<{
 export type FriendRequestOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
+  isAccepted?: Prisma.SortOrder
   emitterId?: Prisma.SortOrder
   receiverId?: Prisma.SortOrder
   _count?: Prisma.FriendRequestCountOrderByAggregateInput
@@ -259,25 +270,29 @@ export type FriendRequestScalarWhereWithAggregatesInput = {
   NOT?: Prisma.FriendRequestScalarWhereWithAggregatesInput | Prisma.FriendRequestScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"FriendRequest"> | number
   sentAt?: Prisma.DateTimeWithAggregatesFilter<"FriendRequest"> | Date | string
+  isAccepted?: Prisma.BoolWithAggregatesFilter<"FriendRequest"> | boolean
   emitterId?: Prisma.IntWithAggregatesFilter<"FriendRequest"> | number
   receiverId?: Prisma.IntWithAggregatesFilter<"FriendRequest"> | number
 }
 
 export type FriendRequestCreateInput = {
-  sentAt: Date | string
+  sentAt?: Date | string
+  isAccepted?: boolean
   emitter: Prisma.UserCreateNestedOneWithoutSentFriendRequestsInput
   receiver: Prisma.UserCreateNestedOneWithoutReceivedFriendRequestsInput
 }
 
 export type FriendRequestUncheckedCreateInput = {
   id?: number
-  sentAt: Date | string
+  sentAt?: Date | string
+  isAccepted?: boolean
   emitterId: number
   receiverId: number
 }
 
 export type FriendRequestUpdateInput = {
   sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   emitter?: Prisma.UserUpdateOneRequiredWithoutSentFriendRequestsNestedInput
   receiver?: Prisma.UserUpdateOneRequiredWithoutReceivedFriendRequestsNestedInput
 }
@@ -285,24 +300,28 @@ export type FriendRequestUpdateInput = {
 export type FriendRequestUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   emitterId?: Prisma.IntFieldUpdateOperationsInput | number
   receiverId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type FriendRequestCreateManyInput = {
   id?: number
-  sentAt: Date | string
+  sentAt?: Date | string
+  isAccepted?: boolean
   emitterId: number
   receiverId: number
 }
 
 export type FriendRequestUpdateManyMutationInput = {
   sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type FriendRequestUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   emitterId?: Prisma.IntFieldUpdateOperationsInput | number
   receiverId?: Prisma.IntFieldUpdateOperationsInput | number
 }
@@ -320,6 +339,7 @@ export type FriendRequestOrderByRelationAggregateInput = {
 export type FriendRequestCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
+  isAccepted?: Prisma.SortOrder
   emitterId?: Prisma.SortOrder
   receiverId?: Prisma.SortOrder
 }
@@ -333,6 +353,7 @@ export type FriendRequestAvgOrderByAggregateInput = {
 export type FriendRequestMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
+  isAccepted?: Prisma.SortOrder
   emitterId?: Prisma.SortOrder
   receiverId?: Prisma.SortOrder
 }
@@ -340,6 +361,7 @@ export type FriendRequestMaxOrderByAggregateInput = {
 export type FriendRequestMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
+  isAccepted?: Prisma.SortOrder
   emitterId?: Prisma.SortOrder
   receiverId?: Prisma.SortOrder
 }
@@ -435,13 +457,15 @@ export type FriendRequestUncheckedUpdateManyWithoutReceiverNestedInput = {
 }
 
 export type FriendRequestCreateWithoutEmitterInput = {
-  sentAt: Date | string
+  sentAt?: Date | string
+  isAccepted?: boolean
   receiver: Prisma.UserCreateNestedOneWithoutReceivedFriendRequestsInput
 }
 
 export type FriendRequestUncheckedCreateWithoutEmitterInput = {
   id?: number
-  sentAt: Date | string
+  sentAt?: Date | string
+  isAccepted?: boolean
   receiverId: number
 }
 
@@ -456,13 +480,15 @@ export type FriendRequestCreateManyEmitterInputEnvelope = {
 }
 
 export type FriendRequestCreateWithoutReceiverInput = {
-  sentAt: Date | string
+  sentAt?: Date | string
+  isAccepted?: boolean
   emitter: Prisma.UserCreateNestedOneWithoutSentFriendRequestsInput
 }
 
 export type FriendRequestUncheckedCreateWithoutReceiverInput = {
   id?: number
-  sentAt: Date | string
+  sentAt?: Date | string
+  isAccepted?: boolean
   emitterId: number
 }
 
@@ -498,6 +524,7 @@ export type FriendRequestScalarWhereInput = {
   NOT?: Prisma.FriendRequestScalarWhereInput | Prisma.FriendRequestScalarWhereInput[]
   id?: Prisma.IntFilter<"FriendRequest"> | number
   sentAt?: Prisma.DateTimeFilter<"FriendRequest"> | Date | string
+  isAccepted?: Prisma.BoolFilter<"FriendRequest"> | boolean
   emitterId?: Prisma.IntFilter<"FriendRequest"> | number
   receiverId?: Prisma.IntFilter<"FriendRequest"> | number
 }
@@ -520,47 +547,55 @@ export type FriendRequestUpdateManyWithWhereWithoutReceiverInput = {
 
 export type FriendRequestCreateManyEmitterInput = {
   id?: number
-  sentAt: Date | string
+  sentAt?: Date | string
+  isAccepted?: boolean
   receiverId: number
 }
 
 export type FriendRequestCreateManyReceiverInput = {
   id?: number
-  sentAt: Date | string
+  sentAt?: Date | string
+  isAccepted?: boolean
   emitterId: number
 }
 
 export type FriendRequestUpdateWithoutEmitterInput = {
   sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   receiver?: Prisma.UserUpdateOneRequiredWithoutReceivedFriendRequestsNestedInput
 }
 
 export type FriendRequestUncheckedUpdateWithoutEmitterInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   receiverId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type FriendRequestUncheckedUpdateManyWithoutEmitterInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   receiverId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type FriendRequestUpdateWithoutReceiverInput = {
   sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   emitter?: Prisma.UserUpdateOneRequiredWithoutSentFriendRequestsNestedInput
 }
 
 export type FriendRequestUncheckedUpdateWithoutReceiverInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   emitterId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type FriendRequestUncheckedUpdateManyWithoutReceiverInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   emitterId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -569,6 +604,7 @@ export type FriendRequestUncheckedUpdateManyWithoutReceiverInput = {
 export type FriendRequestSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   sentAt?: boolean
+  isAccepted?: boolean
   emitterId?: boolean
   receiverId?: boolean
   emitter?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -578,6 +614,7 @@ export type FriendRequestSelect<ExtArgs extends runtime.Types.Extensions.Interna
 export type FriendRequestSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   sentAt?: boolean
+  isAccepted?: boolean
   emitterId?: boolean
   receiverId?: boolean
   emitter?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -587,6 +624,7 @@ export type FriendRequestSelectCreateManyAndReturn<ExtArgs extends runtime.Types
 export type FriendRequestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   sentAt?: boolean
+  isAccepted?: boolean
   emitterId?: boolean
   receiverId?: boolean
   emitter?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -596,11 +634,12 @@ export type FriendRequestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
 export type FriendRequestSelectScalar = {
   id?: boolean
   sentAt?: boolean
+  isAccepted?: boolean
   emitterId?: boolean
   receiverId?: boolean
 }
 
-export type FriendRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sentAt" | "emitterId" | "receiverId", ExtArgs["result"]["friendRequest"]>
+export type FriendRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sentAt" | "isAccepted" | "emitterId" | "receiverId", ExtArgs["result"]["friendRequest"]>
 export type FriendRequestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   emitter?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   receiver?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -623,6 +662,7 @@ export type $FriendRequestPayload<ExtArgs extends runtime.Types.Extensions.Inter
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     sentAt: Date
+    isAccepted: boolean
     emitterId: number
     receiverId: number
   }, ExtArgs["result"]["friendRequest"]>
@@ -1052,6 +1092,7 @@ export interface Prisma__FriendRequestClient<T, Null = never, ExtArgs extends ru
 export interface FriendRequestFieldRefs {
   readonly id: Prisma.FieldRef<"FriendRequest", 'Int'>
   readonly sentAt: Prisma.FieldRef<"FriendRequest", 'DateTime'>
+  readonly isAccepted: Prisma.FieldRef<"FriendRequest", 'Boolean'>
   readonly emitterId: Prisma.FieldRef<"FriendRequest", 'Int'>
   readonly receiverId: Prisma.FieldRef<"FriendRequest", 'Int'>
 }

@@ -33,12 +33,13 @@ npm i bcryptjs
 
 DONE: 
 // - test user endpoints (DONE)
-
-NEXT STEPS: 
 // - gérer le processus pour joinRequestStore 
 // - tester les endpoints pour joinRequestStore dans Postman
-// - Ironic front-end interface in to modelize Figma
 
+NEXT STEPS: 
+// - Ironic front-end interface in to modelize Figma
+// - create friendRequest endpoints (follow the model of JoinRequest, it's exactly the same format)
+// - test friendRequest endpoints (follow the model of JoinRequest, it's exactly the same format)
 
 
 

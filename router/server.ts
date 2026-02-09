@@ -67,6 +67,13 @@ router.post(
   },
 );
 
+
+// FRIEND REQUEST ENDPOINTS
+router.post("/create/friend-request/:emitter_id/:receiver_id",  async (req: Request, res: Response) => {
+    await joinRequestController.newJoinRequest(req, res);
+  },
+);
+
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });
