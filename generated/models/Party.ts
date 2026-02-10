@@ -228,6 +228,7 @@ export type PartyWhereInput = {
   partyType?: Prisma.StringFilter<"Party"> | string
   City?: Prisma.StringFilter<"Party"> | string
   Country?: Prisma.StringFilter<"Party"> | string
+  users?: Prisma.UserListRelationFilter
   groups?: Prisma.GroupListRelationFilter
 }
 
@@ -240,6 +241,7 @@ export type PartyOrderByWithRelationInput = {
   partyType?: Prisma.SortOrder
   City?: Prisma.SortOrder
   Country?: Prisma.SortOrder
+  users?: Prisma.UserOrderByRelationAggregateInput
   groups?: Prisma.GroupOrderByRelationAggregateInput
 }
 
@@ -255,6 +257,7 @@ export type PartyWhereUniqueInput = Prisma.AtLeast<{
   partyType?: Prisma.StringFilter<"Party"> | string
   City?: Prisma.StringFilter<"Party"> | string
   Country?: Prisma.StringFilter<"Party"> | string
+  users?: Prisma.UserListRelationFilter
   groups?: Prisma.GroupListRelationFilter
 }, "id">
 
@@ -296,6 +299,7 @@ export type PartyCreateInput = {
   partyType: string
   City: string
   Country: string
+  users?: Prisma.UserCreateNestedManyWithoutPartyInput
   groups?: Prisma.GroupCreateNestedManyWithoutPartyInput
 }
 
@@ -308,6 +312,7 @@ export type PartyUncheckedCreateInput = {
   partyType: string
   City: string
   Country: string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutPartyInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutPartyInput
 }
 
@@ -319,6 +324,7 @@ export type PartyUpdateInput = {
   partyType?: Prisma.StringFieldUpdateOperationsInput | string
   City?: Prisma.StringFieldUpdateOperationsInput | string
   Country?: Prisma.StringFieldUpdateOperationsInput | string
+  users?: Prisma.UserUpdateManyWithoutPartyNestedInput
   groups?: Prisma.GroupUpdateManyWithoutPartyNestedInput
 }
 
@@ -331,6 +337,7 @@ export type PartyUncheckedUpdateInput = {
   partyType?: Prisma.StringFieldUpdateOperationsInput | string
   City?: Prisma.StringFieldUpdateOperationsInput | string
   Country?: Prisma.StringFieldUpdateOperationsInput | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutPartyNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutPartyNestedInput
 }
 
@@ -364,6 +371,11 @@ export type PartyUncheckedUpdateManyInput = {
   partyType?: Prisma.StringFieldUpdateOperationsInput | string
   City?: Prisma.StringFieldUpdateOperationsInput | string
   Country?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type PartyNullableScalarRelationFilter = {
+  is?: Prisma.PartyWhereInput | null
+  isNot?: Prisma.PartyWhereInput | null
 }
 
 export type StringNullableListFilter<$PrismaModel = never> = {
@@ -414,6 +426,22 @@ export type PartyScalarRelationFilter = {
   isNot?: Prisma.PartyWhereInput
 }
 
+export type PartyCreateNestedOneWithoutUsersInput = {
+  create?: Prisma.XOR<Prisma.PartyCreateWithoutUsersInput, Prisma.PartyUncheckedCreateWithoutUsersInput>
+  connectOrCreate?: Prisma.PartyCreateOrConnectWithoutUsersInput
+  connect?: Prisma.PartyWhereUniqueInput
+}
+
+export type PartyUpdateOneWithoutUsersNestedInput = {
+  create?: Prisma.XOR<Prisma.PartyCreateWithoutUsersInput, Prisma.PartyUncheckedCreateWithoutUsersInput>
+  connectOrCreate?: Prisma.PartyCreateOrConnectWithoutUsersInput
+  upsert?: Prisma.PartyUpsertWithoutUsersInput
+  disconnect?: Prisma.PartyWhereInput | boolean
+  delete?: Prisma.PartyWhereInput | boolean
+  connect?: Prisma.PartyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PartyUpdateToOneWithWhereWithoutUsersInput, Prisma.PartyUpdateWithoutUsersInput>, Prisma.PartyUncheckedUpdateWithoutUsersInput>
+}
+
 export type PartyCreatepartyPicturesInput = {
   set: string[]
 }
@@ -446,6 +474,68 @@ export type PartyUpdateOneRequiredWithoutGroupsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PartyUpdateToOneWithWhereWithoutGroupsInput, Prisma.PartyUpdateWithoutGroupsInput>, Prisma.PartyUncheckedUpdateWithoutGroupsInput>
 }
 
+export type PartyCreateWithoutUsersInput = {
+  partyCoords?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  partyAddress: string
+  partyPictures?: Prisma.PartyCreatepartyPicturesInput | string[]
+  partyTags?: Prisma.PartyCreatepartyTagsInput | string[]
+  partyType: string
+  City: string
+  Country: string
+  groups?: Prisma.GroupCreateNestedManyWithoutPartyInput
+}
+
+export type PartyUncheckedCreateWithoutUsersInput = {
+  id?: number
+  partyCoords?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  partyAddress: string
+  partyPictures?: Prisma.PartyCreatepartyPicturesInput | string[]
+  partyTags?: Prisma.PartyCreatepartyTagsInput | string[]
+  partyType: string
+  City: string
+  Country: string
+  groups?: Prisma.GroupUncheckedCreateNestedManyWithoutPartyInput
+}
+
+export type PartyCreateOrConnectWithoutUsersInput = {
+  where: Prisma.PartyWhereUniqueInput
+  create: Prisma.XOR<Prisma.PartyCreateWithoutUsersInput, Prisma.PartyUncheckedCreateWithoutUsersInput>
+}
+
+export type PartyUpsertWithoutUsersInput = {
+  update: Prisma.XOR<Prisma.PartyUpdateWithoutUsersInput, Prisma.PartyUncheckedUpdateWithoutUsersInput>
+  create: Prisma.XOR<Prisma.PartyCreateWithoutUsersInput, Prisma.PartyUncheckedCreateWithoutUsersInput>
+  where?: Prisma.PartyWhereInput
+}
+
+export type PartyUpdateToOneWithWhereWithoutUsersInput = {
+  where?: Prisma.PartyWhereInput
+  data: Prisma.XOR<Prisma.PartyUpdateWithoutUsersInput, Prisma.PartyUncheckedUpdateWithoutUsersInput>
+}
+
+export type PartyUpdateWithoutUsersInput = {
+  partyCoords?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  partyAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  partyPictures?: Prisma.PartyUpdatepartyPicturesInput | string[]
+  partyTags?: Prisma.PartyUpdatepartyTagsInput | string[]
+  partyType?: Prisma.StringFieldUpdateOperationsInput | string
+  City?: Prisma.StringFieldUpdateOperationsInput | string
+  Country?: Prisma.StringFieldUpdateOperationsInput | string
+  groups?: Prisma.GroupUpdateManyWithoutPartyNestedInput
+}
+
+export type PartyUncheckedUpdateWithoutUsersInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  partyCoords?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  partyAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  partyPictures?: Prisma.PartyUpdatepartyPicturesInput | string[]
+  partyTags?: Prisma.PartyUpdatepartyTagsInput | string[]
+  partyType?: Prisma.StringFieldUpdateOperationsInput | string
+  City?: Prisma.StringFieldUpdateOperationsInput | string
+  Country?: Prisma.StringFieldUpdateOperationsInput | string
+  groups?: Prisma.GroupUncheckedUpdateManyWithoutPartyNestedInput
+}
+
 export type PartyCreateWithoutGroupsInput = {
   partyCoords?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   partyAddress: string
@@ -454,6 +544,7 @@ export type PartyCreateWithoutGroupsInput = {
   partyType: string
   City: string
   Country: string
+  users?: Prisma.UserCreateNestedManyWithoutPartyInput
 }
 
 export type PartyUncheckedCreateWithoutGroupsInput = {
@@ -465,6 +556,7 @@ export type PartyUncheckedCreateWithoutGroupsInput = {
   partyType: string
   City: string
   Country: string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutPartyInput
 }
 
 export type PartyCreateOrConnectWithoutGroupsInput = {
@@ -491,6 +583,7 @@ export type PartyUpdateWithoutGroupsInput = {
   partyType?: Prisma.StringFieldUpdateOperationsInput | string
   City?: Prisma.StringFieldUpdateOperationsInput | string
   Country?: Prisma.StringFieldUpdateOperationsInput | string
+  users?: Prisma.UserUpdateManyWithoutPartyNestedInput
 }
 
 export type PartyUncheckedUpdateWithoutGroupsInput = {
@@ -502,6 +595,7 @@ export type PartyUncheckedUpdateWithoutGroupsInput = {
   partyType?: Prisma.StringFieldUpdateOperationsInput | string
   City?: Prisma.StringFieldUpdateOperationsInput | string
   Country?: Prisma.StringFieldUpdateOperationsInput | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutPartyNestedInput
 }
 
 
@@ -510,10 +604,12 @@ export type PartyUncheckedUpdateWithoutGroupsInput = {
  */
 
 export type PartyCountOutputType = {
+  users: number
   groups: number
 }
 
 export type PartyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  users?: boolean | PartyCountOutputTypeCountUsersArgs
   groups?: boolean | PartyCountOutputTypeCountGroupsArgs
 }
 
@@ -525,6 +621,13 @@ export type PartyCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extens
    * Select specific fields to fetch from the PartyCountOutputType
    */
   select?: Prisma.PartyCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * PartyCountOutputType without action
+ */
+export type PartyCountOutputTypeCountUsersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserWhereInput
 }
 
 /**
@@ -544,6 +647,7 @@ export type PartySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   partyType?: boolean
   City?: boolean
   Country?: boolean
+  users?: boolean | Prisma.Party$usersArgs<ExtArgs>
   groups?: boolean | Prisma.Party$groupsArgs<ExtArgs>
   _count?: boolean | Prisma.PartyCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["party"]>
@@ -583,6 +687,7 @@ export type PartySelectScalar = {
 
 export type PartyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "partyCoords" | "partyAddress" | "partyPictures" | "partyTags" | "partyType" | "City" | "Country", ExtArgs["result"]["party"]>
 export type PartyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  users?: boolean | Prisma.Party$usersArgs<ExtArgs>
   groups?: boolean | Prisma.Party$groupsArgs<ExtArgs>
   _count?: boolean | Prisma.PartyCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -592,6 +697,7 @@ export type PartyIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type $PartyPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Party"
   objects: {
+    users: Prisma.$UserPayload<ExtArgs>[]
     groups: Prisma.$GroupPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -997,6 +1103,7 @@ readonly fields: PartyFieldRefs;
  */
 export interface Prisma__PartyClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  users<T extends Prisma.Party$usersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Party$usersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   groups<T extends Prisma.Party$groupsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Party$groupsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1420,6 +1527,30 @@ export type PartyDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Limit how many Parties to delete.
    */
   limit?: number
+}
+
+/**
+ * Party.users
+ */
+export type Party$usersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+  orderBy?: Prisma.UserOrderByWithRelationInput | Prisma.UserOrderByWithRelationInput[]
+  cursor?: Prisma.UserWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
 }
 
 /**

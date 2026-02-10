@@ -25,11 +25,14 @@ model User {
   partyLat               Float?
   partyLon               Float?
   friendsNumber          Int             @default(0)
+  partyId                Int?
+  // relations
   sentFriendRequests     FriendRequest[] @relation("EmitterFriendRequest")
   receivedFriendRequests FriendRequest[] @relation("ReceiverFriendRequest")
   sentJoinRequests       JoinRequest[]   @relation("EmitterJoinRequest")
   receivedJoinRequests   JoinRequest[]   @relation("ReceiverJoinRequest")
   groups                 Group[]         @relation("UsersPartying")
+  party                  Party?          @relation("atParty", fields: [partyId], references: [id])
 }
 
 model Party {
@@ -41,6 +44,8 @@ model Party {
   partyType     String
   City          String
   Country       String
+  // relations
+  users         User[]   @relation("atParty")
   groups        Group[]  @relation("Party")
 }
 
@@ -58,11 +63,12 @@ model JoinRequest {
   isAccepted Boolean   @default(false)
   emitterId  Int
   receiverId Int
+  // relations
+  // emitter et receiver sont des relations Prisma et ne devraient pas être passées lors de la création
   emitter    User      @relation("EmitterJoinRequest", fields: [emitterId], references: [id])
   receiver   User      @relation("ReceiverJoinRequest", fields: [receiverId], references: [id])
 }
 
-// emitter et receiver sont des relations Prisma et ne devraient pas être passées lors de la création
 
 model FriendRequest {
   id         Int      @id @default(autoincrement())
@@ -70,6 +76,7 @@ model FriendRequest {
   isAccepted Boolean   @default(false)
   emitterId  Int
   receiverId Int
+  // relations
   emitter    User     @relation("EmitterFriendRequest", fields: [emitterId], references: [id])
   receiver   User     @relation("ReceiverFriendRequest", fields: [receiverId], references: [id])
 }

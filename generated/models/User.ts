@@ -33,6 +33,7 @@ export type UserAvgAggregateOutputType = {
   partyLat: number | null
   partyLon: number | null
   friendsNumber: number | null
+  partyId: number | null
 }
 
 export type UserSumAggregateOutputType = {
@@ -42,6 +43,7 @@ export type UserSumAggregateOutputType = {
   partyLat: number | null
   partyLon: number | null
   friendsNumber: number | null
+  partyId: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -62,6 +64,7 @@ export type UserMinAggregateOutputType = {
   partyLat: number | null
   partyLon: number | null
   friendsNumber: number | null
+  partyId: number | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -82,6 +85,7 @@ export type UserMaxAggregateOutputType = {
   partyLat: number | null
   partyLon: number | null
   friendsNumber: number | null
+  partyId: number | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -102,6 +106,7 @@ export type UserCountAggregateOutputType = {
   partyLat: number
   partyLon: number
   friendsNumber: number
+  partyId: number
   _all: number
 }
 
@@ -113,6 +118,7 @@ export type UserAvgAggregateInputType = {
   partyLat?: true
   partyLon?: true
   friendsNumber?: true
+  partyId?: true
 }
 
 export type UserSumAggregateInputType = {
@@ -122,6 +128,7 @@ export type UserSumAggregateInputType = {
   partyLat?: true
   partyLon?: true
   friendsNumber?: true
+  partyId?: true
 }
 
 export type UserMinAggregateInputType = {
@@ -142,6 +149,7 @@ export type UserMinAggregateInputType = {
   partyLat?: true
   partyLon?: true
   friendsNumber?: true
+  partyId?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -162,6 +170,7 @@ export type UserMaxAggregateInputType = {
   partyLat?: true
   partyLon?: true
   friendsNumber?: true
+  partyId?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -182,6 +191,7 @@ export type UserCountAggregateInputType = {
   partyLat?: true
   partyLon?: true
   friendsNumber?: true
+  partyId?: true
   _all?: true
 }
 
@@ -289,6 +299,7 @@ export type UserGroupByOutputType = {
   partyLat: number | null
   partyLon: number | null
   friendsNumber: number
+  partyId: number | null
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
   _sum: UserSumAggregateOutputType | null
@@ -332,11 +343,13 @@ export type UserWhereInput = {
   partyLat?: Prisma.FloatNullableFilter<"User"> | number | null
   partyLon?: Prisma.FloatNullableFilter<"User"> | number | null
   friendsNumber?: Prisma.IntFilter<"User"> | number
+  partyId?: Prisma.IntNullableFilter<"User"> | number | null
   sentFriendRequests?: Prisma.FriendRequestListRelationFilter
   receivedFriendRequests?: Prisma.FriendRequestListRelationFilter
   sentJoinRequests?: Prisma.JoinRequestListRelationFilter
   receivedJoinRequests?: Prisma.JoinRequestListRelationFilter
   groups?: Prisma.GroupListRelationFilter
+  party?: Prisma.XOR<Prisma.PartyNullableScalarRelationFilter, Prisma.PartyWhereInput> | null
 }
 
 export type UserOrderByWithRelationInput = {
@@ -357,11 +370,13 @@ export type UserOrderByWithRelationInput = {
   partyLat?: Prisma.SortOrderInput | Prisma.SortOrder
   partyLon?: Prisma.SortOrderInput | Prisma.SortOrder
   friendsNumber?: Prisma.SortOrder
+  partyId?: Prisma.SortOrderInput | Prisma.SortOrder
   sentFriendRequests?: Prisma.FriendRequestOrderByRelationAggregateInput
   receivedFriendRequests?: Prisma.FriendRequestOrderByRelationAggregateInput
   sentJoinRequests?: Prisma.JoinRequestOrderByRelationAggregateInput
   receivedJoinRequests?: Prisma.JoinRequestOrderByRelationAggregateInput
   groups?: Prisma.GroupOrderByRelationAggregateInput
+  party?: Prisma.PartyOrderByWithRelationInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -385,11 +400,13 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   partyLat?: Prisma.FloatNullableFilter<"User"> | number | null
   partyLon?: Prisma.FloatNullableFilter<"User"> | number | null
   friendsNumber?: Prisma.IntFilter<"User"> | number
+  partyId?: Prisma.IntNullableFilter<"User"> | number | null
   sentFriendRequests?: Prisma.FriendRequestListRelationFilter
   receivedFriendRequests?: Prisma.FriendRequestListRelationFilter
   sentJoinRequests?: Prisma.JoinRequestListRelationFilter
   receivedJoinRequests?: Prisma.JoinRequestListRelationFilter
   groups?: Prisma.GroupListRelationFilter
+  party?: Prisma.XOR<Prisma.PartyNullableScalarRelationFilter, Prisma.PartyWhereInput> | null
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -410,6 +427,7 @@ export type UserOrderByWithAggregationInput = {
   partyLat?: Prisma.SortOrderInput | Prisma.SortOrder
   partyLon?: Prisma.SortOrderInput | Prisma.SortOrder
   friendsNumber?: Prisma.SortOrder
+  partyId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -438,6 +456,7 @@ export type UserScalarWhereWithAggregatesInput = {
   partyLat?: Prisma.FloatNullableWithAggregatesFilter<"User"> | number | null
   partyLon?: Prisma.FloatNullableWithAggregatesFilter<"User"> | number | null
   friendsNumber?: Prisma.IntWithAggregatesFilter<"User"> | number
+  partyId?: Prisma.IntNullableWithAggregatesFilter<"User"> | number | null
 }
 
 export type UserCreateInput = {
@@ -462,6 +481,7 @@ export type UserCreateInput = {
   sentJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutEmitterInput
   receivedJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutReceiverInput
   groups?: Prisma.GroupCreateNestedManyWithoutMembersInput
+  party?: Prisma.PartyCreateNestedOneWithoutUsersInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -482,6 +502,7 @@ export type UserUncheckedCreateInput = {
   partyLat?: number | null
   partyLon?: number | null
   friendsNumber?: number
+  partyId?: number | null
   sentFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutEmitterInput
   receivedFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutReceiverInput
   sentJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutEmitterInput
@@ -511,6 +532,7 @@ export type UserUpdateInput = {
   sentJoinRequests?: Prisma.JoinRequestUpdateManyWithoutEmitterNestedInput
   receivedJoinRequests?: Prisma.JoinRequestUpdateManyWithoutReceiverNestedInput
   groups?: Prisma.GroupUpdateManyWithoutMembersNestedInput
+  party?: Prisma.PartyUpdateOneWithoutUsersNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -531,6 +553,7 @@ export type UserUncheckedUpdateInput = {
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   friendsNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  partyId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   sentFriendRequests?: Prisma.FriendRequestUncheckedUpdateManyWithoutEmitterNestedInput
   receivedFriendRequests?: Prisma.FriendRequestUncheckedUpdateManyWithoutReceiverNestedInput
   sentJoinRequests?: Prisma.JoinRequestUncheckedUpdateManyWithoutEmitterNestedInput
@@ -556,6 +579,7 @@ export type UserCreateManyInput = {
   partyLat?: number | null
   partyLon?: number | null
   friendsNumber?: number
+  partyId?: number | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -595,6 +619,7 @@ export type UserUncheckedUpdateManyInput = {
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   friendsNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  partyId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -615,6 +640,7 @@ export type UserCountOrderByAggregateInput = {
   partyLat?: Prisma.SortOrder
   partyLon?: Prisma.SortOrder
   friendsNumber?: Prisma.SortOrder
+  partyId?: Prisma.SortOrder
 }
 
 export type UserAvgOrderByAggregateInput = {
@@ -624,6 +650,7 @@ export type UserAvgOrderByAggregateInput = {
   partyLat?: Prisma.SortOrder
   partyLon?: Prisma.SortOrder
   friendsNumber?: Prisma.SortOrder
+  partyId?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -644,6 +671,7 @@ export type UserMaxOrderByAggregateInput = {
   partyLat?: Prisma.SortOrder
   partyLon?: Prisma.SortOrder
   friendsNumber?: Prisma.SortOrder
+  partyId?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -664,6 +692,7 @@ export type UserMinOrderByAggregateInput = {
   partyLat?: Prisma.SortOrder
   partyLon?: Prisma.SortOrder
   friendsNumber?: Prisma.SortOrder
+  partyId?: Prisma.SortOrder
 }
 
 export type UserSumOrderByAggregateInput = {
@@ -673,6 +702,7 @@ export type UserSumOrderByAggregateInput = {
   partyLat?: Prisma.SortOrder
   partyLon?: Prisma.SortOrder
   friendsNumber?: Prisma.SortOrder
+  partyId?: Prisma.SortOrder
 }
 
 export type UserListRelationFilter = {
@@ -720,6 +750,56 @@ export type IntFieldUpdateOperationsInput = {
   decrement?: number
   multiply?: number
   divide?: number
+}
+
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type UserCreateNestedManyWithoutPartyInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPartyInput, Prisma.UserUncheckedCreateWithoutPartyInput> | Prisma.UserCreateWithoutPartyInput[] | Prisma.UserUncheckedCreateWithoutPartyInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPartyInput | Prisma.UserCreateOrConnectWithoutPartyInput[]
+  createMany?: Prisma.UserCreateManyPartyInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUncheckedCreateNestedManyWithoutPartyInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPartyInput, Prisma.UserUncheckedCreateWithoutPartyInput> | Prisma.UserCreateWithoutPartyInput[] | Prisma.UserUncheckedCreateWithoutPartyInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPartyInput | Prisma.UserCreateOrConnectWithoutPartyInput[]
+  createMany?: Prisma.UserCreateManyPartyInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUpdateManyWithoutPartyNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPartyInput, Prisma.UserUncheckedCreateWithoutPartyInput> | Prisma.UserCreateWithoutPartyInput[] | Prisma.UserUncheckedCreateWithoutPartyInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPartyInput | Prisma.UserCreateOrConnectWithoutPartyInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutPartyInput | Prisma.UserUpsertWithWhereUniqueWithoutPartyInput[]
+  createMany?: Prisma.UserCreateManyPartyInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutPartyInput | Prisma.UserUpdateWithWhereUniqueWithoutPartyInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutPartyInput | Prisma.UserUpdateManyWithWhereWithoutPartyInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserUncheckedUpdateManyWithoutPartyNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPartyInput, Prisma.UserUncheckedCreateWithoutPartyInput> | Prisma.UserCreateWithoutPartyInput[] | Prisma.UserUncheckedCreateWithoutPartyInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPartyInput | Prisma.UserCreateOrConnectWithoutPartyInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutPartyInput | Prisma.UserUpsertWithWhereUniqueWithoutPartyInput[]
+  createMany?: Prisma.UserCreateManyPartyInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutPartyInput | Prisma.UserUpdateWithWhereUniqueWithoutPartyInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutPartyInput | Prisma.UserUpdateManyWithWhereWithoutPartyInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
 }
 
 export type UserCreateNestedManyWithoutGroupsInput = {
@@ -816,6 +896,105 @@ export type UserUpdateOneRequiredWithoutReceivedFriendRequestsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReceivedFriendRequestsInput, Prisma.UserUpdateWithoutReceivedFriendRequestsInput>, Prisma.UserUncheckedUpdateWithoutReceivedFriendRequestsInput>
 }
 
+export type UserCreateWithoutPartyInput = {
+  firstName: string
+  lastName: string
+  email: string
+  picture?: string | null
+  password: string
+  homeAddress?: string | null
+  isOnline?: boolean
+  isOnMap?: boolean
+  userLat?: number | null
+  userLon?: number | null
+  status?: string
+  lastLogin?: Date | string
+  partyAddress?: string | null
+  partyLat?: number | null
+  partyLon?: number | null
+  friendsNumber?: number
+  sentFriendRequests?: Prisma.FriendRequestCreateNestedManyWithoutEmitterInput
+  receivedFriendRequests?: Prisma.FriendRequestCreateNestedManyWithoutReceiverInput
+  sentJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutEmitterInput
+  receivedJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutReceiverInput
+  groups?: Prisma.GroupCreateNestedManyWithoutMembersInput
+}
+
+export type UserUncheckedCreateWithoutPartyInput = {
+  id?: number
+  firstName: string
+  lastName: string
+  email: string
+  picture?: string | null
+  password: string
+  homeAddress?: string | null
+  isOnline?: boolean
+  isOnMap?: boolean
+  userLat?: number | null
+  userLon?: number | null
+  status?: string
+  lastLogin?: Date | string
+  partyAddress?: string | null
+  partyLat?: number | null
+  partyLon?: number | null
+  friendsNumber?: number
+  sentFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutEmitterInput
+  receivedFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutReceiverInput
+  sentJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutEmitterInput
+  receivedJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutReceiverInput
+  groups?: Prisma.GroupUncheckedCreateNestedManyWithoutMembersInput
+}
+
+export type UserCreateOrConnectWithoutPartyInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPartyInput, Prisma.UserUncheckedCreateWithoutPartyInput>
+}
+
+export type UserCreateManyPartyInputEnvelope = {
+  data: Prisma.UserCreateManyPartyInput | Prisma.UserCreateManyPartyInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserUpsertWithWhereUniqueWithoutPartyInput = {
+  where: Prisma.UserWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPartyInput, Prisma.UserUncheckedUpdateWithoutPartyInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPartyInput, Prisma.UserUncheckedCreateWithoutPartyInput>
+}
+
+export type UserUpdateWithWhereUniqueWithoutPartyInput = {
+  where: Prisma.UserWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPartyInput, Prisma.UserUncheckedUpdateWithoutPartyInput>
+}
+
+export type UserUpdateManyWithWhereWithoutPartyInput = {
+  where: Prisma.UserScalarWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutPartyInput>
+}
+
+export type UserScalarWhereInput = {
+  AND?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  OR?: Prisma.UserScalarWhereInput[]
+  NOT?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  id?: Prisma.IntFilter<"User"> | number
+  firstName?: Prisma.StringFilter<"User"> | string
+  lastName?: Prisma.StringFilter<"User"> | string
+  email?: Prisma.StringFilter<"User"> | string
+  picture?: Prisma.StringNullableFilter<"User"> | string | null
+  password?: Prisma.StringFilter<"User"> | string
+  homeAddress?: Prisma.StringNullableFilter<"User"> | string | null
+  isOnline?: Prisma.BoolFilter<"User"> | boolean
+  isOnMap?: Prisma.BoolFilter<"User"> | boolean
+  userLat?: Prisma.FloatNullableFilter<"User"> | number | null
+  userLon?: Prisma.FloatNullableFilter<"User"> | number | null
+  status?: Prisma.StringFilter<"User"> | string
+  lastLogin?: Prisma.DateTimeFilter<"User"> | Date | string
+  partyAddress?: Prisma.StringNullableFilter<"User"> | string | null
+  partyLat?: Prisma.FloatNullableFilter<"User"> | number | null
+  partyLon?: Prisma.FloatNullableFilter<"User"> | number | null
+  friendsNumber?: Prisma.IntFilter<"User"> | number
+  partyId?: Prisma.IntNullableFilter<"User"> | number | null
+}
+
 export type UserCreateWithoutGroupsInput = {
   firstName: string
   lastName: string
@@ -837,6 +1016,7 @@ export type UserCreateWithoutGroupsInput = {
   receivedFriendRequests?: Prisma.FriendRequestCreateNestedManyWithoutReceiverInput
   sentJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutEmitterInput
   receivedJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutReceiverInput
+  party?: Prisma.PartyCreateNestedOneWithoutUsersInput
 }
 
 export type UserUncheckedCreateWithoutGroupsInput = {
@@ -857,6 +1037,7 @@ export type UserUncheckedCreateWithoutGroupsInput = {
   partyLat?: number | null
   partyLon?: number | null
   friendsNumber?: number
+  partyId?: number | null
   sentFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutEmitterInput
   receivedFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutReceiverInput
   sentJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutEmitterInput
@@ -884,29 +1065,6 @@ export type UserUpdateManyWithWhereWithoutGroupsInput = {
   data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutGroupsInput>
 }
 
-export type UserScalarWhereInput = {
-  AND?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
-  OR?: Prisma.UserScalarWhereInput[]
-  NOT?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
-  id?: Prisma.IntFilter<"User"> | number
-  firstName?: Prisma.StringFilter<"User"> | string
-  lastName?: Prisma.StringFilter<"User"> | string
-  email?: Prisma.StringFilter<"User"> | string
-  picture?: Prisma.StringNullableFilter<"User"> | string | null
-  password?: Prisma.StringFilter<"User"> | string
-  homeAddress?: Prisma.StringNullableFilter<"User"> | string | null
-  isOnline?: Prisma.BoolFilter<"User"> | boolean
-  isOnMap?: Prisma.BoolFilter<"User"> | boolean
-  userLat?: Prisma.FloatNullableFilter<"User"> | number | null
-  userLon?: Prisma.FloatNullableFilter<"User"> | number | null
-  status?: Prisma.StringFilter<"User"> | string
-  lastLogin?: Prisma.DateTimeFilter<"User"> | Date | string
-  partyAddress?: Prisma.StringNullableFilter<"User"> | string | null
-  partyLat?: Prisma.FloatNullableFilter<"User"> | number | null
-  partyLon?: Prisma.FloatNullableFilter<"User"> | number | null
-  friendsNumber?: Prisma.IntFilter<"User"> | number
-}
-
 export type UserCreateWithoutSentJoinRequestsInput = {
   firstName: string
   lastName: string
@@ -928,6 +1086,7 @@ export type UserCreateWithoutSentJoinRequestsInput = {
   receivedFriendRequests?: Prisma.FriendRequestCreateNestedManyWithoutReceiverInput
   receivedJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutReceiverInput
   groups?: Prisma.GroupCreateNestedManyWithoutMembersInput
+  party?: Prisma.PartyCreateNestedOneWithoutUsersInput
 }
 
 export type UserUncheckedCreateWithoutSentJoinRequestsInput = {
@@ -948,6 +1107,7 @@ export type UserUncheckedCreateWithoutSentJoinRequestsInput = {
   partyLat?: number | null
   partyLon?: number | null
   friendsNumber?: number
+  partyId?: number | null
   sentFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutEmitterInput
   receivedFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutReceiverInput
   receivedJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutReceiverInput
@@ -980,6 +1140,7 @@ export type UserCreateWithoutReceivedJoinRequestsInput = {
   receivedFriendRequests?: Prisma.FriendRequestCreateNestedManyWithoutReceiverInput
   sentJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutEmitterInput
   groups?: Prisma.GroupCreateNestedManyWithoutMembersInput
+  party?: Prisma.PartyCreateNestedOneWithoutUsersInput
 }
 
 export type UserUncheckedCreateWithoutReceivedJoinRequestsInput = {
@@ -1000,6 +1161,7 @@ export type UserUncheckedCreateWithoutReceivedJoinRequestsInput = {
   partyLat?: number | null
   partyLon?: number | null
   friendsNumber?: number
+  partyId?: number | null
   sentFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutEmitterInput
   receivedFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutReceiverInput
   sentJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutEmitterInput
@@ -1043,6 +1205,7 @@ export type UserUpdateWithoutSentJoinRequestsInput = {
   receivedFriendRequests?: Prisma.FriendRequestUpdateManyWithoutReceiverNestedInput
   receivedJoinRequests?: Prisma.JoinRequestUpdateManyWithoutReceiverNestedInput
   groups?: Prisma.GroupUpdateManyWithoutMembersNestedInput
+  party?: Prisma.PartyUpdateOneWithoutUsersNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSentJoinRequestsInput = {
@@ -1063,6 +1226,7 @@ export type UserUncheckedUpdateWithoutSentJoinRequestsInput = {
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   friendsNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  partyId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   sentFriendRequests?: Prisma.FriendRequestUncheckedUpdateManyWithoutEmitterNestedInput
   receivedFriendRequests?: Prisma.FriendRequestUncheckedUpdateManyWithoutReceiverNestedInput
   receivedJoinRequests?: Prisma.JoinRequestUncheckedUpdateManyWithoutReceiverNestedInput
@@ -1101,6 +1265,7 @@ export type UserUpdateWithoutReceivedJoinRequestsInput = {
   receivedFriendRequests?: Prisma.FriendRequestUpdateManyWithoutReceiverNestedInput
   sentJoinRequests?: Prisma.JoinRequestUpdateManyWithoutEmitterNestedInput
   groups?: Prisma.GroupUpdateManyWithoutMembersNestedInput
+  party?: Prisma.PartyUpdateOneWithoutUsersNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReceivedJoinRequestsInput = {
@@ -1121,6 +1286,7 @@ export type UserUncheckedUpdateWithoutReceivedJoinRequestsInput = {
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   friendsNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  partyId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   sentFriendRequests?: Prisma.FriendRequestUncheckedUpdateManyWithoutEmitterNestedInput
   receivedFriendRequests?: Prisma.FriendRequestUncheckedUpdateManyWithoutReceiverNestedInput
   sentJoinRequests?: Prisma.JoinRequestUncheckedUpdateManyWithoutEmitterNestedInput
@@ -1148,6 +1314,7 @@ export type UserCreateWithoutSentFriendRequestsInput = {
   sentJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutEmitterInput
   receivedJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutReceiverInput
   groups?: Prisma.GroupCreateNestedManyWithoutMembersInput
+  party?: Prisma.PartyCreateNestedOneWithoutUsersInput
 }
 
 export type UserUncheckedCreateWithoutSentFriendRequestsInput = {
@@ -1168,6 +1335,7 @@ export type UserUncheckedCreateWithoutSentFriendRequestsInput = {
   partyLat?: number | null
   partyLon?: number | null
   friendsNumber?: number
+  partyId?: number | null
   receivedFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutReceiverInput
   sentJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutEmitterInput
   receivedJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutReceiverInput
@@ -1200,6 +1368,7 @@ export type UserCreateWithoutReceivedFriendRequestsInput = {
   sentJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutEmitterInput
   receivedJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutReceiverInput
   groups?: Prisma.GroupCreateNestedManyWithoutMembersInput
+  party?: Prisma.PartyCreateNestedOneWithoutUsersInput
 }
 
 export type UserUncheckedCreateWithoutReceivedFriendRequestsInput = {
@@ -1220,6 +1389,7 @@ export type UserUncheckedCreateWithoutReceivedFriendRequestsInput = {
   partyLat?: number | null
   partyLon?: number | null
   friendsNumber?: number
+  partyId?: number | null
   sentFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutEmitterInput
   sentJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutEmitterInput
   receivedJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutReceiverInput
@@ -1263,6 +1433,7 @@ export type UserUpdateWithoutSentFriendRequestsInput = {
   sentJoinRequests?: Prisma.JoinRequestUpdateManyWithoutEmitterNestedInput
   receivedJoinRequests?: Prisma.JoinRequestUpdateManyWithoutReceiverNestedInput
   groups?: Prisma.GroupUpdateManyWithoutMembersNestedInput
+  party?: Prisma.PartyUpdateOneWithoutUsersNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSentFriendRequestsInput = {
@@ -1283,6 +1454,7 @@ export type UserUncheckedUpdateWithoutSentFriendRequestsInput = {
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   friendsNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  partyId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   receivedFriendRequests?: Prisma.FriendRequestUncheckedUpdateManyWithoutReceiverNestedInput
   sentJoinRequests?: Prisma.JoinRequestUncheckedUpdateManyWithoutEmitterNestedInput
   receivedJoinRequests?: Prisma.JoinRequestUncheckedUpdateManyWithoutReceiverNestedInput
@@ -1321,6 +1493,7 @@ export type UserUpdateWithoutReceivedFriendRequestsInput = {
   sentJoinRequests?: Prisma.JoinRequestUpdateManyWithoutEmitterNestedInput
   receivedJoinRequests?: Prisma.JoinRequestUpdateManyWithoutReceiverNestedInput
   groups?: Prisma.GroupUpdateManyWithoutMembersNestedInput
+  party?: Prisma.PartyUpdateOneWithoutUsersNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReceivedFriendRequestsInput = {
@@ -1341,10 +1514,100 @@ export type UserUncheckedUpdateWithoutReceivedFriendRequestsInput = {
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   friendsNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  partyId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   sentFriendRequests?: Prisma.FriendRequestUncheckedUpdateManyWithoutEmitterNestedInput
   sentJoinRequests?: Prisma.JoinRequestUncheckedUpdateManyWithoutEmitterNestedInput
   receivedJoinRequests?: Prisma.JoinRequestUncheckedUpdateManyWithoutReceiverNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutMembersNestedInput
+}
+
+export type UserCreateManyPartyInput = {
+  id?: number
+  firstName: string
+  lastName: string
+  email: string
+  picture?: string | null
+  password: string
+  homeAddress?: string | null
+  isOnline?: boolean
+  isOnMap?: boolean
+  userLat?: number | null
+  userLon?: number | null
+  status?: string
+  lastLogin?: Date | string
+  partyAddress?: string | null
+  partyLat?: number | null
+  partyLon?: number | null
+  friendsNumber?: number
+}
+
+export type UserUpdateWithoutPartyInput = {
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isOnMap?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  friendsNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  sentFriendRequests?: Prisma.FriendRequestUpdateManyWithoutEmitterNestedInput
+  receivedFriendRequests?: Prisma.FriendRequestUpdateManyWithoutReceiverNestedInput
+  sentJoinRequests?: Prisma.JoinRequestUpdateManyWithoutEmitterNestedInput
+  receivedJoinRequests?: Prisma.JoinRequestUpdateManyWithoutReceiverNestedInput
+  groups?: Prisma.GroupUpdateManyWithoutMembersNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPartyInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isOnMap?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  friendsNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  sentFriendRequests?: Prisma.FriendRequestUncheckedUpdateManyWithoutEmitterNestedInput
+  receivedFriendRequests?: Prisma.FriendRequestUncheckedUpdateManyWithoutReceiverNestedInput
+  sentJoinRequests?: Prisma.JoinRequestUncheckedUpdateManyWithoutEmitterNestedInput
+  receivedJoinRequests?: Prisma.JoinRequestUncheckedUpdateManyWithoutReceiverNestedInput
+  groups?: Prisma.GroupUncheckedUpdateManyWithoutMembersNestedInput
+}
+
+export type UserUncheckedUpdateManyWithoutPartyInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isOnMap?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  friendsNumber?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type UserUpdateWithoutGroupsInput = {
@@ -1368,6 +1631,7 @@ export type UserUpdateWithoutGroupsInput = {
   receivedFriendRequests?: Prisma.FriendRequestUpdateManyWithoutReceiverNestedInput
   sentJoinRequests?: Prisma.JoinRequestUpdateManyWithoutEmitterNestedInput
   receivedJoinRequests?: Prisma.JoinRequestUpdateManyWithoutReceiverNestedInput
+  party?: Prisma.PartyUpdateOneWithoutUsersNestedInput
 }
 
 export type UserUncheckedUpdateWithoutGroupsInput = {
@@ -1388,6 +1652,7 @@ export type UserUncheckedUpdateWithoutGroupsInput = {
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   friendsNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  partyId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   sentFriendRequests?: Prisma.FriendRequestUncheckedUpdateManyWithoutEmitterNestedInput
   receivedFriendRequests?: Prisma.FriendRequestUncheckedUpdateManyWithoutReceiverNestedInput
   sentJoinRequests?: Prisma.JoinRequestUncheckedUpdateManyWithoutEmitterNestedInput
@@ -1412,6 +1677,7 @@ export type UserUncheckedUpdateManyWithoutGroupsInput = {
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   friendsNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  partyId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 
@@ -1499,11 +1765,13 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   partyLat?: boolean
   partyLon?: boolean
   friendsNumber?: boolean
+  partyId?: boolean
   sentFriendRequests?: boolean | Prisma.User$sentFriendRequestsArgs<ExtArgs>
   receivedFriendRequests?: boolean | Prisma.User$receivedFriendRequestsArgs<ExtArgs>
   sentJoinRequests?: boolean | Prisma.User$sentJoinRequestsArgs<ExtArgs>
   receivedJoinRequests?: boolean | Prisma.User$receivedJoinRequestsArgs<ExtArgs>
   groups?: boolean | Prisma.User$groupsArgs<ExtArgs>
+  party?: boolean | Prisma.User$partyArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1525,6 +1793,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   partyLat?: boolean
   partyLon?: boolean
   friendsNumber?: boolean
+  partyId?: boolean
+  party?: boolean | Prisma.User$partyArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1545,6 +1815,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   partyLat?: boolean
   partyLon?: boolean
   friendsNumber?: boolean
+  partyId?: boolean
+  party?: boolean | Prisma.User$partyArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -1565,19 +1837,25 @@ export type UserSelectScalar = {
   partyLat?: boolean
   partyLon?: boolean
   friendsNumber?: boolean
+  partyId?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "picture" | "password" | "homeAddress" | "isOnline" | "isOnMap" | "userLat" | "userLon" | "status" | "lastLogin" | "partyAddress" | "partyLat" | "partyLon" | "friendsNumber", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "picture" | "password" | "homeAddress" | "isOnline" | "isOnMap" | "userLat" | "userLon" | "status" | "lastLogin" | "partyAddress" | "partyLat" | "partyLon" | "friendsNumber" | "partyId", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sentFriendRequests?: boolean | Prisma.User$sentFriendRequestsArgs<ExtArgs>
   receivedFriendRequests?: boolean | Prisma.User$receivedFriendRequestsArgs<ExtArgs>
   sentJoinRequests?: boolean | Prisma.User$sentJoinRequestsArgs<ExtArgs>
   receivedJoinRequests?: boolean | Prisma.User$receivedJoinRequestsArgs<ExtArgs>
   groups?: boolean | Prisma.User$groupsArgs<ExtArgs>
+  party?: boolean | Prisma.User$partyArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  party?: boolean | Prisma.User$partyArgs<ExtArgs>
+}
+export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  party?: boolean | Prisma.User$partyArgs<ExtArgs>
+}
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
@@ -1587,6 +1865,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     sentJoinRequests: Prisma.$JoinRequestPayload<ExtArgs>[]
     receivedJoinRequests: Prisma.$JoinRequestPayload<ExtArgs>[]
     groups: Prisma.$GroupPayload<ExtArgs>[]
+    party: Prisma.$PartyPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1606,6 +1885,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     partyLat: number | null
     partyLon: number | null
     friendsNumber: number
+    partyId: number | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -2005,6 +2285,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   sentJoinRequests<T extends Prisma.User$sentJoinRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sentJoinRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JoinRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   receivedJoinRequests<T extends Prisma.User$receivedJoinRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$receivedJoinRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JoinRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   groups<T extends Prisma.User$groupsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$groupsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  party<T extends Prisma.User$partyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$partyArgs<ExtArgs>>): Prisma.Prisma__PartyClient<runtime.Types.Result.GetResult<Prisma.$PartyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2051,6 +2332,7 @@ export interface UserFieldRefs {
   readonly partyLat: Prisma.FieldRef<"User", 'Float'>
   readonly partyLon: Prisma.FieldRef<"User", 'Float'>
   readonly friendsNumber: Prisma.FieldRef<"User", 'Int'>
+  readonly partyId: Prisma.FieldRef<"User", 'Int'>
 }
     
 
@@ -2300,6 +2582,10 @@ export type UserCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    */
   data: Prisma.UserCreateManyInput | Prisma.UserCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -2370,6 +2656,10 @@ export type UserUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many Users to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -2556,6 +2846,25 @@ export type User$groupsArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   distinct?: Prisma.GroupScalarFieldEnum | Prisma.GroupScalarFieldEnum[]
+}
+
+/**
+ * User.party
+ */
+export type User$partyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Party
+   */
+  select?: Prisma.PartySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Party
+   */
+  omit?: Prisma.PartyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PartyInclude<ExtArgs> | null
+  where?: Prisma.PartyWhereInput
 }
 
 /**
