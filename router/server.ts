@@ -2,7 +2,8 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import { UserController } from "../controller/userController";
-import { JoinRequestController } from "../controller/joinRequestController";
+import { JoinRequestController} from "../controller/joinRequestController";
+import { FriendRequestController } from "../controller/friendRequestController";
 
 const app = express();
 const router = express.Router();
@@ -14,6 +15,7 @@ app.use(router);
 
 const userController = new UserController();
 const joinRequestController = new JoinRequestController();
+const friendRequestController = new FriendRequestController();
 
 // USER ENDPOINTS
 // operationnal
@@ -69,10 +71,23 @@ router.post(
 
 
 // FRIEND REQUEST ENDPOINTS
+
+// operationnal
 router.post("/create/friend-request/:emitter_id/:receiver_id",  async (req: Request, res: Response) => {
-    await joinRequestController.newJoinRequest(req, res);
+    await friendRequestController.newFriendRequest(req, res);
   },
 );
+
+// operationnal
+router.post("/get/friend-request/:emitter_id/:receiver_id",  async (req: Request, res: Response) => {
+    await friendRequestController.getFriendRequest(req, res);
+  },
+);
+
+// operationnal
+router.post("/delete/friend-request/:emitter_id/:receiver_id", async(req: Request, res:Response) => {
+  await friendRequestController.deleteFriendRequest(req, res);
+})
 
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);

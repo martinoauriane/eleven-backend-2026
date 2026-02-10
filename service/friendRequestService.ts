@@ -11,7 +11,7 @@ class FriendRequestService {
   }
 
   async getFriendRequest(data: FriendRequestCreate): Promise<FriendRequestData | null> {
-    const response : FriendRequestData | null = await friendRequestStore.getFriendRequest(
+    const response : FriendRequestData | null = await friendRequestStore.GetFriendRequest(
       data.emitterId,
       data.receiverId,
     );
