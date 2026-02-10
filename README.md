@@ -40,6 +40,8 @@ DONE:
 
 NEXT STEPS: 
 // - Ironic front-end interface in to modelize Figma
+// - créer le service Party le store et le controller
+// - tester les endpoints Party
 
 
 PRISMA QUERY METHODS
@@ -57,3 +59,4 @@ const data = await prisma.user.findUnique({
         lastName: true
     },
 });
+

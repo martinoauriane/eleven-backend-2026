@@ -23,15 +23,15 @@ export * from './enums';
  */
 export type User = Prisma.UserModel
 /**
- * Model Party
+ * Model Event
  * 
  */
-export type Party = Prisma.PartyModel
+export type Event = Prisma.EventModel
 /**
- * Model Group
+ * Model EventMembers
  * 
  */
-export type Group = Prisma.GroupModel
+export type EventMembers = Prisma.EventMembersModel
 /**
  * Model JoinRequest
  * 

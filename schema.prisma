@@ -26,34 +26,36 @@ model User {
   partyLon               Float?
   friendsNumber          Int             @default(0)
   partyId                Int?
+  eventsCreated          Event[]         @relation("hosting_event")
   // relations
   sentFriendRequests     FriendRequest[] @relation("EmitterFriendRequest")
   receivedFriendRequests FriendRequest[] @relation("ReceiverFriendRequest")
   sentJoinRequests       JoinRequest[]   @relation("EmitterJoinRequest")
   receivedJoinRequests   JoinRequest[]   @relation("ReceiverJoinRequest")
-  groups                 Group[]         @relation("UsersPartying")
-  party                  Party?          @relation("atParty", fields: [partyId], references: [id])
+  groups                 EventMembers[]         @relation("UsersPartying")
 }
 
-model Party {
+model Event {
   id            Int      @id @default(autoincrement())
+  eventName     String?  @default("Drinks with friends")// "Drinks with friends" | "Flat-party" | "Night out clubbing" | "Concert"
   partyCoords   Json?
   partyAddress  String
   partyPictures String[]
   partyTags     String[]
-  partyType     String
-  City          String
-  Country       String
+  partyType     String // flat-party // clubbing night out // drinks with friends
+  city          String
+  country       String
+  userId       Int
+  createdBy     User @relation("hosting_event", fields:[userId], references: [id])
   // relations
-  users         User[]   @relation("atParty")
-  groups        Group[]  @relation("Party")
+  groups        EventMembers[]  @relation("Party")
 }
 
-model Group {
+model EventMembers {
   id      Int     @id @default(autoincrement())
   partyId Int
   isFull  Boolean @default(false)
-  party   Party   @relation("Party", fields: [partyId], references: [id])
+  party   Event   @relation("Party", fields: [partyId], references: [id])
   members User[]  @relation("UsersPartying")
 }
 
