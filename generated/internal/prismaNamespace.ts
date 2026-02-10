@@ -860,7 +860,7 @@ export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof Ev
 
 export const EventMembersScalarFieldEnum = {
   id: 'id',
-  partyId: 'partyId',
+  eventId: 'eventId',
   isFull: 'isFull'
 } as const
 

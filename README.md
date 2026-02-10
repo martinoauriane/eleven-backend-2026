@@ -37,15 +37,14 @@ DONE:
 // - tester les endpoints pour joinRequestStore dans Postman
 // - create friendRequest endpoints (follow the model of JoinRequest, it's exactly the same format)
 // - test friendRequest endpoints (follow the model of JoinRequest, it's exactly the same format)
+// - créer le service Event le store et le controller
+// - tester les endpoints Event
 
 NEXT STEPS: 
 // - Ironic front-end interface in to modelize Figma
-// - créer le service Event le store et le controller
-// - tester les endpoints Event
-// - peut on programmer des évènements à l'avance?
 
 PRISMA QUERY METHODS
-const qry = <GUID value>
+const query = <GUID value>
 
 const data = await prisma.user.findUnique({
     where: {

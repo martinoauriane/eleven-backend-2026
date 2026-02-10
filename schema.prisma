@@ -49,14 +49,14 @@ model Event {
   userId        Int
   createdBy     User           @relation("hosting_event", fields: [userId], references: [id])
   // relations
-  groups        EventMembers[] @relation("Party")
+  groups        EventMembers[] @relation("Event")
 }
 
 model EventMembers {
   id      Int     @id @default(autoincrement())
-  partyId Int
+  eventId Int
   isFull  Boolean @default(false)
-  party   Event   @relation("Party", fields: [partyId], references: [id])
+  event   Event   @relation("Event", fields: [eventId], references: [id])
   members User[]  @relation("UsersPartying")
 }
 

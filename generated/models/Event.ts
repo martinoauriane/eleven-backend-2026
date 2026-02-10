@@ -354,7 +354,7 @@ export type EventCreateInput = {
   city: string
   country: string
   createdBy: Prisma.UserCreateNestedOneWithoutEventsCreatedInput
-  groups?: Prisma.EventMembersCreateNestedManyWithoutPartyInput
+  groups?: Prisma.EventMembersCreateNestedManyWithoutEventInput
 }
 
 export type EventUncheckedCreateInput = {
@@ -369,7 +369,7 @@ export type EventUncheckedCreateInput = {
   city: string
   country: string
   userId: number
-  groups?: Prisma.EventMembersUncheckedCreateNestedManyWithoutPartyInput
+  groups?: Prisma.EventMembersUncheckedCreateNestedManyWithoutEventInput
 }
 
 export type EventUpdateInput = {
@@ -383,7 +383,7 @@ export type EventUpdateInput = {
   city?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
   createdBy?: Prisma.UserUpdateOneRequiredWithoutEventsCreatedNestedInput
-  groups?: Prisma.EventMembersUpdateManyWithoutPartyNestedInput
+  groups?: Prisma.EventMembersUpdateManyWithoutEventNestedInput
 }
 
 export type EventUncheckedUpdateInput = {
@@ -398,7 +398,7 @@ export type EventUncheckedUpdateInput = {
   city?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
-  groups?: Prisma.EventMembersUncheckedUpdateManyWithoutPartyNestedInput
+  groups?: Prisma.EventMembersUncheckedUpdateManyWithoutEventNestedInput
 }
 
 export type EventCreateManyInput = {
@@ -608,7 +608,7 @@ export type EventCreateWithoutCreatedByInput = {
   eventType?: string | null
   city: string
   country: string
-  groups?: Prisma.EventMembersCreateNestedManyWithoutPartyInput
+  groups?: Prisma.EventMembersCreateNestedManyWithoutEventInput
 }
 
 export type EventUncheckedCreateWithoutCreatedByInput = {
@@ -622,7 +622,7 @@ export type EventUncheckedCreateWithoutCreatedByInput = {
   eventType?: string | null
   city: string
   country: string
-  groups?: Prisma.EventMembersUncheckedCreateNestedManyWithoutPartyInput
+  groups?: Prisma.EventMembersUncheckedCreateNestedManyWithoutEventInput
 }
 
 export type EventCreateOrConnectWithoutCreatedByInput = {
@@ -761,7 +761,7 @@ export type EventUpdateWithoutCreatedByInput = {
   eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
-  groups?: Prisma.EventMembersUpdateManyWithoutPartyNestedInput
+  groups?: Prisma.EventMembersUpdateManyWithoutEventNestedInput
 }
 
 export type EventUncheckedUpdateWithoutCreatedByInput = {
@@ -775,7 +775,7 @@ export type EventUncheckedUpdateWithoutCreatedByInput = {
   eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   city?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
-  groups?: Prisma.EventMembersUncheckedUpdateManyWithoutPartyNestedInput
+  groups?: Prisma.EventMembersUncheckedUpdateManyWithoutEventNestedInput
 }
 
 export type EventUncheckedUpdateManyWithoutCreatedByInput = {

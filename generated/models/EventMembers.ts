@@ -28,29 +28,29 @@ export type AggregateEventMembers = {
 
 export type EventMembersAvgAggregateOutputType = {
   id: number | null
-  partyId: number | null
+  eventId: number | null
 }
 
 export type EventMembersSumAggregateOutputType = {
   id: number | null
-  partyId: number | null
+  eventId: number | null
 }
 
 export type EventMembersMinAggregateOutputType = {
   id: number | null
-  partyId: number | null
+  eventId: number | null
   isFull: boolean | null
 }
 
 export type EventMembersMaxAggregateOutputType = {
   id: number | null
-  partyId: number | null
+  eventId: number | null
   isFull: boolean | null
 }
 
 export type EventMembersCountAggregateOutputType = {
   id: number
-  partyId: number
+  eventId: number
   isFull: number
   _all: number
 }
@@ -58,29 +58,29 @@ export type EventMembersCountAggregateOutputType = {
 
 export type EventMembersAvgAggregateInputType = {
   id?: true
-  partyId?: true
+  eventId?: true
 }
 
 export type EventMembersSumAggregateInputType = {
   id?: true
-  partyId?: true
+  eventId?: true
 }
 
 export type EventMembersMinAggregateInputType = {
   id?: true
-  partyId?: true
+  eventId?: true
   isFull?: true
 }
 
 export type EventMembersMaxAggregateInputType = {
   id?: true
-  partyId?: true
+  eventId?: true
   isFull?: true
 }
 
 export type EventMembersCountAggregateInputType = {
   id?: true
-  partyId?: true
+  eventId?: true
   isFull?: true
   _all?: true
 }
@@ -173,7 +173,7 @@ export type EventMembersGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 
 export type EventMembersGroupByOutputType = {
   id: number
-  partyId: number
+  eventId: number
   isFull: boolean
   _count: EventMembersCountAggregateOutputType | null
   _avg: EventMembersAvgAggregateOutputType | null
@@ -202,17 +202,17 @@ export type EventMembersWhereInput = {
   OR?: Prisma.EventMembersWhereInput[]
   NOT?: Prisma.EventMembersWhereInput | Prisma.EventMembersWhereInput[]
   id?: Prisma.IntFilter<"EventMembers"> | number
-  partyId?: Prisma.IntFilter<"EventMembers"> | number
+  eventId?: Prisma.IntFilter<"EventMembers"> | number
   isFull?: Prisma.BoolFilter<"EventMembers"> | boolean
-  party?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
+  event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
   members?: Prisma.UserListRelationFilter
 }
 
 export type EventMembersOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  partyId?: Prisma.SortOrder
+  eventId?: Prisma.SortOrder
   isFull?: Prisma.SortOrder
-  party?: Prisma.EventOrderByWithRelationInput
+  event?: Prisma.EventOrderByWithRelationInput
   members?: Prisma.UserOrderByRelationAggregateInput
 }
 
@@ -221,15 +221,15 @@ export type EventMembersWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.EventMembersWhereInput | Prisma.EventMembersWhereInput[]
   OR?: Prisma.EventMembersWhereInput[]
   NOT?: Prisma.EventMembersWhereInput | Prisma.EventMembersWhereInput[]
-  partyId?: Prisma.IntFilter<"EventMembers"> | number
+  eventId?: Prisma.IntFilter<"EventMembers"> | number
   isFull?: Prisma.BoolFilter<"EventMembers"> | boolean
-  party?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
+  event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
   members?: Prisma.UserListRelationFilter
 }, "id">
 
 export type EventMembersOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  partyId?: Prisma.SortOrder
+  eventId?: Prisma.SortOrder
   isFull?: Prisma.SortOrder
   _count?: Prisma.EventMembersCountOrderByAggregateInput
   _avg?: Prisma.EventMembersAvgOrderByAggregateInput
@@ -243,39 +243,39 @@ export type EventMembersScalarWhereWithAggregatesInput = {
   OR?: Prisma.EventMembersScalarWhereWithAggregatesInput[]
   NOT?: Prisma.EventMembersScalarWhereWithAggregatesInput | Prisma.EventMembersScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"EventMembers"> | number
-  partyId?: Prisma.IntWithAggregatesFilter<"EventMembers"> | number
+  eventId?: Prisma.IntWithAggregatesFilter<"EventMembers"> | number
   isFull?: Prisma.BoolWithAggregatesFilter<"EventMembers"> | boolean
 }
 
 export type EventMembersCreateInput = {
   isFull?: boolean
-  party: Prisma.EventCreateNestedOneWithoutGroupsInput
+  event: Prisma.EventCreateNestedOneWithoutGroupsInput
   members?: Prisma.UserCreateNestedManyWithoutGroupsInput
 }
 
 export type EventMembersUncheckedCreateInput = {
   id?: number
-  partyId: number
+  eventId: number
   isFull?: boolean
   members?: Prisma.UserUncheckedCreateNestedManyWithoutGroupsInput
 }
 
 export type EventMembersUpdateInput = {
   isFull?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  party?: Prisma.EventUpdateOneRequiredWithoutGroupsNestedInput
+  event?: Prisma.EventUpdateOneRequiredWithoutGroupsNestedInput
   members?: Prisma.UserUpdateManyWithoutGroupsNestedInput
 }
 
 export type EventMembersUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  partyId?: Prisma.IntFieldUpdateOperationsInput | number
+  eventId?: Prisma.IntFieldUpdateOperationsInput | number
   isFull?: Prisma.BoolFieldUpdateOperationsInput | boolean
   members?: Prisma.UserUncheckedUpdateManyWithoutGroupsNestedInput
 }
 
 export type EventMembersCreateManyInput = {
   id?: number
-  partyId: number
+  eventId: number
   isFull?: boolean
 }
 
@@ -285,7 +285,7 @@ export type EventMembersUpdateManyMutationInput = {
 
 export type EventMembersUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  partyId?: Prisma.IntFieldUpdateOperationsInput | number
+  eventId?: Prisma.IntFieldUpdateOperationsInput | number
   isFull?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -301,30 +301,30 @@ export type EventMembersOrderByRelationAggregateInput = {
 
 export type EventMembersCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  partyId?: Prisma.SortOrder
+  eventId?: Prisma.SortOrder
   isFull?: Prisma.SortOrder
 }
 
 export type EventMembersAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  partyId?: Prisma.SortOrder
+  eventId?: Prisma.SortOrder
 }
 
 export type EventMembersMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  partyId?: Prisma.SortOrder
+  eventId?: Prisma.SortOrder
   isFull?: Prisma.SortOrder
 }
 
 export type EventMembersMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  partyId?: Prisma.SortOrder
+  eventId?: Prisma.SortOrder
   isFull?: Prisma.SortOrder
 }
 
 export type EventMembersSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  partyId?: Prisma.SortOrder
+  eventId?: Prisma.SortOrder
 }
 
 export type EventMembersCreateNestedManyWithoutMembersInput = {
@@ -365,56 +365,56 @@ export type EventMembersUncheckedUpdateManyWithoutMembersNestedInput = {
   deleteMany?: Prisma.EventMembersScalarWhereInput | Prisma.EventMembersScalarWhereInput[]
 }
 
-export type EventMembersCreateNestedManyWithoutPartyInput = {
-  create?: Prisma.XOR<Prisma.EventMembersCreateWithoutPartyInput, Prisma.EventMembersUncheckedCreateWithoutPartyInput> | Prisma.EventMembersCreateWithoutPartyInput[] | Prisma.EventMembersUncheckedCreateWithoutPartyInput[]
-  connectOrCreate?: Prisma.EventMembersCreateOrConnectWithoutPartyInput | Prisma.EventMembersCreateOrConnectWithoutPartyInput[]
-  createMany?: Prisma.EventMembersCreateManyPartyInputEnvelope
+export type EventMembersCreateNestedManyWithoutEventInput = {
+  create?: Prisma.XOR<Prisma.EventMembersCreateWithoutEventInput, Prisma.EventMembersUncheckedCreateWithoutEventInput> | Prisma.EventMembersCreateWithoutEventInput[] | Prisma.EventMembersUncheckedCreateWithoutEventInput[]
+  connectOrCreate?: Prisma.EventMembersCreateOrConnectWithoutEventInput | Prisma.EventMembersCreateOrConnectWithoutEventInput[]
+  createMany?: Prisma.EventMembersCreateManyEventInputEnvelope
   connect?: Prisma.EventMembersWhereUniqueInput | Prisma.EventMembersWhereUniqueInput[]
 }
 
-export type EventMembersUncheckedCreateNestedManyWithoutPartyInput = {
-  create?: Prisma.XOR<Prisma.EventMembersCreateWithoutPartyInput, Prisma.EventMembersUncheckedCreateWithoutPartyInput> | Prisma.EventMembersCreateWithoutPartyInput[] | Prisma.EventMembersUncheckedCreateWithoutPartyInput[]
-  connectOrCreate?: Prisma.EventMembersCreateOrConnectWithoutPartyInput | Prisma.EventMembersCreateOrConnectWithoutPartyInput[]
-  createMany?: Prisma.EventMembersCreateManyPartyInputEnvelope
+export type EventMembersUncheckedCreateNestedManyWithoutEventInput = {
+  create?: Prisma.XOR<Prisma.EventMembersCreateWithoutEventInput, Prisma.EventMembersUncheckedCreateWithoutEventInput> | Prisma.EventMembersCreateWithoutEventInput[] | Prisma.EventMembersUncheckedCreateWithoutEventInput[]
+  connectOrCreate?: Prisma.EventMembersCreateOrConnectWithoutEventInput | Prisma.EventMembersCreateOrConnectWithoutEventInput[]
+  createMany?: Prisma.EventMembersCreateManyEventInputEnvelope
   connect?: Prisma.EventMembersWhereUniqueInput | Prisma.EventMembersWhereUniqueInput[]
 }
 
-export type EventMembersUpdateManyWithoutPartyNestedInput = {
-  create?: Prisma.XOR<Prisma.EventMembersCreateWithoutPartyInput, Prisma.EventMembersUncheckedCreateWithoutPartyInput> | Prisma.EventMembersCreateWithoutPartyInput[] | Prisma.EventMembersUncheckedCreateWithoutPartyInput[]
-  connectOrCreate?: Prisma.EventMembersCreateOrConnectWithoutPartyInput | Prisma.EventMembersCreateOrConnectWithoutPartyInput[]
-  upsert?: Prisma.EventMembersUpsertWithWhereUniqueWithoutPartyInput | Prisma.EventMembersUpsertWithWhereUniqueWithoutPartyInput[]
-  createMany?: Prisma.EventMembersCreateManyPartyInputEnvelope
+export type EventMembersUpdateManyWithoutEventNestedInput = {
+  create?: Prisma.XOR<Prisma.EventMembersCreateWithoutEventInput, Prisma.EventMembersUncheckedCreateWithoutEventInput> | Prisma.EventMembersCreateWithoutEventInput[] | Prisma.EventMembersUncheckedCreateWithoutEventInput[]
+  connectOrCreate?: Prisma.EventMembersCreateOrConnectWithoutEventInput | Prisma.EventMembersCreateOrConnectWithoutEventInput[]
+  upsert?: Prisma.EventMembersUpsertWithWhereUniqueWithoutEventInput | Prisma.EventMembersUpsertWithWhereUniqueWithoutEventInput[]
+  createMany?: Prisma.EventMembersCreateManyEventInputEnvelope
   set?: Prisma.EventMembersWhereUniqueInput | Prisma.EventMembersWhereUniqueInput[]
   disconnect?: Prisma.EventMembersWhereUniqueInput | Prisma.EventMembersWhereUniqueInput[]
   delete?: Prisma.EventMembersWhereUniqueInput | Prisma.EventMembersWhereUniqueInput[]
   connect?: Prisma.EventMembersWhereUniqueInput | Prisma.EventMembersWhereUniqueInput[]
-  update?: Prisma.EventMembersUpdateWithWhereUniqueWithoutPartyInput | Prisma.EventMembersUpdateWithWhereUniqueWithoutPartyInput[]
-  updateMany?: Prisma.EventMembersUpdateManyWithWhereWithoutPartyInput | Prisma.EventMembersUpdateManyWithWhereWithoutPartyInput[]
+  update?: Prisma.EventMembersUpdateWithWhereUniqueWithoutEventInput | Prisma.EventMembersUpdateWithWhereUniqueWithoutEventInput[]
+  updateMany?: Prisma.EventMembersUpdateManyWithWhereWithoutEventInput | Prisma.EventMembersUpdateManyWithWhereWithoutEventInput[]
   deleteMany?: Prisma.EventMembersScalarWhereInput | Prisma.EventMembersScalarWhereInput[]
 }
 
-export type EventMembersUncheckedUpdateManyWithoutPartyNestedInput = {
-  create?: Prisma.XOR<Prisma.EventMembersCreateWithoutPartyInput, Prisma.EventMembersUncheckedCreateWithoutPartyInput> | Prisma.EventMembersCreateWithoutPartyInput[] | Prisma.EventMembersUncheckedCreateWithoutPartyInput[]
-  connectOrCreate?: Prisma.EventMembersCreateOrConnectWithoutPartyInput | Prisma.EventMembersCreateOrConnectWithoutPartyInput[]
-  upsert?: Prisma.EventMembersUpsertWithWhereUniqueWithoutPartyInput | Prisma.EventMembersUpsertWithWhereUniqueWithoutPartyInput[]
-  createMany?: Prisma.EventMembersCreateManyPartyInputEnvelope
+export type EventMembersUncheckedUpdateManyWithoutEventNestedInput = {
+  create?: Prisma.XOR<Prisma.EventMembersCreateWithoutEventInput, Prisma.EventMembersUncheckedCreateWithoutEventInput> | Prisma.EventMembersCreateWithoutEventInput[] | Prisma.EventMembersUncheckedCreateWithoutEventInput[]
+  connectOrCreate?: Prisma.EventMembersCreateOrConnectWithoutEventInput | Prisma.EventMembersCreateOrConnectWithoutEventInput[]
+  upsert?: Prisma.EventMembersUpsertWithWhereUniqueWithoutEventInput | Prisma.EventMembersUpsertWithWhereUniqueWithoutEventInput[]
+  createMany?: Prisma.EventMembersCreateManyEventInputEnvelope
   set?: Prisma.EventMembersWhereUniqueInput | Prisma.EventMembersWhereUniqueInput[]
   disconnect?: Prisma.EventMembersWhereUniqueInput | Prisma.EventMembersWhereUniqueInput[]
   delete?: Prisma.EventMembersWhereUniqueInput | Prisma.EventMembersWhereUniqueInput[]
   connect?: Prisma.EventMembersWhereUniqueInput | Prisma.EventMembersWhereUniqueInput[]
-  update?: Prisma.EventMembersUpdateWithWhereUniqueWithoutPartyInput | Prisma.EventMembersUpdateWithWhereUniqueWithoutPartyInput[]
-  updateMany?: Prisma.EventMembersUpdateManyWithWhereWithoutPartyInput | Prisma.EventMembersUpdateManyWithWhereWithoutPartyInput[]
+  update?: Prisma.EventMembersUpdateWithWhereUniqueWithoutEventInput | Prisma.EventMembersUpdateWithWhereUniqueWithoutEventInput[]
+  updateMany?: Prisma.EventMembersUpdateManyWithWhereWithoutEventInput | Prisma.EventMembersUpdateManyWithWhereWithoutEventInput[]
   deleteMany?: Prisma.EventMembersScalarWhereInput | Prisma.EventMembersScalarWhereInput[]
 }
 
 export type EventMembersCreateWithoutMembersInput = {
   isFull?: boolean
-  party: Prisma.EventCreateNestedOneWithoutGroupsInput
+  event: Prisma.EventCreateNestedOneWithoutGroupsInput
 }
 
 export type EventMembersUncheckedCreateWithoutMembersInput = {
   id?: number
-  partyId: number
+  eventId: number
   isFull?: boolean
 }
 
@@ -444,81 +444,81 @@ export type EventMembersScalarWhereInput = {
   OR?: Prisma.EventMembersScalarWhereInput[]
   NOT?: Prisma.EventMembersScalarWhereInput | Prisma.EventMembersScalarWhereInput[]
   id?: Prisma.IntFilter<"EventMembers"> | number
-  partyId?: Prisma.IntFilter<"EventMembers"> | number
+  eventId?: Prisma.IntFilter<"EventMembers"> | number
   isFull?: Prisma.BoolFilter<"EventMembers"> | boolean
 }
 
-export type EventMembersCreateWithoutPartyInput = {
+export type EventMembersCreateWithoutEventInput = {
   isFull?: boolean
   members?: Prisma.UserCreateNestedManyWithoutGroupsInput
 }
 
-export type EventMembersUncheckedCreateWithoutPartyInput = {
+export type EventMembersUncheckedCreateWithoutEventInput = {
   id?: number
   isFull?: boolean
   members?: Prisma.UserUncheckedCreateNestedManyWithoutGroupsInput
 }
 
-export type EventMembersCreateOrConnectWithoutPartyInput = {
+export type EventMembersCreateOrConnectWithoutEventInput = {
   where: Prisma.EventMembersWhereUniqueInput
-  create: Prisma.XOR<Prisma.EventMembersCreateWithoutPartyInput, Prisma.EventMembersUncheckedCreateWithoutPartyInput>
+  create: Prisma.XOR<Prisma.EventMembersCreateWithoutEventInput, Prisma.EventMembersUncheckedCreateWithoutEventInput>
 }
 
-export type EventMembersCreateManyPartyInputEnvelope = {
-  data: Prisma.EventMembersCreateManyPartyInput | Prisma.EventMembersCreateManyPartyInput[]
+export type EventMembersCreateManyEventInputEnvelope = {
+  data: Prisma.EventMembersCreateManyEventInput | Prisma.EventMembersCreateManyEventInput[]
   skipDuplicates?: boolean
 }
 
-export type EventMembersUpsertWithWhereUniqueWithoutPartyInput = {
+export type EventMembersUpsertWithWhereUniqueWithoutEventInput = {
   where: Prisma.EventMembersWhereUniqueInput
-  update: Prisma.XOR<Prisma.EventMembersUpdateWithoutPartyInput, Prisma.EventMembersUncheckedUpdateWithoutPartyInput>
-  create: Prisma.XOR<Prisma.EventMembersCreateWithoutPartyInput, Prisma.EventMembersUncheckedCreateWithoutPartyInput>
+  update: Prisma.XOR<Prisma.EventMembersUpdateWithoutEventInput, Prisma.EventMembersUncheckedUpdateWithoutEventInput>
+  create: Prisma.XOR<Prisma.EventMembersCreateWithoutEventInput, Prisma.EventMembersUncheckedCreateWithoutEventInput>
 }
 
-export type EventMembersUpdateWithWhereUniqueWithoutPartyInput = {
+export type EventMembersUpdateWithWhereUniqueWithoutEventInput = {
   where: Prisma.EventMembersWhereUniqueInput
-  data: Prisma.XOR<Prisma.EventMembersUpdateWithoutPartyInput, Prisma.EventMembersUncheckedUpdateWithoutPartyInput>
+  data: Prisma.XOR<Prisma.EventMembersUpdateWithoutEventInput, Prisma.EventMembersUncheckedUpdateWithoutEventInput>
 }
 
-export type EventMembersUpdateManyWithWhereWithoutPartyInput = {
+export type EventMembersUpdateManyWithWhereWithoutEventInput = {
   where: Prisma.EventMembersScalarWhereInput
-  data: Prisma.XOR<Prisma.EventMembersUpdateManyMutationInput, Prisma.EventMembersUncheckedUpdateManyWithoutPartyInput>
+  data: Prisma.XOR<Prisma.EventMembersUpdateManyMutationInput, Prisma.EventMembersUncheckedUpdateManyWithoutEventInput>
 }
 
 export type EventMembersUpdateWithoutMembersInput = {
   isFull?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  party?: Prisma.EventUpdateOneRequiredWithoutGroupsNestedInput
+  event?: Prisma.EventUpdateOneRequiredWithoutGroupsNestedInput
 }
 
 export type EventMembersUncheckedUpdateWithoutMembersInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  partyId?: Prisma.IntFieldUpdateOperationsInput | number
+  eventId?: Prisma.IntFieldUpdateOperationsInput | number
   isFull?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type EventMembersUncheckedUpdateManyWithoutMembersInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  partyId?: Prisma.IntFieldUpdateOperationsInput | number
+  eventId?: Prisma.IntFieldUpdateOperationsInput | number
   isFull?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
-export type EventMembersCreateManyPartyInput = {
+export type EventMembersCreateManyEventInput = {
   id?: number
   isFull?: boolean
 }
 
-export type EventMembersUpdateWithoutPartyInput = {
+export type EventMembersUpdateWithoutEventInput = {
   isFull?: Prisma.BoolFieldUpdateOperationsInput | boolean
   members?: Prisma.UserUpdateManyWithoutGroupsNestedInput
 }
 
-export type EventMembersUncheckedUpdateWithoutPartyInput = {
+export type EventMembersUncheckedUpdateWithoutEventInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   isFull?: Prisma.BoolFieldUpdateOperationsInput | boolean
   members?: Prisma.UserUncheckedUpdateManyWithoutGroupsNestedInput
 }
 
-export type EventMembersUncheckedUpdateManyWithoutPartyInput = {
+export type EventMembersUncheckedUpdateManyWithoutEventInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   isFull?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
@@ -556,55 +556,55 @@ export type EventMembersCountOutputTypeCountMembersArgs<ExtArgs extends runtime.
 
 export type EventMembersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  partyId?: boolean
+  eventId?: boolean
   isFull?: boolean
-  party?: boolean | Prisma.EventDefaultArgs<ExtArgs>
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   members?: boolean | Prisma.EventMembers$membersArgs<ExtArgs>
   _count?: boolean | Prisma.EventMembersCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["eventMembers"]>
 
 export type EventMembersSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  partyId?: boolean
+  eventId?: boolean
   isFull?: boolean
-  party?: boolean | Prisma.EventDefaultArgs<ExtArgs>
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["eventMembers"]>
 
 export type EventMembersSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  partyId?: boolean
+  eventId?: boolean
   isFull?: boolean
-  party?: boolean | Prisma.EventDefaultArgs<ExtArgs>
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["eventMembers"]>
 
 export type EventMembersSelectScalar = {
   id?: boolean
-  partyId?: boolean
+  eventId?: boolean
   isFull?: boolean
 }
 
-export type EventMembersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "partyId" | "isFull", ExtArgs["result"]["eventMembers"]>
+export type EventMembersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "eventId" | "isFull", ExtArgs["result"]["eventMembers"]>
 export type EventMembersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  party?: boolean | Prisma.EventDefaultArgs<ExtArgs>
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   members?: boolean | Prisma.EventMembers$membersArgs<ExtArgs>
   _count?: boolean | Prisma.EventMembersCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type EventMembersIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  party?: boolean | Prisma.EventDefaultArgs<ExtArgs>
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }
 export type EventMembersIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  party?: boolean | Prisma.EventDefaultArgs<ExtArgs>
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }
 
 export type $EventMembersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "EventMembers"
   objects: {
-    party: Prisma.$EventPayload<ExtArgs>
+    event: Prisma.$EventPayload<ExtArgs>
     members: Prisma.$UserPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    partyId: number
+    eventId: number
     isFull: boolean
   }, ExtArgs["result"]["eventMembers"]>
   composites: {}
@@ -1000,7 +1000,7 @@ readonly fields: EventMembersFieldRefs;
  */
 export interface Prisma__EventMembersClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  party<T extends Prisma.EventDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EventDefaultArgs<ExtArgs>>): Prisma.Prisma__EventClient<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  event<T extends Prisma.EventDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EventDefaultArgs<ExtArgs>>): Prisma.Prisma__EventClient<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   members<T extends Prisma.EventMembers$membersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EventMembers$membersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1032,7 +1032,7 @@ export interface Prisma__EventMembersClient<T, Null = never, ExtArgs extends run
  */
 export interface EventMembersFieldRefs {
   readonly id: Prisma.FieldRef<"EventMembers", 'Int'>
-  readonly partyId: Prisma.FieldRef<"EventMembers", 'Int'>
+  readonly eventId: Prisma.FieldRef<"EventMembers", 'Int'>
   readonly isFull: Prisma.FieldRef<"EventMembers", 'Boolean'>
 }
     
