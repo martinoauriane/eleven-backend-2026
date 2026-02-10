@@ -32,7 +32,7 @@ model User {
   receivedFriendRequests FriendRequest[] @relation("ReceiverFriendRequest")
   sentJoinRequests       JoinRequest[]   @relation("EmitterJoinRequest")
   receivedJoinRequests   JoinRequest[]   @relation("ReceiverJoinRequest")
-  groups                 EventMembers[]  @relation("UsersPartying")
+  groups                 EventPeople[]  @relation("PeoplePartying")
 }
 
 model Event {
@@ -49,15 +49,15 @@ model Event {
   userId        Int
   createdBy     User           @relation("hosting_event", fields: [userId], references: [id])
   // relations
-  groups        EventMembers[] @relation("Event")
+  groups        EventPeople[] @relation("Event")
 }
 
-model EventMembers {
+model EventPeople {
   id      Int     @id @default(autoincrement())
   eventId Int
-  isFull  Boolean @default(false)
   event   Event   @relation("Event", fields: [eventId], references: [id])
-  members User[]  @relation("UsersPartying")
+  isFull  Boolean @default(false)
+  people User[]  @relation("PeoplePartying")
 }
 
 model JoinRequest {

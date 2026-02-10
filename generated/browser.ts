@@ -28,10 +28,10 @@ export type User = Prisma.UserModel
  */
 export type Event = Prisma.EventModel
 /**
- * Model EventMembers
+ * Model EventPeople
  * 
  */
-export type EventMembers = Prisma.EventMembersModel
+export type EventPeople = Prisma.EventPeopleModel
 /**
  * Model JoinRequest
  * 

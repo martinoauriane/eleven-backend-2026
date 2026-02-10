@@ -349,7 +349,7 @@ export type UserWhereInput = {
   receivedFriendRequests?: Prisma.FriendRequestListRelationFilter
   sentJoinRequests?: Prisma.JoinRequestListRelationFilter
   receivedJoinRequests?: Prisma.JoinRequestListRelationFilter
-  groups?: Prisma.EventMembersListRelationFilter
+  groups?: Prisma.EventPeopleListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -376,7 +376,7 @@ export type UserOrderByWithRelationInput = {
   receivedFriendRequests?: Prisma.FriendRequestOrderByRelationAggregateInput
   sentJoinRequests?: Prisma.JoinRequestOrderByRelationAggregateInput
   receivedJoinRequests?: Prisma.JoinRequestOrderByRelationAggregateInput
-  groups?: Prisma.EventMembersOrderByRelationAggregateInput
+  groups?: Prisma.EventPeopleOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -406,7 +406,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   receivedFriendRequests?: Prisma.FriendRequestListRelationFilter
   sentJoinRequests?: Prisma.JoinRequestListRelationFilter
   receivedJoinRequests?: Prisma.JoinRequestListRelationFilter
-  groups?: Prisma.EventMembersListRelationFilter
+  groups?: Prisma.EventPeopleListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -482,7 +482,7 @@ export type UserCreateInput = {
   receivedFriendRequests?: Prisma.FriendRequestCreateNestedManyWithoutReceiverInput
   sentJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutEmitterInput
   receivedJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutReceiverInput
-  groups?: Prisma.EventMembersCreateNestedManyWithoutMembersInput
+  groups?: Prisma.EventPeopleCreateNestedManyWithoutPeopleInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -509,7 +509,7 @@ export type UserUncheckedCreateInput = {
   receivedFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutReceiverInput
   sentJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutEmitterInput
   receivedJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutReceiverInput
-  groups?: Prisma.EventMembersUncheckedCreateNestedManyWithoutMembersInput
+  groups?: Prisma.EventPeopleUncheckedCreateNestedManyWithoutPeopleInput
 }
 
 export type UserUpdateInput = {
@@ -535,7 +535,7 @@ export type UserUpdateInput = {
   receivedFriendRequests?: Prisma.FriendRequestUpdateManyWithoutReceiverNestedInput
   sentJoinRequests?: Prisma.JoinRequestUpdateManyWithoutEmitterNestedInput
   receivedJoinRequests?: Prisma.JoinRequestUpdateManyWithoutReceiverNestedInput
-  groups?: Prisma.EventMembersUpdateManyWithoutMembersNestedInput
+  groups?: Prisma.EventPeopleUpdateManyWithoutPeopleNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -562,7 +562,7 @@ export type UserUncheckedUpdateInput = {
   receivedFriendRequests?: Prisma.FriendRequestUncheckedUpdateManyWithoutReceiverNestedInput
   sentJoinRequests?: Prisma.JoinRequestUncheckedUpdateManyWithoutEmitterNestedInput
   receivedJoinRequests?: Prisma.JoinRequestUncheckedUpdateManyWithoutReceiverNestedInput
-  groups?: Prisma.EventMembersUncheckedUpdateManyWithoutMembersNestedInput
+  groups?: Prisma.EventPeopleUncheckedUpdateManyWithoutPeopleNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -895,7 +895,7 @@ export type UserCreateWithoutEventsCreatedInput = {
   receivedFriendRequests?: Prisma.FriendRequestCreateNestedManyWithoutReceiverInput
   sentJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutEmitterInput
   receivedJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutReceiverInput
-  groups?: Prisma.EventMembersCreateNestedManyWithoutMembersInput
+  groups?: Prisma.EventPeopleCreateNestedManyWithoutPeopleInput
 }
 
 export type UserUncheckedCreateWithoutEventsCreatedInput = {
@@ -921,7 +921,7 @@ export type UserUncheckedCreateWithoutEventsCreatedInput = {
   receivedFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutReceiverInput
   sentJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutEmitterInput
   receivedJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutReceiverInput
-  groups?: Prisma.EventMembersUncheckedCreateNestedManyWithoutMembersInput
+  groups?: Prisma.EventPeopleUncheckedCreateNestedManyWithoutPeopleInput
 }
 
 export type UserCreateOrConnectWithoutEventsCreatedInput = {
@@ -962,7 +962,7 @@ export type UserUpdateWithoutEventsCreatedInput = {
   receivedFriendRequests?: Prisma.FriendRequestUpdateManyWithoutReceiverNestedInput
   sentJoinRequests?: Prisma.JoinRequestUpdateManyWithoutEmitterNestedInput
   receivedJoinRequests?: Prisma.JoinRequestUpdateManyWithoutReceiverNestedInput
-  groups?: Prisma.EventMembersUpdateManyWithoutMembersNestedInput
+  groups?: Prisma.EventPeopleUpdateManyWithoutPeopleNestedInput
 }
 
 export type UserUncheckedUpdateWithoutEventsCreatedInput = {
@@ -988,7 +988,7 @@ export type UserUncheckedUpdateWithoutEventsCreatedInput = {
   receivedFriendRequests?: Prisma.FriendRequestUncheckedUpdateManyWithoutReceiverNestedInput
   sentJoinRequests?: Prisma.JoinRequestUncheckedUpdateManyWithoutEmitterNestedInput
   receivedJoinRequests?: Prisma.JoinRequestUncheckedUpdateManyWithoutReceiverNestedInput
-  groups?: Prisma.EventMembersUncheckedUpdateManyWithoutMembersNestedInput
+  groups?: Prisma.EventPeopleUncheckedUpdateManyWithoutPeopleNestedInput
 }
 
 export type UserCreateWithoutGroupsInput = {
@@ -1109,7 +1109,7 @@ export type UserCreateWithoutSentJoinRequestsInput = {
   sentFriendRequests?: Prisma.FriendRequestCreateNestedManyWithoutEmitterInput
   receivedFriendRequests?: Prisma.FriendRequestCreateNestedManyWithoutReceiverInput
   receivedJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutReceiverInput
-  groups?: Prisma.EventMembersCreateNestedManyWithoutMembersInput
+  groups?: Prisma.EventPeopleCreateNestedManyWithoutPeopleInput
 }
 
 export type UserUncheckedCreateWithoutSentJoinRequestsInput = {
@@ -1135,7 +1135,7 @@ export type UserUncheckedCreateWithoutSentJoinRequestsInput = {
   sentFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutEmitterInput
   receivedFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutReceiverInput
   receivedJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutReceiverInput
-  groups?: Prisma.EventMembersUncheckedCreateNestedManyWithoutMembersInput
+  groups?: Prisma.EventPeopleUncheckedCreateNestedManyWithoutPeopleInput
 }
 
 export type UserCreateOrConnectWithoutSentJoinRequestsInput = {
@@ -1165,7 +1165,7 @@ export type UserCreateWithoutReceivedJoinRequestsInput = {
   sentFriendRequests?: Prisma.FriendRequestCreateNestedManyWithoutEmitterInput
   receivedFriendRequests?: Prisma.FriendRequestCreateNestedManyWithoutReceiverInput
   sentJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutEmitterInput
-  groups?: Prisma.EventMembersCreateNestedManyWithoutMembersInput
+  groups?: Prisma.EventPeopleCreateNestedManyWithoutPeopleInput
 }
 
 export type UserUncheckedCreateWithoutReceivedJoinRequestsInput = {
@@ -1191,7 +1191,7 @@ export type UserUncheckedCreateWithoutReceivedJoinRequestsInput = {
   sentFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutEmitterInput
   receivedFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutReceiverInput
   sentJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutEmitterInput
-  groups?: Prisma.EventMembersUncheckedCreateNestedManyWithoutMembersInput
+  groups?: Prisma.EventPeopleUncheckedCreateNestedManyWithoutPeopleInput
 }
 
 export type UserCreateOrConnectWithoutReceivedJoinRequestsInput = {
@@ -1232,7 +1232,7 @@ export type UserUpdateWithoutSentJoinRequestsInput = {
   sentFriendRequests?: Prisma.FriendRequestUpdateManyWithoutEmitterNestedInput
   receivedFriendRequests?: Prisma.FriendRequestUpdateManyWithoutReceiverNestedInput
   receivedJoinRequests?: Prisma.JoinRequestUpdateManyWithoutReceiverNestedInput
-  groups?: Prisma.EventMembersUpdateManyWithoutMembersNestedInput
+  groups?: Prisma.EventPeopleUpdateManyWithoutPeopleNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSentJoinRequestsInput = {
@@ -1258,7 +1258,7 @@ export type UserUncheckedUpdateWithoutSentJoinRequestsInput = {
   sentFriendRequests?: Prisma.FriendRequestUncheckedUpdateManyWithoutEmitterNestedInput
   receivedFriendRequests?: Prisma.FriendRequestUncheckedUpdateManyWithoutReceiverNestedInput
   receivedJoinRequests?: Prisma.JoinRequestUncheckedUpdateManyWithoutReceiverNestedInput
-  groups?: Prisma.EventMembersUncheckedUpdateManyWithoutMembersNestedInput
+  groups?: Prisma.EventPeopleUncheckedUpdateManyWithoutPeopleNestedInput
 }
 
 export type UserUpsertWithoutReceivedJoinRequestsInput = {
@@ -1294,7 +1294,7 @@ export type UserUpdateWithoutReceivedJoinRequestsInput = {
   sentFriendRequests?: Prisma.FriendRequestUpdateManyWithoutEmitterNestedInput
   receivedFriendRequests?: Prisma.FriendRequestUpdateManyWithoutReceiverNestedInput
   sentJoinRequests?: Prisma.JoinRequestUpdateManyWithoutEmitterNestedInput
-  groups?: Prisma.EventMembersUpdateManyWithoutMembersNestedInput
+  groups?: Prisma.EventPeopleUpdateManyWithoutPeopleNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReceivedJoinRequestsInput = {
@@ -1320,7 +1320,7 @@ export type UserUncheckedUpdateWithoutReceivedJoinRequestsInput = {
   sentFriendRequests?: Prisma.FriendRequestUncheckedUpdateManyWithoutEmitterNestedInput
   receivedFriendRequests?: Prisma.FriendRequestUncheckedUpdateManyWithoutReceiverNestedInput
   sentJoinRequests?: Prisma.JoinRequestUncheckedUpdateManyWithoutEmitterNestedInput
-  groups?: Prisma.EventMembersUncheckedUpdateManyWithoutMembersNestedInput
+  groups?: Prisma.EventPeopleUncheckedUpdateManyWithoutPeopleNestedInput
 }
 
 export type UserCreateWithoutSentFriendRequestsInput = {
@@ -1345,7 +1345,7 @@ export type UserCreateWithoutSentFriendRequestsInput = {
   receivedFriendRequests?: Prisma.FriendRequestCreateNestedManyWithoutReceiverInput
   sentJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutEmitterInput
   receivedJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutReceiverInput
-  groups?: Prisma.EventMembersCreateNestedManyWithoutMembersInput
+  groups?: Prisma.EventPeopleCreateNestedManyWithoutPeopleInput
 }
 
 export type UserUncheckedCreateWithoutSentFriendRequestsInput = {
@@ -1371,7 +1371,7 @@ export type UserUncheckedCreateWithoutSentFriendRequestsInput = {
   receivedFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutReceiverInput
   sentJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutEmitterInput
   receivedJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutReceiverInput
-  groups?: Prisma.EventMembersUncheckedCreateNestedManyWithoutMembersInput
+  groups?: Prisma.EventPeopleUncheckedCreateNestedManyWithoutPeopleInput
 }
 
 export type UserCreateOrConnectWithoutSentFriendRequestsInput = {
@@ -1401,7 +1401,7 @@ export type UserCreateWithoutReceivedFriendRequestsInput = {
   sentFriendRequests?: Prisma.FriendRequestCreateNestedManyWithoutEmitterInput
   sentJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutEmitterInput
   receivedJoinRequests?: Prisma.JoinRequestCreateNestedManyWithoutReceiverInput
-  groups?: Prisma.EventMembersCreateNestedManyWithoutMembersInput
+  groups?: Prisma.EventPeopleCreateNestedManyWithoutPeopleInput
 }
 
 export type UserUncheckedCreateWithoutReceivedFriendRequestsInput = {
@@ -1427,7 +1427,7 @@ export type UserUncheckedCreateWithoutReceivedFriendRequestsInput = {
   sentFriendRequests?: Prisma.FriendRequestUncheckedCreateNestedManyWithoutEmitterInput
   sentJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutEmitterInput
   receivedJoinRequests?: Prisma.JoinRequestUncheckedCreateNestedManyWithoutReceiverInput
-  groups?: Prisma.EventMembersUncheckedCreateNestedManyWithoutMembersInput
+  groups?: Prisma.EventPeopleUncheckedCreateNestedManyWithoutPeopleInput
 }
 
 export type UserCreateOrConnectWithoutReceivedFriendRequestsInput = {
@@ -1468,7 +1468,7 @@ export type UserUpdateWithoutSentFriendRequestsInput = {
   receivedFriendRequests?: Prisma.FriendRequestUpdateManyWithoutReceiverNestedInput
   sentJoinRequests?: Prisma.JoinRequestUpdateManyWithoutEmitterNestedInput
   receivedJoinRequests?: Prisma.JoinRequestUpdateManyWithoutReceiverNestedInput
-  groups?: Prisma.EventMembersUpdateManyWithoutMembersNestedInput
+  groups?: Prisma.EventPeopleUpdateManyWithoutPeopleNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSentFriendRequestsInput = {
@@ -1494,7 +1494,7 @@ export type UserUncheckedUpdateWithoutSentFriendRequestsInput = {
   receivedFriendRequests?: Prisma.FriendRequestUncheckedUpdateManyWithoutReceiverNestedInput
   sentJoinRequests?: Prisma.JoinRequestUncheckedUpdateManyWithoutEmitterNestedInput
   receivedJoinRequests?: Prisma.JoinRequestUncheckedUpdateManyWithoutReceiverNestedInput
-  groups?: Prisma.EventMembersUncheckedUpdateManyWithoutMembersNestedInput
+  groups?: Prisma.EventPeopleUncheckedUpdateManyWithoutPeopleNestedInput
 }
 
 export type UserUpsertWithoutReceivedFriendRequestsInput = {
@@ -1530,7 +1530,7 @@ export type UserUpdateWithoutReceivedFriendRequestsInput = {
   sentFriendRequests?: Prisma.FriendRequestUpdateManyWithoutEmitterNestedInput
   sentJoinRequests?: Prisma.JoinRequestUpdateManyWithoutEmitterNestedInput
   receivedJoinRequests?: Prisma.JoinRequestUpdateManyWithoutReceiverNestedInput
-  groups?: Prisma.EventMembersUpdateManyWithoutMembersNestedInput
+  groups?: Prisma.EventPeopleUpdateManyWithoutPeopleNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReceivedFriendRequestsInput = {
@@ -1556,7 +1556,7 @@ export type UserUncheckedUpdateWithoutReceivedFriendRequestsInput = {
   sentFriendRequests?: Prisma.FriendRequestUncheckedUpdateManyWithoutEmitterNestedInput
   sentJoinRequests?: Prisma.JoinRequestUncheckedUpdateManyWithoutEmitterNestedInput
   receivedJoinRequests?: Prisma.JoinRequestUncheckedUpdateManyWithoutReceiverNestedInput
-  groups?: Prisma.EventMembersUncheckedUpdateManyWithoutMembersNestedInput
+  groups?: Prisma.EventPeopleUncheckedUpdateManyWithoutPeopleNestedInput
 }
 
 export type UserUpdateWithoutGroupsInput = {
@@ -1703,7 +1703,7 @@ export type UserCountOutputTypeCountReceivedJoinRequestsArgs<ExtArgs extends run
  * UserCountOutputType without action
  */
 export type UserCountOutputTypeCountGroupsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.EventMembersWhereInput
+  where?: Prisma.EventPeopleWhereInput
 }
 
 
@@ -1819,7 +1819,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     receivedFriendRequests: Prisma.$FriendRequestPayload<ExtArgs>[]
     sentJoinRequests: Prisma.$JoinRequestPayload<ExtArgs>[]
     receivedJoinRequests: Prisma.$JoinRequestPayload<ExtArgs>[]
-    groups: Prisma.$EventMembersPayload<ExtArgs>[]
+    groups: Prisma.$EventPeoplePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -2239,7 +2239,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   receivedFriendRequests<T extends Prisma.User$receivedFriendRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$receivedFriendRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FriendRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sentJoinRequests<T extends Prisma.User$sentJoinRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sentJoinRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JoinRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   receivedJoinRequests<T extends Prisma.User$receivedJoinRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$receivedJoinRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JoinRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  groups<T extends Prisma.User$groupsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$groupsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EventMembersPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  groups<T extends Prisma.User$groupsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$groupsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EventPeoplePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2799,23 +2799,23 @@ export type User$receivedJoinRequestsArgs<ExtArgs extends runtime.Types.Extensio
  */
 export type User$groupsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the EventMembers
+   * Select specific fields to fetch from the EventPeople
    */
-  select?: Prisma.EventMembersSelect<ExtArgs> | null
+  select?: Prisma.EventPeopleSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the EventMembers
+   * Omit specific fields from the EventPeople
    */
-  omit?: Prisma.EventMembersOmit<ExtArgs> | null
+  omit?: Prisma.EventPeopleOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.EventMembersInclude<ExtArgs> | null
-  where?: Prisma.EventMembersWhereInput
-  orderBy?: Prisma.EventMembersOrderByWithRelationInput | Prisma.EventMembersOrderByWithRelationInput[]
-  cursor?: Prisma.EventMembersWhereUniqueInput
+  include?: Prisma.EventPeopleInclude<ExtArgs> | null
+  where?: Prisma.EventPeopleWhereInput
+  orderBy?: Prisma.EventPeopleOrderByWithRelationInput | Prisma.EventPeopleOrderByWithRelationInput[]
+  cursor?: Prisma.EventPeopleWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.EventMembersScalarFieldEnum | Prisma.EventMembersScalarFieldEnum[]
+  distinct?: Prisma.EventPeopleScalarFieldEnum | Prisma.EventPeopleScalarFieldEnum[]
 }
 
 /**
