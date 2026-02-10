@@ -89,6 +89,28 @@ router.post("/delete/friend-request/:emitter_id/:receiver_id", async(req: Reques
   await friendRequestController.deleteFriendRequest(req, res);
 })
 
+// EVENT ENDPOINTS
+
+router.post("/create/event",  async (req: Request, res: Response) => {
+    await friendRequestController.newFriendRequest(req, res);
+  },
+);
+
+router.post("/get/event/:event_id",  async (req: Request, res: Response) => {
+    await friendRequestController.getFriendRequest(req, res);
+  },
+);
+
+// operationnal
+router.post("/update/event/:event_id", async (req: Request, res: Response) => {
+  await userController.updateUser(req, res);
+});
+
+router.post("/delete/event/:event_id", async(req: Request, res:Response) => {
+  await friendRequestController.deleteFriendRequest(req, res);
+})
+
+
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });

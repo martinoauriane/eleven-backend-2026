@@ -15,10 +15,10 @@ bonnes pratiques:
 // - delete n'en supprime qu'un seul à la fois 
 // - deleteMany en supprime plusieurs
 
-Faire une migration: 
+1. Faire une migration: 
 npx prisma migrate dev
 
-générer le client: 
+2. générer le client: 
 npx prisma generate
 
 Vérifier que Prisma est bien connectée à la db: 
@@ -40,9 +40,9 @@ DONE:
 
 NEXT STEPS: 
 // - Ironic front-end interface in to modelize Figma
-// - créer le service Party le store et le controller
-// - tester les endpoints Party
-
+// - créer le service Event le store et le controller
+// - tester les endpoints Event
+// - peut on programmer des évènements à l'avance?
 
 PRISMA QUERY METHODS
 const qry = <GUID value>

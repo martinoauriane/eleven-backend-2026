@@ -32,23 +32,24 @@ model User {
   receivedFriendRequests FriendRequest[] @relation("ReceiverFriendRequest")
   sentJoinRequests       JoinRequest[]   @relation("EmitterJoinRequest")
   receivedJoinRequests   JoinRequest[]   @relation("ReceiverJoinRequest")
-  groups                 EventMembers[]         @relation("UsersPartying")
+  groups                 EventMembers[]  @relation("UsersPartying")
 }
 
 model Event {
-  id            Int      @id @default(autoincrement())
-  eventName     String?  @default("Drinks with friends")// "Drinks with friends" | "Flat-party" | "Night out clubbing" | "Concert"
-  partyCoords   Json?
-  partyAddress  String
-  partyPictures String[]
-  partyTags     String[]
-  partyType     String // flat-party // clubbing night out // drinks with friends
+  id            Int            @id @default(autoincrement())
+  eventName     String?        @default("Drinks with friends") // "Drinks with friends" | "Flat-party" | "Night out clubbing" | "Concert"
+  eventLat      Float
+  eventLon      Float
+  eventAddress  String
+  eventPictures String[]
+  eventTags     String[]
+  eventType     String? // flat-party // clubbing night out // drinks with friends
   city          String
   country       String
-  userId       Int
-  createdBy     User @relation("hosting_event", fields:[userId], references: [id])
+  userId        Int
+  createdBy     User           @relation("hosting_event", fields: [userId], references: [id])
   // relations
-  groups        EventMembers[]  @relation("Party")
+  groups        EventMembers[] @relation("Party")
 }
 
 model EventMembers {
@@ -60,22 +61,21 @@ model EventMembers {
 }
 
 model JoinRequest {
-  id         Int       @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
   sentAt     DateTime @default(now())
-  isAccepted Boolean   @default(false)
+  isAccepted Boolean  @default(false)
   emitterId  Int
   receiverId Int
   // relations
   // emitter et receiver sont des relations Prisma et ne devraient pas être passées lors de la création
-  emitter    User      @relation("EmitterJoinRequest", fields: [emitterId], references: [id])
-  receiver   User      @relation("ReceiverJoinRequest", fields: [receiverId], references: [id])
+  emitter    User     @relation("EmitterJoinRequest", fields: [emitterId], references: [id])
+  receiver   User     @relation("ReceiverJoinRequest", fields: [receiverId], references: [id])
 }
-
 
 model FriendRequest {
   id         Int      @id @default(autoincrement())
   sentAt     DateTime @default(now())
-  isAccepted Boolean   @default(false)
+  isAccepted Boolean  @default(false)
   emitterId  Int
   receiverId Int
   // relations
