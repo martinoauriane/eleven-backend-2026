@@ -1,5 +1,4 @@
-import { EventStore} from "../store/EventStore";
-import { hashPassword } from "./utils/hash";
+import { EventStore} from "../store/eventStore";
 import { EventCreate, EventUpdate } from "../store/interfaces/eventInterfaces";
 
 const eventStore = new EventStore();

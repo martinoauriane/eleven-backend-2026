@@ -4,6 +4,7 @@ import cors from "cors";
 import { UserController } from "../controller/userController";
 import { JoinRequestController} from "../controller/joinRequestController";
 import { FriendRequestController } from "../controller/friendRequestController";
+import { EventController } from "../controller/eventController";
 
 const app = express();
 const router = express.Router();
@@ -16,6 +17,7 @@ app.use(router);
 const userController = new UserController();
 const joinRequestController = new JoinRequestController();
 const friendRequestController = new FriendRequestController();
+const eventController = new EventController();
 
 // USER ENDPOINTS
 // operationnal
@@ -89,25 +91,29 @@ router.post("/delete/friend-request/:emitter_id/:receiver_id", async(req: Reques
   await friendRequestController.deleteFriendRequest(req, res);
 })
 
+
 // EVENT ENDPOINTS
 
-router.post("/create/event",  async (req: Request, res: Response) => {
-    await friendRequestController.newFriendRequest(req, res);
-  },
-);
-
-router.post("/get/event/:event_id",  async (req: Request, res: Response) => {
-    await friendRequestController.getFriendRequest(req, res);
+// operationnal
+router.post("/event/create",  async (req: Request, res: Response) => {
+    await eventController.newEvent(req, res);
   },
 );
 
 // operationnal
-router.post("/update/event/:event_id", async (req: Request, res: Response) => {
-  await userController.updateUser(req, res);
+router.post("/event/get/:event_id",  async (req: Request, res: Response) => {
+    await eventController.returnEvent(req, res);
+  },
+);
+
+// operationnal
+router.post("/event/update/:event_id", async (req: Request, res: Response) => {
+  await eventController.updateEvent(req, res);
 });
 
+// operationnal
 router.post("/delete/event/:event_id", async(req: Request, res:Response) => {
-  await friendRequestController.deleteFriendRequest(req, res);
+  await eventController.deleteEvent(req, res);
 })
 
 

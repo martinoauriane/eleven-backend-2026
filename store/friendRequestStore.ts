@@ -1,7 +1,6 @@
 import "dotenv/config"; // ⚡ force le chargement de ton .env
 import { prisma } from "../prisma";
 import { FriendRequestCreate, FriendRequestData } from "../store/interfaces/friendRequestInterfaces";
-import { FriendRequest } from "../generated/client";
 
 interface IFriendRequestStore {
     CreateFriendRequest(data:FriendRequestCreate): Promise<any> 
@@ -11,7 +10,9 @@ class FriendRequestStore implements IFriendRequestStore {
 
   async CreateFriendRequest(data:FriendRequestCreate): Promise<any> {
     try {
-      return await prisma.friendRequest.create({ data });
+      console.log("friend data", data);
+      const response = await prisma.friendRequest.create({ data });
+      return response;
     } catch (error) {
       console.error(
         "prisma error trying to create specific joinRequest",

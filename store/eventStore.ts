@@ -13,6 +13,7 @@ class EventStore implements IEventStore {
     
   async createEvent(data: EventCreate) {
     try {
+      console.log("event create data");
       return await prisma.event.create({ data });
     } catch (error) {
       console.error("Prisma creation error:", error);
