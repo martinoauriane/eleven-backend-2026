@@ -42,7 +42,7 @@ class EventStore implements IEventStore {
     }
   }
 
-  async updateEventParticipants(eventId: number, userId: number){
+  async addEventParticipant(eventId: number, userId: number){
     const event = await this.getEventById(eventId);
     if (!event) {
       throw new Error("Event not found");
@@ -68,6 +68,17 @@ class EventStore implements IEventStore {
       console.error("Prisma updating user attending event error");
       throw error;
     }
+  }
+
+  async removeEventParticipant(userId: number){
+    const user = await userStore.getUserById(userId);
+    if(!user){
+      throw new Error("User not found");
+    }
+    return await prisma.user.update({
+      where: { id: userId },
+      data: { attendingEventId: null }
+  });
   }
 
   async deleteEvent(id: number) {
