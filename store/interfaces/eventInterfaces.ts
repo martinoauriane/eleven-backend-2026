@@ -9,6 +9,7 @@ export interface EventCreate{
   city: string
   country: string
   userId: number;
+  eventCreatorId: number;
 } 
 
 export interface EventUpdate {

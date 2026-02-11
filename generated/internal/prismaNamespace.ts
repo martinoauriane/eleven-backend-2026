@@ -778,6 +778,7 @@ export const EventScalarFieldEnum = {
   eventType: 'eventType',
   city: 'city',
   country: 'country',
+  isFull: 'isFull',
   eventCreatorId: 'eventCreatorId'
 } as const
 

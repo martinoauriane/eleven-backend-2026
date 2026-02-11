@@ -46,6 +46,11 @@ NEXT STEPS:
 // - Quand des gens supplémentaires sont ajoutés ça correspond à un update 
 // - Tester les endpoints EventPeople
 
+EVENT: 
+- If is_Full l'évènement sur la carte est grisée, on ne peut pas cliquer dessus et aucun utilisateur ne peut le rejoindre
+
+- il faut une fonctionnalité Leave Event 
+
 PRISMA QUERY METHODS
 const query = <GUID value>
 

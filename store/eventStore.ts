@@ -1,6 +1,9 @@
 import "dotenv/config"; // ⚡ force le chargement de ton .env
 import { prisma } from "../prisma";
 import { EventCreate, EventUpdate, EventData } from "./interfaces/eventInterfaces";
+import { UserStore } from "./userStore";
+
+const userStore = new UserStore();
 
 interface IEventStore {
   createEvent(data: EventCreate): Promise<any>;
@@ -13,7 +16,6 @@ class EventStore implements IEventStore {
     
   async createEvent(data: EventCreate) {
     try {
-      console.log("event create data");
       return await prisma.event.create({ data });
     } catch (error) {
       console.error("Prisma creation error:", error);
@@ -35,7 +37,35 @@ class EventStore implements IEventStore {
         data,
       });
     } catch (error) {
-      console.error("Prisma update error:", error);
+      console.error("Prisma updating event error:", error);
+      throw error;
+    }
+  }
+
+  async updateEventParticipants(eventId: number, userId: number){
+    const event = await this.getEventById(eventId);
+    if (!event) {
+      throw new Error("Event not found");
+    }
+
+    const user = await userStore.getUserById(userId);
+    if(!user){
+      throw new Error("User not found");
+    }
+
+    if (user.attendingEventId) { // empêcher l'ubiquité
+      throw new Error("User already attending an event");
+    }
+
+    try{
+      return await prisma.user.update({
+        where: {id: userId}, 
+        data: {
+          attendingEventId: eventId
+        }
+      })
+    } catch(error){
+      console.error("Prisma updating user attending event error");
       throw error;
     }
   }

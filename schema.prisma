@@ -56,7 +56,7 @@ model Event {
   eventType      String? // flat-party // clubbing night out // drinks with friends
   city           String
   country        String
-
+  isFull         Boolean  @default(false)
   // relations
   
   // creator relation (1-N)
