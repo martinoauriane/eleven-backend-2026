@@ -53,7 +53,6 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Event: 'Event',
-  EventPeople: 'EventPeople',
   JoinRequest: 'JoinRequest',
   FriendRequest: 'FriendRequest'
 } as const
@@ -92,7 +91,8 @@ export const UserScalarFieldEnum = {
   partyLat: 'partyLat',
   partyLon: 'partyLon',
   friendsNumber: 'friendsNumber',
-  partyId: 'partyId'
+  partyId: 'partyId',
+  attendingEventId: 'attendingEventId'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -109,19 +109,10 @@ export const EventScalarFieldEnum = {
   eventType: 'eventType',
   city: 'city',
   country: 'country',
-  userId: 'userId'
+  eventCreatorId: 'eventCreatorId'
 } as const
 
 export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
-
-
-export const EventPeopleScalarFieldEnum = {
-  id: 'id',
-  eventId: 'eventId',
-  isFull: 'isFull'
-} as const
-
-export type EventPeopleScalarFieldEnum = (typeof EventPeopleScalarFieldEnum)[keyof typeof EventPeopleScalarFieldEnum]
 
 
 export const JoinRequestScalarFieldEnum = {

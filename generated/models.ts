@@ -10,7 +10,6 @@
  */
 export type * from './models/User'
 export type * from './models/Event'
-export type * from './models/EventPeople'
 export type * from './models/JoinRequest'
 export type * from './models/FriendRequest'
 export type * from './commonInputTypes'

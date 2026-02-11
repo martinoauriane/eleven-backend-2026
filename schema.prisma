@@ -26,38 +26,44 @@ model User {
   partyLon               Float?
   friendsNumber          Int             @default(0)
   partyId                Int?
-  eventsCreated          Event[]         @relation("hosting_event")
+
   // relations
+
+  // events created by user
+  eventsCreated          Event[]         @relation("EventCreator")
+
+  // event attended by user
+  attendingEventId       Int?
+  attendingEvent        Event?        @relation("EventParticipants", fields: [attendingEventId], references: [id])
+  
+  // friendRequests
   sentFriendRequests     FriendRequest[] @relation("EmitterFriendRequest")
   receivedFriendRequests FriendRequest[] @relation("ReceiverFriendRequest")
+
+  // joinRequests
   sentJoinRequests       JoinRequest[]   @relation("EmitterJoinRequest")
   receivedJoinRequests   JoinRequest[]   @relation("ReceiverJoinRequest")
-  groups                 EventPeople[]  @relation("PeoplePartying")
 }
 
 model Event {
-  id            Int            @id @default(autoincrement())
-  eventName     String?        @default("Drinks with friends") // "Drinks with friends" | "Flat-party" | "Night out clubbing" | "Concert"
-  eventLat      Float
-  eventLon      Float
-  eventAddress  String
-  eventPictures String[]
-  eventTags     String[]
-  eventType     String? // flat-party // clubbing night out // drinks with friends
-  city          String
-  country       String
-  userId        Int
-  createdBy     User           @relation("hosting_event", fields: [userId], references: [id])
-  // relations
-  groups        EventPeople[] @relation("Event")
-}
+  id             Int      @id @default(autoincrement())
+  eventName      String?  @default("Drinks with friends") // "Drinks with friends" | "Flat-party" | "Night out clubbing" | "Concert"
+  eventLat       Float
+  eventLon       Float
+  eventAddress   String
+  eventPictures  String[]
+  eventTags      String[]
+  eventType      String? // flat-party // clubbing night out // drinks with friends
+  city           String
+  country        String
 
-model EventPeople {
-  id      Int     @id @default(autoincrement())
-  eventId Int
-  event   Event   @relation("Event", fields: [eventId], references: [id])
-  isFull  Boolean @default(false)
-  people User[]  @relation("PeoplePartying")
+  // relations
+  
+  // creator relation (1-N)
+  eventCreatorId Int
+  createdBy      User     @relation("EventCreator", fields: [eventCreatorId], references: [id])
+  // isFull Boolean
+  participants    User[]   @relation("EventParticipants")
 }
 
 model JoinRequest {
@@ -78,6 +84,7 @@ model FriendRequest {
   isAccepted Boolean  @default(false)
   emitterId  Int
   receiverId Int
+
   // relations
   emitter    User     @relation("EmitterFriendRequest", fields: [emitterId], references: [id])
   receiver   User     @relation("ReceiverFriendRequest", fields: [receiverId], references: [id])

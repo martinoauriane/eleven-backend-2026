@@ -386,7 +386,6 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   Event: 'Event',
-  EventPeople: 'EventPeople',
   JoinRequest: 'JoinRequest',
   FriendRequest: 'FriendRequest'
 } as const
@@ -404,7 +403,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "event" | "eventPeople" | "joinRequest" | "friendRequest"
+    modelProps: "user" | "event" | "joinRequest" | "friendRequest"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -553,80 +552,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.EventCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.EventCountAggregateOutputType> | number
-        }
-      }
-    }
-    EventPeople: {
-      payload: Prisma.$EventPeoplePayload<ExtArgs>
-      fields: Prisma.EventPeopleFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.EventPeopleFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventPeoplePayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.EventPeopleFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventPeoplePayload>
-        }
-        findFirst: {
-          args: Prisma.EventPeopleFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventPeoplePayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.EventPeopleFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventPeoplePayload>
-        }
-        findMany: {
-          args: Prisma.EventPeopleFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventPeoplePayload>[]
-        }
-        create: {
-          args: Prisma.EventPeopleCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventPeoplePayload>
-        }
-        createMany: {
-          args: Prisma.EventPeopleCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.EventPeopleCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventPeoplePayload>[]
-        }
-        delete: {
-          args: Prisma.EventPeopleDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventPeoplePayload>
-        }
-        update: {
-          args: Prisma.EventPeopleUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventPeoplePayload>
-        }
-        deleteMany: {
-          args: Prisma.EventPeopleDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.EventPeopleUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.EventPeopleUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventPeoplePayload>[]
-        }
-        upsert: {
-          args: Prisma.EventPeopleUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventPeoplePayload>
-        }
-        aggregate: {
-          args: Prisma.EventPeopleAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateEventPeople>
-        }
-        groupBy: {
-          args: Prisma.EventPeopleGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.EventPeopleGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.EventPeopleCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.EventPeopleCountAggregateOutputType> | number
         }
       }
     }
@@ -835,7 +760,8 @@ export const UserScalarFieldEnum = {
   partyLat: 'partyLat',
   partyLon: 'partyLon',
   friendsNumber: 'friendsNumber',
-  partyId: 'partyId'
+  partyId: 'partyId',
+  attendingEventId: 'attendingEventId'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -852,19 +778,10 @@ export const EventScalarFieldEnum = {
   eventType: 'eventType',
   city: 'city',
   country: 'country',
-  userId: 'userId'
+  eventCreatorId: 'eventCreatorId'
 } as const
 
 export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
-
-
-export const EventPeopleScalarFieldEnum = {
-  id: 'id',
-  eventId: 'eventId',
-  isFull: 'isFull'
-} as const
-
-export type EventPeopleScalarFieldEnum = (typeof EventPeopleScalarFieldEnum)[keyof typeof EventPeopleScalarFieldEnum]
 
 
 export const JoinRequestScalarFieldEnum = {
@@ -1078,7 +995,6 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   event?: Prisma.EventOmit
-  eventPeople?: Prisma.EventPeopleOmit
   joinRequest?: Prisma.JoinRequestOmit
   friendRequest?: Prisma.FriendRequestOmit
 }

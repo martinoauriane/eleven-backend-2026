@@ -48,11 +48,6 @@ export type User = Prisma.UserModel
  */
 export type Event = Prisma.EventModel
 /**
- * Model EventPeople
- * 
- */
-export type EventPeople = Prisma.EventPeopleModel
-/**
  * Model JoinRequest
  * 
  */

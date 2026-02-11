@@ -42,9 +42,9 @@ DONE:
 
 NEXT STEPS: 
 // - Ironic front-end interface in to modelize Figma
-// - créer le store Event People, Endpoint et service
+// - créer le store EventPeople, Endpoint et service
 // - Quand des gens supplémentaires sont ajoutés ça correspond à un update 
-// - 
+// - Tester les endpoints EventPeople
 
 PRISMA QUERY METHODS
 const query = <GUID value>
