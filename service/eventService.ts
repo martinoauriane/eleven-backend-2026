@@ -22,6 +22,7 @@ class EventService implements IEventService{
             country:data.country,
             eventType: data.eventType, 
             userId:data.userId,
+            eventCreatorId: data.eventCreatorId,
         };
         return await eventStore.createEvent(EventData);
     }
@@ -32,6 +33,14 @@ class EventService implements IEventService{
 
     async updateEvent(data: EventUpdate, id: number) {
         return await eventStore.updateEvent(id, data);
+    }
+
+    async addParticipant(eventId: number, userId: number){
+        return await eventStore.addEventParticipant(eventId, userId);
+    }
+
+    async deleteParticipant(userId: number){
+        return await eventStore.deleteParticipant(userId);
     }
 
     async deleteEvent(id: number) {

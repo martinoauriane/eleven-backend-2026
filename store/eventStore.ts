@@ -42,48 +42,57 @@ class EventStore implements IEventStore {
     }
   }
 
-  async addEventParticipant(eventId: number, userId: number){
+  async addEventParticipant(eventId: number, id: number){
     const event = await this.getEventById(eventId);
     if (!event) {
       throw new Error("Event not found");
     }
-
-    const user = await userStore.getUserById(userId);
-    if(!user){
+    const user = await prisma.user.findUnique({ where: { id } });
+    if (!user){
       throw new Error("User not found");
     }
 
-    if (user.attendingEventId) { // empêcher l'ubiquité
+    if (user?.attendingEventId) { // empêcher l'ubiquité
       throw new Error("User already attending an event");
     }
 
     try{
       return await prisma.user.update({
-        where: {id: userId}, 
+        where: {id: id}, 
         data: {
           attendingEventId: eventId
         }
       })
     } catch(error){
-      console.error("Prisma updating user attending event error");
+      console.error("Prisma adding event participant error");
       throw error;
     }
   }
 
-  async removeEventParticipant(userId: number){
+  async deleteParticipant(userId: number){
+    console.log("USER id", userId);
     const user = await userStore.getUserById(userId);
     if(!user){
       throw new Error("User not found");
     }
-    return await prisma.user.update({
-      where: { id: userId },
-      data: { attendingEventId: null }
-  });
-  }
-
-  async deleteEvent(id: number) {
+    console.log("user", user);
     try {
-      return await prisma.event.delete({ where: { id } });
+    let deletedP = await prisma.user.update({
+        where: { id: userId },
+        data: { attendingEventId: null }
+    });
+    console.log(deletedP);
+    return deletedP;
+    }catch (error){
+      console.error("Prisma removing event participant event error");
+      throw error;
+    }
+  }
+ 
+
+  async deleteEvent(eventId: number) {
+    try {
+      return await prisma.event.delete({ where: { id : eventId } });
     } catch (error) {
       console.error("Prisma delete error:", error);
     }

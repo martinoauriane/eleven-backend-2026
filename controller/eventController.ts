@@ -41,13 +41,51 @@ class EventController {
             res.status(200).json(updatedEvent);
         } catch (error: any) {
             console.error("Prisma update error:", error); 
-            
             res.status(500).json({ 
                 error: "Error updating event",
                 details: error.message //
             });
         }
     }
+
+    async addParticipants(req: Request, res:Response){
+        const eventId = Number(req.params.event_id);
+         if (isNaN(eventId)) {
+            return res.status(400).json({ error: "Invalid id" });
+        }
+        const userId = Number(req.params.user_id);
+        if (isNaN(userId)) {
+            return res.status(400).json({ error: "Invalid id" });
+        }
+        console.log("user id", userId);
+        console.log("event id", eventId);
+        try {
+        const addedParticipant = await eventService.addParticipant(eventId, userId);
+        return addedParticipant;
+        } catch(error: any){
+            res.status(500).json({ 
+                error: "Error adding participants to the event",
+                details: error.message 
+            });
+            console.log(error);
+        }
+    }
+
+        async deleteParticipant(req: Request, res:Response){
+        const userId = Number(req.params.user_id);
+         if (isNaN(userId)) {
+            return res.status(400).json({ error: "Invalid id" });
+        }
+        try {
+            const removedParticipant = await eventService.deleteParticipant(userId);
+            return removedParticipant;
+        } catch(error:any){
+            res.status(500).json({ 
+                error: "Error adding participants to the event",
+                details: error.message //
+            });
+        }
+      }
 
     async deleteEvent(req: Request, res: Response) {
         const event_id = Number(req.params.event_id);

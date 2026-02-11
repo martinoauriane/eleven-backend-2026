@@ -111,8 +111,17 @@ router.post("/event/update/:event_id", async (req: Request, res: Response) => {
   await eventController.updateEvent(req, res);
 });
 
+router.post("/event/addParticipant/:event_id/:user_id", async(req:Request, res:Response)=>{
+  await eventController.addParticipants(req, res);
+})
+
 // operationnal
-router.post("/delete/event/:event_id", async(req: Request, res:Response) => {
+router.post("/event/deleteParticipant/:user_id", async(req: Request, res:Response) => {
+  await eventController.deleteParticipant(req, res);
+})
+
+// operationnal
+router.post("/event/delete/:event_id", async(req: Request, res:Response) => {
   await eventController.deleteEvent(req, res);
 })
 
