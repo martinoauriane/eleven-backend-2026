@@ -57,7 +57,7 @@ ELEVEN FRONT END - REFLECTION:
 - 1 toggle button : isVisible/isNotVisible  <=> isOnMap/isNotOnMap
 - Show users on Map 
 - click on a user profile picture (BUTTON: JOIN) -> sends a join request
-- en dessous, un rectangle : Adèle is at Le Petit George. JOIN. Event : "NAME" Participants: 32. Open To Join: "Yes". 
+- en dessous, un rectangle : Adèle is at "Le Reflet". JOIN. Event : "Poker Night" Participants: 32. Open To Join: "Yes"  Mood="having fun"/"bored"/"about to leave". 
 
 EVENT: 
 - If is_Full l'évènement sur la carte est grisée, on ne peut pas cliquer dessus et aucun utilisateur ne peut le rejoindre
