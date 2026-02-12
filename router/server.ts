@@ -2,7 +2,7 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import { UserController } from "../controller/userController";
-import { JoinRequestController} from "../controller/joinRequestController";
+import { JoinRequestController } from "../controller/joinRequestController";
 import { FriendRequestController } from "../controller/friendRequestController";
 import { EventController } from "../controller/eventController";
 
@@ -71,60 +71,74 @@ router.post(
   },
 );
 
-
 // FRIEND REQUEST ENDPOINTS
 
 // operationnal
-router.post("/create/friend-request/:emitter_id/:receiver_id",  async (req: Request, res: Response) => {
+router.post(
+  "/create/friend-request/:emitter_id/:receiver_id",
+  async (req: Request, res: Response) => {
     await friendRequestController.newFriendRequest(req, res);
   },
 );
 
 // operationnal
-router.post("/get/friend-request/:emitter_id/:receiver_id",  async (req: Request, res: Response) => {
+router.post(
+  "/get/friend-request/:emitter_id/:receiver_id",
+  async (req: Request, res: Response) => {
     await friendRequestController.getFriendRequest(req, res);
   },
 );
 
 // operationnal
-router.post("/delete/friend-request/:emitter_id/:receiver_id", async(req: Request, res:Response) => {
-  await friendRequestController.deleteFriendRequest(req, res);
-})
+router.post(
+  "/delete/friend-request/:emitter_id/:receiver_id",
+  async (req: Request, res: Response) => {
+    await friendRequestController.deleteFriendRequest(req, res);
+  },
+);
 
 
 // EVENT ENDPOINTS
+// operationnal
+router.post("/event/create", async (req: Request, res: Response) => {
+  await eventController.newEvent(req, res);
+});
 
 // operationnal
-router.post("/event/create",  async (req: Request, res: Response) => {
-    await eventController.newEvent(req, res);
-  },
-);
+router.post("/event/get/:event_id", async (req: Request, res: Response) => {
+  await eventController.returnEventById(req, res);
+});
 
 // operationnal
-router.post("/event/get/:event_id",  async (req: Request, res: Response) => {
-    await eventController.returnEvent(req, res);
-  },
-);
+router.get("/event/get/all", async (req: Request, res: Response) => {
+  await eventController.getAll(req, res);
+});
 
 // operationnal
 router.post("/event/update/:event_id", async (req: Request, res: Response) => {
   await eventController.updateEvent(req, res);
 });
 
-router.post("/event/addParticipant/:event_id/:user_id", async(req:Request, res:Response)=>{
-  await eventController.addParticipants(req, res);
-})
+// operationnal
+router.post(
+  "/event/addParticipant/:event_id/:user_id",
+  async (req: Request, res: Response) => {
+    await eventController.addParticipants(req, res);
+  },
+);
 
 // operationnal
-router.post("/event/deleteParticipant/:user_id", async(req: Request, res:Response) => {
-  await eventController.deleteParticipant(req, res);
-})
+router.post(
+  "/event/deleteParticipant/:user_id",
+  async (req: Request, res: Response) => {
+    await eventController.deleteParticipant(req, res);
+  },
+);
 
 // operationnal
-router.post("/event/delete/:event_id", async(req: Request, res:Response) => {
+router.post("/event/delete/:event_id", async (req: Request, res: Response) => {
   await eventController.deleteEvent(req, res);
-})
-
+});
 
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);

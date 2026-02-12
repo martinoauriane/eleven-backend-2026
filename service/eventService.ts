@@ -31,6 +31,11 @@ class EventService implements IEventService{
         return await eventStore.getEventById(id);
     }
 
+    async getAllEvents(){
+        let serviceEvents = await eventStore.getAll();
+        return serviceEvents;
+    }
+
     async updateEvent(data: EventUpdate, id: number) {
         return await eventStore.updateEvent(id, data);
     }

@@ -24,7 +24,18 @@ class EventStore implements IEventStore {
 
   async getEventById(id: number) {
     try {
-      return await prisma.event.findUnique({ where: { id } });
+      const event = await prisma.event.findUnique({ where: { id } });
+      return event;
+    } catch (error) {
+      console.error("Prisma retrieve error:", error);
+    }
+  }
+
+  async getAll(){
+    try {
+      let events = await prisma.event.findMany();
+      console.log(events);
+      return events;
     } catch (error) {
       console.error("Prisma retrieve error:", error);
     }

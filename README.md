@@ -39,13 +39,15 @@ DONE:
 // - test friendRequest endpoints (follow the model of JoinRequest, it's exactly the same format)
 // - créer le service Event le store et le controller
 // - tester les endpoints Event
-
-NEXT STEPS: 
-// - Ironic front-end interface in to modelize Figma
 // - créer le store EventPeople, Endpoint et service
 // - Quand des gens supplémentaires sont ajoutés ça correspond à un update 
 // - Tester les endpoints EventPeople
 // - Tester les deux nouvelles méthodes dans l'endpoint Event: ajouter et retirer des participants
+
+TO DO: 
+// - Ironic front-end interface in to modelize Figma
+// - add getAll Method for users 
+// - réfléchir à l'interface du front (Figma)
 
 EVENT: 
 - If is_Full l'évènement sur la carte est grisée, on ne peut pas cliquer dessus et aucun utilisateur ne peut le rejoindre
