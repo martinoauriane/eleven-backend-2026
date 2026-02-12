@@ -11,7 +11,7 @@ Afficher les tables:
 \l
 
 PRISMA 
-bonnes pratiques: 
+> bonnes pratiques: 
 // - delete n'en supprime qu'un seul à la fois 
 // - deleteMany en supprime plusieurs
 
@@ -48,6 +48,16 @@ TO DO:
 // - Ironic front-end interface in to modelize Figma
 // - add getAll Method for users 
 // - réfléchir à l'interface du front (Figma)
+
+ELEVEN FRONT END - REFLECTION: 
+// Bien modéliser le front en amont. Vue, fonctionnalités par vue. 
+// 3 vues principales: 1 vue Map,  1 vue Feed, 1 vue MyProfile (avec un onglet Sent Requests) + option create new Event, 1 vue Settings 
+
+// CARTES (fonctionnalités):
+- 1 toggle button : isVisible/isNotVisible  <=> isOnMap/isNotOnMap
+- Show users on Map 
+- click on a user profile picture (BUTTON: JOIN) -> sends a join request
+- en dessous, un rectangle : Adèle is at Le Petit George. JOIN. Event : "NAME" Participants: 32. Open To Join: "Yes". 
 
 EVENT: 
 - If is_Full l'évènement sur la carte est grisée, on ne peut pas cliquer dessus et aucun utilisateur ne peut le rejoindre
