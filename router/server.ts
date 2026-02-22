@@ -25,31 +25,37 @@ router.get("/", async (req: Request, res: Response) => {
   res.status(200).json("Welcome");
 });
 
+router.post("/user/:id/friends-list", async(req:Request, res:Response) =>{
+  await userController.getUserFriends(req, res)
+})
+
 // operationnal
-router.post("/user-create", async (req: Request, res: Response) => {
+router.post("/user/create", async (req: Request, res: Response) => {
   await userController.newUser(req, res);
 });
 
 // operationnal
-router.post("/get-user", async (req: Request, res: Response) => {
+router.post("/user/get", async (req: Request, res: Response) => {
   await userController.returnUser(req, res);
 });
 
 // operationnal
-router.post("/user-update", async (req: Request, res: Response) => {
+router.post("/user/update", async (req: Request, res: Response) => {
   await userController.updateUser(req, res);
 });
 
 // operationnal
-router.post("/user-delete", async (req: Request, res: Response) => {
+router.post("/user/delete", async (req: Request, res: Response) => {
   await userController.deleteUser(req, res);
 });
+
+// add get a list of friends endpoint
 
 // JOIN REQUEST ENDPOINTS
 
 // operationnal
 router.post(
-  "/create/join-request/:emitter_id/:receiver_id",
+  "/join-request/create/:emitter_id/:receiver_id",
   async (req: Request, res: Response) => {
     await joinRequestController.newJoinRequest(req, res);
   },
@@ -57,7 +63,7 @@ router.post(
 
 // operationnal
 router.post(
-  "/get/join-request/:emitter_id/:receiver_id",
+  "/join-request/get/:emitter_id/:receiver_id",
   async (req: Request, res: Response) => {
     await joinRequestController.getJoinRequest(req, res);
   },
@@ -65,7 +71,7 @@ router.post(
 
 // operationnal
 router.post(
-  "/delete/join-request/:emitter_id/:receiver_id",
+  "/join-request/delete/:emitter_id/:receiver_id",
   async (req: Request, res: Response) => {
     await joinRequestController.deleteJoinRequest(req, res);
   },
@@ -75,7 +81,7 @@ router.post(
 
 // operationnal
 router.post(
-  "/create/friend-request/:emitter_id/:receiver_id",
+  "/friend-request/create/:emitter_id/:receiver_id",
   async (req: Request, res: Response) => {
     await friendRequestController.newFriendRequest(req, res);
   },
@@ -83,7 +89,7 @@ router.post(
 
 // operationnal
 router.post(
-  "/get/friend-request/:emitter_id/:receiver_id",
+  "/friend-request/get/:emitter_id/:receiver_id",
   async (req: Request, res: Response) => {
     await friendRequestController.getFriendRequest(req, res);
   },
@@ -91,7 +97,7 @@ router.post(
 
 // operationnal
 router.post(
-  "/delete/friend-request/:emitter_id/:receiver_id",
+  "/friend-request/delete/:emitter_id/:receiver_id",
   async (req: Request, res: Response) => {
     await friendRequestController.deleteFriendRequest(req, res);
   },

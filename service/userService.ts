@@ -1,41 +1,48 @@
-import {UserStore} from "../store/userStore";
+import { UserStore } from "../store/userStore";
 import { hashPassword } from "./utils/hash";
-import { UserCreate, UserData, UserUpdate } from "../store/interfaces/userInterfaces";
+import {
+  UserCreate,
+  UserData,
+  UserUpdate,
+} from "../store/interfaces/userInterfaces";
 
 const userStore = new UserStore();
 
 interface UserService {
-    createUser(data: UserCreate): Promise<any>;
-    getUserById(id: number): Promise<any>;
-    updateUser(data:UserUpdate, id: number): Promise<any>;
-    deleteUser(id: number): Promise<any>;
+  createUser(data: UserCreate): Promise<any>;
+  getUserById(id: number): Promise<any>;
+  updateUser(data: UserUpdate, id: number): Promise<any>;
+  deleteUser(id: number): Promise<any>;
 }
 
 class UserService {
+  async createUser(user: UserCreate): Promise<any> {
+    const passwordHash = await hashPassword(String(user.password));
+    const userData: UserCreate = {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      homeAddress: user.homeAddress,
+      password: passwordHash,
+    };
+    return await userStore.createUser(userData);
+  }
 
-    async createUser(user:UserCreate): Promise<any> {
-        const passwordHash = await hashPassword(String(user.password));
-        const userData: UserCreate = {
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
-            homeAddress: user.homeAddress,
-            password: passwordHash
-        };
-        return await userStore.createUser(userData);
-    }
+  async getUserFriends(userId: number): Promise<any> {
+    return await userStore.getUserFriends(userId);
+  }
 
-    async getUserById(id: number) {
-        return await userStore.getUserById(id);
-    }
+  async getUserById(id: number) {
+    return await userStore.getUserById(id);
+  }
 
-    async updateUser(data: UserUpdate, id: number) {
-        return await userStore.updateUser(id, data);
-    }
+  async updateUser(data: UserUpdate, id: number) {
+    return await userStore.updateUser(id, data);
+  }
 
-    async deleteUser(id: number) {
-        return await userStore.deleteUser(id);
-    }
+  async deleteUser(id: number) {
+    return await userStore.deleteUser(id);
+  }
 }
 
 export { UserService };

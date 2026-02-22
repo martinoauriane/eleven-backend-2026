@@ -26,6 +26,17 @@ class UserStore implements IUserStore {
     }
   }
 
+  async getUserFriends(id: number) {
+    try {
+      return await prisma.user.findMany({
+        where: { id },
+        include: { friend: true },
+      });
+    } catch (error) {
+      console.error("Prisma retrieve error:", error);
+    }
+  }
+
   async updateUser(id: number, data: UserUpdate) {
     try {
       return await prisma.user.update({

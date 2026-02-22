@@ -23,6 +23,21 @@ class UserController {
     }
     }
 
+
+    async getUserFriends(req: Request, res: Response){
+        const userId = req.params.id;
+         try {
+            const friendsList = await userService.getUserFriends(userId);
+            if (friendsList) {
+                res.status(200).json(friendsList);
+            } else {
+                res.status(404).json({ error: "Error returning user friends list" });
+            }
+        } catch (error) {
+            res.status(500).json({ error: "Error returning user friends list" });
+        }
+    }
+
     async returnUser(req: Request, res: Response) {
         const id = Number(req.body.id);
         try {
