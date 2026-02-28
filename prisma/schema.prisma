@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                     Int             @id @default(autoincrement())
+  firstName              String
+  lastName               String
+  email                  String          @unique
+  picture                String?
+  password               String
+  homeAddress            String?
+  isOnline               Boolean         @default(false)
+  isOnMap                Boolean         @default(false)
+  userLat                Float?
+  userLon                Float?
+  status                 String          @default("Wants to go out")
+  lastLogin              DateTime        @default(now())
+  partyAddress           String?
+  partyLat               Float?
+  partyLon               Float?
+  friendsNumber          Int             @default(0)
+  partyId                Int?
+
+  // relations
+
+  // events created by user
+  eventsCreated          Event[]         @relation("EventCreator")
+
+  // event attended by user
+  attendingEventId       Int?
+  attendingEvent        Event?        @relation("EventParticipants", fields: [attendingEventId], references: [id])
+  
+  // friendRequests
+  sentFriendRequests     FriendRequest[] @relation("EmitterFriendRequest")
+  receivedFriendRequests FriendRequest[] @relation("ReceiverFriendRequest")
+
+  // joinRequests
+  sentJoinRequests       JoinRequest[]   @relation("EmitterJoinRequest")
+  receivedJoinRequests   JoinRequest[]   @relation("ReceiverJoinRequest")
+}
+
+model Event {
+  id             Int      @id @default(autoincrement())
+  eventName      String?  @default("Drinks with friends") // "Drinks with friends" | "Flat-party" | "Night out clubbing" | "Concert"
+  eventLat       Float
+  eventLon       Float
+  eventAddress   String
+  eventPictures  String[]
+  eventTags      String[]
+  eventType      String? // flat-party // clubbing night out // drinks with friends
+  city           String
+  country        String
+  isFull         Boolean  @default(false)
+  // relations
+  
+  // creator relation (1-N)
+  eventCreatorId Int
+  createdBy      User     @relation("EventCreator", fields: [eventCreatorId], references: [id])
+  // isFull Boolean
+  participants    User[]   @relation("EventParticipants")
+}
+
+model JoinRequest {
+  id         Int      @id @default(autoincrement())
+  sentAt     DateTime @default(now())
+  isAccepted Boolean  @default(false)
+  emitterId  Int
+  receiverId Int
+  // relations
+  // emitter et receiver sont des relations Prisma et ne devraient pas être passées lors de la création
+  emitter    User     @relation("EmitterJoinRequest", fields: [emitterId], references: [id])
+  receiver   User     @relation("ReceiverJoinRequest", fields: [receiverId], references: [id])
+}
+
+model FriendRequest {
+  id         Int      @id @default(autoincrement())
+  sentAt     DateTime @default(now())
+  isAccepted Boolean  @default(false)
+  emitterId  Int
+  receiverId Int
+
+  // relations
+  emitter    User     @relation("EmitterFriendRequest", fields: [emitterId], references: [id])
+  receiver   User     @relation("ReceiverFriendRequest", fields: [receiverId], references: [id])
+}

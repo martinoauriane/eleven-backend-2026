@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "FriendRequest" ADD COLUMN     "isAccepted" BOOLEAN NOT NULL DEFAULT false,
-ALTER COLUMN "sentAt" SET DEFAULT CURRENT_TIMESTAMP;
