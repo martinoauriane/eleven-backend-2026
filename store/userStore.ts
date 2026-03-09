@@ -1,6 +1,6 @@
 import "dotenv/config"; // ⚡ force le chargement de ton .env
 import { UserCreate, UserUpdate, UserData } from "./interfaces/userInterfaces";
-import { prisma } from "../prisma/generated/lib/prisma";
+import { prisma } from "../prisma/lib/prisma";
 
 
 interface IUserStore {
@@ -32,7 +32,7 @@ class UserStore implements IUserStore {
     try {
       return await prisma.user.findMany({
         where: { id: idNum },
-        include: { friend: true },
+        include: { friends: true },
       });
     } catch (error) {
       console.error("Prisma retrieve error:", error);

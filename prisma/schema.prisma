@@ -32,6 +32,10 @@ model User {
   // events created by user
   eventsCreated          Event[]         @relation("EventCreator")
 
+  // user friends
+  friends        User[] @relation("UserFriends")
+  friendOf       User[] @relation("UserFriends")
+
   // event attended by user
   attendingEventId       Int?
   attendingEvent        Event?        @relation("EventParticipants", fields: [attendingEventId], references: [id])

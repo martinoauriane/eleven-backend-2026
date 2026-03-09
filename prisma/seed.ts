@@ -1,5 +1,5 @@
 import 'dotenv/config';  // ⚡ force le chargement de ton .env
-import { prisma } from "../prisma";
+import { prisma } from "./lib";
 
 async function main() {
   const alice = await prisma.user.create({

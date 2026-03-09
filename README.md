@@ -3,7 +3,7 @@ Installer Express:
 npm install express
 
 Lancer le serveur: 
-- 
+npm run serve
 
 BASE DE DONNEES
 PSQL
@@ -14,15 +14,15 @@ Afficher les tables:
 \l
 
 PRISMA
-
 > bonnes pratiques:
 > // - delete n'en supprime qu'un seul à la fois
 > // - deleteMany en supprime plusieurs
 
+FAIRE UNE MIGRATION (EN DEUX TEMPS)
 1. Faire une migration:
    npx prisma migrate dev
 
-2. générer le client:
+2. Puis, il faut nécessairement re-générer le client:
    npx prisma generate
 
 Vérifier que Prisma est bien connectée à la db:
