@@ -2,6 +2,9 @@ SERVER
 Installer Express:
 npm install express
 
+Lancer le serveur: 
+- 
+
 BASE DE DONNEES
 PSQL
 Se connecter à la db:

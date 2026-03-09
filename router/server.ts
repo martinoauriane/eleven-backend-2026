@@ -25,7 +25,7 @@ router.get("/", async (req: Request, res: Response) => {
   res.status(200).json("Welcome");
 });
 
-router.post("/user/:id/friends-list", async(req:Request, res:Response) =>{
+router.post("/user/friends-list/:id", async(req:Request, res:Response) =>{
   await userController.getUserFriends(req, res)
 })
 
@@ -106,7 +106,7 @@ router.post(
 
 // EVENT ENDPOINTS
 // operationnal
-router.post("/event/create", async (req: Request, res: Response) => {
+router.post("/event/create/:userId", async (req: Request, res: Response) => {
   await eventController.newEvent(req, res);
 });
 

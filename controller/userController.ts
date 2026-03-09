@@ -25,9 +25,9 @@ class UserController {
 
 
     async getUserFriends(req: Request, res: Response){
-        const userId = req.params.id;
+        const id : string = String(req.params.id);
          try {
-            const friendsList = await userService.getUserFriends(userId);
+            const friendsList = await userService.getUserFriends(id);
             if (friendsList) {
                 res.status(200).json(friendsList);
             } else {

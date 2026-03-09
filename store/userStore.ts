@@ -1,6 +1,7 @@
 import "dotenv/config"; // ⚡ force le chargement de ton .env
-import { prisma } from "../prisma";
 import { UserCreate, UserUpdate, UserData } from "./interfaces/userInterfaces";
+import { prisma } from "../prisma/generated/lib/prisma";
+
 
 interface IUserStore {
   createUser(data: UserCreate): Promise<any>;
@@ -26,10 +27,11 @@ class UserStore implements IUserStore {
     }
   }
 
-  async getUserFriends(id: number) {
+  async getUserFriends(id: string) {
+    const idNum = parseInt(id);
     try {
       return await prisma.user.findMany({
-        where: { id },
+        where: { id: idNum },
         include: { friend: true },
       });
     } catch (error) {

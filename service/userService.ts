@@ -28,7 +28,7 @@ class UserService {
     return await userStore.createUser(userData);
   }
 
-  async getUserFriends(userId: number): Promise<any> {
+  async getUserFriends(userId: string): Promise<any> {
     return await userStore.getUserFriends(userId);
   }
 

@@ -14,15 +14,16 @@ class EventService implements IEventService{
 
     async createEvent(data:EventCreate): Promise<any> {
         const EventData: EventCreate = {
+            userId:data.userId,
             eventName: data.eventName,
+            eventType: data.eventType, 
+            eventAddress:data.eventAddress,
             eventLat: data.eventLat,
             eventLon:data.eventLon,
-            eventAddress:data.eventAddress,
-            city:data.city,
-            country:data.country,
-            eventType: data.eventType, 
-            userId:data.userId,
-            eventCreatorId: data.eventCreatorId,
+            eventCity:data.eventCity,
+            eventCountry: data.eventCountry,
+            isFull: data.isFull, 
+            isPublic: data.isPublic,
         };
         return await eventStore.createEvent(EventData);
     }
