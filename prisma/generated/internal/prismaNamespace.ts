@@ -385,6 +385,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
+  UserSituation: 'UserSituation',
   Event: 'Event',
   JoinRequest: 'JoinRequest',
   FriendRequest: 'FriendRequest'
@@ -403,7 +404,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "event" | "joinRequest" | "friendRequest"
+    modelProps: "user" | "userSituation" | "event" | "joinRequest" | "friendRequest"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -478,6 +479,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserSituation: {
+      payload: Prisma.$UserSituationPayload<ExtArgs>
+      fields: Prisma.UserSituationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserSituationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSituationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserSituationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSituationPayload>
+        }
+        findFirst: {
+          args: Prisma.UserSituationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSituationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserSituationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSituationPayload>
+        }
+        findMany: {
+          args: Prisma.UserSituationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSituationPayload>[]
+        }
+        create: {
+          args: Prisma.UserSituationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSituationPayload>
+        }
+        createMany: {
+          args: Prisma.UserSituationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserSituationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSituationPayload>[]
+        }
+        delete: {
+          args: Prisma.UserSituationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSituationPayload>
+        }
+        update: {
+          args: Prisma.UserSituationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSituationPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserSituationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserSituationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserSituationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSituationPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserSituationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSituationPayload>
+        }
+        aggregate: {
+          args: Prisma.UserSituationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserSituation>
+        }
+        groupBy: {
+          args: Prisma.UserSituationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserSituationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserSituationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserSituationCountAggregateOutputType> | number
         }
       }
     }
@@ -767,6 +842,19 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+export const UserSituationScalarFieldEnum = {
+  id: 'id',
+  username: 'username',
+  activity: 'activity',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  address: 'address',
+  picture: 'picture'
+} as const
+
+export type UserSituationScalarFieldEnum = (typeof UserSituationScalarFieldEnum)[keyof typeof UserSituationScalarFieldEnum]
+
+
 export const EventScalarFieldEnum = {
   id: 'id',
   eventName: 'eventName',
@@ -995,6 +1083,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
+  userSituation?: Prisma.UserSituationOmit
   event?: Prisma.EventOmit
   joinRequest?: Prisma.JoinRequestOmit
   friendRequest?: Prisma.FriendRequestOmit

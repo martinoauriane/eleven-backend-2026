@@ -12,7 +12,7 @@ model User {
   firstName              String
   lastName               String
   email                  String          @unique
-  picture                String?
+  picture                String?         @unique
   password               String
   homeAddress            String?
   isOnline               Boolean         @default(false)
@@ -28,6 +28,7 @@ model User {
   partyId                Int?
 
   // relations
+  userPicture UserSituation? 
 
   // events created by user
   eventsCreated          Event[]         @relation("EventCreator")
@@ -47,6 +48,19 @@ model User {
   // joinRequests
   sentJoinRequests       JoinRequest[]   @relation("EmitterJoinRequest")
   receivedJoinRequests   JoinRequest[]   @relation("ReceiverJoinRequest")
+}
+
+model UserSituation {
+  id             Int      @id @default(autoincrement())
+  username String
+  activity String 
+  latitude Int 
+  longitude Int 
+  address String 
+  
+  picture   String?   @unique
+
+  userPicture User? @relation(fields: [picture], references: [picture])
 }
 
 model Event {

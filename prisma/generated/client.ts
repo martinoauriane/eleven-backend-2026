@@ -45,6 +45,11 @@ export { Prisma }
  */
 export type User = Prisma.UserModel
 /**
+ * Model UserSituation
+ * 
+ */
+export type UserSituation = Prisma.UserSituationModel
+/**
  * Model Event
  * 
  */
