@@ -24,6 +24,7 @@ class UserStore implements IUserStore {
       return await prisma.user.findMany();
     } catch(error){
       console.error("Prisma retrieving all users error:", error);
+      throw error;
     }
   }
 

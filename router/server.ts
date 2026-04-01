@@ -33,7 +33,7 @@ router.post("/user/create", async (req: Request, res: Response) => {
   await userController.newUser(req, res);
 });
 
-//new 
+//operationnal
 router.get("/user/all", async(req: Request, res: Response) => {
   await userController.getAll(req, res);
 });
