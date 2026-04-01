@@ -19,25 +19,33 @@ const joinRequestController = new JoinRequestController();
 const friendRequestController = new FriendRequestController();
 const eventController = new EventController();
 
-// USER ENDPOINTS
+
 // operationnal
 router.get("/", async (req: Request, res: Response) => {
   res.status(200).json("Welcome");
 });
 
-router.post("/user/friends-list/:id", async(req:Request, res:Response) =>{
-  await userController.getUserFriends(req, res)
-})
+
+// USER ENDPOINTS
 
 // operationnal
 router.post("/user/create", async (req: Request, res: Response) => {
   await userController.newUser(req, res);
 });
 
+//new 
+router.get("/user/all", async(req: Request, res: Response) => {
+  await userController.getAll(req, res);
+});
+
 // operationnal
-router.post("/user/get", async (req: Request, res: Response) => {
+router.post("/user/:id", async (req: Request, res: Response) => {
   await userController.returnUser(req, res);
 });
+
+router.post("/user/:id/friends", async(req:Request, res:Response) =>{
+  await userController.getUserFriends(req, res)
+})
 
 // operationnal
 router.post("/user/update", async (req: Request, res: Response) => {

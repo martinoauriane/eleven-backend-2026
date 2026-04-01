@@ -28,6 +28,10 @@ class UserService {
     return await userStore.createUser(userData);
   }
 
+  async getAll(){
+    return await userStore.getAllUsers();
+  }
+
   async getUserFriends(userId: string): Promise<any> {
     return await userStore.getUserFriends(userId);
   }

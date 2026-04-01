@@ -19,6 +19,14 @@ class UserStore implements IUserStore {
     }
   }
 
+  async getAllUsers(){
+    try{
+      return await prisma.user.findMany();
+    } catch(error){
+      console.error("Prisma retrieving all users error:", error);
+    }
+  }
+
   async getUserById(id: number) {
     try {
       return await prisma.user.findUnique({ where: { id } });
