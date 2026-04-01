@@ -1,5 +1,5 @@
 import "dotenv/config"; // ⚡ force le chargement de ton .env
-import { prisma } from "../prisma";
+import { prisma } from "../prisma/lib/prisma";
 import { EventCreate, EventUpdate, EventData } from "./interfaces/eventInterfaces";
 import { UserStore } from "./userStore";
 

@@ -9,6 +9,9 @@ export interface EventCreate{
   eventCountry: string;
   isFull: boolean;
   isPublic: boolean;
+  city: string
+  country: string
+  eventCreatorId: number
 } 
 
 export interface EventUpdate {

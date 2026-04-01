@@ -1,7 +1,6 @@
 import "dotenv/config"; // ⚡ force le chargement de ton .env
-import { prisma } from "../prisma";
+import { prisma } from "../prisma/lib/prisma";
 import { JoinRequestCreate, JoinRequestData } from "./interfaces/joinRequestInterfaces";
-import { JoinRequest } from "../generated/client";
 
 interface IJoinRequestStore {
   CreateJoinRequest(data: JoinRequestCreate): Promise<any>;
