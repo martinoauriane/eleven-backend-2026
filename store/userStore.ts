@@ -2,7 +2,6 @@ import "dotenv/config"; // ⚡ force le chargement de ton .env
 import { UserCreate, UserUpdate, UserData } from "./interfaces/userInterfaces";
 import { prisma } from "../prisma/lib/prisma";
 
-
 interface IUserStore {
   createUser(data: UserCreate): Promise<any>;
   getUserById(id: number): Promise<any>;
@@ -19,10 +18,10 @@ class UserStore implements IUserStore {
     }
   }
 
-  async getAllUsers(){
-    try{
+  async getAllUsers() {
+    try {
       return await prisma.user.findMany();
-    } catch(error){
+    } catch (error) {
       console.error("Prisma retrieving all users error:", error);
       throw error;
     }
@@ -33,6 +32,25 @@ class UserStore implements IUserStore {
       return await prisma.user.findUnique({ where: { id } });
     } catch (error) {
       console.error("Prisma retrieve error:", error);
+    }
+  }
+
+  async addFriend(userId: number, friendId: number) {
+    try {
+      const updatedUser = await prisma.user.update({
+        where: { id: userId },
+        data: {
+          friends: {
+            connect: { id: friendId },
+          },
+        },
+        include: {
+          friends: true,
+        },
+      });
+      return updatedUser;
+    } catch (error) {
+      console.error("Prisma adding friend error:", error);
     }
   }
 

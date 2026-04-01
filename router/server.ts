@@ -38,11 +38,17 @@ router.get("/user/all", async(req: Request, res: Response) => {
   await userController.getAll(req, res);
 });
 
+// add friend method 
+router.post("/user/add-friend", async(req: Request, res:Response) =>{
+  await userController.addFriend(req, res);
+})
+
 // operationnal
 router.post("/user/:id", async (req: Request, res: Response) => {
   await userController.returnUser(req, res);
 });
 
+//operationnal
 router.post("/user/:id/friends", async(req:Request, res:Response) =>{
   await userController.getUserFriends(req, res)
 })

@@ -28,6 +28,9 @@ class UserService {
     return await userStore.createUser(userData);
   }
 
+  async addNewFriend(userId: number, friendId: number){
+    return userStore.addFriend(userId, friendId);
+  }
   async getAll(){
     return await userStore.getAllUsers();
   }
