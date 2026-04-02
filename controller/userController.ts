@@ -31,6 +31,7 @@ class UserController {
   }
 
   async getUserFriends(req: Request, res: Response) {
+    console.log("route has functionned");
     const id: string = String(req.params.id);
     try {
       const friendsList = await userService.getUserFriends(id);

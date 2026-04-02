@@ -50,6 +50,7 @@ router.post("/user/:id", async (req: Request, res: Response) => {
 
 //operationnal
 router.post("/user/:id/friends", async(req:Request, res:Response) =>{
+  console.log("route hit");
   await userController.getUserFriends(req, res)
 })
 

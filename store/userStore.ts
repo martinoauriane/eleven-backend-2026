@@ -56,11 +56,15 @@ class UserStore implements IUserStore {
 
   async getUserFriends(id: string) {
     const idNum = parseInt(id);
+    console.log("idNum", idNum);
     try {
-      return await prisma.user.findMany({
+      const user = await prisma.user.findUnique({
         where: { id: idNum },
         include: { friends: true },
       });
+      const userArrayFriends = user?.friends;
+      console.log("userArray Friends", userArrayFriends);
+      return userArrayFriends;
     } catch (error) {
       console.error("Prisma retrieve error:", error);
     }
