@@ -46,7 +46,8 @@ class UserController {
   }
 
   async returnUser(req: Request, res: Response) {
-    const id = Number(req.body.id);
+    const id = Number(req.params.id);
+    console.log("user id", id);
     try {
       const user = await userService.getUserById(id);
       if (user) {
