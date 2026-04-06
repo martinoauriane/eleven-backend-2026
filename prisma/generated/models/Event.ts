@@ -30,55 +30,56 @@ export type EventAvgAggregateOutputType = {
   id: number | null
   eventLat: number | null
   eventLon: number | null
-  eventCreatorId: number | null
+  userId: number | null
 }
 
 export type EventSumAggregateOutputType = {
   id: number | null
   eventLat: number | null
   eventLon: number | null
-  eventCreatorId: number | null
+  userId: number | null
 }
 
 export type EventMinAggregateOutputType = {
   id: number | null
   eventName: string | null
+  eventType: string | null
   eventLat: number | null
   eventLon: number | null
   eventAddress: string | null
-  eventType: string | null
-  city: string | null
-  country: string | null
+  eventCity: string | null
+  eventCountry: string | null
   isFull: boolean | null
-  eventCreatorId: number | null
+  isPublic: boolean | null
+  userId: number | null
 }
 
 export type EventMaxAggregateOutputType = {
   id: number | null
   eventName: string | null
+  eventType: string | null
   eventLat: number | null
   eventLon: number | null
   eventAddress: string | null
-  eventType: string | null
-  city: string | null
-  country: string | null
+  eventCity: string | null
+  eventCountry: string | null
   isFull: boolean | null
-  eventCreatorId: number | null
+  isPublic: boolean | null
+  userId: number | null
 }
 
 export type EventCountAggregateOutputType = {
   id: number
   eventName: number
+  eventType: number
   eventLat: number
   eventLon: number
   eventAddress: number
-  eventPictures: number
-  eventTags: number
-  eventType: number
-  city: number
-  country: number
+  eventCity: number
+  eventCountry: number
   isFull: number
-  eventCreatorId: number
+  isPublic: number
+  userId: number
   _all: number
 }
 
@@ -87,55 +88,56 @@ export type EventAvgAggregateInputType = {
   id?: true
   eventLat?: true
   eventLon?: true
-  eventCreatorId?: true
+  userId?: true
 }
 
 export type EventSumAggregateInputType = {
   id?: true
   eventLat?: true
   eventLon?: true
-  eventCreatorId?: true
+  userId?: true
 }
 
 export type EventMinAggregateInputType = {
   id?: true
   eventName?: true
+  eventType?: true
   eventLat?: true
   eventLon?: true
   eventAddress?: true
-  eventType?: true
-  city?: true
-  country?: true
+  eventCity?: true
+  eventCountry?: true
   isFull?: true
-  eventCreatorId?: true
+  isPublic?: true
+  userId?: true
 }
 
 export type EventMaxAggregateInputType = {
   id?: true
   eventName?: true
+  eventType?: true
   eventLat?: true
   eventLon?: true
   eventAddress?: true
-  eventType?: true
-  city?: true
-  country?: true
+  eventCity?: true
+  eventCountry?: true
   isFull?: true
-  eventCreatorId?: true
+  isPublic?: true
+  userId?: true
 }
 
 export type EventCountAggregateInputType = {
   id?: true
   eventName?: true
+  eventType?: true
   eventLat?: true
   eventLon?: true
   eventAddress?: true
-  eventPictures?: true
-  eventTags?: true
-  eventType?: true
-  city?: true
-  country?: true
+  eventCity?: true
+  eventCountry?: true
   isFull?: true
-  eventCreatorId?: true
+  isPublic?: true
+  userId?: true
   _all?: true
 }
 
@@ -228,16 +230,15 @@ export type EventGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type EventGroupByOutputType = {
   id: number
   eventName: string
+  eventType: string | null
   eventLat: number
   eventLon: number
   eventAddress: string
-  eventPictures: string[]
-  eventTags: string[]
-  eventType: string | null
-  city: string
-  country: string
+  eventCity: string
+  eventCountry: string
   isFull: boolean
-  eventCreatorId: number
+  isPublic: boolean
+  userId: number
   _count: EventCountAggregateOutputType | null
   _avg: EventAvgAggregateOutputType | null
   _sum: EventSumAggregateOutputType | null
@@ -266,16 +267,15 @@ export type EventWhereInput = {
   NOT?: Prisma.EventWhereInput | Prisma.EventWhereInput[]
   id?: Prisma.IntFilter<"Event"> | number
   eventName?: Prisma.StringFilter<"Event"> | string
+  eventType?: Prisma.StringNullableFilter<"Event"> | string | null
   eventLat?: Prisma.FloatFilter<"Event"> | number
   eventLon?: Prisma.FloatFilter<"Event"> | number
   eventAddress?: Prisma.StringFilter<"Event"> | string
-  eventPictures?: Prisma.StringNullableListFilter<"Event">
-  eventTags?: Prisma.StringNullableListFilter<"Event">
-  eventType?: Prisma.StringNullableFilter<"Event"> | string | null
-  city?: Prisma.StringFilter<"Event"> | string
-  country?: Prisma.StringFilter<"Event"> | string
+  eventCity?: Prisma.StringFilter<"Event"> | string
+  eventCountry?: Prisma.StringFilter<"Event"> | string
   isFull?: Prisma.BoolFilter<"Event"> | boolean
-  eventCreatorId?: Prisma.IntFilter<"Event"> | number
+  isPublic?: Prisma.BoolFilter<"Event"> | boolean
+  userId?: Prisma.IntFilter<"Event"> | number
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   favoritedBy?: Prisma.UserListRelationFilter
   participants?: Prisma.UserListRelationFilter
@@ -284,16 +284,15 @@ export type EventWhereInput = {
 export type EventOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   eventName?: Prisma.SortOrder
+  eventType?: Prisma.SortOrderInput | Prisma.SortOrder
   eventLat?: Prisma.SortOrder
   eventLon?: Prisma.SortOrder
   eventAddress?: Prisma.SortOrder
-  eventPictures?: Prisma.SortOrder
-  eventTags?: Prisma.SortOrder
-  eventType?: Prisma.SortOrderInput | Prisma.SortOrder
-  city?: Prisma.SortOrder
-  country?: Prisma.SortOrder
+  eventCity?: Prisma.SortOrder
+  eventCountry?: Prisma.SortOrder
   isFull?: Prisma.SortOrder
-  eventCreatorId?: Prisma.SortOrder
+  isPublic?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   createdBy?: Prisma.UserOrderByWithRelationInput
   favoritedBy?: Prisma.UserOrderByRelationAggregateInput
   participants?: Prisma.UserOrderByRelationAggregateInput
@@ -305,16 +304,15 @@ export type EventWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.EventWhereInput[]
   NOT?: Prisma.EventWhereInput | Prisma.EventWhereInput[]
   eventName?: Prisma.StringFilter<"Event"> | string
+  eventType?: Prisma.StringNullableFilter<"Event"> | string | null
   eventLat?: Prisma.FloatFilter<"Event"> | number
   eventLon?: Prisma.FloatFilter<"Event"> | number
   eventAddress?: Prisma.StringFilter<"Event"> | string
-  eventPictures?: Prisma.StringNullableListFilter<"Event">
-  eventTags?: Prisma.StringNullableListFilter<"Event">
-  eventType?: Prisma.StringNullableFilter<"Event"> | string | null
-  city?: Prisma.StringFilter<"Event"> | string
-  country?: Prisma.StringFilter<"Event"> | string
+  eventCity?: Prisma.StringFilter<"Event"> | string
+  eventCountry?: Prisma.StringFilter<"Event"> | string
   isFull?: Prisma.BoolFilter<"Event"> | boolean
-  eventCreatorId?: Prisma.IntFilter<"Event"> | number
+  isPublic?: Prisma.BoolFilter<"Event"> | boolean
+  userId?: Prisma.IntFilter<"Event"> | number
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   favoritedBy?: Prisma.UserListRelationFilter
   participants?: Prisma.UserListRelationFilter
@@ -323,16 +321,15 @@ export type EventWhereUniqueInput = Prisma.AtLeast<{
 export type EventOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   eventName?: Prisma.SortOrder
+  eventType?: Prisma.SortOrderInput | Prisma.SortOrder
   eventLat?: Prisma.SortOrder
   eventLon?: Prisma.SortOrder
   eventAddress?: Prisma.SortOrder
-  eventPictures?: Prisma.SortOrder
-  eventTags?: Prisma.SortOrder
-  eventType?: Prisma.SortOrderInput | Prisma.SortOrder
-  city?: Prisma.SortOrder
-  country?: Prisma.SortOrder
+  eventCity?: Prisma.SortOrder
+  eventCountry?: Prisma.SortOrder
   isFull?: Prisma.SortOrder
-  eventCreatorId?: Prisma.SortOrder
+  isPublic?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   _count?: Prisma.EventCountOrderByAggregateInput
   _avg?: Prisma.EventAvgOrderByAggregateInput
   _max?: Prisma.EventMaxOrderByAggregateInput
@@ -346,29 +343,27 @@ export type EventScalarWhereWithAggregatesInput = {
   NOT?: Prisma.EventScalarWhereWithAggregatesInput | Prisma.EventScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Event"> | number
   eventName?: Prisma.StringWithAggregatesFilter<"Event"> | string
+  eventType?: Prisma.StringNullableWithAggregatesFilter<"Event"> | string | null
   eventLat?: Prisma.FloatWithAggregatesFilter<"Event"> | number
   eventLon?: Prisma.FloatWithAggregatesFilter<"Event"> | number
   eventAddress?: Prisma.StringWithAggregatesFilter<"Event"> | string
-  eventPictures?: Prisma.StringNullableListFilter<"Event">
-  eventTags?: Prisma.StringNullableListFilter<"Event">
-  eventType?: Prisma.StringNullableWithAggregatesFilter<"Event"> | string | null
-  city?: Prisma.StringWithAggregatesFilter<"Event"> | string
-  country?: Prisma.StringWithAggregatesFilter<"Event"> | string
+  eventCity?: Prisma.StringWithAggregatesFilter<"Event"> | string
+  eventCountry?: Prisma.StringWithAggregatesFilter<"Event"> | string
   isFull?: Prisma.BoolWithAggregatesFilter<"Event"> | boolean
-  eventCreatorId?: Prisma.IntWithAggregatesFilter<"Event"> | number
+  isPublic?: Prisma.BoolWithAggregatesFilter<"Event"> | boolean
+  userId?: Prisma.IntWithAggregatesFilter<"Event"> | number
 }
 
 export type EventCreateInput = {
   eventName?: string
+  eventType?: string | null
   eventLat: number
   eventLon: number
   eventAddress: string
-  eventPictures?: Prisma.EventCreateeventPicturesInput | string[]
-  eventTags?: Prisma.EventCreateeventTagsInput | string[]
-  eventType?: string | null
-  city: string
-  country: string
+  eventCity: string
+  eventCountry: string
   isFull?: boolean
+  isPublic?: boolean
   createdBy: Prisma.UserCreateNestedOneWithoutEventsCreatedInput
   favoritedBy?: Prisma.UserCreateNestedManyWithoutFavoritesInput
   participants?: Prisma.UserCreateNestedManyWithoutAttendingEventInput
@@ -377,31 +372,29 @@ export type EventCreateInput = {
 export type EventUncheckedCreateInput = {
   id?: number
   eventName?: string
+  eventType?: string | null
   eventLat: number
   eventLon: number
   eventAddress: string
-  eventPictures?: Prisma.EventCreateeventPicturesInput | string[]
-  eventTags?: Prisma.EventCreateeventTagsInput | string[]
-  eventType?: string | null
-  city: string
-  country: string
+  eventCity: string
+  eventCountry: string
   isFull?: boolean
-  eventCreatorId: number
+  isPublic?: boolean
+  userId: number
   favoritedBy?: Prisma.UserUncheckedCreateNestedManyWithoutFavoritesInput
   participants?: Prisma.UserUncheckedCreateNestedManyWithoutAttendingEventInput
 }
 
 export type EventUpdateInput = {
   eventName?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   eventLat?: Prisma.FloatFieldUpdateOperationsInput | number
   eventLon?: Prisma.FloatFieldUpdateOperationsInput | number
   eventAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  eventPictures?: Prisma.EventUpdateeventPicturesInput | string[]
-  eventTags?: Prisma.EventUpdateeventTagsInput | string[]
-  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  country?: Prisma.StringFieldUpdateOperationsInput | string
+  eventCity?: Prisma.StringFieldUpdateOperationsInput | string
+  eventCountry?: Prisma.StringFieldUpdateOperationsInput | string
   isFull?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.UserUpdateOneRequiredWithoutEventsCreatedNestedInput
   favoritedBy?: Prisma.UserUpdateManyWithoutFavoritesNestedInput
   participants?: Prisma.UserUpdateManyWithoutAttendingEventNestedInput
@@ -410,16 +403,15 @@ export type EventUpdateInput = {
 export type EventUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   eventName?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   eventLat?: Prisma.FloatFieldUpdateOperationsInput | number
   eventLon?: Prisma.FloatFieldUpdateOperationsInput | number
   eventAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  eventPictures?: Prisma.EventUpdateeventPicturesInput | string[]
-  eventTags?: Prisma.EventUpdateeventTagsInput | string[]
-  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  country?: Prisma.StringFieldUpdateOperationsInput | string
+  eventCity?: Prisma.StringFieldUpdateOperationsInput | string
+  eventCountry?: Prisma.StringFieldUpdateOperationsInput | string
   isFull?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  eventCreatorId?: Prisma.IntFieldUpdateOperationsInput | number
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   favoritedBy?: Prisma.UserUncheckedUpdateManyWithoutFavoritesNestedInput
   participants?: Prisma.UserUncheckedUpdateManyWithoutAttendingEventNestedInput
 }
@@ -427,44 +419,41 @@ export type EventUncheckedUpdateInput = {
 export type EventCreateManyInput = {
   id?: number
   eventName?: string
+  eventType?: string | null
   eventLat: number
   eventLon: number
   eventAddress: string
-  eventPictures?: Prisma.EventCreateeventPicturesInput | string[]
-  eventTags?: Prisma.EventCreateeventTagsInput | string[]
-  eventType?: string | null
-  city: string
-  country: string
+  eventCity: string
+  eventCountry: string
   isFull?: boolean
-  eventCreatorId: number
+  isPublic?: boolean
+  userId: number
 }
 
 export type EventUpdateManyMutationInput = {
   eventName?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   eventLat?: Prisma.FloatFieldUpdateOperationsInput | number
   eventLon?: Prisma.FloatFieldUpdateOperationsInput | number
   eventAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  eventPictures?: Prisma.EventUpdateeventPicturesInput | string[]
-  eventTags?: Prisma.EventUpdateeventTagsInput | string[]
-  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  country?: Prisma.StringFieldUpdateOperationsInput | string
+  eventCity?: Prisma.StringFieldUpdateOperationsInput | string
+  eventCountry?: Prisma.StringFieldUpdateOperationsInput | string
   isFull?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type EventUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   eventName?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   eventLat?: Prisma.FloatFieldUpdateOperationsInput | number
   eventLon?: Prisma.FloatFieldUpdateOperationsInput | number
   eventAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  eventPictures?: Prisma.EventUpdateeventPicturesInput | string[]
-  eventTags?: Prisma.EventUpdateeventTagsInput | string[]
-  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  country?: Prisma.StringFieldUpdateOperationsInput | string
+  eventCity?: Prisma.StringFieldUpdateOperationsInput | string
+  eventCountry?: Prisma.StringFieldUpdateOperationsInput | string
   isFull?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  eventCreatorId?: Prisma.IntFieldUpdateOperationsInput | number
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type EventListRelationFilter = {
@@ -482,67 +471,60 @@ export type EventOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type StringNullableListFilter<$PrismaModel = never> = {
-  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
-  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
-  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  isEmpty?: boolean
-}
-
 export type EventCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   eventName?: Prisma.SortOrder
+  eventType?: Prisma.SortOrder
   eventLat?: Prisma.SortOrder
   eventLon?: Prisma.SortOrder
   eventAddress?: Prisma.SortOrder
-  eventPictures?: Prisma.SortOrder
-  eventTags?: Prisma.SortOrder
-  eventType?: Prisma.SortOrder
-  city?: Prisma.SortOrder
-  country?: Prisma.SortOrder
+  eventCity?: Prisma.SortOrder
+  eventCountry?: Prisma.SortOrder
   isFull?: Prisma.SortOrder
-  eventCreatorId?: Prisma.SortOrder
+  isPublic?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
 }
 
 export type EventAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   eventLat?: Prisma.SortOrder
   eventLon?: Prisma.SortOrder
-  eventCreatorId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
 }
 
 export type EventMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   eventName?: Prisma.SortOrder
+  eventType?: Prisma.SortOrder
   eventLat?: Prisma.SortOrder
   eventLon?: Prisma.SortOrder
   eventAddress?: Prisma.SortOrder
-  eventType?: Prisma.SortOrder
-  city?: Prisma.SortOrder
-  country?: Prisma.SortOrder
+  eventCity?: Prisma.SortOrder
+  eventCountry?: Prisma.SortOrder
   isFull?: Prisma.SortOrder
-  eventCreatorId?: Prisma.SortOrder
+  isPublic?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
 }
 
 export type EventMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   eventName?: Prisma.SortOrder
+  eventType?: Prisma.SortOrder
   eventLat?: Prisma.SortOrder
   eventLon?: Prisma.SortOrder
   eventAddress?: Prisma.SortOrder
-  eventType?: Prisma.SortOrder
-  city?: Prisma.SortOrder
-  country?: Prisma.SortOrder
+  eventCity?: Prisma.SortOrder
+  eventCountry?: Prisma.SortOrder
   isFull?: Prisma.SortOrder
-  eventCreatorId?: Prisma.SortOrder
+  isPublic?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
 }
 
 export type EventSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   eventLat?: Prisma.SortOrder
   eventLon?: Prisma.SortOrder
-  eventCreatorId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
 }
 
 export type EventCreateNestedManyWithoutCreatedByInput = {
@@ -641,35 +623,16 @@ export type EventUncheckedUpdateManyWithoutFavoritedByNestedInput = {
   deleteMany?: Prisma.EventScalarWhereInput | Prisma.EventScalarWhereInput[]
 }
 
-export type EventCreateeventPicturesInput = {
-  set: string[]
-}
-
-export type EventCreateeventTagsInput = {
-  set: string[]
-}
-
-export type EventUpdateeventPicturesInput = {
-  set?: string[]
-  push?: string | string[]
-}
-
-export type EventUpdateeventTagsInput = {
-  set?: string[]
-  push?: string | string[]
-}
-
 export type EventCreateWithoutCreatedByInput = {
   eventName?: string
+  eventType?: string | null
   eventLat: number
   eventLon: number
   eventAddress: string
-  eventPictures?: Prisma.EventCreateeventPicturesInput | string[]
-  eventTags?: Prisma.EventCreateeventTagsInput | string[]
-  eventType?: string | null
-  city: string
-  country: string
+  eventCity: string
+  eventCountry: string
   isFull?: boolean
+  isPublic?: boolean
   favoritedBy?: Prisma.UserCreateNestedManyWithoutFavoritesInput
   participants?: Prisma.UserCreateNestedManyWithoutAttendingEventInput
 }
@@ -677,15 +640,14 @@ export type EventCreateWithoutCreatedByInput = {
 export type EventUncheckedCreateWithoutCreatedByInput = {
   id?: number
   eventName?: string
+  eventType?: string | null
   eventLat: number
   eventLon: number
   eventAddress: string
-  eventPictures?: Prisma.EventCreateeventPicturesInput | string[]
-  eventTags?: Prisma.EventCreateeventTagsInput | string[]
-  eventType?: string | null
-  city: string
-  country: string
+  eventCity: string
+  eventCountry: string
   isFull?: boolean
+  isPublic?: boolean
   favoritedBy?: Prisma.UserUncheckedCreateNestedManyWithoutFavoritesInput
   participants?: Prisma.UserUncheckedCreateNestedManyWithoutAttendingEventInput
 }
@@ -702,15 +664,14 @@ export type EventCreateManyCreatedByInputEnvelope = {
 
 export type EventCreateWithoutFavoritedByInput = {
   eventName?: string
+  eventType?: string | null
   eventLat: number
   eventLon: number
   eventAddress: string
-  eventPictures?: Prisma.EventCreateeventPicturesInput | string[]
-  eventTags?: Prisma.EventCreateeventTagsInput | string[]
-  eventType?: string | null
-  city: string
-  country: string
+  eventCity: string
+  eventCountry: string
   isFull?: boolean
+  isPublic?: boolean
   createdBy: Prisma.UserCreateNestedOneWithoutEventsCreatedInput
   participants?: Prisma.UserCreateNestedManyWithoutAttendingEventInput
 }
@@ -718,16 +679,15 @@ export type EventCreateWithoutFavoritedByInput = {
 export type EventUncheckedCreateWithoutFavoritedByInput = {
   id?: number
   eventName?: string
+  eventType?: string | null
   eventLat: number
   eventLon: number
   eventAddress: string
-  eventPictures?: Prisma.EventCreateeventPicturesInput | string[]
-  eventTags?: Prisma.EventCreateeventTagsInput | string[]
-  eventType?: string | null
-  city: string
-  country: string
+  eventCity: string
+  eventCountry: string
   isFull?: boolean
-  eventCreatorId: number
+  isPublic?: boolean
+  userId: number
   participants?: Prisma.UserUncheckedCreateNestedManyWithoutAttendingEventInput
 }
 
@@ -738,15 +698,14 @@ export type EventCreateOrConnectWithoutFavoritedByInput = {
 
 export type EventCreateWithoutParticipantsInput = {
   eventName?: string
+  eventType?: string | null
   eventLat: number
   eventLon: number
   eventAddress: string
-  eventPictures?: Prisma.EventCreateeventPicturesInput | string[]
-  eventTags?: Prisma.EventCreateeventTagsInput | string[]
-  eventType?: string | null
-  city: string
-  country: string
+  eventCity: string
+  eventCountry: string
   isFull?: boolean
+  isPublic?: boolean
   createdBy: Prisma.UserCreateNestedOneWithoutEventsCreatedInput
   favoritedBy?: Prisma.UserCreateNestedManyWithoutFavoritesInput
 }
@@ -754,16 +713,15 @@ export type EventCreateWithoutParticipantsInput = {
 export type EventUncheckedCreateWithoutParticipantsInput = {
   id?: number
   eventName?: string
+  eventType?: string | null
   eventLat: number
   eventLon: number
   eventAddress: string
-  eventPictures?: Prisma.EventCreateeventPicturesInput | string[]
-  eventTags?: Prisma.EventCreateeventTagsInput | string[]
-  eventType?: string | null
-  city: string
-  country: string
+  eventCity: string
+  eventCountry: string
   isFull?: boolean
-  eventCreatorId: number
+  isPublic?: boolean
+  userId: number
   favoritedBy?: Prisma.UserUncheckedCreateNestedManyWithoutFavoritesInput
 }
 
@@ -794,16 +752,15 @@ export type EventScalarWhereInput = {
   NOT?: Prisma.EventScalarWhereInput | Prisma.EventScalarWhereInput[]
   id?: Prisma.IntFilter<"Event"> | number
   eventName?: Prisma.StringFilter<"Event"> | string
+  eventType?: Prisma.StringNullableFilter<"Event"> | string | null
   eventLat?: Prisma.FloatFilter<"Event"> | number
   eventLon?: Prisma.FloatFilter<"Event"> | number
   eventAddress?: Prisma.StringFilter<"Event"> | string
-  eventPictures?: Prisma.StringNullableListFilter<"Event">
-  eventTags?: Prisma.StringNullableListFilter<"Event">
-  eventType?: Prisma.StringNullableFilter<"Event"> | string | null
-  city?: Prisma.StringFilter<"Event"> | string
-  country?: Prisma.StringFilter<"Event"> | string
+  eventCity?: Prisma.StringFilter<"Event"> | string
+  eventCountry?: Prisma.StringFilter<"Event"> | string
   isFull?: Prisma.BoolFilter<"Event"> | boolean
-  eventCreatorId?: Prisma.IntFilter<"Event"> | number
+  isPublic?: Prisma.BoolFilter<"Event"> | boolean
+  userId?: Prisma.IntFilter<"Event"> | number
 }
 
 export type EventUpsertWithWhereUniqueWithoutFavoritedByInput = {
@@ -835,15 +792,14 @@ export type EventUpdateToOneWithWhereWithoutParticipantsInput = {
 
 export type EventUpdateWithoutParticipantsInput = {
   eventName?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   eventLat?: Prisma.FloatFieldUpdateOperationsInput | number
   eventLon?: Prisma.FloatFieldUpdateOperationsInput | number
   eventAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  eventPictures?: Prisma.EventUpdateeventPicturesInput | string[]
-  eventTags?: Prisma.EventUpdateeventTagsInput | string[]
-  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  country?: Prisma.StringFieldUpdateOperationsInput | string
+  eventCity?: Prisma.StringFieldUpdateOperationsInput | string
+  eventCountry?: Prisma.StringFieldUpdateOperationsInput | string
   isFull?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.UserUpdateOneRequiredWithoutEventsCreatedNestedInput
   favoritedBy?: Prisma.UserUpdateManyWithoutFavoritesNestedInput
 }
@@ -851,44 +807,41 @@ export type EventUpdateWithoutParticipantsInput = {
 export type EventUncheckedUpdateWithoutParticipantsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   eventName?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   eventLat?: Prisma.FloatFieldUpdateOperationsInput | number
   eventLon?: Prisma.FloatFieldUpdateOperationsInput | number
   eventAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  eventPictures?: Prisma.EventUpdateeventPicturesInput | string[]
-  eventTags?: Prisma.EventUpdateeventTagsInput | string[]
-  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  country?: Prisma.StringFieldUpdateOperationsInput | string
+  eventCity?: Prisma.StringFieldUpdateOperationsInput | string
+  eventCountry?: Prisma.StringFieldUpdateOperationsInput | string
   isFull?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  eventCreatorId?: Prisma.IntFieldUpdateOperationsInput | number
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   favoritedBy?: Prisma.UserUncheckedUpdateManyWithoutFavoritesNestedInput
 }
 
 export type EventCreateManyCreatedByInput = {
   id?: number
   eventName?: string
+  eventType?: string | null
   eventLat: number
   eventLon: number
   eventAddress: string
-  eventPictures?: Prisma.EventCreateeventPicturesInput | string[]
-  eventTags?: Prisma.EventCreateeventTagsInput | string[]
-  eventType?: string | null
-  city: string
-  country: string
+  eventCity: string
+  eventCountry: string
   isFull?: boolean
+  isPublic?: boolean
 }
 
 export type EventUpdateWithoutCreatedByInput = {
   eventName?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   eventLat?: Prisma.FloatFieldUpdateOperationsInput | number
   eventLon?: Prisma.FloatFieldUpdateOperationsInput | number
   eventAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  eventPictures?: Prisma.EventUpdateeventPicturesInput | string[]
-  eventTags?: Prisma.EventUpdateeventTagsInput | string[]
-  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  country?: Prisma.StringFieldUpdateOperationsInput | string
+  eventCity?: Prisma.StringFieldUpdateOperationsInput | string
+  eventCountry?: Prisma.StringFieldUpdateOperationsInput | string
   isFull?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   favoritedBy?: Prisma.UserUpdateManyWithoutFavoritesNestedInput
   participants?: Prisma.UserUpdateManyWithoutAttendingEventNestedInput
 }
@@ -896,15 +849,14 @@ export type EventUpdateWithoutCreatedByInput = {
 export type EventUncheckedUpdateWithoutCreatedByInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   eventName?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   eventLat?: Prisma.FloatFieldUpdateOperationsInput | number
   eventLon?: Prisma.FloatFieldUpdateOperationsInput | number
   eventAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  eventPictures?: Prisma.EventUpdateeventPicturesInput | string[]
-  eventTags?: Prisma.EventUpdateeventTagsInput | string[]
-  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  country?: Prisma.StringFieldUpdateOperationsInput | string
+  eventCity?: Prisma.StringFieldUpdateOperationsInput | string
+  eventCountry?: Prisma.StringFieldUpdateOperationsInput | string
   isFull?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   favoritedBy?: Prisma.UserUncheckedUpdateManyWithoutFavoritesNestedInput
   participants?: Prisma.UserUncheckedUpdateManyWithoutAttendingEventNestedInput
 }
@@ -912,28 +864,26 @@ export type EventUncheckedUpdateWithoutCreatedByInput = {
 export type EventUncheckedUpdateManyWithoutCreatedByInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   eventName?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   eventLat?: Prisma.FloatFieldUpdateOperationsInput | number
   eventLon?: Prisma.FloatFieldUpdateOperationsInput | number
   eventAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  eventPictures?: Prisma.EventUpdateeventPicturesInput | string[]
-  eventTags?: Prisma.EventUpdateeventTagsInput | string[]
-  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  country?: Prisma.StringFieldUpdateOperationsInput | string
+  eventCity?: Prisma.StringFieldUpdateOperationsInput | string
+  eventCountry?: Prisma.StringFieldUpdateOperationsInput | string
   isFull?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type EventUpdateWithoutFavoritedByInput = {
   eventName?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   eventLat?: Prisma.FloatFieldUpdateOperationsInput | number
   eventLon?: Prisma.FloatFieldUpdateOperationsInput | number
   eventAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  eventPictures?: Prisma.EventUpdateeventPicturesInput | string[]
-  eventTags?: Prisma.EventUpdateeventTagsInput | string[]
-  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  country?: Prisma.StringFieldUpdateOperationsInput | string
+  eventCity?: Prisma.StringFieldUpdateOperationsInput | string
+  eventCountry?: Prisma.StringFieldUpdateOperationsInput | string
   isFull?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.UserUpdateOneRequiredWithoutEventsCreatedNestedInput
   participants?: Prisma.UserUpdateManyWithoutAttendingEventNestedInput
 }
@@ -941,32 +891,30 @@ export type EventUpdateWithoutFavoritedByInput = {
 export type EventUncheckedUpdateWithoutFavoritedByInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   eventName?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   eventLat?: Prisma.FloatFieldUpdateOperationsInput | number
   eventLon?: Prisma.FloatFieldUpdateOperationsInput | number
   eventAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  eventPictures?: Prisma.EventUpdateeventPicturesInput | string[]
-  eventTags?: Prisma.EventUpdateeventTagsInput | string[]
-  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  country?: Prisma.StringFieldUpdateOperationsInput | string
+  eventCity?: Prisma.StringFieldUpdateOperationsInput | string
+  eventCountry?: Prisma.StringFieldUpdateOperationsInput | string
   isFull?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  eventCreatorId?: Prisma.IntFieldUpdateOperationsInput | number
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   participants?: Prisma.UserUncheckedUpdateManyWithoutAttendingEventNestedInput
 }
 
 export type EventUncheckedUpdateManyWithoutFavoritedByInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   eventName?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   eventLat?: Prisma.FloatFieldUpdateOperationsInput | number
   eventLon?: Prisma.FloatFieldUpdateOperationsInput | number
   eventAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  eventPictures?: Prisma.EventUpdateeventPicturesInput | string[]
-  eventTags?: Prisma.EventUpdateeventTagsInput | string[]
-  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  country?: Prisma.StringFieldUpdateOperationsInput | string
+  eventCity?: Prisma.StringFieldUpdateOperationsInput | string
+  eventCountry?: Prisma.StringFieldUpdateOperationsInput | string
   isFull?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  eventCreatorId?: Prisma.IntFieldUpdateOperationsInput | number
+  isPublic?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -1012,16 +960,15 @@ export type EventCountOutputTypeCountParticipantsArgs<ExtArgs extends runtime.Ty
 export type EventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   eventName?: boolean
+  eventType?: boolean
   eventLat?: boolean
   eventLon?: boolean
   eventAddress?: boolean
-  eventPictures?: boolean
-  eventTags?: boolean
-  eventType?: boolean
-  city?: boolean
-  country?: boolean
+  eventCity?: boolean
+  eventCountry?: boolean
   isFull?: boolean
-  eventCreatorId?: boolean
+  isPublic?: boolean
+  userId?: boolean
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   favoritedBy?: boolean | Prisma.Event$favoritedByArgs<ExtArgs>
   participants?: boolean | Prisma.Event$participantsArgs<ExtArgs>
@@ -1031,51 +978,48 @@ export type EventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type EventSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   eventName?: boolean
+  eventType?: boolean
   eventLat?: boolean
   eventLon?: boolean
   eventAddress?: boolean
-  eventPictures?: boolean
-  eventTags?: boolean
-  eventType?: boolean
-  city?: boolean
-  country?: boolean
+  eventCity?: boolean
+  eventCountry?: boolean
   isFull?: boolean
-  eventCreatorId?: boolean
+  isPublic?: boolean
+  userId?: boolean
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["event"]>
 
 export type EventSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   eventName?: boolean
+  eventType?: boolean
   eventLat?: boolean
   eventLon?: boolean
   eventAddress?: boolean
-  eventPictures?: boolean
-  eventTags?: boolean
-  eventType?: boolean
-  city?: boolean
-  country?: boolean
+  eventCity?: boolean
+  eventCountry?: boolean
   isFull?: boolean
-  eventCreatorId?: boolean
+  isPublic?: boolean
+  userId?: boolean
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["event"]>
 
 export type EventSelectScalar = {
   id?: boolean
   eventName?: boolean
+  eventType?: boolean
   eventLat?: boolean
   eventLon?: boolean
   eventAddress?: boolean
-  eventPictures?: boolean
-  eventTags?: boolean
-  eventType?: boolean
-  city?: boolean
-  country?: boolean
+  eventCity?: boolean
+  eventCountry?: boolean
   isFull?: boolean
-  eventCreatorId?: boolean
+  isPublic?: boolean
+  userId?: boolean
 }
 
-export type EventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "eventName" | "eventLat" | "eventLon" | "eventAddress" | "eventPictures" | "eventTags" | "eventType" | "city" | "country" | "isFull" | "eventCreatorId", ExtArgs["result"]["event"]>
+export type EventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "eventName" | "eventType" | "eventLat" | "eventLon" | "eventAddress" | "eventCity" | "eventCountry" | "isFull" | "isPublic" | "userId", ExtArgs["result"]["event"]>
 export type EventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   favoritedBy?: boolean | Prisma.Event$favoritedByArgs<ExtArgs>
@@ -1099,16 +1043,15 @@ export type $EventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     eventName: string
+    eventType: string | null
     eventLat: number
     eventLon: number
     eventAddress: string
-    eventPictures: string[]
-    eventTags: string[]
-    eventType: string | null
-    city: string
-    country: string
+    eventCity: string
+    eventCountry: string
     isFull: boolean
-    eventCreatorId: number
+    isPublic: boolean
+    userId: number
   }, ExtArgs["result"]["event"]>
   composites: {}
 }
@@ -1537,16 +1480,15 @@ export interface Prisma__EventClient<T, Null = never, ExtArgs extends runtime.Ty
 export interface EventFieldRefs {
   readonly id: Prisma.FieldRef<"Event", 'Int'>
   readonly eventName: Prisma.FieldRef<"Event", 'String'>
+  readonly eventType: Prisma.FieldRef<"Event", 'String'>
   readonly eventLat: Prisma.FieldRef<"Event", 'Float'>
   readonly eventLon: Prisma.FieldRef<"Event", 'Float'>
   readonly eventAddress: Prisma.FieldRef<"Event", 'String'>
-  readonly eventPictures: Prisma.FieldRef<"Event", 'String[]'>
-  readonly eventTags: Prisma.FieldRef<"Event", 'String[]'>
-  readonly eventType: Prisma.FieldRef<"Event", 'String'>
-  readonly city: Prisma.FieldRef<"Event", 'String'>
-  readonly country: Prisma.FieldRef<"Event", 'String'>
+  readonly eventCity: Prisma.FieldRef<"Event", 'String'>
+  readonly eventCountry: Prisma.FieldRef<"Event", 'String'>
   readonly isFull: Prisma.FieldRef<"Event", 'Boolean'>
-  readonly eventCreatorId: Prisma.FieldRef<"Event", 'Int'>
+  readonly isPublic: Prisma.FieldRef<"Event", 'Boolean'>
+  readonly userId: Prisma.FieldRef<"Event", 'Int'>
 }
     
 

@@ -857,16 +857,15 @@ export type UserSituationScalarFieldEnum = (typeof UserSituationScalarFieldEnum)
 export const EventScalarFieldEnum = {
   id: 'id',
   eventName: 'eventName',
+  eventType: 'eventType',
   eventLat: 'eventLat',
   eventLon: 'eventLon',
   eventAddress: 'eventAddress',
-  eventPictures: 'eventPictures',
-  eventTags: 'eventTags',
-  eventType: 'eventType',
-  city: 'city',
-  country: 'country',
+  eventCity: 'eventCity',
+  eventCountry: 'eventCountry',
   isFull: 'isFull',
-  eventCreatorId: 'eventCreatorId'
+  isPublic: 'isPublic',
+  userId: 'userId'
 } as const
 
 export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]

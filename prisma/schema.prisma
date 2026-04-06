@@ -65,20 +65,19 @@ model UserSituation {
 model Event {
   id             Int      @id @default(autoincrement())
   eventName      String  @default("Drinks with friends") // "Drinks with friends" | "Flat-party" | "Night out clubbing" | "Concert"
+  eventType      String? // flat-party // clubbing night out // drinks with friends
   eventLat       Float
   eventLon       Float
   eventAddress   String
-  eventPictures  String[]
-  eventTags      String[]
-  eventType      String? // flat-party // clubbing night out // drinks with friends
-  city           String
-  country        String
+  eventCity      String
+  eventCountry        String
   isFull         Boolean  @default(false)
+  isPublic       Boolean  @default(true)
   // relations
   
   // creator relation (1-N)
-  eventCreatorId Int
-  createdBy      User     @relation("EventCreator", fields: [eventCreatorId], references: [id])
+  userId Int
+  createdBy      User     @relation("EventCreator", fields: [userId], references: [id])
 
   // favorited by
   favoritedBy   User[]     @relation("UserFavorites")
