@@ -88,6 +88,7 @@ export const UserScalarFieldEnum = {
   userLon: 'userLon',
   status: 'status',
   lastLogin: 'lastLogin',
+  ActivityType: 'ActivityType',
   partyAddress: 'partyAddress',
   partyLat: 'partyLat',
   partyLon: 'partyLon',

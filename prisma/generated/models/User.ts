@@ -60,6 +60,7 @@ export type UserMinAggregateOutputType = {
   userLon: number | null
   status: string | null
   lastLogin: Date | null
+  ActivityType: string | null
   partyAddress: string | null
   partyLat: number | null
   partyLon: number | null
@@ -81,6 +82,7 @@ export type UserMaxAggregateOutputType = {
   userLon: number | null
   status: string | null
   lastLogin: Date | null
+  ActivityType: string | null
   partyAddress: string | null
   partyLat: number | null
   partyLon: number | null
@@ -102,6 +104,7 @@ export type UserCountAggregateOutputType = {
   userLon: number
   status: number
   lastLogin: number
+  ActivityType: number
   partyAddress: number
   partyLat: number
   partyLon: number
@@ -145,6 +148,7 @@ export type UserMinAggregateInputType = {
   userLon?: true
   status?: true
   lastLogin?: true
+  ActivityType?: true
   partyAddress?: true
   partyLat?: true
   partyLon?: true
@@ -166,6 +170,7 @@ export type UserMaxAggregateInputType = {
   userLon?: true
   status?: true
   lastLogin?: true
+  ActivityType?: true
   partyAddress?: true
   partyLat?: true
   partyLon?: true
@@ -187,6 +192,7 @@ export type UserCountAggregateInputType = {
   userLon?: true
   status?: true
   lastLogin?: true
+  ActivityType?: true
   partyAddress?: true
   partyLat?: true
   partyLon?: true
@@ -295,6 +301,7 @@ export type UserGroupByOutputType = {
   userLon: number | null
   status: string
   lastLogin: Date
+  ActivityType: string | null
   partyAddress: string | null
   partyLat: number | null
   partyLon: number | null
@@ -339,6 +346,7 @@ export type UserWhereInput = {
   userLon?: Prisma.FloatNullableFilter<"User"> | number | null
   status?: Prisma.StringFilter<"User"> | string
   lastLogin?: Prisma.DateTimeFilter<"User"> | Date | string
+  ActivityType?: Prisma.StringNullableFilter<"User"> | string | null
   partyAddress?: Prisma.StringNullableFilter<"User"> | string | null
   partyLat?: Prisma.FloatNullableFilter<"User"> | number | null
   partyLon?: Prisma.FloatNullableFilter<"User"> | number | null
@@ -370,6 +378,7 @@ export type UserOrderByWithRelationInput = {
   userLon?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   lastLogin?: Prisma.SortOrder
+  ActivityType?: Prisma.SortOrderInput | Prisma.SortOrder
   partyAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   partyLat?: Prisma.SortOrderInput | Prisma.SortOrder
   partyLon?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -404,6 +413,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   userLon?: Prisma.FloatNullableFilter<"User"> | number | null
   status?: Prisma.StringFilter<"User"> | string
   lastLogin?: Prisma.DateTimeFilter<"User"> | Date | string
+  ActivityType?: Prisma.StringNullableFilter<"User"> | string | null
   partyAddress?: Prisma.StringNullableFilter<"User"> | string | null
   partyLat?: Prisma.FloatNullableFilter<"User"> | number | null
   partyLon?: Prisma.FloatNullableFilter<"User"> | number | null
@@ -435,6 +445,7 @@ export type UserOrderByWithAggregationInput = {
   userLon?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   lastLogin?: Prisma.SortOrder
+  ActivityType?: Prisma.SortOrderInput | Prisma.SortOrder
   partyAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   partyLat?: Prisma.SortOrderInput | Prisma.SortOrder
   partyLon?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -464,6 +475,7 @@ export type UserScalarWhereWithAggregatesInput = {
   userLon?: Prisma.FloatNullableWithAggregatesFilter<"User"> | number | null
   status?: Prisma.StringWithAggregatesFilter<"User"> | string
   lastLogin?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  ActivityType?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   partyAddress?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   partyLat?: Prisma.FloatNullableWithAggregatesFilter<"User"> | number | null
   partyLon?: Prisma.FloatNullableWithAggregatesFilter<"User"> | number | null
@@ -484,6 +496,7 @@ export type UserCreateInput = {
   userLon?: number | null
   status?: string
   lastLogin?: Date | string
+  ActivityType?: string | null
   partyAddress?: string | null
   partyLat?: number | null
   partyLon?: number | null
@@ -514,6 +527,7 @@ export type UserUncheckedCreateInput = {
   userLon?: number | null
   status?: string
   lastLogin?: Date | string
+  ActivityType?: string | null
   partyAddress?: string | null
   partyLat?: number | null
   partyLon?: number | null
@@ -543,6 +557,7 @@ export type UserUpdateInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -573,6 +588,7 @@ export type UserUncheckedUpdateInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -603,6 +619,7 @@ export type UserCreateManyInput = {
   userLon?: number | null
   status?: string
   lastLogin?: Date | string
+  ActivityType?: string | null
   partyAddress?: string | null
   partyLat?: number | null
   partyLon?: number | null
@@ -623,6 +640,7 @@ export type UserUpdateManyMutationInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -643,6 +661,7 @@ export type UserUncheckedUpdateManyInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -674,6 +693,7 @@ export type UserCountOrderByAggregateInput = {
   userLon?: Prisma.SortOrder
   status?: Prisma.SortOrder
   lastLogin?: Prisma.SortOrder
+  ActivityType?: Prisma.SortOrder
   partyAddress?: Prisma.SortOrder
   partyLat?: Prisma.SortOrder
   partyLon?: Prisma.SortOrder
@@ -705,6 +725,7 @@ export type UserMaxOrderByAggregateInput = {
   userLon?: Prisma.SortOrder
   status?: Prisma.SortOrder
   lastLogin?: Prisma.SortOrder
+  ActivityType?: Prisma.SortOrder
   partyAddress?: Prisma.SortOrder
   partyLat?: Prisma.SortOrder
   partyLon?: Prisma.SortOrder
@@ -726,6 +747,7 @@ export type UserMinOrderByAggregateInput = {
   userLon?: Prisma.SortOrder
   status?: Prisma.SortOrder
   lastLogin?: Prisma.SortOrder
+  ActivityType?: Prisma.SortOrder
   partyAddress?: Prisma.SortOrder
   partyLat?: Prisma.SortOrder
   partyLon?: Prisma.SortOrder
@@ -1048,6 +1070,7 @@ export type UserCreateWithoutFriendOfInput = {
   userLon?: number | null
   status?: string
   lastLogin?: Date | string
+  ActivityType?: string | null
   partyAddress?: string | null
   partyLat?: number | null
   partyLon?: number | null
@@ -1077,6 +1100,7 @@ export type UserUncheckedCreateWithoutFriendOfInput = {
   userLon?: number | null
   status?: string
   lastLogin?: Date | string
+  ActivityType?: string | null
   partyAddress?: string | null
   partyLat?: number | null
   partyLon?: number | null
@@ -1110,6 +1134,7 @@ export type UserCreateWithoutFriendsInput = {
   userLon?: number | null
   status?: string
   lastLogin?: Date | string
+  ActivityType?: string | null
   partyAddress?: string | null
   partyLat?: number | null
   partyLon?: number | null
@@ -1139,6 +1164,7 @@ export type UserUncheckedCreateWithoutFriendsInput = {
   userLon?: number | null
   status?: string
   lastLogin?: Date | string
+  ActivityType?: string | null
   partyAddress?: string | null
   partyLat?: number | null
   partyLon?: number | null
@@ -1192,6 +1218,7 @@ export type UserScalarWhereInput = {
   userLon?: Prisma.FloatNullableFilter<"User"> | number | null
   status?: Prisma.StringFilter<"User"> | string
   lastLogin?: Prisma.DateTimeFilter<"User"> | Date | string
+  ActivityType?: Prisma.StringNullableFilter<"User"> | string | null
   partyAddress?: Prisma.StringNullableFilter<"User"> | string | null
   partyLat?: Prisma.FloatNullableFilter<"User"> | number | null
   partyLon?: Prisma.FloatNullableFilter<"User"> | number | null
@@ -1228,6 +1255,7 @@ export type UserCreateWithoutUserPictureInput = {
   userLon?: number | null
   status?: string
   lastLogin?: Date | string
+  ActivityType?: string | null
   partyAddress?: string | null
   partyLat?: number | null
   partyLon?: number | null
@@ -1257,6 +1285,7 @@ export type UserUncheckedCreateWithoutUserPictureInput = {
   userLon?: number | null
   status?: string
   lastLogin?: Date | string
+  ActivityType?: string | null
   partyAddress?: string | null
   partyLat?: number | null
   partyLon?: number | null
@@ -1301,6 +1330,7 @@ export type UserUpdateWithoutUserPictureInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1330,6 +1360,7 @@ export type UserUncheckedUpdateWithoutUserPictureInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1358,6 +1389,7 @@ export type UserCreateWithoutEventsCreatedInput = {
   userLon?: number | null
   status?: string
   lastLogin?: Date | string
+  ActivityType?: string | null
   partyAddress?: string | null
   partyLat?: number | null
   partyLon?: number | null
@@ -1387,6 +1419,7 @@ export type UserUncheckedCreateWithoutEventsCreatedInput = {
   userLon?: number | null
   status?: string
   lastLogin?: Date | string
+  ActivityType?: string | null
   partyAddress?: string | null
   partyLat?: number | null
   partyLon?: number | null
@@ -1420,6 +1453,7 @@ export type UserCreateWithoutFavoritesInput = {
   userLon?: number | null
   status?: string
   lastLogin?: Date | string
+  ActivityType?: string | null
   partyAddress?: string | null
   partyLat?: number | null
   partyLon?: number | null
@@ -1449,6 +1483,7 @@ export type UserUncheckedCreateWithoutFavoritesInput = {
   userLon?: number | null
   status?: string
   lastLogin?: Date | string
+  ActivityType?: string | null
   partyAddress?: string | null
   partyLat?: number | null
   partyLon?: number | null
@@ -1482,6 +1517,7 @@ export type UserCreateWithoutAttendingEventInput = {
   userLon?: number | null
   status?: string
   lastLogin?: Date | string
+  ActivityType?: string | null
   partyAddress?: string | null
   partyLat?: number | null
   partyLon?: number | null
@@ -1511,6 +1547,7 @@ export type UserUncheckedCreateWithoutAttendingEventInput = {
   userLon?: number | null
   status?: string
   lastLogin?: Date | string
+  ActivityType?: string | null
   partyAddress?: string | null
   partyLat?: number | null
   partyLon?: number | null
@@ -1560,6 +1597,7 @@ export type UserUpdateWithoutEventsCreatedInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1589,6 +1627,7 @@ export type UserUncheckedUpdateWithoutEventsCreatedInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1649,6 +1688,7 @@ export type UserCreateWithoutSentJoinRequestsInput = {
   userLon?: number | null
   status?: string
   lastLogin?: Date | string
+  ActivityType?: string | null
   partyAddress?: string | null
   partyLat?: number | null
   partyLon?: number | null
@@ -1678,6 +1718,7 @@ export type UserUncheckedCreateWithoutSentJoinRequestsInput = {
   userLon?: number | null
   status?: string
   lastLogin?: Date | string
+  ActivityType?: string | null
   partyAddress?: string | null
   partyLat?: number | null
   partyLon?: number | null
@@ -1711,6 +1752,7 @@ export type UserCreateWithoutReceivedJoinRequestsInput = {
   userLon?: number | null
   status?: string
   lastLogin?: Date | string
+  ActivityType?: string | null
   partyAddress?: string | null
   partyLat?: number | null
   partyLon?: number | null
@@ -1740,6 +1782,7 @@ export type UserUncheckedCreateWithoutReceivedJoinRequestsInput = {
   userLon?: number | null
   status?: string
   lastLogin?: Date | string
+  ActivityType?: string | null
   partyAddress?: string | null
   partyLat?: number | null
   partyLon?: number | null
@@ -1784,6 +1827,7 @@ export type UserUpdateWithoutSentJoinRequestsInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1813,6 +1857,7 @@ export type UserUncheckedUpdateWithoutSentJoinRequestsInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1852,6 +1897,7 @@ export type UserUpdateWithoutReceivedJoinRequestsInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1881,6 +1927,7 @@ export type UserUncheckedUpdateWithoutReceivedJoinRequestsInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1909,6 +1956,7 @@ export type UserCreateWithoutSentFriendRequestsInput = {
   userLon?: number | null
   status?: string
   lastLogin?: Date | string
+  ActivityType?: string | null
   partyAddress?: string | null
   partyLat?: number | null
   partyLon?: number | null
@@ -1938,6 +1986,7 @@ export type UserUncheckedCreateWithoutSentFriendRequestsInput = {
   userLon?: number | null
   status?: string
   lastLogin?: Date | string
+  ActivityType?: string | null
   partyAddress?: string | null
   partyLat?: number | null
   partyLon?: number | null
@@ -1971,6 +2020,7 @@ export type UserCreateWithoutReceivedFriendRequestsInput = {
   userLon?: number | null
   status?: string
   lastLogin?: Date | string
+  ActivityType?: string | null
   partyAddress?: string | null
   partyLat?: number | null
   partyLon?: number | null
@@ -2000,6 +2050,7 @@ export type UserUncheckedCreateWithoutReceivedFriendRequestsInput = {
   userLon?: number | null
   status?: string
   lastLogin?: Date | string
+  ActivityType?: string | null
   partyAddress?: string | null
   partyLat?: number | null
   partyLon?: number | null
@@ -2044,6 +2095,7 @@ export type UserUpdateWithoutSentFriendRequestsInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -2073,6 +2125,7 @@ export type UserUncheckedUpdateWithoutSentFriendRequestsInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -2112,6 +2165,7 @@ export type UserUpdateWithoutReceivedFriendRequestsInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -2141,6 +2195,7 @@ export type UserUncheckedUpdateWithoutReceivedFriendRequestsInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -2169,6 +2224,7 @@ export type UserUpdateWithoutFriendOfInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -2198,6 +2254,7 @@ export type UserUncheckedUpdateWithoutFriendOfInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -2227,6 +2284,7 @@ export type UserUncheckedUpdateManyWithoutFriendOfInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -2247,6 +2305,7 @@ export type UserUpdateWithoutFriendsInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -2276,6 +2335,7 @@ export type UserUncheckedUpdateWithoutFriendsInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -2305,6 +2365,7 @@ export type UserUncheckedUpdateManyWithoutFriendsInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -2326,6 +2387,7 @@ export type UserCreateManyAttendingEventInput = {
   userLon?: number | null
   status?: string
   lastLogin?: Date | string
+  ActivityType?: string | null
   partyAddress?: string | null
   partyLat?: number | null
   partyLon?: number | null
@@ -2345,6 +2407,7 @@ export type UserUpdateWithoutFavoritesInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -2374,6 +2437,7 @@ export type UserUncheckedUpdateWithoutFavoritesInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -2403,6 +2467,7 @@ export type UserUncheckedUpdateManyWithoutFavoritesInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -2423,6 +2488,7 @@ export type UserUpdateWithoutAttendingEventInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -2452,6 +2518,7 @@ export type UserUncheckedUpdateWithoutAttendingEventInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -2481,6 +2548,7 @@ export type UserUncheckedUpdateManyWithoutAttendingEventInput = {
   userLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ActivityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partyLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   partyLon?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -2595,6 +2663,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   userLon?: boolean
   status?: boolean
   lastLogin?: boolean
+  ActivityType?: boolean
   partyAddress?: boolean
   partyLat?: boolean
   partyLon?: boolean
@@ -2627,6 +2696,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   userLon?: boolean
   status?: boolean
   lastLogin?: boolean
+  ActivityType?: boolean
   partyAddress?: boolean
   partyLat?: boolean
   partyLon?: boolean
@@ -2649,6 +2719,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   userLon?: boolean
   status?: boolean
   lastLogin?: boolean
+  ActivityType?: boolean
   partyAddress?: boolean
   partyLat?: boolean
   partyLon?: boolean
@@ -2671,6 +2742,7 @@ export type UserSelectScalar = {
   userLon?: boolean
   status?: boolean
   lastLogin?: boolean
+  ActivityType?: boolean
   partyAddress?: boolean
   partyLat?: boolean
   partyLon?: boolean
@@ -2678,7 +2750,7 @@ export type UserSelectScalar = {
   attendingEventId?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "picture" | "password" | "homeAddress" | "isOnline" | "isOnMap" | "userLat" | "userLon" | "status" | "lastLogin" | "partyAddress" | "partyLat" | "partyLon" | "partyId" | "attendingEventId", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "picture" | "password" | "homeAddress" | "isOnline" | "isOnMap" | "userLat" | "userLon" | "status" | "lastLogin" | "ActivityType" | "partyAddress" | "partyLat" | "partyLon" | "partyId" | "attendingEventId", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   userPicture?: boolean | Prisma.User$userPictureArgs<ExtArgs>
   eventsCreated?: boolean | Prisma.User$eventsCreatedArgs<ExtArgs>
@@ -2727,6 +2799,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     userLon: number | null
     status: string
     lastLogin: Date
+    ActivityType: string | null
     partyAddress: string | null
     partyLat: number | null
     partyLon: number | null
@@ -3178,6 +3251,7 @@ export interface UserFieldRefs {
   readonly userLon: Prisma.FieldRef<"User", 'Float'>
   readonly status: Prisma.FieldRef<"User", 'String'>
   readonly lastLogin: Prisma.FieldRef<"User", 'DateTime'>
+  readonly ActivityType: Prisma.FieldRef<"User", 'String'>
   readonly partyAddress: Prisma.FieldRef<"User", 'String'>
   readonly partyLat: Prisma.FieldRef<"User", 'Float'>
   readonly partyLon: Prisma.FieldRef<"User", 'Float'>

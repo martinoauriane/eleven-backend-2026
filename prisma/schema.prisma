@@ -21,6 +21,7 @@ model User {
   userLon      Float?
   status       String   @default("Wants to go out")
   lastLogin    DateTime @default(now())
+  ActivityType String?
   partyAddress String?
   partyLat     Float?
   partyLon     Float?
