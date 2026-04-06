@@ -24,15 +24,14 @@ model User {
   partyAddress           String?
   partyLat               Float?
   partyLon               Float?
-  friendsNumber          Int             @default(0)
   partyId                Int?
 
   // relations
   userPicture UserSituation? 
 
-  // events created by user
+  // events created and favorited by user
   eventsCreated          Event[]         @relation("EventCreator")
-
+  favorites              Event[]         @relation("UserFavorites")
   // user friends
   friends        User[] @relation("UserFriends")
   friendOf       User[] @relation("UserFriends")
@@ -54,8 +53,8 @@ model UserSituation {
   id             Int      @id @default(autoincrement())
   username String
   activity String 
-  latitude Int 
-  longitude Int 
+  latitude Float 
+  longitude Float 
   address String 
   
   picture   String?   @unique
@@ -65,7 +64,7 @@ model UserSituation {
 
 model Event {
   id             Int      @id @default(autoincrement())
-  eventName      String?  @default("Drinks with friends") // "Drinks with friends" | "Flat-party" | "Night out clubbing" | "Concert"
+  eventName      String  @default("Drinks with friends") // "Drinks with friends" | "Flat-party" | "Night out clubbing" | "Concert"
   eventLat       Float
   eventLon       Float
   eventAddress   String
@@ -80,6 +79,10 @@ model Event {
   // creator relation (1-N)
   eventCreatorId Int
   createdBy      User     @relation("EventCreator", fields: [eventCreatorId], references: [id])
+
+  // favorited by
+  userId        Int
+  favoritedBy   User[]     @relation("UserFavorites")
   // isFull Boolean
   participants    User[]   @relation("EventParticipants")
 }

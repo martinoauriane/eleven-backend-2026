@@ -236,8 +236,8 @@ export type UserSituationWhereInput = {
   id?: Prisma.IntFilter<"UserSituation"> | number
   username?: Prisma.StringFilter<"UserSituation"> | string
   activity?: Prisma.StringFilter<"UserSituation"> | string
-  latitude?: Prisma.IntFilter<"UserSituation"> | number
-  longitude?: Prisma.IntFilter<"UserSituation"> | number
+  latitude?: Prisma.FloatFilter<"UserSituation"> | number
+  longitude?: Prisma.FloatFilter<"UserSituation"> | number
   address?: Prisma.StringFilter<"UserSituation"> | string
   picture?: Prisma.StringNullableFilter<"UserSituation"> | string | null
   userPicture?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -262,8 +262,8 @@ export type UserSituationWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UserSituationWhereInput | Prisma.UserSituationWhereInput[]
   username?: Prisma.StringFilter<"UserSituation"> | string
   activity?: Prisma.StringFilter<"UserSituation"> | string
-  latitude?: Prisma.IntFilter<"UserSituation"> | number
-  longitude?: Prisma.IntFilter<"UserSituation"> | number
+  latitude?: Prisma.FloatFilter<"UserSituation"> | number
+  longitude?: Prisma.FloatFilter<"UserSituation"> | number
   address?: Prisma.StringFilter<"UserSituation"> | string
   userPicture?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "picture">
@@ -290,8 +290,8 @@ export type UserSituationScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"UserSituation"> | number
   username?: Prisma.StringWithAggregatesFilter<"UserSituation"> | string
   activity?: Prisma.StringWithAggregatesFilter<"UserSituation"> | string
-  latitude?: Prisma.IntWithAggregatesFilter<"UserSituation"> | number
-  longitude?: Prisma.IntWithAggregatesFilter<"UserSituation"> | number
+  latitude?: Prisma.FloatWithAggregatesFilter<"UserSituation"> | number
+  longitude?: Prisma.FloatWithAggregatesFilter<"UserSituation"> | number
   address?: Prisma.StringWithAggregatesFilter<"UserSituation"> | string
   picture?: Prisma.StringNullableWithAggregatesFilter<"UserSituation"> | string | null
 }
@@ -318,8 +318,8 @@ export type UserSituationUncheckedCreateInput = {
 export type UserSituationUpdateInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   activity?: Prisma.StringFieldUpdateOperationsInput | string
-  latitude?: Prisma.IntFieldUpdateOperationsInput | number
-  longitude?: Prisma.IntFieldUpdateOperationsInput | number
+  latitude?: Prisma.FloatFieldUpdateOperationsInput | number
+  longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   address?: Prisma.StringFieldUpdateOperationsInput | string
   userPicture?: Prisma.UserUpdateOneWithoutUserPictureNestedInput
 }
@@ -328,8 +328,8 @@ export type UserSituationUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   activity?: Prisma.StringFieldUpdateOperationsInput | string
-  latitude?: Prisma.IntFieldUpdateOperationsInput | number
-  longitude?: Prisma.IntFieldUpdateOperationsInput | number
+  latitude?: Prisma.FloatFieldUpdateOperationsInput | number
+  longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   address?: Prisma.StringFieldUpdateOperationsInput | string
   picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -347,8 +347,8 @@ export type UserSituationCreateManyInput = {
 export type UserSituationUpdateManyMutationInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   activity?: Prisma.StringFieldUpdateOperationsInput | string
-  latitude?: Prisma.IntFieldUpdateOperationsInput | number
-  longitude?: Prisma.IntFieldUpdateOperationsInput | number
+  latitude?: Prisma.FloatFieldUpdateOperationsInput | number
+  longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   address?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -356,8 +356,8 @@ export type UserSituationUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   activity?: Prisma.StringFieldUpdateOperationsInput | string
-  latitude?: Prisma.IntFieldUpdateOperationsInput | number
-  longitude?: Prisma.IntFieldUpdateOperationsInput | number
+  latitude?: Prisma.FloatFieldUpdateOperationsInput | number
+  longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   address?: Prisma.StringFieldUpdateOperationsInput | string
   picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -441,6 +441,14 @@ export type UserSituationUncheckedUpdateOneWithoutUserPictureNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserSituationUpdateToOneWithWhereWithoutUserPictureInput, Prisma.UserSituationUpdateWithoutUserPictureInput>, Prisma.UserSituationUncheckedUpdateWithoutUserPictureInput>
 }
 
+export type FloatFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type UserSituationCreateWithoutUserPictureInput = {
   username: string
   activity: string
@@ -477,8 +485,8 @@ export type UserSituationUpdateToOneWithWhereWithoutUserPictureInput = {
 export type UserSituationUpdateWithoutUserPictureInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   activity?: Prisma.StringFieldUpdateOperationsInput | string
-  latitude?: Prisma.IntFieldUpdateOperationsInput | number
-  longitude?: Prisma.IntFieldUpdateOperationsInput | number
+  latitude?: Prisma.FloatFieldUpdateOperationsInput | number
+  longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   address?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -486,8 +494,8 @@ export type UserSituationUncheckedUpdateWithoutUserPictureInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   activity?: Prisma.StringFieldUpdateOperationsInput | string
-  latitude?: Prisma.IntFieldUpdateOperationsInput | number
-  longitude?: Prisma.IntFieldUpdateOperationsInput | number
+  latitude?: Prisma.FloatFieldUpdateOperationsInput | number
+  longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   address?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -987,8 +995,8 @@ export interface UserSituationFieldRefs {
   readonly id: Prisma.FieldRef<"UserSituation", 'Int'>
   readonly username: Prisma.FieldRef<"UserSituation", 'String'>
   readonly activity: Prisma.FieldRef<"UserSituation", 'String'>
-  readonly latitude: Prisma.FieldRef<"UserSituation", 'Int'>
-  readonly longitude: Prisma.FieldRef<"UserSituation", 'Int'>
+  readonly latitude: Prisma.FieldRef<"UserSituation", 'Float'>
+  readonly longitude: Prisma.FieldRef<"UserSituation", 'Float'>
   readonly address: Prisma.FieldRef<"UserSituation", 'String'>
   readonly picture: Prisma.FieldRef<"UserSituation", 'String'>
 }

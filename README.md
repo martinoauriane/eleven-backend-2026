@@ -48,11 +48,6 @@ DONE:
 // - Tester les endpoints EventPeople
 // - Tester les deux nouvelles méthodes dans l'endpoint Event: ajouter et retirer des participants
 
-TO DO:
-// - Ironic front-end interface in to modelize Figma
-// - add getAll() Method for users
-// - réfléchir à l'interface du front (Figma)
-
 PRISMA QUERY METHODS
 const query = <GUID value>
 

@@ -834,7 +834,6 @@ export const UserScalarFieldEnum = {
   partyAddress: 'partyAddress',
   partyLat: 'partyLat',
   partyLon: 'partyLon',
-  friendsNumber: 'friendsNumber',
   partyId: 'partyId',
   attendingEventId: 'attendingEventId'
 } as const
@@ -867,7 +866,8 @@ export const EventScalarFieldEnum = {
   city: 'city',
   country: 'country',
   isFull: 'isFull',
-  eventCreatorId: 'eventCreatorId'
+  eventCreatorId: 'eventCreatorId',
+  userId: 'userId'
 } as const
 
 export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
