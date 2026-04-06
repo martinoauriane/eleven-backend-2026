@@ -148,7 +148,7 @@ router.post("/event/get/:eventId", async (req: Request, res: Response) => {
 
 // operationnal
 router.get("/event/get/all", async (req: Request, res: Response) => {
-  await eventController.getAll(req, res);
+  await eventController.getAllEvents(req, res);
 });
 
 // operationnal

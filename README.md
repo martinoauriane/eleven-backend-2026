@@ -51,6 +51,30 @@ DONE:
 PRISMA QUERY METHODS
 const query = <GUID value>
 
+Mais… y’a encore mieux (et plus important)
+Là tu fais 1 requête par event → ça scale très mal ⚠️
+👉 (N+1 queries problem)
+
+Version optimisée avec Prisma
+Prisma peut faire la relation directement :
+async getAllEvents() {
+  try {
+    const events = await prisma.event.findMany({
+      include: {
+        user: true, // ou le nom de ta relation
+      },
+    });
+
+    return events;
+  } catch (error) {
+    console.error("Prisma retrieve error:", error);
+  }
+}
+Résultat :
+1 seule requête SQL
+beaucoup plus rapide
+code plus clean
+
 const data = await prisma.user.findUnique({
 where: {
 id: qry,

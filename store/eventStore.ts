@@ -42,15 +42,18 @@ async getEventById(id: number) {
   }
 }
 
-  async getAll() {
-    try {
-      let events = await prisma.event.findMany();
-      console.log(events);
-      return events;
-    } catch (error) {
-      console.error("Prisma retrieve error:", error);
-    }
+async getAllEvents() {
+  try {
+    const events = await prisma.event.findMany({
+      include: {
+        createdBy: true,
+      },
+    });
+    return events;
+  } catch (error) {
+    console.error("Prisma retrieve error:", error);
   }
+}
 
   async updateEvent(id: number, data: EventUpdate) {
     try {

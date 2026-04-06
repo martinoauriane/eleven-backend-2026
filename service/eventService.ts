@@ -23,7 +23,7 @@ class EventService implements IEventService{
     }
 
     async getAllEvents(): Promise<any>{
-        let serviceEvents = await eventStore.getAll();
+        let serviceEvents = await eventStore.getAllEvents();
         return serviceEvents;
     }
 
