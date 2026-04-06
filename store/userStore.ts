@@ -54,6 +54,53 @@ class UserStore implements IUserStore {
     }
   }
 
+  async addEventFavorite(userId: number, eventId: number) {
+  try {
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: {
+        favorites: {
+          connect: { id: eventId },
+        },
+      },
+      include: {
+        favorites: true,
+      },
+    });
+
+    return updatedUser;
+  } catch (error) {
+    console.error("Prisma add favorite error:", error);
+  }
+}
+
+async removeEventFavorite(userId: number, eventId: number) {
+  try {
+    return await prisma.user.update({
+      where: { id: userId },
+      data: {
+        favorites: {
+          disconnect: { id: eventId },
+        },
+      },
+      include: {
+        favorites: true,
+      },
+    });
+  } catch (error) {
+    console.error("Prisma remove favorite error:", error);
+  }
+}
+
+async getUserFavorites(userId: number) {
+  return await prisma.user.findUnique({
+    where: { id: userId },
+    include: {
+      favorites: true,
+    },
+  });
+}
+
   async getUserFriends(id: string) {
     const idNum = parseInt(id);
     console.log("idNum", idNum);

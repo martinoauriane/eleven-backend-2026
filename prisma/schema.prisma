@@ -81,7 +81,6 @@ model Event {
   createdBy      User     @relation("EventCreator", fields: [eventCreatorId], references: [id])
 
   // favorited by
-  userId        Int
   favoritedBy   User[]     @relation("UserFavorites")
   // isFull Boolean
   participants    User[]   @relation("EventParticipants")

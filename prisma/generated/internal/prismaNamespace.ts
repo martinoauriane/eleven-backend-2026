@@ -866,8 +866,7 @@ export const EventScalarFieldEnum = {
   city: 'city',
   country: 'country',
   isFull: 'isFull',
-  eventCreatorId: 'eventCreatorId',
-  userId: 'userId'
+  eventCreatorId: 'eventCreatorId'
 } as const
 
 export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]

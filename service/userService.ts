@@ -47,6 +47,10 @@ class UserService {
     return await userStore.updateUser(id, data);
   }
 
+  addEventFavorite(eventObject:any, eventId:any){
+    return await userStore.addEventFavorite(eventObject, eventId)
+  }
+  
   async deleteUser(id: number) {
     return await userStore.deleteUser(id);
   }

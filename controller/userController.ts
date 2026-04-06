@@ -30,6 +30,21 @@ class UserController {
     }
   }
 
+  async addFriend(req: Request, res: Response) {
+    try {
+      console.log(req.body);
+      const userId = req.body.userId;
+      const friendId = req.body.friendId;
+      console.log("friendId", friendId);
+      console.log("userId", userId);
+      console.log("friendship successfully updated");
+      const updatedUser = await userService.addNewFriend(userId, friendId);
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      res.status(500).json({ error: "Error adding friend" });
+    }
+  }
+
   async getUserFriends(req: Request, res: Response) {
     console.log("route has functionned");
     const id: string = String(req.params.id);
@@ -79,6 +94,24 @@ class UserController {
     }
   }
 
+  async addFavoriteEvent(req: Request, res: Response){
+    const eventObject = req.body;
+    const eventId = eventObject.id;
+    if (isNaN(eventId)) {
+      return res.status(400).json({ error: "Invalid id" });
+    }
+     try {
+      const favoriteEvent = await userService.addEventFavorite(eventObject, eventId);
+      res.status(200).json(favoriteEvent);
+    } catch (error: any) {
+      console.error("Prisma update error:", error);
+      res.status(500).json({
+        error: "Error adding event to favorite",
+        details: error.message, 
+      });
+    }
+  }
+
   async deleteUser(req: Request, res: Response) {
     const id = Number(req.query.id);
     console.log("id", id);
@@ -90,20 +123,6 @@ class UserController {
     }
   }
 
-  async addFriend(req: Request, res: Response) {
-    try {
-      console.log(req.body);
-      const userId = req.body.userId;
-      const friendId = req.body.friendId;
-      console.log("friendId", friendId);
-      console.log("userId", userId);
-      console.log("friendship successfully updated");
-      const updatedUser = await userService.addNewFriend(userId, friendId);
-      res.status(200).json(updatedUser);
-    } catch (error) {
-      res.status(500).json({ error: "Error adding friend" });
-    }
-  }
 }
 
 export { UserController };

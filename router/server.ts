@@ -43,21 +43,25 @@ router.post("/user/add-friend", async(req: Request, res:Response) =>{
   await userController.addFriend(req, res);
 })
 
+//operationnal
+router.post("/user/:id/friends", async(req:Request, res:Response) =>{
+  await userController.getUserFriends(req, res)
+})
+
 // operationnal
 router.post("/user/:id", async (req: Request, res: Response) => {
   await userController.returnUser(req, res);
 });
 
-//operationnal
-router.post("/user/:id/friends", async(req:Request, res:Response) =>{
-  console.log("route hit");
-  await userController.getUserFriends(req, res)
-})
-
 // operationnal
 router.post("/user/update", async (req: Request, res: Response) => {
   await userController.updateUser(req, res);
 });
+
+// to do: add favorites user endpoints
+router.post("/user/:id/favorites", async(req:Request, res:Response) => {
+  await userController.addFavoriteEvent(req, res)
+})
 
 // operationnal
 router.post("/user/delete", async (req: Request, res: Response) => {
