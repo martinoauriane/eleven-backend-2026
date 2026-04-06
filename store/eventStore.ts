@@ -24,23 +24,23 @@ class EventStore implements IEventStore {
       console.error("Prisma creation error:", error);
     }
   }
-
-  async getEventById(id: number) {
-    try {
-      const event: EventData | null = await prisma.event.findUnique({
-        where: { id },
-      });
-      if (!event) {
-        return null;
-      } else {
-        const id = event?.userId;
-        const user = await prisma.user.findUnique({ where: { id } });
-        return { event, user };
-      }
-    } catch (error) {
-      console.error("Prisma retrieve error:", error);
+async getEventById(id: number) {
+  try {
+    const event : EventData | null = await prisma.event.findUnique({
+      where: { id },
+    });
+    if (!event) {
+      return null;
     }
+    const user = await prisma.user.findUnique({
+      where: { id: event.userId }
+    });
+    return { event, user };
+  } catch (error) {
+    console.error("Prisma retrieve error:", error);
+    throw error;
   }
+}
 
   async getAll() {
     try {
