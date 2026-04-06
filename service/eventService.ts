@@ -5,51 +5,41 @@ const eventStore = new EventStore();
 
 interface IEventService {
     createEvent(data: EventCreate): Promise<any>;
-    getEventById(id: number): Promise<any>;
-    updateEvent(data:EventUpdate, id: number): Promise<any>;
+    getEvent(id: number): Promise<any>;
+    getAllEvents(): Promise<any>;
+    addEventParticipants(eventId: number, userId: number):Promise<any>;
+    updateEvent(data:EventUpdate, id: number): Promise<any>
     deleteEvent(id: number): Promise<any>;
 }
 
 class EventService implements IEventService{
 
-    async createEvent(data:EventCreate): Promise<any> {
-        const EventData: EventCreate = {
-            userId:data.userId,
-            eventName: data.eventName,
-            eventType: data.eventType, 
-            eventAddress:data.eventAddress,
-            eventLat: data.eventLat,
-            eventLon:data.eventLon,
-            eventCity:data.eventCity,
-            eventCountry: data.eventCountry,
-            isFull: data.isFull, 
-            isPublic: data.isPublic,
-        };
-        return await eventStore.createEvent(EventData);
+    async createEvent(newEvent:EventCreate): Promise<any> {
+        return await eventStore.createEvent(newEvent);
     }
 
-    async getEventById(id: number) {
+    async getEvent(id: number): Promise<any>{
         return await eventStore.getEventById(id);
     }
 
-    async getAllEvents(){
+    async getAllEvents(): Promise<any>{
         let serviceEvents = await eventStore.getAll();
         return serviceEvents;
     }
 
-    async updateEvent(data: EventUpdate, id: number) {
+    async updateEvent(data: EventUpdate, id: number): Promise<any> {
         return await eventStore.updateEvent(id, data);
     }
 
-    async addParticipant(eventId: number, userId: number){
+    async addEventParticipants(eventId: number, userId: number): Promise<any>{
         return await eventStore.addEventParticipant(eventId, userId);
     }
 
-    async deleteParticipant(userId: number){
+    async deleteParticipant(userId: number): Promise<any>{
         return await eventStore.deleteParticipant(userId);
     }
 
-    async deleteEvent(id: number) {
+    async deleteEvent(id: number): Promise<any> {
         return await eventStore.deleteEvent(id);
     }
 }

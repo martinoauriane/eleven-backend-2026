@@ -7,19 +7,21 @@ const eventService = new EventService();
 class EventController {
     
     async newEvent(req: Request, res: Response) {
-    const event : EventCreate = {
-        userId: parseInt(req.body.userId), 
+    const userId = parseInt(String(req.params.userId));
+    const newEvent : EventCreate = {
+        userId: userId, 
         eventName: String(req.body.eventName),
         eventLat: parseFloat(req.body.eventLat),
         eventLon: parseFloat(req.body.eventLon),
         eventAddress: String(req.body.eventAddress),
-        eventCity: String(req.body.city),
+        eventCity: String(req.body.eventCity),
         eventCountry: String(req.body.eventCountry),
         isFull: req.body.isFull,
         isPublic: req.body.isPublic,
     }
+    console.log("newEvent", newEvent);
     try {
-        const eventCreated = await eventService.createEvent(event);
+        const eventCreated = await eventService.createEvent(newEvent);
         res.status(200).json(eventCreated);
     } catch (error) {
         res.status(500).json({ error: "Error creating new event" });
@@ -27,9 +29,9 @@ class EventController {
     }
 
     async returnEventById(req: Request, res: Response) {
-        const id = Number(req.params.event_id);
+        const eventId = Number(req.params.eventId);
         try {
-            const event = await eventService.getEventById(id);
+            const {event, usercreator} = await eventService.getEvent(eventId);
             res.status(200).json(event);
         } catch (error) {
             res.status(500).json({ error: "Error retrieving event" });
@@ -72,7 +74,7 @@ class EventController {
             res.status(400).json({ error: "Invalid user id" });
         }
         try {
-        const addedParticipant = await eventService.addParticipant(eventId, userId);
+        const addedParticipant = await eventService.addEventParticipants(eventId, userId);
         return addedParticipant;
         } catch(error: any){
             res.status(500).json({ 

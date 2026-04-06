@@ -2,7 +2,6 @@ import { UserStore } from "../store/userStore";
 import { hashPassword } from "./utils/hash";
 import {
   UserCreate,
-  UserData,
   UserUpdate,
 } from "../store/interfaces/userInterfaces";
 
@@ -16,6 +15,7 @@ interface UserService {
 }
 
 class UserService {
+
   async createUser(user: UserCreate): Promise<any> {
     const passwordHash = await hashPassword(String(user.password));
     const userData: UserCreate = {
@@ -31,7 +31,7 @@ class UserService {
   async addNewFriend(userId: number, friendId: number){
     return userStore.addFriend(userId, friendId);
   }
-  async getAll(){
+  async getAllUsers(){
     return await userStore.getAllUsers();
   }
 

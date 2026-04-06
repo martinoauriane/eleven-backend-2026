@@ -26,7 +26,7 @@ export interface EventUpdate {
 export interface EventData {
   userId: number;
   eventName: string;
-  eventType?: string // flat-^party // clubbing night out // drinks with friends
+  eventType: string
   eventLat: number;
   eventLon: number;
   eventAddress: string;

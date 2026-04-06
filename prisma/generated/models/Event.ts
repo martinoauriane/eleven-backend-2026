@@ -230,7 +230,7 @@ export type EventGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type EventGroupByOutputType = {
   id: number
   eventName: string
-  eventType: string | null
+  eventType: string
   eventLat: number
   eventLon: number
   eventAddress: string
@@ -267,7 +267,7 @@ export type EventWhereInput = {
   NOT?: Prisma.EventWhereInput | Prisma.EventWhereInput[]
   id?: Prisma.IntFilter<"Event"> | number
   eventName?: Prisma.StringFilter<"Event"> | string
-  eventType?: Prisma.StringNullableFilter<"Event"> | string | null
+  eventType?: Prisma.StringFilter<"Event"> | string
   eventLat?: Prisma.FloatFilter<"Event"> | number
   eventLon?: Prisma.FloatFilter<"Event"> | number
   eventAddress?: Prisma.StringFilter<"Event"> | string
@@ -284,7 +284,7 @@ export type EventWhereInput = {
 export type EventOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   eventName?: Prisma.SortOrder
-  eventType?: Prisma.SortOrderInput | Prisma.SortOrder
+  eventType?: Prisma.SortOrder
   eventLat?: Prisma.SortOrder
   eventLon?: Prisma.SortOrder
   eventAddress?: Prisma.SortOrder
@@ -304,7 +304,7 @@ export type EventWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.EventWhereInput[]
   NOT?: Prisma.EventWhereInput | Prisma.EventWhereInput[]
   eventName?: Prisma.StringFilter<"Event"> | string
-  eventType?: Prisma.StringNullableFilter<"Event"> | string | null
+  eventType?: Prisma.StringFilter<"Event"> | string
   eventLat?: Prisma.FloatFilter<"Event"> | number
   eventLon?: Prisma.FloatFilter<"Event"> | number
   eventAddress?: Prisma.StringFilter<"Event"> | string
@@ -321,7 +321,7 @@ export type EventWhereUniqueInput = Prisma.AtLeast<{
 export type EventOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   eventName?: Prisma.SortOrder
-  eventType?: Prisma.SortOrderInput | Prisma.SortOrder
+  eventType?: Prisma.SortOrder
   eventLat?: Prisma.SortOrder
   eventLon?: Prisma.SortOrder
   eventAddress?: Prisma.SortOrder
@@ -343,7 +343,7 @@ export type EventScalarWhereWithAggregatesInput = {
   NOT?: Prisma.EventScalarWhereWithAggregatesInput | Prisma.EventScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Event"> | number
   eventName?: Prisma.StringWithAggregatesFilter<"Event"> | string
-  eventType?: Prisma.StringNullableWithAggregatesFilter<"Event"> | string | null
+  eventType?: Prisma.StringWithAggregatesFilter<"Event"> | string
   eventLat?: Prisma.FloatWithAggregatesFilter<"Event"> | number
   eventLon?: Prisma.FloatWithAggregatesFilter<"Event"> | number
   eventAddress?: Prisma.StringWithAggregatesFilter<"Event"> | string
@@ -355,8 +355,8 @@ export type EventScalarWhereWithAggregatesInput = {
 }
 
 export type EventCreateInput = {
-  eventName?: string
-  eventType?: string | null
+  eventName: string
+  eventType?: string
   eventLat: number
   eventLon: number
   eventAddress: string
@@ -371,8 +371,8 @@ export type EventCreateInput = {
 
 export type EventUncheckedCreateInput = {
   id?: number
-  eventName?: string
-  eventType?: string | null
+  eventName: string
+  eventType?: string
   eventLat: number
   eventLon: number
   eventAddress: string
@@ -387,7 +387,7 @@ export type EventUncheckedCreateInput = {
 
 export type EventUpdateInput = {
   eventName?: Prisma.StringFieldUpdateOperationsInput | string
-  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   eventLat?: Prisma.FloatFieldUpdateOperationsInput | number
   eventLon?: Prisma.FloatFieldUpdateOperationsInput | number
   eventAddress?: Prisma.StringFieldUpdateOperationsInput | string
@@ -403,7 +403,7 @@ export type EventUpdateInput = {
 export type EventUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   eventName?: Prisma.StringFieldUpdateOperationsInput | string
-  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   eventLat?: Prisma.FloatFieldUpdateOperationsInput | number
   eventLon?: Prisma.FloatFieldUpdateOperationsInput | number
   eventAddress?: Prisma.StringFieldUpdateOperationsInput | string
@@ -418,8 +418,8 @@ export type EventUncheckedUpdateInput = {
 
 export type EventCreateManyInput = {
   id?: number
-  eventName?: string
-  eventType?: string | null
+  eventName: string
+  eventType?: string
   eventLat: number
   eventLon: number
   eventAddress: string
@@ -432,7 +432,7 @@ export type EventCreateManyInput = {
 
 export type EventUpdateManyMutationInput = {
   eventName?: Prisma.StringFieldUpdateOperationsInput | string
-  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   eventLat?: Prisma.FloatFieldUpdateOperationsInput | number
   eventLon?: Prisma.FloatFieldUpdateOperationsInput | number
   eventAddress?: Prisma.StringFieldUpdateOperationsInput | string
@@ -445,7 +445,7 @@ export type EventUpdateManyMutationInput = {
 export type EventUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   eventName?: Prisma.StringFieldUpdateOperationsInput | string
-  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   eventLat?: Prisma.FloatFieldUpdateOperationsInput | number
   eventLon?: Prisma.FloatFieldUpdateOperationsInput | number
   eventAddress?: Prisma.StringFieldUpdateOperationsInput | string
@@ -624,8 +624,8 @@ export type EventUncheckedUpdateManyWithoutFavoritedByNestedInput = {
 }
 
 export type EventCreateWithoutCreatedByInput = {
-  eventName?: string
-  eventType?: string | null
+  eventName: string
+  eventType?: string
   eventLat: number
   eventLon: number
   eventAddress: string
@@ -639,8 +639,8 @@ export type EventCreateWithoutCreatedByInput = {
 
 export type EventUncheckedCreateWithoutCreatedByInput = {
   id?: number
-  eventName?: string
-  eventType?: string | null
+  eventName: string
+  eventType?: string
   eventLat: number
   eventLon: number
   eventAddress: string
@@ -663,8 +663,8 @@ export type EventCreateManyCreatedByInputEnvelope = {
 }
 
 export type EventCreateWithoutFavoritedByInput = {
-  eventName?: string
-  eventType?: string | null
+  eventName: string
+  eventType?: string
   eventLat: number
   eventLon: number
   eventAddress: string
@@ -678,8 +678,8 @@ export type EventCreateWithoutFavoritedByInput = {
 
 export type EventUncheckedCreateWithoutFavoritedByInput = {
   id?: number
-  eventName?: string
-  eventType?: string | null
+  eventName: string
+  eventType?: string
   eventLat: number
   eventLon: number
   eventAddress: string
@@ -697,8 +697,8 @@ export type EventCreateOrConnectWithoutFavoritedByInput = {
 }
 
 export type EventCreateWithoutParticipantsInput = {
-  eventName?: string
-  eventType?: string | null
+  eventName: string
+  eventType?: string
   eventLat: number
   eventLon: number
   eventAddress: string
@@ -712,8 +712,8 @@ export type EventCreateWithoutParticipantsInput = {
 
 export type EventUncheckedCreateWithoutParticipantsInput = {
   id?: number
-  eventName?: string
-  eventType?: string | null
+  eventName: string
+  eventType?: string
   eventLat: number
   eventLon: number
   eventAddress: string
@@ -752,7 +752,7 @@ export type EventScalarWhereInput = {
   NOT?: Prisma.EventScalarWhereInput | Prisma.EventScalarWhereInput[]
   id?: Prisma.IntFilter<"Event"> | number
   eventName?: Prisma.StringFilter<"Event"> | string
-  eventType?: Prisma.StringNullableFilter<"Event"> | string | null
+  eventType?: Prisma.StringFilter<"Event"> | string
   eventLat?: Prisma.FloatFilter<"Event"> | number
   eventLon?: Prisma.FloatFilter<"Event"> | number
   eventAddress?: Prisma.StringFilter<"Event"> | string
@@ -792,7 +792,7 @@ export type EventUpdateToOneWithWhereWithoutParticipantsInput = {
 
 export type EventUpdateWithoutParticipantsInput = {
   eventName?: Prisma.StringFieldUpdateOperationsInput | string
-  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   eventLat?: Prisma.FloatFieldUpdateOperationsInput | number
   eventLon?: Prisma.FloatFieldUpdateOperationsInput | number
   eventAddress?: Prisma.StringFieldUpdateOperationsInput | string
@@ -807,7 +807,7 @@ export type EventUpdateWithoutParticipantsInput = {
 export type EventUncheckedUpdateWithoutParticipantsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   eventName?: Prisma.StringFieldUpdateOperationsInput | string
-  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   eventLat?: Prisma.FloatFieldUpdateOperationsInput | number
   eventLon?: Prisma.FloatFieldUpdateOperationsInput | number
   eventAddress?: Prisma.StringFieldUpdateOperationsInput | string
@@ -821,8 +821,8 @@ export type EventUncheckedUpdateWithoutParticipantsInput = {
 
 export type EventCreateManyCreatedByInput = {
   id?: number
-  eventName?: string
-  eventType?: string | null
+  eventName: string
+  eventType?: string
   eventLat: number
   eventLon: number
   eventAddress: string
@@ -834,7 +834,7 @@ export type EventCreateManyCreatedByInput = {
 
 export type EventUpdateWithoutCreatedByInput = {
   eventName?: Prisma.StringFieldUpdateOperationsInput | string
-  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   eventLat?: Prisma.FloatFieldUpdateOperationsInput | number
   eventLon?: Prisma.FloatFieldUpdateOperationsInput | number
   eventAddress?: Prisma.StringFieldUpdateOperationsInput | string
@@ -849,7 +849,7 @@ export type EventUpdateWithoutCreatedByInput = {
 export type EventUncheckedUpdateWithoutCreatedByInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   eventName?: Prisma.StringFieldUpdateOperationsInput | string
-  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   eventLat?: Prisma.FloatFieldUpdateOperationsInput | number
   eventLon?: Prisma.FloatFieldUpdateOperationsInput | number
   eventAddress?: Prisma.StringFieldUpdateOperationsInput | string
@@ -864,7 +864,7 @@ export type EventUncheckedUpdateWithoutCreatedByInput = {
 export type EventUncheckedUpdateManyWithoutCreatedByInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   eventName?: Prisma.StringFieldUpdateOperationsInput | string
-  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   eventLat?: Prisma.FloatFieldUpdateOperationsInput | number
   eventLon?: Prisma.FloatFieldUpdateOperationsInput | number
   eventAddress?: Prisma.StringFieldUpdateOperationsInput | string
@@ -876,7 +876,7 @@ export type EventUncheckedUpdateManyWithoutCreatedByInput = {
 
 export type EventUpdateWithoutFavoritedByInput = {
   eventName?: Prisma.StringFieldUpdateOperationsInput | string
-  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   eventLat?: Prisma.FloatFieldUpdateOperationsInput | number
   eventLon?: Prisma.FloatFieldUpdateOperationsInput | number
   eventAddress?: Prisma.StringFieldUpdateOperationsInput | string
@@ -891,7 +891,7 @@ export type EventUpdateWithoutFavoritedByInput = {
 export type EventUncheckedUpdateWithoutFavoritedByInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   eventName?: Prisma.StringFieldUpdateOperationsInput | string
-  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   eventLat?: Prisma.FloatFieldUpdateOperationsInput | number
   eventLon?: Prisma.FloatFieldUpdateOperationsInput | number
   eventAddress?: Prisma.StringFieldUpdateOperationsInput | string
@@ -906,7 +906,7 @@ export type EventUncheckedUpdateWithoutFavoritedByInput = {
 export type EventUncheckedUpdateManyWithoutFavoritedByInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   eventName?: Prisma.StringFieldUpdateOperationsInput | string
-  eventType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   eventLat?: Prisma.FloatFieldUpdateOperationsInput | number
   eventLon?: Prisma.FloatFieldUpdateOperationsInput | number
   eventAddress?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1043,7 +1043,7 @@ export type $EventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     eventName: string
-    eventType: string | null
+    eventType: string
     eventLat: number
     eventLon: number
     eventAddress: string

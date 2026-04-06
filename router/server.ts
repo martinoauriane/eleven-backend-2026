@@ -30,33 +30,34 @@ router.get("/", async (req: Request, res: Response) => {
 
 // operationnal
 router.post("/user/create", async (req: Request, res: Response) => {
-  await userController.newUser(req, res);
+  await userController.createUser(req, res);
 });
-
-//operationnal
-router.get("/user/all", async(req: Request, res: Response) => {
-  await userController.getAll(req, res);
-});
-
-// add friend method 
-router.post("/user/add-friend", async(req: Request, res:Response) =>{
-  await userController.addFriend(req, res);
-})
-
-//operationnal
-router.post("/user/:id/friends", async(req:Request, res:Response) =>{
-  await userController.getUserFriends(req, res)
-})
 
 // operationnal
 router.post("/user/:id", async (req: Request, res: Response) => {
-  await userController.returnUser(req, res);
+  await userController.getUser(req, res);
+});
+
+
+//operationnal
+router.get("/user/all", async(req: Request, res: Response) => {
+  await userController.getAllUsers(req, res);
 });
 
 // operationnal
 router.post("/user/update", async (req: Request, res: Response) => {
   await userController.updateUser(req, res);
 });
+
+//operationnal
+router.post("/user/:id/friends", async(req:Request, res:Response) =>{
+  await userController.getUserFriends(req, res)
+})
+
+// add friend method 
+router.post("/user/add-friend", async(req: Request, res:Response) =>{
+  await userController.addFriend(req, res);
+})
 
 // to do: add favorites user endpoints
 router.post("/user/:userId/:eventId/add-favorites", async(req:Request, res:Response) => {
@@ -134,13 +135,14 @@ router.post(
 
 
 // EVENT ENDPOINTS
+
 // operationnal
 router.post("/event/create/:userId", async (req: Request, res: Response) => {
   await eventController.newEvent(req, res);
 });
 
 // operationnal
-router.post("/event/get/:event_id", async (req: Request, res: Response) => {
+router.post("/event/get/:eventId", async (req: Request, res: Response) => {
   await eventController.returnEventById(req, res);
 });
 

@@ -8,81 +8,81 @@ datasource db {
 }
 
 model User {
-  id                     Int             @id @default(autoincrement())
-  firstName              String
-  lastName               String
-  email                  String          @unique
-  picture                String?         @unique
-  password               String
-  homeAddress            String?
-  isOnline               Boolean         @default(false)
-  isOnMap                Boolean         @default(false)
-  userLat                Float?
-  userLon                Float?
-  status                 String          @default("Wants to go out")
-  lastLogin              DateTime        @default(now())
-  partyAddress           String?
-  partyLat               Float?
-  partyLon               Float?
-  partyId                Int?
+  id           Int      @id @default(autoincrement())
+  firstName    String
+  lastName     String
+  email        String   @unique
+  picture      String?  @unique
+  password     String
+  homeAddress  String?
+  isOnline     Boolean  @default(false)
+  isOnMap      Boolean  @default(false)
+  userLat      Float?
+  userLon      Float?
+  status       String   @default("Wants to go out")
+  lastLogin    DateTime @default(now())
+  partyAddress String?
+  partyLat     Float?
+  partyLon     Float?
+  partyId      Int?
 
   // relations
-  userPicture UserSituation? 
+  userPicture UserSituation?
 
   // events created and favorited by user
-  eventsCreated          Event[]         @relation("EventCreator")
-  favorites              Event[]         @relation("UserFavorites")
+  eventsCreated Event[] @relation("EventCreator")
+  favorites     Event[] @relation("UserFavorites")
   // user friends
-  friends        User[] @relation("UserFriends")
-  friendOf       User[] @relation("UserFriends")
+  friends       User[]  @relation("UserFriends")
+  friendOf      User[]  @relation("UserFriends")
 
   // event attended by user
-  attendingEventId       Int?
-  attendingEvent        Event?        @relation("EventParticipants", fields: [attendingEventId], references: [id])
-  
+  attendingEventId Int?
+  attendingEvent   Event? @relation("EventParticipants", fields: [attendingEventId], references: [id])
+
   // friendRequests
   sentFriendRequests     FriendRequest[] @relation("EmitterFriendRequest")
   receivedFriendRequests FriendRequest[] @relation("ReceiverFriendRequest")
 
   // joinRequests
-  sentJoinRequests       JoinRequest[]   @relation("EmitterJoinRequest")
-  receivedJoinRequests   JoinRequest[]   @relation("ReceiverJoinRequest")
+  sentJoinRequests     JoinRequest[] @relation("EmitterJoinRequest")
+  receivedJoinRequests JoinRequest[] @relation("ReceiverJoinRequest")
 }
 
 model UserSituation {
-  id             Int      @id @default(autoincrement())
-  username String
-  activity String 
-  latitude Float 
-  longitude Float 
-  address String 
-  
-  picture   String?   @unique
+  id        Int    @id @default(autoincrement())
+  username  String
+  activity  String
+  latitude  Float
+  longitude Float
+  address   String
+
+  picture String? @unique
 
   userPicture User? @relation(fields: [picture], references: [picture])
 }
 
 model Event {
-  id             Int      @id @default(autoincrement())
-  eventName      String  @default("Drinks with friends") // "Drinks with friends" | "Flat-party" | "Night out clubbing" | "Concert"
-  eventType      String? // flat-party // clubbing night out // drinks with friends
-  eventLat       Float
-  eventLon       Float
-  eventAddress   String
-  eventCity      String
-  eventCountry        String
-  isFull         Boolean  @default(false)
-  isPublic       Boolean  @default(true)
+  id           Int     @id @default(autoincrement())
+  eventName    String 
+  eventType    String @default("Drinks with friends") // "Drinks with friends" | "Flat-party" | "Night out clubbing" | "Concert"
+  eventLat     Float
+  eventLon     Float
+  eventAddress String
+  eventCity    String
+  eventCountry String
+  isFull       Boolean @default(false)
+  isPublic     Boolean @default(true)
   // relations
-  
+
   // creator relation (1-N)
-  userId Int
-  createdBy      User     @relation("EventCreator", fields: [userId], references: [id])
+  userId    Int
+  createdBy User @relation("EventCreator", fields: [userId], references: [id])
 
   // favorited by
-  favoritedBy   User[]     @relation("UserFavorites")
+  favoritedBy  User[] @relation("UserFavorites")
   // isFull Boolean
-  participants    User[]   @relation("EventParticipants")
+  participants User[] @relation("EventParticipants")
 }
 
 model JoinRequest {
@@ -105,6 +105,6 @@ model FriendRequest {
   receiverId Int
 
   // relations
-  emitter    User     @relation("EmitterFriendRequest", fields: [emitterId], references: [id])
-  receiver   User     @relation("ReceiverFriendRequest", fields: [receiverId], references: [id])
+  emitter  User @relation("EmitterFriendRequest", fields: [emitterId], references: [id])
+  receiver User @relation("ReceiverFriendRequest", fields: [receiverId], references: [id])
 }
