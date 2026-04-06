@@ -32,12 +32,8 @@ class UserController {
 
   async addFriend(req: Request, res: Response) {
     try {
-      console.log(req.body);
       const userId = req.body.userId;
       const friendId = req.body.friendId;
-      console.log("friendId", friendId);
-      console.log("userId", userId);
-      console.log("friendship successfully updated");
       const updatedUser = await userService.addNewFriend(userId, friendId);
       res.status(200).json(updatedUser);
     } catch (error) {
@@ -46,7 +42,6 @@ class UserController {
   }
 
   async getUserFriends(req: Request, res: Response) {
-    console.log("route has functionned");
     const id: string = String(req.params.id);
     try {
       const friendsList = await userService.getUserFriends(id);

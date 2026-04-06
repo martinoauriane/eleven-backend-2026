@@ -1,13 +1,23 @@
 
 import { EventService } from "../service/eventService";
 import { Request, Response } from "express";
-
+import { EventCreate } from "../store/interfaces/eventInterfaces";
 const eventService = new EventService();
 
 class EventController {
     
     async newEvent(req: Request, res: Response) {
-    const event = req.body;
+    const event : EventCreate = {
+        userId: parseInt(req.body.userId), 
+        eventName: String(req.body.eventName),
+        eventLat: parseFloat(req.body.eventLat),
+        eventLon: parseFloat(req.body.eventLon),
+        eventAddress: String(req.body.eventAddress),
+        eventCity: String(req.body.city),
+        eventCountry: String(req.body.eventCountry),
+        isFull: req.body.isFull,
+        isPublic: req.body.isPublic,
+    }
     try {
         const eventCreated = await eventService.createEvent(event);
         res.status(200).json(eventCreated);
