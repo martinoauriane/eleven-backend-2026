@@ -24,9 +24,6 @@ class EventService implements IEventService{
             eventCountry: data.eventCountry,
             isFull: data.isFull, 
             isPublic: data.isPublic,
-            city: data.city,
-            country: data.country,
-            eventCreatorId: data.eventCreatorId,
         };
         return await eventStore.createEvent(EventData);
     }
