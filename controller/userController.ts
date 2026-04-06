@@ -94,20 +94,49 @@ class UserController {
     }
   }
 
-  async addFavoriteEvent(req: Request, res: Response){
-    const eventObject = req.body;
-    const eventId = eventObject.id;
-    if (isNaN(eventId)) {
-      return res.status(400).json({ error: "Invalid id" });
-    }
-     try {
-      const favoriteEvent = await userService.addEventFavorite(eventObject, eventId);
+  async addFavoriteEvent(req: Request, res: Response) {
+    const eventId = req.params.eventId;
+    const userId = req.params.userId;
+    try {
+      const favoriteEvent = await userService.addEventFavorite(userId, eventId);
       res.status(200).json(favoriteEvent);
     } catch (error: any) {
-      console.error("Prisma update error:", error);
+      console.error("Prisma adding event favorite error:", error);
       res.status(500).json({
         error: "Error adding event to favorite",
-        details: error.message, 
+        details: error.message,
+      });
+    }
+  }
+
+  async removeFavoriteEvent(req: Request, res: Response) {
+    const eventId = req.params.eventId;
+    const userId = req.params.userId;
+    try {
+      const removedEvent = await userService.removeEventFavorite(
+        userId,
+        eventId,
+      );
+      res.status(200).json(removedEvent);
+    } catch (error: any) {
+      console.error("Prisma removing event favorite error:", error);
+      res.status(500).json({
+        error: "Error removing favorite event",
+        details: error.message,
+      });
+    }
+  }
+
+  async getUserFavoriteEvents(req: Request, res: Response) {
+    const userId = req.params.id;
+    try {
+      const userFavoriteEvents = await userService.getUserFavorite(userId);
+      res.status(200).json(userFavoriteEvents);
+    } catch (error: any) {
+      console.error("Prisma retrieving user favorite events error:", error);
+      res.status(500).json({
+        error: "Error retrieving user favorite events",
+        details: error.message,
       });
     }
   }
@@ -122,7 +151,6 @@ class UserController {
       res.status(500).json({ error: "Error deleting user" });
     }
   }
-
 }
 
 export { UserController };

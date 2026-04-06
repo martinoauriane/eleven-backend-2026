@@ -9,7 +9,7 @@ interface IUserStore {
   deleteUser(id: number): Promise<any>;
 }
 
-class UserStore implements IUserStore {
+ class UserStore implements IUserStore {
   async createUser(data: UserCreate) {
     try {
       return await prisma.user.create({ data });
@@ -67,7 +67,6 @@ class UserStore implements IUserStore {
         favorites: true,
       },
     });
-
     return updatedUser;
   } catch (error) {
     console.error("Prisma add favorite error:", error);
