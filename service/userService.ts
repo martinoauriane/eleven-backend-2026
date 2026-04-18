@@ -31,6 +31,14 @@ class UserService {
   async addNewFriend(userId: number, friendId: number){
     return userStore.addFriend(userId, friendId);
   }
+
+  async logInUser(userLogin:any){
+    const answer : string = await userStore.checkUser(userLogin);
+    if (answer != undefined){
+      return answer;
+    } 
+  }
+
   async getAllUsers(){
     return await userStore.getAllUsers();
   }

@@ -22,6 +22,19 @@ class UserController {
     }
   }
 
+    async checkUser(req: Request, res:Response){
+      const userLogin = {
+        email: req.body.email,
+        password : req.body.password
+      }     
+      try{
+        const loggedUser = await userService.logInUser(userLogin);
+        res.status(200).json(loggedUser);
+      }catch(error){
+      res.status(500).json({ error: "Error checking user credentials" });
+      }
+    }
+
     async getUser(req: Request, res: Response) {
     const id = Number(req.params.id);
     console.log("user id", id);

@@ -29,9 +29,14 @@ router.get("/", async (req: Request, res: Response) => {
 // USER ENDPOINTS
 
 // operationnal
-router.post("/user/create", async (req: Request, res: Response) => {
+router.post("/user/register", async (req: Request, res: Response) => {
   await userController.createUser(req, res);
 });
+
+// to test 
+router.post("/user/login", async(req:Request, res:Response) => {
+    await userController.checkUser(req, res);
+})
 
 // operationnal
 router.post("/user/:id", async (req: Request, res: Response) => {
