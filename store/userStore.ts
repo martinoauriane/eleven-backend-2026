@@ -116,17 +116,22 @@ class UserStore implements IUserStore {
   }
 
   async getUserFavorites(userId: number) {
-    return await prisma.user.findUnique({
-      where: { id: userId },
-      include: {
-        favorites: true,
-      },
-    });
+    try {
+      let user = await prisma.user.findUnique({
+        where: { id: userId },
+        include: {
+          favorites: true,
+        },
+      });
+      let favorites = user?.favorites;
+      return favorites;
+    } catch (error) {
+      console.error("Prisma retrieve error:", error);
+    }
   }
 
   async getUserFriends(id: string) {
     const idNum = parseInt(id);
-    console.log("idNum", idNum);
     try {
       const user = await prisma.user.findUnique({
         where: { id: idNum },

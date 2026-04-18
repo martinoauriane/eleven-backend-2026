@@ -55,7 +55,7 @@ class UserService {
     return await userStore.updateUser(id, data);
   }
 
-  async addEventFavorite(eventId:any, userId:any){
+  async addEventFavorite(eventId:number, userId:number){
     return await userStore.addEventFavorite(eventId, userId);
   }
 

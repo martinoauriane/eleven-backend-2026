@@ -37,7 +37,6 @@ class UserController {
 
     async getUser(req: Request, res: Response) {
     const id = Number(req.params.id);
-    console.log("user id", id);
     try {
       const user = await userService.getUserById(id);
       if (user) {
@@ -104,8 +103,8 @@ class UserController {
   }
 
   async addFavoriteEvent(req: Request, res: Response) {
-    const eventId = req.params.eventId;
-    const userId = req.params.userId;
+    const eventId = parseInt(String(req.params.eventId));
+    const userId = parseInt(String(req.params.userId));
     try {
       const favoriteEvent = await userService.addEventFavorite(userId, eventId);
       res.status(200).json(favoriteEvent);
@@ -137,7 +136,7 @@ class UserController {
   }
 
   async getUserFavoriteEvents(req: Request, res: Response) {
-    const userId = req.params.id;
+    const userId = parseInt(String(req.params.userId));
     try {
       const userFavoriteEvents = await userService.getUserFavorite(userId);
       res.status(200).json(userFavoriteEvents);
@@ -152,7 +151,6 @@ class UserController {
 
   async deleteUser(req: Request, res: Response) {
     const id = Number(req.query.id);
-    console.log("id", id);
     try {
       await userService.deleteUser(id);
       res.status(200).json({ message: "User deleted successfully" });

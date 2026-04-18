@@ -65,17 +65,17 @@ router.post("/user/add-friend", async(req: Request, res:Response) =>{
 })
 
 // to do: add favorites user endpoints
-router.post("/user/:userId/:eventId/add-favorites", async(req:Request, res:Response) => {
+router.post("/user/:userId/:eventId/add-event-favorites", async(req:Request, res:Response) => {
   await userController.addFavoriteEvent(req, res)
 })
 
 // to do: remove favorites user endpoints
-router.post("/user/:userId/:eventId/remove-favorites", async(req:Request, res:Response) => {
+router.post("/user/:userId/:eventId/remove-event-favorites", async(req:Request, res:Response) => {
   await userController.removeFavoriteEvent(req, res)
 })
 
 // to do: get user favorite events endpoints
-router.post("/user/:userId/:eventId/get-favorites", async(req:Request, res:Response) => {
+router.post("/user/:userId/get-event-favorites", async(req:Request, res:Response) => {
   await userController.getUserFavoriteEvents(req, res)
 })
 
