@@ -864,6 +864,9 @@ export const EventScalarFieldEnum = {
   eventAddress: 'eventAddress',
   eventCity: 'eventCity',
   eventCountry: 'eventCountry',
+  eventDate: 'eventDate',
+  eventStartTime: 'eventStartTime',
+  eventEndTime: 'eventEndTime',
   isFull: 'isFull',
   isPublic: 'isPublic',
   userId: 'userId'

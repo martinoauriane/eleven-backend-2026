@@ -69,9 +69,15 @@ model Event {
   eventType    String @default("Drinks with friends") // "Drinks with friends" | "Flat-party" | "Night out clubbing" | "Concert"
   eventLat     Float
   eventLon     Float
+
   eventAddress String
   eventCity    String
   eventCountry String
+
+  eventDate      DateTime @default(now())
+  eventStartTime DateTime @default(now())
+  eventEndTime   DateTime @default(now())
+
   isFull       Boolean @default(false)
   isPublic     Boolean @default(true)
   // relations
