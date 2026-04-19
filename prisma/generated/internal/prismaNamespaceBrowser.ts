@@ -52,7 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  UserSituation: 'UserSituation',
+  OnMap: 'OnMap',
   Event: 'Event',
   JoinRequest: 'JoinRequest',
   FriendRequest: 'FriendRequest'
@@ -83,33 +83,26 @@ export const UserScalarFieldEnum = {
   password: 'password',
   homeAddress: 'homeAddress',
   isOnline: 'isOnline',
-  isOnMap: 'isOnMap',
-  userLat: 'userLat',
-  userLon: 'userLon',
   status: 'status',
   lastLogin: 'lastLogin',
-  ActivityType: 'ActivityType',
-  partyAddress: 'partyAddress',
-  partyLat: 'partyLat',
-  partyLon: 'partyLon',
-  partyId: 'partyId',
   attendingEventId: 'attendingEventId'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const UserSituationScalarFieldEnum = {
+export const OnMapScalarFieldEnum = {
   id: 'id',
-  username: 'username',
-  activity: 'activity',
+  userId: 'userId',
   latitude: 'latitude',
   longitude: 'longitude',
   address: 'address',
-  picture: 'picture'
+  activity: 'activity',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type UserSituationScalarFieldEnum = (typeof UserSituationScalarFieldEnum)[keyof typeof UserSituationScalarFieldEnum]
+export type OnMapScalarFieldEnum = (typeof OnMapScalarFieldEnum)[keyof typeof OnMapScalarFieldEnum]
 
 
 export const EventScalarFieldEnum = {

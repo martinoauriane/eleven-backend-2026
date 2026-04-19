@@ -385,7 +385,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
-  UserSituation: 'UserSituation',
+  OnMap: 'OnMap',
   Event: 'Event',
   JoinRequest: 'JoinRequest',
   FriendRequest: 'FriendRequest'
@@ -404,7 +404,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userSituation" | "event" | "joinRequest" | "friendRequest"
+    modelProps: "user" | "onMap" | "event" | "joinRequest" | "friendRequest"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -482,77 +482,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    UserSituation: {
-      payload: Prisma.$UserSituationPayload<ExtArgs>
-      fields: Prisma.UserSituationFieldRefs
+    OnMap: {
+      payload: Prisma.$OnMapPayload<ExtArgs>
+      fields: Prisma.OnMapFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.UserSituationFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSituationPayload> | null
+          args: Prisma.OnMapFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OnMapPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.UserSituationFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSituationPayload>
+          args: Prisma.OnMapFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OnMapPayload>
         }
         findFirst: {
-          args: Prisma.UserSituationFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSituationPayload> | null
+          args: Prisma.OnMapFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OnMapPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.UserSituationFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSituationPayload>
+          args: Prisma.OnMapFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OnMapPayload>
         }
         findMany: {
-          args: Prisma.UserSituationFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSituationPayload>[]
+          args: Prisma.OnMapFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OnMapPayload>[]
         }
         create: {
-          args: Prisma.UserSituationCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSituationPayload>
+          args: Prisma.OnMapCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OnMapPayload>
         }
         createMany: {
-          args: Prisma.UserSituationCreateManyArgs<ExtArgs>
+          args: Prisma.OnMapCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.UserSituationCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSituationPayload>[]
+          args: Prisma.OnMapCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OnMapPayload>[]
         }
         delete: {
-          args: Prisma.UserSituationDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSituationPayload>
+          args: Prisma.OnMapDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OnMapPayload>
         }
         update: {
-          args: Prisma.UserSituationUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSituationPayload>
+          args: Prisma.OnMapUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OnMapPayload>
         }
         deleteMany: {
-          args: Prisma.UserSituationDeleteManyArgs<ExtArgs>
+          args: Prisma.OnMapDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.UserSituationUpdateManyArgs<ExtArgs>
+          args: Prisma.OnMapUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.UserSituationUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSituationPayload>[]
+          args: Prisma.OnMapUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OnMapPayload>[]
         }
         upsert: {
-          args: Prisma.UserSituationUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSituationPayload>
+          args: Prisma.OnMapUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OnMapPayload>
         }
         aggregate: {
-          args: Prisma.UserSituationAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateUserSituation>
+          args: Prisma.OnMapAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOnMap>
         }
         groupBy: {
-          args: Prisma.UserSituationGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.UserSituationGroupByOutputType>[]
+          args: Prisma.OnMapGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OnMapGroupByOutputType>[]
         }
         count: {
-          args: Prisma.UserSituationCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.UserSituationCountAggregateOutputType> | number
+          args: Prisma.OnMapCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OnMapCountAggregateOutputType> | number
         }
       }
     }
@@ -826,33 +826,26 @@ export const UserScalarFieldEnum = {
   password: 'password',
   homeAddress: 'homeAddress',
   isOnline: 'isOnline',
-  isOnMap: 'isOnMap',
-  userLat: 'userLat',
-  userLon: 'userLon',
   status: 'status',
   lastLogin: 'lastLogin',
-  ActivityType: 'ActivityType',
-  partyAddress: 'partyAddress',
-  partyLat: 'partyLat',
-  partyLon: 'partyLon',
-  partyId: 'partyId',
   attendingEventId: 'attendingEventId'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const UserSituationScalarFieldEnum = {
+export const OnMapScalarFieldEnum = {
   id: 'id',
-  username: 'username',
-  activity: 'activity',
+  userId: 'userId',
   latitude: 'latitude',
   longitude: 'longitude',
   address: 'address',
-  picture: 'picture'
+  activity: 'activity',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type UserSituationScalarFieldEnum = (typeof UserSituationScalarFieldEnum)[keyof typeof UserSituationScalarFieldEnum]
+export type OnMapScalarFieldEnum = (typeof OnMapScalarFieldEnum)[keyof typeof OnMapScalarFieldEnum]
 
 
 export const EventScalarFieldEnum = {
@@ -963,20 +956,6 @@ export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
- * Reference to a field of type 'Float'
- */
-export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-/**
- * Reference to a field of type 'Float[]'
- */
-export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
-    
-
-
-/**
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -987,6 +966,20 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 /**
@@ -1085,7 +1078,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
-  userSituation?: Prisma.UserSituationOmit
+  onMap?: Prisma.OnMapOmit
   event?: Prisma.EventOmit
   joinRequest?: Prisma.JoinRequestOmit
   friendRequest?: Prisma.FriendRequestOmit

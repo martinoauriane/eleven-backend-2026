@@ -45,10 +45,10 @@ export { Prisma }
  */
 export type User = Prisma.UserModel
 /**
- * Model UserSituation
+ * Model OnMap
  * 
  */
-export type UserSituation = Prisma.UserSituationModel
+export type OnMap = Prisma.OnMapModel
 /**
  * Model Event
  * 

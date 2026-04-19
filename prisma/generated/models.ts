@@ -9,7 +9,7 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User'
-export type * from './models/UserSituation'
+export type * from './models/OnMap'
 export type * from './models/Event'
 export type * from './models/JoinRequest'
 export type * from './models/FriendRequest'
