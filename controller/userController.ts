@@ -5,7 +5,6 @@ import { UserCreate } from "../store/interfaces/userInterfaces";
 const userService = new UserService();
 
 class UserController {
-
   async createUser(req: Request, res: Response) {
     const user: UserCreate = {
       firstName: String(req.body.firstName),
@@ -22,20 +21,20 @@ class UserController {
     }
   }
 
-    async checkUser(req: Request, res:Response){
-      const userLogin = {
-        email: req.body.email,
-        password : req.body.password
-      }     
-      try{
-        const loggedUser = await userService.logInUser(userLogin);
-        res.status(200).json(loggedUser);
-      }catch(error){
+  async checkUser(req: Request, res: Response) {
+    const userLogin = {
+      email: req.body.email,
+      password: req.body.password,
+    };
+    try {
+      const loggedUser = await userService.logInUser(userLogin);
+      res.status(200).json(loggedUser);
+    } catch (error) {
       res.status(500).json({ error: "Error checking user credentials" });
-      }
     }
+  }
 
-    async getUser(req: Request, res: Response) {
+  async getUser(req: Request, res: Response) {
     const id = Number(req.params.id);
     try {
       const user = await userService.getUserById(id);
@@ -144,6 +143,18 @@ class UserController {
       console.error("Prisma retrieving user favorite events error:", error);
       res.status(500).json({
         error: "Error retrieving user favorite events",
+        details: error.message,
+      });
+    }
+  }
+
+  async getUsersOnMap(req: Request, res: Response) {
+    try {
+      let usersOnMap = await userService.getUsersOnMap();
+      res.status(200).json(usersOnMap);
+    } catch (error: any) {
+      res.status(500).json({
+        error: "Error retrieving users on map",
         details: error.message,
       });
     }

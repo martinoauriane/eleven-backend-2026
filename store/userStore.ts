@@ -115,6 +115,34 @@ class UserStore implements IUserStore {
     }
   }
 
+  async getUsersOnMap() {
+    try {
+      const usersOnMap = await prisma.onMap.findMany({
+        include: {
+          user: {
+            select: {
+              id: true,
+              firstName: true,
+              picture: true,
+            },
+          },
+        },
+      });
+      return usersOnMap.map((item) => ({
+        id: item.user.id,
+        name: item.user.firstName,
+        activity: item.activity,
+        latitude: item.latitude,
+        longitude: item.longitude,
+        address: item.address,
+        picture: item.user.picture,
+      }));
+    } catch (error) {
+      console.error(error);
+      throw new Error("Failed to fetch users on map");
+    }
+  }
+
   async getUserFavorites(userId: number) {
     try {
       let user = await prisma.user.findUnique({

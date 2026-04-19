@@ -1,9 +1,6 @@
 import { UserStore } from "../store/userStore";
 import { hashPassword } from "./utils/hash";
-import {
-  UserCreate,
-  UserUpdate,
-} from "../store/interfaces/userInterfaces";
+import { UserCreate, UserUpdate } from "../store/interfaces/userInterfaces";
 
 const userStore = new UserStore();
 
@@ -15,7 +12,6 @@ interface UserService {
 }
 
 class UserService {
-
   async createUser(user: UserCreate): Promise<any> {
     const passwordHash = await hashPassword(String(user.password));
     const userData: UserCreate = {
@@ -28,19 +24,23 @@ class UserService {
     return await userStore.createUser(userData);
   }
 
-  async addNewFriend(userId: number, friendId: number){
+  async addNewFriend(userId: number, friendId: number) {
     return userStore.addFriend(userId, friendId);
   }
 
-  async logInUser(userLogin:any){
-    const answer : string = await userStore.checkUser(userLogin);
-    if (answer != undefined){
+  async logInUser(userLogin: any) {
+    const answer: string = await userStore.checkUser(userLogin);
+    if (answer != undefined) {
       return answer;
-    } 
+    }
   }
 
-  async getAllUsers(){
+  async getAllUsers() {
     return await userStore.getAllUsers();
+  }
+
+  async getUsersOnMap() {
+    return await userStore.getUsersOnMap();
   }
 
   async getUserFriends(userId: string): Promise<any> {
@@ -55,18 +55,18 @@ class UserService {
     return await userStore.updateUser(id, data);
   }
 
-  async addEventFavorite(eventId:number, userId:number){
+  async addEventFavorite(eventId: number, userId: number) {
     return await userStore.addEventFavorite(eventId, userId);
   }
 
-  async removeEventFavorite(eventId: any, userId:any){
+  async removeEventFavorite(eventId: any, userId: any) {
     return await userStore.removeEventFavorite(eventId, userId);
   }
 
-  async getUserFavorite(userId:any){
+  async getUserFavorite(userId: any) {
     return await userStore.getUserFavorites(userId);
   }
-  
+
   async deleteUser(id: number) {
     return await userStore.deleteUser(id);
   }

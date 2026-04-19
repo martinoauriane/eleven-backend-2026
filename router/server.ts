@@ -84,6 +84,10 @@ router.post("/user/delete", async (req: Request, res: Response) => {
   await userController.deleteUser(req, res);
 });
 
+router.get("/user/onmap", async(req:Request, res:Response) =>{
+  await userController.getUsersOnMap(req, res);
+})
+
 // add get a list of friends endpoint
 
 // JOIN REQUEST ENDPOINTS
