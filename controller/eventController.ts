@@ -6,18 +6,21 @@ const eventService = new EventService();
 class EventController {
   async newEvent(req: Request, res: Response) {
     const userId = parseInt(String(req.params.userId));
+    
     const newEvent: EventCreate = {
       userId: userId,
       eventName: String(req.body.eventName),
       eventLat: parseFloat(req.body.eventLat),
       eventLon: parseFloat(req.body.eventLon),
       eventAddress: String(req.body.eventAddress),
+      eventDate: req.body.eventDate,
+      eventStartTime: req.body.eventStartTime,
+      eventEndTime: req.body.eventEndTime,
       eventCity: String(req.body.eventCity),
       eventCountry: String(req.body.eventCountry),
       isFull: req.body.isFull,
       isPublic: req.body.isPublic,
     };
-    console.log("newEvent", newEvent);
     try {
       const eventCreated = await eventService.createEvent(newEvent);
       res.status(200).json(eventCreated);

@@ -2,6 +2,9 @@ export interface EventCreate{
   userId: number;
   eventName: string;
   eventType?: string // flat-party // clubbing night out // drinks with friends
+  eventDate: Date;
+  eventStartTime: Date;
+  eventEndTime: Date;
   eventLat: number;
   eventLon: number;
   eventAddress: string;
