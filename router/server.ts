@@ -84,6 +84,10 @@ router.post("/user/delete", async (req: Request, res: Response) => {
   await userController.deleteUser(req, res);
 });
 
+router.post("/user/:userId/onmap", async(req:Request, res:Response) =>{
+  await userController.addUserOnMap(req, res);
+})
+
 router.get("/user/onmap", async(req:Request, res:Response) =>{
   await userController.getUsersOnMap(req, res);
 })

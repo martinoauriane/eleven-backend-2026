@@ -39,6 +39,10 @@ class UserService {
     return await userStore.getAllUsers();
   }
 
+  async addUserOnMap(user:any){
+    return await userStore.addUserOnMap(user);
+  }
+
   async getUsersOnMap() {
     return await userStore.getUsersOnMap();
   }

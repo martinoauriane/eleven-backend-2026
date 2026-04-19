@@ -148,6 +148,25 @@ class UserController {
     }
   }
 
+ async addUserOnMap(req: Request, res: Response) {
+  const user = {
+    id: Number(req.params.userId),
+    activity: req.body.activity,
+    latitude: req.body.latitude,
+    longitude: req.body.longitude,
+    address: req.body.address,
+  };
+  try {
+    const newUserOnMap = await userService.addUserOnMap(user);
+    res.status(200).json(newUserOnMap);
+  } catch (error: any) {
+    res.status(500).json({
+      error: "Error adding user on map",
+      details: error.message,
+    });
+  }
+}
+
   async getUsersOnMap(req: Request, res: Response) {
     try {
       let usersOnMap = await userService.getUsersOnMap();

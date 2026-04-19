@@ -115,6 +115,32 @@ class UserStore implements IUserStore {
     }
   }
 
+  async addUserOnMap(user: any) {
+    try {
+      const newUserOnMap = await prisma.onMap.upsert({
+        where: { userId: user.id },
+        update: {
+          latitude: user.latitude,
+          longitude: user.longitude,
+          address: user.address,
+          activity: user.activity,
+        },
+        create: {
+          userId: user.id,
+          latitude: user.latitude,
+          longitude: user.longitude,
+          address: user.address,
+          activity: user.activity,
+        },
+      });
+
+      return newUserOnMap;
+    } catch (error) {
+      console.error("Error adding user on map", error);
+      throw error;
+    }
+  }
+
   async getUsersOnMap() {
     try {
       const usersOnMap = await prisma.onMap.findMany({
