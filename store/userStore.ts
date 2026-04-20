@@ -141,9 +141,29 @@ class UserStore implements IUserStore {
     }
   }
 
-  async getUsersOnMap() {
+  async getUsersOnMap(currentUserId: number) {
     try {
       const usersOnMap = await prisma.onMap.findMany({
+        where: {
+          user: {
+            OR: [
+              {
+                friends: {
+                  some: {
+                    id: currentUserId,
+                  },
+                },
+              },
+              {
+                friendOf: {
+                  some: {
+                    id: currentUserId,
+                  },
+                },
+              },
+            ],
+          },
+        },
         include: {
           user: {
             select: {
@@ -154,15 +174,7 @@ class UserStore implements IUserStore {
           },
         },
       });
-      return usersOnMap.map((item) => ({
-        id: item.user.id,
-        name: item.user.firstName,
-        activity: item.activity,
-        latitude: item.latitude,
-        longitude: item.longitude,
-        address: item.address,
-        picture: item.user.picture,
-      }));
+      return usersOnMap;
     } catch (error) {
       console.error(error);
       throw new Error("Failed to fetch users on map");
@@ -192,7 +204,6 @@ class UserStore implements IUserStore {
         include: { friends: true },
       });
       const userArrayFriends = user?.friends;
-      console.log("userArray Friends", userArrayFriends);
       return userArrayFriends;
     } catch (error) {
       console.error("Prisma retrieve error:", error);

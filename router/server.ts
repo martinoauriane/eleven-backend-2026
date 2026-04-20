@@ -19,12 +19,10 @@ const joinRequestController = new JoinRequestController();
 const friendRequestController = new FriendRequestController();
 const eventController = new EventController();
 
-
 // operationnal
 router.get("/", async (req: Request, res: Response) => {
   res.status(200).json("Welcome");
 });
-
 
 // USER ENDPOINTS
 
@@ -33,19 +31,18 @@ router.post("/user/register", async (req: Request, res: Response) => {
   await userController.createUser(req, res);
 });
 
-// to test 
-router.post("/user/login", async(req:Request, res:Response) => {
-    await userController.checkUser(req, res);
-})
+// to test
+router.post("/user/login", async (req: Request, res: Response) => {
+  await userController.checkUser(req, res);
+});
 
 // operationnal
 router.post("/user/:id", async (req: Request, res: Response) => {
   await userController.getUser(req, res);
 });
 
-
 //operationnal
-router.get("/user/all", async(req: Request, res: Response) => {
+router.get("/user/all", async (req: Request, res: Response) => {
   await userController.getAllUsers(req, res);
 });
 
@@ -55,42 +52,56 @@ router.post("/user/update", async (req: Request, res: Response) => {
 });
 
 //operationnal
-router.post("/user/:id/friends", async(req:Request, res:Response) =>{
-  await userController.getUserFriends(req, res)
-})
+router.post("/user/:id/friends", async (req: Request, res: Response) => {
+  await userController.getUserFriends(req, res);
+});
 
-// add friend method 
-router.post("/user/add-friend", async(req: Request, res:Response) =>{
+// add friend method
+router.post("/user/add-friend", async (req: Request, res: Response) => {
   await userController.addFriend(req, res);
-})
+});
 
 // to do: add favorites user endpoints
-router.post("/user/:userId/:eventId/add-event-favorites", async(req:Request, res:Response) => {
-  await userController.addFavoriteEvent(req, res)
-})
+router.post(
+  "/user/:userId/:eventId/add-event-favorites",
+  async (req: Request, res: Response) => {
+    await userController.addFavoriteEvent(req, res);
+  },
+);
 
 // to do: remove favorites user endpoints
-router.post("/user/:userId/:eventId/remove-event-favorites", async(req:Request, res:Response) => {
-  await userController.removeFavoriteEvent(req, res)
-})
+router.post(
+  "/user/:userId/:eventId/remove-event-favorites",
+  async (req: Request, res: Response) => {
+    await userController.removeFavoriteEvent(req, res);
+  },
+);
 
 // to do: get user favorite events endpoints
-router.post("/user/:userId/get-event-favorites", async(req:Request, res:Response) => {
-  await userController.getUserFavoriteEvents(req, res)
-})
+router.post(
+  "/user/:userId/get-event-favorites",
+  async (req: Request, res: Response) => {
+    await userController.getUserFavoriteEvents(req, res);
+  },
+);
 
 // operationnal
 router.post("/user/delete", async (req: Request, res: Response) => {
   await userController.deleteUser(req, res);
 });
 
-router.post("/user/:userId/onmap", async(req:Request, res:Response) =>{
+router.post("/user/:userId/onmap", async (req: Request, res: Response) => {
   await userController.addUserOnMap(req, res);
-})
+});
 
-router.get("/user/onmap", async(req:Request, res:Response) =>{
-  await userController.getUsersOnMap(req, res);
-})
+router.get("/user/:userId/onmap-all", async (req: Request, res: Response) => {
+  try {
+    await userController.getUsersOnMap(req, res);
+  } catch (err) {
+    console.error("ERROR getAllEvents:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 // add get a list of friends endpoint
 
@@ -145,7 +156,6 @@ router.post(
     await friendRequestController.deleteFriendRequest(req, res);
   },
 );
-
 
 // EVENT ENDPOINTS
 

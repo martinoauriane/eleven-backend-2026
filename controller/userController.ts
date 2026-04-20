@@ -104,7 +104,7 @@ class UserController {
   async addFavoriteEvent(req: Request, res: Response) {
     const eventId = parseInt(String(req.params.eventId));
     const userId = parseInt(String(req.params.userId));
-    try {
+     try {
       const favoriteEvent = await userService.addEventFavorite(userId, eventId);
       res.status(200).json(favoriteEvent);
     } catch (error: any) {
@@ -168,9 +168,11 @@ class UserController {
 }
 
   async getUsersOnMap(req: Request, res: Response) {
+    let userId = parseInt(String(req.params.userId));
     try {
-      let usersOnMap = await userService.getUsersOnMap();
-      res.status(200).json(usersOnMap);
+      let usersOnMap = await userService.getUsersOnMap(userId);
+      console.log(usersOnMap);
+       res.status(200).json(usersOnMap);
     } catch (error: any) {
       res.status(500).json({
         error: "Error retrieving users on map",
