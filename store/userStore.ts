@@ -1,6 +1,7 @@
 import "dotenv/config"; // ⚡ force le chargement de ton .env
 import { UserCreate, UserUpdate, UserData } from "./interfaces/userInterfaces";
 import { prisma } from "../prisma/lib/prisma";
+import { MoodStatus } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
 interface IUserStore {
@@ -10,6 +11,7 @@ interface IUserStore {
   deleteUser(id: number): Promise<any>;
 }
 
+ 
 class UserStore implements IUserStore {
   async createUser(data: UserCreate) {
     try {
@@ -220,6 +222,20 @@ class UserStore implements IUserStore {
       throw error;
     }
   }
+
+  async updateUserStatus(userId: number, userStatus: MoodStatus) {
+  try {
+    return await prisma.user.update({
+      where: { id: userId },
+      data: {
+        status: userStatus,
+      },
+    });
+  } catch (error) {
+    console.error("Prisma update user status error:", error);
+    throw error;
+  }
+}
 
   async deleteUser(id: number) {
     try {

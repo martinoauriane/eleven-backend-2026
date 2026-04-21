@@ -956,6 +956,20 @@ export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'MoodStatus'
+ */
+export type EnumMoodStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MoodStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'MoodStatus[]'
+ */
+export type ListEnumMoodStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MoodStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>

@@ -45,7 +45,7 @@ export type UserMinAggregateOutputType = {
   password: string | null
   homeAddress: string | null
   isOnline: boolean | null
-  status: string | null
+  status: $Enums.MoodStatus | null
   lastLogin: Date | null
   attendingEventId: number | null
 }
@@ -59,7 +59,7 @@ export type UserMaxAggregateOutputType = {
   password: string | null
   homeAddress: string | null
   isOnline: boolean | null
-  status: string | null
+  status: $Enums.MoodStatus | null
   lastLogin: Date | null
   attendingEventId: number | null
 }
@@ -228,7 +228,7 @@ export type UserGroupByOutputType = {
   password: string
   homeAddress: string | null
   isOnline: boolean
-  status: string
+  status: $Enums.MoodStatus | null
   lastLogin: Date
   attendingEventId: number | null
   _count: UserCountAggregateOutputType | null
@@ -265,7 +265,7 @@ export type UserWhereInput = {
   password?: Prisma.StringFilter<"User"> | string
   homeAddress?: Prisma.StringNullableFilter<"User"> | string | null
   isOnline?: Prisma.BoolFilter<"User"> | boolean
-  status?: Prisma.StringFilter<"User"> | string
+  status?: Prisma.EnumMoodStatusNullableFilter<"User"> | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFilter<"User"> | Date | string
   attendingEventId?: Prisma.IntNullableFilter<"User"> | number | null
   onMap?: Prisma.XOR<Prisma.OnMapNullableScalarRelationFilter, Prisma.OnMapWhereInput> | null
@@ -289,7 +289,7 @@ export type UserOrderByWithRelationInput = {
   password?: Prisma.SortOrder
   homeAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   isOnline?: Prisma.SortOrder
-  status?: Prisma.SortOrder
+  status?: Prisma.SortOrderInput | Prisma.SortOrder
   lastLogin?: Prisma.SortOrder
   attendingEventId?: Prisma.SortOrderInput | Prisma.SortOrder
   onMap?: Prisma.OnMapOrderByWithRelationInput
@@ -316,7 +316,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   password?: Prisma.StringFilter<"User"> | string
   homeAddress?: Prisma.StringNullableFilter<"User"> | string | null
   isOnline?: Prisma.BoolFilter<"User"> | boolean
-  status?: Prisma.StringFilter<"User"> | string
+  status?: Prisma.EnumMoodStatusNullableFilter<"User"> | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFilter<"User"> | Date | string
   attendingEventId?: Prisma.IntNullableFilter<"User"> | number | null
   onMap?: Prisma.XOR<Prisma.OnMapNullableScalarRelationFilter, Prisma.OnMapWhereInput> | null
@@ -340,7 +340,7 @@ export type UserOrderByWithAggregationInput = {
   password?: Prisma.SortOrder
   homeAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   isOnline?: Prisma.SortOrder
-  status?: Prisma.SortOrder
+  status?: Prisma.SortOrderInput | Prisma.SortOrder
   lastLogin?: Prisma.SortOrder
   attendingEventId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -362,7 +362,7 @@ export type UserScalarWhereWithAggregatesInput = {
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
   homeAddress?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   isOnline?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
-  status?: Prisma.StringWithAggregatesFilter<"User"> | string
+  status?: Prisma.EnumMoodStatusNullableWithAggregatesFilter<"User"> | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   attendingEventId?: Prisma.IntNullableWithAggregatesFilter<"User"> | number | null
 }
@@ -375,7 +375,7 @@ export type UserCreateInput = {
   password: string
   homeAddress?: string | null
   isOnline?: boolean
-  status?: string
+  status?: $Enums.MoodStatus | null
   lastLogin?: Date | string
   onMap?: Prisma.OnMapCreateNestedOneWithoutUserInput
   eventsCreated?: Prisma.EventCreateNestedManyWithoutCreatedByInput
@@ -398,7 +398,7 @@ export type UserUncheckedCreateInput = {
   password: string
   homeAddress?: string | null
   isOnline?: boolean
-  status?: string
+  status?: $Enums.MoodStatus | null
   lastLogin?: Date | string
   attendingEventId?: number | null
   onMap?: Prisma.OnMapUncheckedCreateNestedOneWithoutUserInput
@@ -420,7 +420,7 @@ export type UserUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onMap?: Prisma.OnMapUpdateOneWithoutUserNestedInput
   eventsCreated?: Prisma.EventUpdateManyWithoutCreatedByNestedInput
@@ -443,7 +443,7 @@ export type UserUncheckedUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendingEventId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onMap?: Prisma.OnMapUncheckedUpdateOneWithoutUserNestedInput
@@ -466,7 +466,7 @@ export type UserCreateManyInput = {
   password: string
   homeAddress?: string | null
   isOnline?: boolean
-  status?: string
+  status?: $Enums.MoodStatus | null
   lastLogin?: Date | string
   attendingEventId?: number | null
 }
@@ -479,7 +479,7 @@ export type UserUpdateManyMutationInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -492,7 +492,7 @@ export type UserUncheckedUpdateManyInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendingEventId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
@@ -598,6 +598,10 @@ export type NullableStringFieldUpdateOperationsInput = {
 
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
+}
+
+export type NullableEnumMoodStatusFieldUpdateOperationsInput = {
+  set?: $Enums.MoodStatus | null
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -844,7 +848,7 @@ export type UserCreateWithoutFriendOfInput = {
   password: string
   homeAddress?: string | null
   isOnline?: boolean
-  status?: string
+  status?: $Enums.MoodStatus | null
   lastLogin?: Date | string
   onMap?: Prisma.OnMapCreateNestedOneWithoutUserInput
   eventsCreated?: Prisma.EventCreateNestedManyWithoutCreatedByInput
@@ -866,7 +870,7 @@ export type UserUncheckedCreateWithoutFriendOfInput = {
   password: string
   homeAddress?: string | null
   isOnline?: boolean
-  status?: string
+  status?: $Enums.MoodStatus | null
   lastLogin?: Date | string
   attendingEventId?: number | null
   onMap?: Prisma.OnMapUncheckedCreateNestedOneWithoutUserInput
@@ -892,7 +896,7 @@ export type UserCreateWithoutFriendsInput = {
   password: string
   homeAddress?: string | null
   isOnline?: boolean
-  status?: string
+  status?: $Enums.MoodStatus | null
   lastLogin?: Date | string
   onMap?: Prisma.OnMapCreateNestedOneWithoutUserInput
   eventsCreated?: Prisma.EventCreateNestedManyWithoutCreatedByInput
@@ -914,7 +918,7 @@ export type UserUncheckedCreateWithoutFriendsInput = {
   password: string
   homeAddress?: string | null
   isOnline?: boolean
-  status?: string
+  status?: $Enums.MoodStatus | null
   lastLogin?: Date | string
   attendingEventId?: number | null
   onMap?: Prisma.OnMapUncheckedCreateNestedOneWithoutUserInput
@@ -960,7 +964,7 @@ export type UserScalarWhereInput = {
   password?: Prisma.StringFilter<"User"> | string
   homeAddress?: Prisma.StringNullableFilter<"User"> | string | null
   isOnline?: Prisma.BoolFilter<"User"> | boolean
-  status?: Prisma.StringFilter<"User"> | string
+  status?: Prisma.EnumMoodStatusNullableFilter<"User"> | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFilter<"User"> | Date | string
   attendingEventId?: Prisma.IntNullableFilter<"User"> | number | null
 }
@@ -989,7 +993,7 @@ export type UserCreateWithoutOnMapInput = {
   password: string
   homeAddress?: string | null
   isOnline?: boolean
-  status?: string
+  status?: $Enums.MoodStatus | null
   lastLogin?: Date | string
   eventsCreated?: Prisma.EventCreateNestedManyWithoutCreatedByInput
   favorites?: Prisma.EventCreateNestedManyWithoutFavoritedByInput
@@ -1011,7 +1015,7 @@ export type UserUncheckedCreateWithoutOnMapInput = {
   password: string
   homeAddress?: string | null
   isOnline?: boolean
-  status?: string
+  status?: $Enums.MoodStatus | null
   lastLogin?: Date | string
   attendingEventId?: number | null
   eventsCreated?: Prisma.EventUncheckedCreateNestedManyWithoutCreatedByInput
@@ -1048,7 +1052,7 @@ export type UserUpdateWithoutOnMapInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   eventsCreated?: Prisma.EventUpdateManyWithoutCreatedByNestedInput
   favorites?: Prisma.EventUpdateManyWithoutFavoritedByNestedInput
@@ -1070,7 +1074,7 @@ export type UserUncheckedUpdateWithoutOnMapInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendingEventId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   eventsCreated?: Prisma.EventUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -1091,7 +1095,7 @@ export type UserCreateWithoutEventsCreatedInput = {
   password: string
   homeAddress?: string | null
   isOnline?: boolean
-  status?: string
+  status?: $Enums.MoodStatus | null
   lastLogin?: Date | string
   onMap?: Prisma.OnMapCreateNestedOneWithoutUserInput
   favorites?: Prisma.EventCreateNestedManyWithoutFavoritedByInput
@@ -1113,7 +1117,7 @@ export type UserUncheckedCreateWithoutEventsCreatedInput = {
   password: string
   homeAddress?: string | null
   isOnline?: boolean
-  status?: string
+  status?: $Enums.MoodStatus | null
   lastLogin?: Date | string
   attendingEventId?: number | null
   onMap?: Prisma.OnMapUncheckedCreateNestedOneWithoutUserInput
@@ -1139,7 +1143,7 @@ export type UserCreateWithoutFavoritesInput = {
   password: string
   homeAddress?: string | null
   isOnline?: boolean
-  status?: string
+  status?: $Enums.MoodStatus | null
   lastLogin?: Date | string
   onMap?: Prisma.OnMapCreateNestedOneWithoutUserInput
   eventsCreated?: Prisma.EventCreateNestedManyWithoutCreatedByInput
@@ -1161,7 +1165,7 @@ export type UserUncheckedCreateWithoutFavoritesInput = {
   password: string
   homeAddress?: string | null
   isOnline?: boolean
-  status?: string
+  status?: $Enums.MoodStatus | null
   lastLogin?: Date | string
   attendingEventId?: number | null
   onMap?: Prisma.OnMapUncheckedCreateNestedOneWithoutUserInput
@@ -1187,7 +1191,7 @@ export type UserCreateWithoutAttendingEventInput = {
   password: string
   homeAddress?: string | null
   isOnline?: boolean
-  status?: string
+  status?: $Enums.MoodStatus | null
   lastLogin?: Date | string
   onMap?: Prisma.OnMapCreateNestedOneWithoutUserInput
   eventsCreated?: Prisma.EventCreateNestedManyWithoutCreatedByInput
@@ -1209,7 +1213,7 @@ export type UserUncheckedCreateWithoutAttendingEventInput = {
   password: string
   homeAddress?: string | null
   isOnline?: boolean
-  status?: string
+  status?: $Enums.MoodStatus | null
   lastLogin?: Date | string
   onMap?: Prisma.OnMapUncheckedCreateNestedOneWithoutUserInput
   eventsCreated?: Prisma.EventUncheckedCreateNestedManyWithoutCreatedByInput
@@ -1251,7 +1255,7 @@ export type UserUpdateWithoutEventsCreatedInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onMap?: Prisma.OnMapUpdateOneWithoutUserNestedInput
   favorites?: Prisma.EventUpdateManyWithoutFavoritedByNestedInput
@@ -1273,7 +1277,7 @@ export type UserUncheckedUpdateWithoutEventsCreatedInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendingEventId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onMap?: Prisma.OnMapUncheckedUpdateOneWithoutUserNestedInput
@@ -1326,7 +1330,7 @@ export type UserCreateWithoutSentJoinRequestsInput = {
   password: string
   homeAddress?: string | null
   isOnline?: boolean
-  status?: string
+  status?: $Enums.MoodStatus | null
   lastLogin?: Date | string
   onMap?: Prisma.OnMapCreateNestedOneWithoutUserInput
   eventsCreated?: Prisma.EventCreateNestedManyWithoutCreatedByInput
@@ -1348,7 +1352,7 @@ export type UserUncheckedCreateWithoutSentJoinRequestsInput = {
   password: string
   homeAddress?: string | null
   isOnline?: boolean
-  status?: string
+  status?: $Enums.MoodStatus | null
   lastLogin?: Date | string
   attendingEventId?: number | null
   onMap?: Prisma.OnMapUncheckedCreateNestedOneWithoutUserInput
@@ -1374,7 +1378,7 @@ export type UserCreateWithoutReceivedJoinRequestsInput = {
   password: string
   homeAddress?: string | null
   isOnline?: boolean
-  status?: string
+  status?: $Enums.MoodStatus | null
   lastLogin?: Date | string
   onMap?: Prisma.OnMapCreateNestedOneWithoutUserInput
   eventsCreated?: Prisma.EventCreateNestedManyWithoutCreatedByInput
@@ -1396,7 +1400,7 @@ export type UserUncheckedCreateWithoutReceivedJoinRequestsInput = {
   password: string
   homeAddress?: string | null
   isOnline?: boolean
-  status?: string
+  status?: $Enums.MoodStatus | null
   lastLogin?: Date | string
   attendingEventId?: number | null
   onMap?: Prisma.OnMapUncheckedCreateNestedOneWithoutUserInput
@@ -1433,7 +1437,7 @@ export type UserUpdateWithoutSentJoinRequestsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onMap?: Prisma.OnMapUpdateOneWithoutUserNestedInput
   eventsCreated?: Prisma.EventUpdateManyWithoutCreatedByNestedInput
@@ -1455,7 +1459,7 @@ export type UserUncheckedUpdateWithoutSentJoinRequestsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendingEventId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onMap?: Prisma.OnMapUncheckedUpdateOneWithoutUserNestedInput
@@ -1487,7 +1491,7 @@ export type UserUpdateWithoutReceivedJoinRequestsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onMap?: Prisma.OnMapUpdateOneWithoutUserNestedInput
   eventsCreated?: Prisma.EventUpdateManyWithoutCreatedByNestedInput
@@ -1509,7 +1513,7 @@ export type UserUncheckedUpdateWithoutReceivedJoinRequestsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendingEventId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onMap?: Prisma.OnMapUncheckedUpdateOneWithoutUserNestedInput
@@ -1530,7 +1534,7 @@ export type UserCreateWithoutSentFriendRequestsInput = {
   password: string
   homeAddress?: string | null
   isOnline?: boolean
-  status?: string
+  status?: $Enums.MoodStatus | null
   lastLogin?: Date | string
   onMap?: Prisma.OnMapCreateNestedOneWithoutUserInput
   eventsCreated?: Prisma.EventCreateNestedManyWithoutCreatedByInput
@@ -1552,7 +1556,7 @@ export type UserUncheckedCreateWithoutSentFriendRequestsInput = {
   password: string
   homeAddress?: string | null
   isOnline?: boolean
-  status?: string
+  status?: $Enums.MoodStatus | null
   lastLogin?: Date | string
   attendingEventId?: number | null
   onMap?: Prisma.OnMapUncheckedCreateNestedOneWithoutUserInput
@@ -1578,7 +1582,7 @@ export type UserCreateWithoutReceivedFriendRequestsInput = {
   password: string
   homeAddress?: string | null
   isOnline?: boolean
-  status?: string
+  status?: $Enums.MoodStatus | null
   lastLogin?: Date | string
   onMap?: Prisma.OnMapCreateNestedOneWithoutUserInput
   eventsCreated?: Prisma.EventCreateNestedManyWithoutCreatedByInput
@@ -1600,7 +1604,7 @@ export type UserUncheckedCreateWithoutReceivedFriendRequestsInput = {
   password: string
   homeAddress?: string | null
   isOnline?: boolean
-  status?: string
+  status?: $Enums.MoodStatus | null
   lastLogin?: Date | string
   attendingEventId?: number | null
   onMap?: Prisma.OnMapUncheckedCreateNestedOneWithoutUserInput
@@ -1637,7 +1641,7 @@ export type UserUpdateWithoutSentFriendRequestsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onMap?: Prisma.OnMapUpdateOneWithoutUserNestedInput
   eventsCreated?: Prisma.EventUpdateManyWithoutCreatedByNestedInput
@@ -1659,7 +1663,7 @@ export type UserUncheckedUpdateWithoutSentFriendRequestsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendingEventId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onMap?: Prisma.OnMapUncheckedUpdateOneWithoutUserNestedInput
@@ -1691,7 +1695,7 @@ export type UserUpdateWithoutReceivedFriendRequestsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onMap?: Prisma.OnMapUpdateOneWithoutUserNestedInput
   eventsCreated?: Prisma.EventUpdateManyWithoutCreatedByNestedInput
@@ -1713,7 +1717,7 @@ export type UserUncheckedUpdateWithoutReceivedFriendRequestsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendingEventId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onMap?: Prisma.OnMapUncheckedUpdateOneWithoutUserNestedInput
@@ -1734,7 +1738,7 @@ export type UserUpdateWithoutFriendOfInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onMap?: Prisma.OnMapUpdateOneWithoutUserNestedInput
   eventsCreated?: Prisma.EventUpdateManyWithoutCreatedByNestedInput
@@ -1756,7 +1760,7 @@ export type UserUncheckedUpdateWithoutFriendOfInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendingEventId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onMap?: Prisma.OnMapUncheckedUpdateOneWithoutUserNestedInput
@@ -1778,7 +1782,7 @@ export type UserUncheckedUpdateManyWithoutFriendOfInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendingEventId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
@@ -1791,7 +1795,7 @@ export type UserUpdateWithoutFriendsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onMap?: Prisma.OnMapUpdateOneWithoutUserNestedInput
   eventsCreated?: Prisma.EventUpdateManyWithoutCreatedByNestedInput
@@ -1813,7 +1817,7 @@ export type UserUncheckedUpdateWithoutFriendsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendingEventId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onMap?: Prisma.OnMapUncheckedUpdateOneWithoutUserNestedInput
@@ -1835,7 +1839,7 @@ export type UserUncheckedUpdateManyWithoutFriendsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendingEventId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
@@ -1849,7 +1853,7 @@ export type UserCreateManyAttendingEventInput = {
   password: string
   homeAddress?: string | null
   isOnline?: boolean
-  status?: string
+  status?: $Enums.MoodStatus | null
   lastLogin?: Date | string
 }
 
@@ -1861,7 +1865,7 @@ export type UserUpdateWithoutFavoritesInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onMap?: Prisma.OnMapUpdateOneWithoutUserNestedInput
   eventsCreated?: Prisma.EventUpdateManyWithoutCreatedByNestedInput
@@ -1883,7 +1887,7 @@ export type UserUncheckedUpdateWithoutFavoritesInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendingEventId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onMap?: Prisma.OnMapUncheckedUpdateOneWithoutUserNestedInput
@@ -1905,7 +1909,7 @@ export type UserUncheckedUpdateManyWithoutFavoritesInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendingEventId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
@@ -1918,7 +1922,7 @@ export type UserUpdateWithoutAttendingEventInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onMap?: Prisma.OnMapUpdateOneWithoutUserNestedInput
   eventsCreated?: Prisma.EventUpdateManyWithoutCreatedByNestedInput
@@ -1940,7 +1944,7 @@ export type UserUncheckedUpdateWithoutAttendingEventInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onMap?: Prisma.OnMapUncheckedUpdateOneWithoutUserNestedInput
   eventsCreated?: Prisma.EventUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -1962,7 +1966,7 @@ export type UserUncheckedUpdateManyWithoutAttendingEventInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   homeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.NullableEnumMoodStatusFieldUpdateOperationsInput | $Enums.MoodStatus | null
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -2173,7 +2177,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     password: string
     homeAddress: string | null
     isOnline: boolean
-    status: string
+    status: $Enums.MoodStatus | null
     lastLogin: Date
     attendingEventId: number | null
   }, ExtArgs["result"]["user"]>
@@ -2617,7 +2621,7 @@ export interface UserFieldRefs {
   readonly password: Prisma.FieldRef<"User", 'String'>
   readonly homeAddress: Prisma.FieldRef<"User", 'String'>
   readonly isOnline: Prisma.FieldRef<"User", 'Boolean'>
-  readonly status: Prisma.FieldRef<"User", 'String'>
+  readonly status: Prisma.FieldRef<"User", 'MoodStatus'>
   readonly lastLogin: Prisma.FieldRef<"User", 'DateTime'>
   readonly attendingEventId: Prisma.FieldRef<"User", 'Int'>
 }

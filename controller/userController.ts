@@ -93,11 +93,25 @@ class UserController {
       res.status(200).json(updatedUser);
     } catch (error: any) {
       console.error("Prisma update error:", error);
-
       res.status(500).json({
         error: "Error updating user",
         details: error.message,  
       });
+    }
+  }
+
+  async updateUserStatus(req: Request, res: Response){
+    const newUserStatus = req.body.status;
+    const userId = parseInt(String(req.params.userId));
+    try{
+      const updatedStatus = await userService.updateUserStatus(newUserStatus, userId);
+      res.status(200).json(updatedStatus);
+    } catch(error:any){
+      console.error("Prisma update error:", error);
+      res.status(500).json({
+        error: "Error updating user status", 
+        details: error.message
+      })
     }
   }
 

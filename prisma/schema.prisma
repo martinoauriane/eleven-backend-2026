@@ -1,10 +1,16 @@
 generator client {
-  provider = "prisma-client"
-  output   = "./generated"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+enum MoodStatus {
+  CHILLING
+  WANTS_TO_GO_OUT
+  BORED
+  ABOUT_TO_LEAVE
 }
 
 model User {
@@ -16,7 +22,7 @@ model User {
   password     String
   homeAddress  String?
   isOnline     Boolean  @default(false)
-  status       String   @default("Wants to go out")
+  status       MoodStatus?
   lastLogin    DateTime @default(now())
   onMap OnMap?
 

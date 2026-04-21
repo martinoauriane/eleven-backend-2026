@@ -9,7 +9,11 @@
 * 🟢 You can import this file directly.
 */
 
+export const MoodStatus = {
+  CHILLING: 'CHILLING',
+  WANTS_TO_GO_OUT: 'WANTS_TO_GO_OUT',
+  BORED: 'BORED',
+  ABOUT_TO_LEAVE: 'ABOUT_TO_LEAVE'
+} as const
 
-
-// This file is empty because there are no enums in the schema.
-export {}
+export type MoodStatus = (typeof MoodStatus)[keyof typeof MoodStatus]

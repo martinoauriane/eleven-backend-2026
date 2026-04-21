@@ -103,6 +103,16 @@ router.post("/user/:userId/onmap-all", async (req: Request, res: Response) => {
   }
 });
 
+// update user status
+router.post("/user/:userId/status-update", async(req: Request, res:Response) => {
+  try {
+    await userController.updateUserStatus(req, res);
+  } catch (err) {
+    console.error("ERROR trying to update status:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+})
+
 // to do: create an endpoint for all users
 /* router.post("/user/:userId/onmap-all", async (req: Request, res: Response) => {
   try {

@@ -71,6 +71,10 @@ class UserService {
     return await userStore.getUserFavorites(userId);
   }
 
+  async updateUserStatus(userId:number, userStatus:any){
+    return await userStore.updateUserStatus(userId, userStatus);
+  }
+
   async deleteUser(id: number) {
     return await userStore.deleteUser(id);
   }
