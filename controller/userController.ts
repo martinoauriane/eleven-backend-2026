@@ -61,8 +61,6 @@ class UserController {
     try {
       const userId = parseInt(String(req.params.userId));
       const friendId = parseInt(String(req.params.friendId));
-      console.log("userId", userId);
-      console.log("friendId", friendId);
       const updatedUser = await userService.addNewFriend(userId, friendId);
       res.status(200).json(updatedUser);
     } catch (error) {
@@ -98,7 +96,7 @@ class UserController {
 
       res.status(500).json({
         error: "Error updating user",
-        details: error.message, // 🔥 envoie le message réel au front
+        details: error.message,  
       });
     }
   }

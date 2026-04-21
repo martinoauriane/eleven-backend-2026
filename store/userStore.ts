@@ -1,7 +1,6 @@
 import "dotenv/config"; // ⚡ force le chargement de ton .env
 import { UserCreate, UserUpdate, UserData } from "./interfaces/userInterfaces";
 import { prisma } from "../prisma/lib/prisma";
-import { hashPassword } from "../service/utils/hash";
 import bcrypt from "bcryptjs";
 
 interface IUserStore {
