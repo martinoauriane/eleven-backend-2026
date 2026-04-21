@@ -59,8 +59,10 @@ class UserController {
 
   async addFriend(req: Request, res: Response) {
     try {
-      const userId = req.body.userId;
-      const friendId = req.body.friendId;
+      const userId = parseInt(String(req.params.userId));
+      const friendId = parseInt(String(req.params.friendId));
+      console.log("userId", userId);
+      console.log("friendId", friendId);
       const updatedUser = await userService.addNewFriend(userId, friendId);
       res.status(200).json(updatedUser);
     } catch (error) {
@@ -169,6 +171,7 @@ class UserController {
 
   async getUsersOnMap(req: Request, res: Response) {
     let userId = parseInt(String(req.params.userId));
+    console.log("inside getUsersOnMap", userId);
     try {
       let usersOnMap = await userService.getUsersOnMap(userId);
       console.log(usersOnMap);

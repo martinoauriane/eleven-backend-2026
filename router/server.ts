@@ -57,7 +57,7 @@ router.post("/user/:id/friends", async (req: Request, res: Response) => {
 });
 
 // add friend method
-router.post("/user/add-friend", async (req: Request, res: Response) => {
+router.post("/user/add-friend/:userId/:friendId", async (req: Request, res: Response) => {
   await userController.addFriend(req, res);
 });
 
@@ -94,7 +94,7 @@ router.post("/user/:userId/onmap", async (req: Request, res: Response) => {
   await userController.addUserOnMap(req, res);
 });
 
-router.get("/user/:userId/onmap-all", async (req: Request, res: Response) => {
+router.post("/user/:userId/onmap-all", async (req: Request, res: Response) => {
   try {
     await userController.getUsersOnMap(req, res);
   } catch (err) {
@@ -102,6 +102,16 @@ router.get("/user/:userId/onmap-all", async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+// to do: create an endpoint for all users
+/* router.post("/user/:userId/onmap-all", async (req: Request, res: Response) => {
+  try {
+    await userController.getUsersOnMap(req, res);
+  } catch (err) {
+    console.error("ERROR getAllEvents:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}); */
 
 // add get a list of friends endpoint
 
