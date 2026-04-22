@@ -204,6 +204,20 @@ class UserController {
     }
   }
 
+  async getUserFriendsStatuses(req: Request, res: Response) {
+    const status = String(req.body.status);
+    const userId = parseInt(String(req.params.userId));
+    try {
+      let userFriendsArray = await userService.getUserFriendsStatuses(status, userId);
+      return userFriendsArray;
+    } catch (error: any) {
+      res.status(500).json({
+        error: "Error retrieving user friends statuses",
+        details: error.message,
+      });
+    }
+  }
+
   async getUsersOnMap(req: Request, res: Response) {
     let userId = parseInt(String(req.params.userId));
     try {

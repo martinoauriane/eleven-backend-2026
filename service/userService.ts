@@ -29,7 +29,7 @@ class UserService {
   }
 
   async logInUser(userLogin: any) {
-    const loggedInUser = await userStore.checkUser(userLogin);
+    const loggedInUser = await userStore.loginUser(userLogin);
     if (loggedInUser != undefined) {
       return loggedInUser;
     }
@@ -61,7 +61,10 @@ class UserService {
   async addEventFavorite(eventId: number, userId: number) {
     return await userStore.addEventFavorite(eventId, userId);
   }
-
+  
+  async getUserFriendsStatuses(userId:number){
+    return await userStore.getUserFriendsStatuses(userId);
+  }
   async removeEventFavorite(eventId: any, userId: any) {
     return await userStore.removeEventFavorite(eventId, userId);
   }

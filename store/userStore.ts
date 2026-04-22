@@ -11,7 +11,6 @@ interface IUserStore {
   deleteUser(id: number): Promise<any>;
 }
 
- 
 class UserStore implements IUserStore {
   async createUser(data: UserCreate) {
     try {
@@ -21,7 +20,7 @@ class UserStore implements IUserStore {
     }
   }
 
-  async checkUser(userLogin: any): Promise<any> {
+  async loginUser(userLogin: any): Promise<any> {
     const email_login = userLogin.email;
     console.log("userlogin", userLogin);
     try {
@@ -35,7 +34,7 @@ class UserStore implements IUserStore {
           userDb?.password,
         );
         if (isMatch) {
-          return {userId};
+          return { userId };
         } else {
           return "false";
         }
@@ -184,7 +183,6 @@ class UserStore implements IUserStore {
     }
   }
 
-  
   async getUserFavorites(userId: number) {
     try {
       let user = await prisma.user.findUnique({
@@ -197,6 +195,37 @@ class UserStore implements IUserStore {
       return favorites;
     } catch (error) {
       console.error("Prisma retrieve error:", error);
+    }
+  }
+
+  async getUserFriendsStatuses(userId: number) {
+    try {
+      let userFriendsStatuses = await prisma.user.findUnique({
+        where: { id: userId },
+        select: {
+          friends: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              picture: true,
+              status: true,
+            },
+          },
+          friendOf: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              picture: true,
+              status: true,
+            },
+          },
+        },
+      });
+      return userFriendsStatuses;
+    } catch (error) {
+      return error;
     }
   }
 
@@ -227,18 +256,18 @@ class UserStore implements IUserStore {
   }
 
   async updateUserStatus(userId: number, userStatus: MoodStatus) {
-  try {
-    return await prisma.user.update({
-      where: { id: userId },
-      data: {
-        status: userStatus,
-      },
-    });
-  } catch (error) {
-    console.error("Prisma update user status error:", error);
-    throw error;
+    try {
+      return await prisma.user.update({
+        where: { id: userId },
+        data: {
+          status: userStatus,
+        },
+      });
+    } catch (error) {
+      console.error("Prisma update user status error:", error);
+      throw error;
+    }
   }
-}
 
   async deleteUser(id: number) {
     try {
