@@ -29,7 +29,6 @@ class UserController {
       email: req.body.email,
       password: req.body.password,
     };
-    console.log("inside loginUser Controller", userLogin);
     try {
       const loggedUser = await userService.logInUser(userLogin);
       console.log(loggedUser);
