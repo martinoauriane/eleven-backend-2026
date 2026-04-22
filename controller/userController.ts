@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { UserCreate } from "../store/interfaces/userInterfaces";
 import { MoodStatus } from "@prisma/client";
 import { toMoodStatus } from "../service/utils/interfaces";
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
 const userService = new UserService();
 
@@ -31,8 +31,15 @@ class UserController {
     };
     try {
       const loggedUser = await userService.logInUser(userLogin);
-      const token = jwt.sign({ userId: loggedUser?.id }, process.env.JWT_SECRET!, { expiresIn: "7d" });
-      res.status(200).json(loggedUser);
+      const token = jwt.sign(
+        { userId: loggedUser?.id },
+        process.env.JWT_SECRET!,
+        { expiresIn: "7d" },
+      );
+      res.status(200).json({
+        user: loggedUser,
+        token,
+      });
     } catch (error) {
       res.status(500).json({ error: "Error checking user credentials" });
     }
@@ -85,7 +92,6 @@ class UserController {
       res.status(500).json({ error: "Error returning user friends list" });
     }
   }
-
 
   async updateUser(req: Request, res: Response) {
     const data = req.body;
