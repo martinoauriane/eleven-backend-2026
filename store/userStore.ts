@@ -7,7 +7,7 @@ import bcrypt from "bcryptjs";
 interface IUserStore {
   createUser(data: UserCreate): Promise<any>;
   getUserById(id: number): Promise<any>;
-  updateUser(id: number, data: UserData): Promise<any>;
+  updateUser(id: number, data: UserUpdate): Promise<any>;
   deleteUser(id: number): Promise<any>;
 }
 
@@ -182,6 +182,7 @@ class UserStore implements IUserStore {
     }
   }
 
+  
   async getUserFavorites(userId: number) {
     try {
       let user = await prisma.user.findUnique({

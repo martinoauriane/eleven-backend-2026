@@ -1,3 +1,5 @@
+import { MoodStatus } from "@prisma/client";
+
 export interface UserCreate {
     firstName: string;
     lastName: string;
@@ -17,7 +19,7 @@ export interface UserUpdate {
   isOnMap?: boolean
   userLat?: number
   userLon?: number
-  status?: string // Wants to go out / is Partying / is Bored at Party
+  status?: MoodStatus // Wants to go out / is Partying / is Bored at Party
   lastLogin?: Date | string
   partyAddress?: string
   partyLat?: number

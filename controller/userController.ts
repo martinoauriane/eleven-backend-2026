@@ -1,6 +1,8 @@
 import { UserService } from "../service/userService";
 import { Request, Response } from "express";
 import { UserCreate } from "../store/interfaces/userInterfaces";
+import { MoodStatus } from "@prisma/client";
+import { toMoodStatus } from "../service/utils/interfaces";
 
 const userService = new UserService();
 
@@ -82,6 +84,7 @@ class UserController {
     }
   }
 
+
   async updateUser(req: Request, res: Response) {
     const data = req.body;
     const id = Number(req.query.id);
@@ -89,36 +92,43 @@ class UserController {
       return res.status(400).json({ error: "Invalid id" });
     }
     try {
-      const updatedUser = await userService.updateUser(data, id);
+      const mappedData = {
+        ...data,
+        status: toMoodStatus(data.status),
+      };
+      const updatedUser = await userService.updateUser(id, mappedData);
       res.status(200).json(updatedUser);
     } catch (error: any) {
       console.error("Prisma update error:", error);
       res.status(500).json({
         error: "Error updating user",
-        details: error.message,  
+        details: error.message,
       });
     }
   }
 
-  async updateUserStatus(req: Request, res: Response){
+  async updateUserStatus(req: Request, res: Response) {
     const newUserStatus = req.body.status;
     const userId = parseInt(String(req.params.userId));
-    try{
-      const updatedStatus = await userService.updateUserStatus(newUserStatus, userId);
+    try {
+      const updatedStatus = await userService.updateUserStatus(
+        newUserStatus,
+        userId,
+      );
       res.status(200).json(updatedStatus);
-    } catch(error:any){
+    } catch (error: any) {
       console.error("Prisma update error:", error);
       res.status(500).json({
-        error: "Error updating user status", 
-        details: error.message
-      })
+        error: "Error updating user status",
+        details: error.message,
+      });
     }
   }
 
   async addFavoriteEvent(req: Request, res: Response) {
     const eventId = parseInt(String(req.params.eventId));
     const userId = parseInt(String(req.params.userId));
-     try {
+    try {
       const favoriteEvent = await userService.addEventFavorite(userId, eventId);
       res.status(200).json(favoriteEvent);
     } catch (error: any) {
@@ -162,24 +172,24 @@ class UserController {
     }
   }
 
- async addUserOnMap(req: Request, res: Response) {
-  const user = {
-    id: Number(req.params.userId),
-    activity: req.body.activity,
-    latitude: req.body.latitude,
-    longitude: req.body.longitude,
-    address: req.body.address,
-  };
-  try {
-    const newUserOnMap = await userService.addUserOnMap(user);
-    res.status(200).json(newUserOnMap);
-  } catch (error: any) {
-    res.status(500).json({
-      error: "Error adding user on map",
-      details: error.message,
-    });
+  async addUserOnMap(req: Request, res: Response) {
+    const user = {
+      id: Number(req.params.userId),
+      activity: req.body.activity,
+      latitude: req.body.latitude,
+      longitude: req.body.longitude,
+      address: req.body.address,
+    };
+    try {
+      const newUserOnMap = await userService.addUserOnMap(user);
+      res.status(200).json(newUserOnMap);
+    } catch (error: any) {
+      res.status(500).json({
+        error: "Error adding user on map",
+        details: error.message,
+      });
+    }
   }
-}
 
   async getUsersOnMap(req: Request, res: Response) {
     let userId = parseInt(String(req.params.userId));
@@ -187,7 +197,7 @@ class UserController {
     try {
       let usersOnMap = await userService.getUsersOnMap(userId);
       console.log(usersOnMap);
-       res.status(200).json(usersOnMap);
+      res.status(200).json(usersOnMap);
     } catch (error: any) {
       res.status(500).json({
         error: "Error retrieving users on map",

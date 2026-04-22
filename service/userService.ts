@@ -7,7 +7,7 @@ const userStore = new UserStore();
 interface UserService {
   createUser(data: UserCreate): Promise<any>;
   getUserById(id: number): Promise<any>;
-  updateUser(data: UserUpdate, id: number): Promise<any>;
+  updateUser(id: number, data: UserUpdate, ): Promise<any>;
   deleteUser(id: number): Promise<any>;
 }
 
@@ -55,7 +55,7 @@ class UserService {
     return await userStore.getUserById(id);
   }
 
-  async updateUser(data: UserUpdate, id: number) {
+  async updateUser(id: number, data: UserUpdate) {
     return await userStore.updateUser(id, data);
   }
 
