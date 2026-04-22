@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { UserCreate } from "../store/interfaces/userInterfaces";
 import { MoodStatus } from "@prisma/client";
 import { toMoodStatus } from "../service/utils/interfaces";
+import jwt from 'jsonwebtoken';
 
 const userService = new UserService();
 
@@ -23,13 +24,14 @@ class UserController {
     }
   }
 
-  async checkUser(req: Request, res: Response) {
+  async loginUser(req: Request, res: Response) {
     const userLogin = {
       email: req.body.email,
       password: req.body.password,
     };
     try {
       const loggedUser = await userService.logInUser(userLogin);
+      const token = jwt.sign({ userId: loggedUser?.id }, process.env.JWT_SECRET!, { expiresIn: "7d" });
       res.status(200).json(loggedUser);
     } catch (error) {
       res.status(500).json({ error: "Error checking user credentials" });
@@ -193,7 +195,6 @@ class UserController {
 
   async getUsersOnMap(req: Request, res: Response) {
     let userId = parseInt(String(req.params.userId));
-    console.log("inside getUsersOnMap", userId);
     try {
       let usersOnMap = await userService.getUsersOnMap(userId);
       console.log(usersOnMap);

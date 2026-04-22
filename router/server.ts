@@ -19,22 +19,25 @@ const joinRequestController = new JoinRequestController();
 const friendRequestController = new FriendRequestController();
 const eventController = new EventController();
 
-// operationnal
+// welcome
 router.get("/", async (req: Request, res: Response) => {
   res.status(200).json("Welcome");
 });
 
-// USER ENDPOINTS
-
-// operationnal
+// AUTH
 router.post("/user/register", async (req: Request, res: Response) => {
   await userController.createUser(req, res);
 });
 
-// to test
 router.post("/user/login", async (req: Request, res: Response) => {
-  await userController.checkUser(req, res);
+  await userController.loginUser(req, res);
 });
+
+router.get("/logout", async(req:Request, res:Response) => {
+  await 
+})
+
+// USER ENDPOINTS
 
 // operationnal
 router.post("/user/:id", async (req: Request, res: Response) => {
@@ -219,6 +222,8 @@ router.post(
 router.post("/event/delete/:event_id", async (req: Request, res: Response) => {
   await eventController.deleteEvent(req, res);
 });
+
+
 
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);

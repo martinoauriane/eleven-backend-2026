@@ -29,12 +29,11 @@ class UserService {
   }
 
   async logInUser(userLogin: any) {
-    const answer: string = await userStore.checkUser(userLogin);
-    if (answer != undefined) {
-      return answer;
+    const loggedInUser = await userStore.checkUser(userLogin);
+    if (loggedInUser != undefined) {
+      return loggedInUser;
     }
   }
-
   async getAllUsers() {
     return await userStore.getAllUsers();
   }
