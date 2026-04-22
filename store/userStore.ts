@@ -23,17 +23,19 @@ class UserStore implements IUserStore {
 
   async checkUser(userLogin: any): Promise<any> {
     const email_login = userLogin.email;
+    console.log("userlogin", userLogin);
     try {
       let userDb = await prisma.user.findUnique({
         where: { email: email_login },
       });
+      const userId = userDb?.id;
       if (userDb) {
         const isMatch = await bcrypt.compare(
           userLogin.password,
           userDb?.password,
         );
         if (isMatch) {
-          return "okay";
+          return {userId};
         } else {
           return "false";
         }

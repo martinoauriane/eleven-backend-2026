@@ -5,6 +5,8 @@ import { UserController } from "../controller/userController";
 import { JoinRequestController } from "../controller/joinRequestController";
 import { FriendRequestController } from "../controller/friendRequestController";
 import { EventController } from "../controller/eventController";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 const router = express.Router();
@@ -25,14 +27,14 @@ router.get("/", async (req: Request, res: Response) => {
 });
 
 // AUTH
-router.post("/user/register", async (req: Request, res: Response) => {
-  await userController.createUser(req, res);
-});
 
-router.post("/user/login", async (req: Request, res: Response) => {
+router.post("/user/login", async(req: Request, res: Response) => {
   await userController.loginUser(req, res);
 });
 
+router.post("/user/register", async (req: Request, res: Response) => {
+  await userController.createUser(req, res);
+});
 router.get("/logout", async(req:Request, res:Response) => {
   return res.status(200).json({ message: "Logged out" });
 })

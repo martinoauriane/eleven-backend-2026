@@ -29,8 +29,13 @@ class UserController {
       email: req.body.email,
       password: req.body.password,
     };
+    console.log("inside loginUser Controller", userLogin);
     try {
       const loggedUser = await userService.logInUser(userLogin);
+      console.log(loggedUser);
+      if (!process.env.JWT_SECRET) {
+        throw new Error("JWT_SECRET is missing in environment variables");
+      }
       const token = jwt.sign(
         { userId: loggedUser?.id },
         process.env.JWT_SECRET!,
@@ -40,8 +45,9 @@ class UserController {
         user: loggedUser,
         token,
       });
-    } catch (error) {
-      res.status(500).json({ error: "Error checking user credentials" });
+    } catch (error: any) {
+      console.error("LOGIN ERROR:", error);
+      res.status(500).json({ message: error.message });
     }
   }
 
