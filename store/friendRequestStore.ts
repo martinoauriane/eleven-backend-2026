@@ -10,7 +10,6 @@ class FriendRequestStore implements IFriendRequestStore {
 
   async CreateFriendRequest(data:FriendRequestCreate): Promise<any> {
     try {
-      console.log("friend data", data);
       const response = await prisma.friendRequest.create({ data });
       return response;
     } catch (error) {

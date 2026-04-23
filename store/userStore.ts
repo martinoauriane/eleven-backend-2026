@@ -8,6 +8,7 @@ interface IUserStore {
   createUser(data: UserCreate): Promise<any>;
   getUserById(id: number): Promise<any>;
   updateUser(id: number, data: UserUpdate): Promise<any>;
+  UpdateUserStatus(userId: number, userStatus: any): Promise<any>;
   deleteUser(id: number): Promise<any>;
 }
 
@@ -22,7 +23,6 @@ class UserStore implements IUserStore {
 
   async loginUser(userLogin: any): Promise<any> {
     const email_login = userLogin.email;
-    console.log("userlogin", userLogin);
     try {
       let userDb = await prisma.user.findUnique({
         where: { email: email_login },
@@ -245,24 +245,26 @@ class UserStore implements IUserStore {
 
   async updateUser(id: number, data: UserUpdate) {
     try {
-      return await prisma.user.update({
+      const newUser = await prisma.user.update({
         where: { id },
         data,
       });
+      return newUser;
     } catch (error) {
       console.error("Prisma update error:", error);
       throw error;
     }
   }
 
-  async updateUserStatus(userId: number, userStatus: MoodStatus) {
+  async UpdateUserStatus(userId: number, userStatus: any) {
     try {
-      return await prisma.user.update({
+      const updatedUser = await prisma.user.update({
         where: { id: userId },
         data: {
           status: userStatus,
         },
       });
+      return updatedUser;
     } catch (error) {
       console.error("Prisma update user status error:", error);
       throw error;

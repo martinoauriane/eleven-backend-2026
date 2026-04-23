@@ -118,7 +118,7 @@ router.post("/user/:userId/status-update", async(req: Request, res:Response) => 
   }
 })
 
-router.get("/user/:userId/friends/statuses", async(req:Request, res:Response) => {
+router.post("/user/:userId/friends/statuses", async(req:Request, res:Response) => {
   try{
     await userController.getUserFriendsStatuses(req, res);
   }catch(err){

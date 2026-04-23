@@ -96,18 +96,15 @@ async getAllEvents() {
   }
 
   async deleteParticipant(userId: number) {
-    console.log("USER id", userId);
     const user = await userStore.getUserById(userId);
     if (!user) {
       throw new Error("User not found");
     }
-    console.log("user", user);
     try {
       let deletedP = await prisma.user.update({
         where: { id: userId },
         data: { attendingEventId: null },
       });
-      console.log(deletedP);
       return deletedP;
     } catch (error) {
       console.error("Prisma removing event participant event error");

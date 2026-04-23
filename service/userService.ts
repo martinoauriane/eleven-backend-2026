@@ -9,6 +9,7 @@ interface UserService {
   getUserById(id: number): Promise<any>;
   updateUser(id: number, data: UserUpdate, ): Promise<any>;
   deleteUser(id: number): Promise<any>;
+  updateUserStatus(userId:number, userStatus:any): Promise<any>;
 }
 
 class UserService {
@@ -74,7 +75,7 @@ class UserService {
   }
 
   async updateUserStatus(userId:number, userStatus:any){
-    return await userStore.updateUserStatus(userId, userStatus);
+    return await userStore.UpdateUserStatus(userId, userStatus);
   }
 
   async deleteUser(id: number) {

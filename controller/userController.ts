@@ -31,7 +31,6 @@ class UserController {
     };
     try {
       const loggedUser = await userService.logInUser(userLogin);
-      console.log(loggedUser);
       if (!process.env.JWT_SECRET) {
         throw new Error("JWT_SECRET is missing in environment variables");
       }
@@ -121,12 +120,12 @@ class UserController {
   }
 
   async updateUserStatus(req: Request, res: Response) {
-    const newUserStatus = req.body.status;
+    const userStatus = req.body.status;
     const userId = parseInt(String(req.params.userId));
     try {
       const updatedStatus = await userService.updateUserStatus(
-        newUserStatus,
         userId,
+        userStatus,
       );
       res.status(200).json(updatedStatus);
     } catch (error: any) {
@@ -206,6 +205,7 @@ class UserController {
 
   async getUserFriendsStatuses(req: Request, res: Response) {
     const userId = parseInt(String(req.params.userId));
+    console.log("inside user controller");
     try {
       let userFriendsArray = await userService.getUserFriendsStatuses(userId);
       return userFriendsArray;
@@ -219,9 +219,9 @@ class UserController {
 
   async getUsersOnMap(req: Request, res: Response) {
     let userId = parseInt(String(req.params.userId));
+
     try {
       let usersOnMap = await userService.getUsersOnMap(userId);
-      console.log(usersOnMap);
       res.status(200).json(usersOnMap);
     } catch (error: any) {
       res.status(500).json({
