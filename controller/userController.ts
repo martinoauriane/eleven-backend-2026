@@ -205,10 +205,9 @@ class UserController {
   }
 
   async getUserFriendsStatuses(req: Request, res: Response) {
-    const status = String(req.body.status);
     const userId = parseInt(String(req.params.userId));
     try {
-      let userFriendsArray = await userService.getUserFriendsStatuses(status, userId);
+      let userFriendsArray = await userService.getUserFriendsStatuses(userId);
       return userFriendsArray;
     } catch (error: any) {
       res.status(500).json({
