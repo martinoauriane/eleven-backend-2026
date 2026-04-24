@@ -46,19 +46,41 @@ router.post("/user/:id", async (req: Request, res: Response) => {
   await userController.getUser(req, res);
 });
 
-//operationnal
-router.get("/user/all", async (req: Request, res: Response) => {
-  await userController.getAllUsers(req, res);
-});
-
 // operationnal
-router.post("/user/update", async (req: Request, res: Response) => {
+router.post("/user/:userId/update", async (req: Request, res: Response) => {
   await userController.updateUser(req, res);
 });
 
 //operationnal
 router.post("/user/:id/friends", async (req: Request, res: Response) => {
   await userController.getUserFriends(req, res);
+});
+
+//operationnal
+router.get("/user/all", async (req: Request, res: Response) => {
+  await userController.getAllUsers(req, res);
+});
+
+// update user status
+router.post("/user/:userId/status-update", async(req: Request, res:Response) => {
+  try {
+    await userController.updateUserStatus(req, res);
+  } catch (err) {
+    console.error("ERROR trying to update status:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+})
+
+// to do: get user favorite events endpoints
+router.post(
+  "/user/:userId/get-event-favorites",
+  async (req: Request, res: Response) => {
+    await userController.getUserFavoriteEvents(req, res);
+  },
+);
+
+router.post("/user/:userId/onmap", async (req: Request, res: Response) => {
+  await userController.addUserOnMap(req, res);
 });
 
 // add friend method
@@ -82,22 +104,11 @@ router.post(
   },
 );
 
-// to do: get user favorite events endpoints
-router.post(
-  "/user/:userId/get-event-favorites",
-  async (req: Request, res: Response) => {
-    await userController.getUserFavoriteEvents(req, res);
-  },
-);
-
 // operationnal
 router.post("/user/delete", async (req: Request, res: Response) => {
   await userController.deleteUser(req, res);
 });
 
-router.post("/user/:userId/onmap", async (req: Request, res: Response) => {
-  await userController.addUserOnMap(req, res);
-});
 
 router.post("/user/:userId/onmap-all", async (req: Request, res: Response) => {
   try {
@@ -107,16 +118,6 @@ router.post("/user/:userId/onmap-all", async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
-// update user status
-router.post("/user/:userId/status-update", async(req: Request, res:Response) => {
-  try {
-    await userController.updateUserStatus(req, res);
-  } catch (err) {
-    console.error("ERROR trying to update status:", err);
-    res.status(500).json({ error: "Internal server error" });
-  }
-})
 
 router.post("/user/:userId/friends/statuses", async(req:Request, res:Response) => {
   try{

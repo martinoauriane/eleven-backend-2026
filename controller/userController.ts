@@ -53,10 +53,9 @@ class UserController {
     const id = Number(req.params.id);
     try {
       const user = await userService.getUserById(id);
+      console.log("user", user);
       if (user) {
         res.status(200).json(user);
-      } else {
-        res.status(404).json({ error: "User not found" });
       }
     } catch (error) {
       res.status(500).json({ error: "Error retrieving user" });
@@ -98,8 +97,10 @@ class UserController {
   }
 
   async updateUser(req: Request, res: Response) {
-    const data = req.body;
-    const id = Number(req.query.id);
+     const data = req.body;
+     console.log(req.body);
+    console.log("data received", data);
+    const id = Number(req.params.userId);
     if (isNaN(id)) {
       return res.status(400).json({ error: "Invalid id" });
     }
@@ -109,6 +110,7 @@ class UserController {
         status: toMoodStatus(data.status),
       };
       const updatedUser = await userService.updateUser(id, mappedData);
+      console.log("updated user", updatedUser);
       res.status(200).json(updatedUser);
     } catch (error: any) {
       console.error("Prisma update error:", error);
@@ -204,8 +206,8 @@ class UserController {
   }
 
   async getUserFriendsStatuses(req: Request, res: Response) {
+
     const userId = parseInt(String(req.params.userId));
-    console.log("inside user controller");
     try {
       let userFriendsArray = await userService.getUserFriendsStatuses(userId);
       return userFriendsArray;
