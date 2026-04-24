@@ -219,7 +219,7 @@ class UserController {
     }
   }
 
-  async getUsersOnMap(req: Request, res: Response) {
+  async getFriendsOnMap(req: Request, res: Response) {
     let userId = parseInt(String(req.params.userId));
 
     try {

@@ -110,9 +110,9 @@ router.post("/user/delete", async (req: Request, res: Response) => {
 });
 
 
-router.post("/user/:userId/onmap-all", async (req: Request, res: Response) => {
+router.post("/user/:userId/friends-on-map", async (req: Request, res: Response) => {
   try {
-    await userController.getUsersOnMap(req, res);
+    await userController.getFriendsOnMap(req, res);
   } catch (err) {
     console.error("ERROR getAllEvents:", err);
     res.status(500).json({ error: "Internal server error" });
