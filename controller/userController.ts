@@ -30,18 +30,9 @@ class UserController {
       password: req.body.password,
     };
     try {
-      const loggedUser = await userService.logInUser(userLogin);
-      if (!process.env.JWT_SECRET) {
-        throw new Error("JWT_SECRET is missing in environment variables");
-      }
-      const token = jwt.sign(
-        { userId: loggedUser?.id },
-        process.env.JWT_SECRET!,
-        { expiresIn: "7d" },
-      );
+      const answer = await userService.logInUser(userLogin);
       res.status(200).json({
-        user: loggedUser,
-        token,
+        answer,
       });
     } catch (error: any) {
       console.error("LOGIN ERROR:", error);
@@ -53,7 +44,6 @@ class UserController {
     const id = Number(req.params.id);
     try {
       const user = await userService.getUserById(id);
-      console.log("user", user);
       if (user) {
         res.status(200).json(user);
       }
@@ -97,9 +87,7 @@ class UserController {
   }
 
   async updateUser(req: Request, res: Response) {
-     const data = req.body;
-     console.log(req.body);
-    console.log("data received", data);
+    const data = req.body;
     const id = Number(req.params.userId);
     if (isNaN(id)) {
       return res.status(400).json({ error: "Invalid id" });
@@ -110,7 +98,6 @@ class UserController {
         status: toMoodStatus(data.status),
       };
       const updatedUser = await userService.updateUser(id, mappedData);
-      console.log("updated user", updatedUser);
       res.status(200).json(updatedUser);
     } catch (error: any) {
       console.error("Prisma update error:", error);
@@ -206,7 +193,6 @@ class UserController {
   }
 
   async getUserFriendsStatuses(req: Request, res: Response) {
-
     const userId = parseInt(String(req.params.userId));
     try {
       let userFriendsArray = await userService.getUserFriendsStatuses(userId);

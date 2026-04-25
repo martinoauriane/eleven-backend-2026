@@ -2,6 +2,7 @@ import "dotenv/config"; // ⚡ force le chargement de ton .env
 import { UserCreate, UserUpdate, UserData } from "./interfaces/userInterfaces";
 import { prisma } from "../prisma/lib/prisma";
 import { MoodStatus } from "@prisma/client";
+import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
 interface IUserStore {
@@ -16,7 +17,15 @@ class UserStore implements IUserStore {
   async createUser(data: UserCreate) {
     try {
       let createdUser = await prisma.user.create({ data });
-      console.log("created user", createdUser);
+      const token = jwt.sign(
+        { userId: createdUser.id },
+        process.env.JWT_SECRET!,
+        { expiresIn: "7d" },
+      );
+      return {
+        user: createdUser,
+        token,
+      };
     } catch (error) {
       console.error("Prisma creation error:", error);
     }
@@ -34,10 +43,14 @@ class UserStore implements IUserStore {
           userLogin.password,
           userDb?.password,
         );
-        if (isMatch) {
-          return { userId };
+        if (isMatch && userId) {
+          const user = await prisma.user.findUnique({ where: { id: userId } });
+          const token = jwt.sign({ userId: userId }, process.env.JWT_SECRET!, {
+            expiresIn: "7d",
+          });
+          return { token, user };
         } else {
-          return "false";
+          throw new Error("Invalid credentials");
         }
       }
     } catch (error) {
