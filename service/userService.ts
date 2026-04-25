@@ -56,6 +56,9 @@ class UserService {
   }
 
   async updateUser(id: number, data: UserUpdate) {
+    const passwordHash = await hashPassword(String(data.password));
+    // updating data with new passwordHash
+    data.password = passwordHash;
     return await userStore.updateUser(id, data);
   }
 

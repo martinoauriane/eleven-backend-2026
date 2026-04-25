@@ -7,6 +7,7 @@ class EventController {
 
   async newEvent(req: Request, res: Response) {
     const userId = parseInt(String(req.params.userId));
+    console.log("userId", userId);
     const newEvent: EventCreate = {
       userId: userId,
       eventName: String(req.body.eventName),
