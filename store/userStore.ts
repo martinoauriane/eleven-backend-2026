@@ -15,7 +15,8 @@ interface IUserStore {
 class UserStore implements IUserStore {
   async createUser(data: UserCreate) {
     try {
-      return await prisma.user.create({ data });
+      let createdUser = await prisma.user.create({ data });
+      console.log("created user", createdUser);
     } catch (error) {
       console.error("Prisma creation error:", error);
     }
