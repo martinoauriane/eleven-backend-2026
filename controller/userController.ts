@@ -29,6 +29,7 @@ class UserController {
       email: req.body.email,
       password: req.body.password,
     };
+    console.log("userlogin", userLogin);
     try {
       const answer = await userService.logInUser(userLogin);
       res.status(200).json({
@@ -209,7 +210,7 @@ class UserController {
     let userId = parseInt(String(req.params.userId));
 
     try {
-      let usersOnMap = await userService.getUsersOnMap(userId);
+      let usersOnMap = await userService.getFriendsOnMap(userId);
       res.status(200).json(usersOnMap);
     } catch (error: any) {
       res.status(500).json({

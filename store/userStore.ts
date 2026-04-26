@@ -157,7 +157,7 @@ class UserStore implements IUserStore {
     }
   }
 
-  async getUsersOnMap(currentUserId: number) {
+  async getFriendsOnMap(userId: number) {
     try {
       const usersOnMap = await prisma.onMap.findMany({
         where: {
@@ -166,14 +166,14 @@ class UserStore implements IUserStore {
               {
                 friends: {
                   some: {
-                    id: currentUserId,
+                    id: userId,
                   },
                 },
               },
               {
                 friendOf: {
                   some: {
-                    id: currentUserId,
+                    id: userId,
                   },
                 },
               },
