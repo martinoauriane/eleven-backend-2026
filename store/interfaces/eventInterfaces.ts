@@ -1,7 +1,7 @@
 export interface EventCreate{
   userId: number;
   eventName: string;
-  eventType?: string // flat-party // clubbing night out // drinks with friends
+  eventType: string // flat-party // clubbing night out // drinks with friends
   eventDate: Date;
   eventStartTime: Date;
   eventEndTime: Date;

@@ -62,7 +62,7 @@ model OnMap {
 model Event {
   id           Int     @id @default(autoincrement())
   eventName    String 
-  eventType    String @default("Drinks with friends") // "Drinks with friends" | "Flat-party" | "Night out clubbing" | "Concert"
+  eventType    String // "Drinks with friends" | "Flat-party" | "Night out clubbing" | "Concert" | "Coffee" | 
   eventLat     Float
   eventLon     Float
 

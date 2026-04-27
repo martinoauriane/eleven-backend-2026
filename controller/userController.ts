@@ -29,7 +29,6 @@ class UserController {
       email: req.body.email,
       password: req.body.password,
     };
-    console.log("userlogin", userLogin);
     try {
       const answer = await userService.logInUser(userLogin);
       res.status(200).json({
@@ -110,8 +109,8 @@ class UserController {
   }
 
   async updateUserStatus(req: Request, res: Response) {
-    const userStatus = req.body.status;
     const userId = parseInt(String(req.params.userId));
+    const userStatus = req.body.status;
     try {
       const updatedStatus = await userService.updateUserStatus(
         userId,
