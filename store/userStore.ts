@@ -216,7 +216,7 @@ class UserStore implements IUserStore {
     try {
       let userFriendsStatuses = await prisma.user.findUnique({
         where: { id: userId },
-        select: {
+        include: {
           friends: {
             select: {
               id: true,
@@ -270,15 +270,14 @@ class UserStore implements IUserStore {
     }
   }
 
-  async UpdateUserStatus(userId: number, userStatus: any) {
+  async UpdateUserStatus(userId: number, userStatus: MoodStatus) {
     try {
       const updatedUser = await prisma.user.update({
         where: { id: userId },
         data: {
           status: userStatus,
-          statusUpdatedAt: new Date(),
-        },
-      });
+          statusUpdatedAt : new Date(),
+    }});
       return updatedUser;
     } catch (error) {
       console.error("Prisma update user status error:", error);
