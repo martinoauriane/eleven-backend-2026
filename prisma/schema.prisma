@@ -27,8 +27,21 @@ model User {
   onMap                  OnMap?
   attendingEvent         Event?          @relation("EventParticipants", fields: [attendingEventId], references: [id])
   favorites              Event[]         @relation("UserFavorites")
-  User_A                 User[]          @relation("UserFriends")
-  User_B                 User[]          @relation("UserFriends")
+
+  sentFriendships     Friendship[] @relation("FriendshipUser")
+  receivedFriendships Friendship[] @relation("FriendshipFriend")
+}
+
+model Friendship {
+  id Int @id @default(autoincrement())
+
+  userId   Int
+  friendId Int
+
+  user   User @relation("FriendshipUser", fields: [userId], references: [id])
+  friend User @relation("FriendshipFriend", fields: [friendId], references: [id])
+
+  createdAt DateTime @default(now())
 }
 
 model OnMap {

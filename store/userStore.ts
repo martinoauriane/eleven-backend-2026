@@ -77,15 +77,10 @@ class UserStore implements IUserStore {
 
   async addFriend(userId: number, friendId: number) {
     try {
-      const updatedUser = await prisma.user.update({
-        where: { id: userId },
+      const updatedUser = await prisma.friendship.create({
         data: {
-          friends: {
-            connect: { id: friendId },
-          },
-        },
-        include: {
-          friends: true,
+          userId: userId,
+          friendId: friendId,
         },
       });
       return updatedUser;
@@ -156,102 +151,103 @@ class UserStore implements IUserStore {
       throw error;
     }
   }
+async getFriendsOnMap(userId: number) {
+  try {
+    const friendships = await prisma.friendship.findMany({
+      where: {
+        OR: [
+          { userId },
+          { friendId: userId },
+        ],
+      },
+    });
 
-  async getFriendsOnMap(userId: number) {
-    try {
-      const usersOnMap = await prisma.onMap.findMany({
-        where: {
-          user: {
-            OR: [
-              {
-                friends: {
-                  some: {
-                    id: userId,
-                  },
-                },
-              },
-              {
-                friendOf: {
-                  some: {
-                    id: userId,
-                  },
-                },
-              },
-            ],
+    const friendIds = friendships.map(f =>
+      f.userId === userId ? f.friendId : f.userId
+    );
+
+    const usersOnMap = await prisma.onMap.findMany({
+      where: {
+        userId: {
+          in: friendIds,
+        },
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            firstName: true,
+            picture: true,
           },
         },
-        include: {
-          user: {
-            select: {
-              id: true,
-              firstName: true,
-              picture: true,
-            },
-          },
-        },
-      });
-      return usersOnMap;
-    } catch (error) {
-      console.error(error);
-      throw new Error("Failed to fetch users on map");
-    }
-  }
+      },
+    });
 
-  async getUserFavorites(userId: number) {
-    try {
-      let user = await prisma.user.findUnique({
-        where: { id: userId },
-        include: {
-          favorites: true,
-        },
-      });
-      let favorites = user?.favorites;
-      return favorites;
-    } catch (error) {
-      console.error("Prisma retrieve error:", error);
-    }
+    return usersOnMap;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to fetch users on map");
   }
+}
 
   async getUserFriendsStatuses(userId: number) {
-    try {
-      let userFriendsStatuses = await prisma.user.findUnique({
-        where: { id: userId },
-        include: {
-          friends: {
-            select: {
-              id: true,
-              firstName: true,
-              lastName: true,
-              picture: true,
-              status: true,
-            },
-          },
-          friendOf: {
-            select: {
-              id: true,
-              firstName: true,
-              lastName: true,
-              picture: true,
-              status: true,
-            },
-          },
-        },
-      });
-      return userFriendsStatuses;
-    } catch (error) {
-      return error;
-    }
+  try {
+    const friendships = await prisma.friendship.findMany({
+      where: {
+        OR: [
+          { userId },
+          { friendId: userId },
+        ],
+      },
+      include: {
+        user: true,
+        friend: true,
+      },
+    });
+
+    const friends = friendships.map(f =>
+      f.userId === userId ? f.friend : f.user
+    );
+
+    return friends.map(friend => ({
+      id: friend.id,
+      firstName: friend.firstName,
+      lastName: friend.lastName,
+      picture: friend.picture,
+      status: friend.status,
+    }));
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
+}
 
   async getUserFriends(id: string) {
     const idNum = parseInt(id);
     try {
       const user = await prisma.user.findUnique({
         where: { id: idNum },
-        include: { friends: true },
+        include: {
+          sentFriendships: {
+            include: {
+              friend: true,
+            },
+          },
+          receivedFriendships: {
+            include: {
+              user: true,
+            },
+          },
+        },
       });
-      const userArrayFriends = user?.friends;
-      return userArrayFriends;
+
+    const friends = [
+      ...(user?.sentFriendships.map(f => f.friend) ?? []),
+      ...(user?.receivedFriendships.map(f => f.user) ?? []),
+    ];
+
+    return friends;
+
     } catch (error) {
       console.error("Prisma retrieve error:", error);
     }
@@ -276,8 +272,9 @@ class UserStore implements IUserStore {
         where: { id: userId },
         data: {
           status: userStatus,
-          statusUpdatedAt : new Date(),
-    }});
+          statusUpdatedAt: new Date(),
+        },
+      });
       return updatedUser;
     } catch (error) {
       console.error("Prisma update user status error:", error);
