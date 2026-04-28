@@ -276,6 +276,7 @@ class UserStore implements IUserStore {
         where: { id: userId },
         data: {
           status: userStatus,
+          statusUpdatedAt: new Date(),
         },
       });
       return updatedUser;

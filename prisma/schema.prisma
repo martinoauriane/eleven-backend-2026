@@ -23,6 +23,7 @@ model User {
   homeAddress  String?
   isOnline     Boolean  @default(false)
   status       MoodStatus?
+  statusUpdatedAt DateTime?
   lastLogin    DateTime @default(now())
   onMap OnMap?
 
