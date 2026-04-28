@@ -131,7 +131,7 @@ class UserStore implements IUserStore {
     }
   }
 
-  async addUserOnMap(user: any) {
+  async shareUserOnMap(user: any) {
     try {
       const newUserOnMap = await prisma.onMap.upsert({
         where: { userId: user.id },

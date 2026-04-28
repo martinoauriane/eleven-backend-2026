@@ -80,7 +80,7 @@ router.post(
 );
 
 router.post("/user/:userId/onmap", async (req: Request, res: Response) => {
-  await userController.addUserOnMap(req, res);
+  await userController.shareUserOnMap(req, res);
 });
 
 // add friend method

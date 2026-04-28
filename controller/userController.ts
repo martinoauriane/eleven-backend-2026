@@ -173,7 +173,7 @@ class UserController {
     }
   }
 
-  async addUserOnMap(req: Request, res: Response) {
+  async shareUserOnMap(req: Request, res: Response) {
     const user = {
       id: Number(req.params.userId),
       activity: req.body.activity,
@@ -182,7 +182,7 @@ class UserController {
       address: req.body.address,
     };
     try {
-      const newUserOnMap = await userService.addUserOnMap(user);
+      const newUserOnMap = await userService.shareUserOnMap(user);
       res.status(200).json(newUserOnMap);
     } catch (error: any) {
       res.status(500).json({

@@ -39,8 +39,8 @@ class UserService {
     return await userStore.getAllUsers();
   }
 
-  async addUserOnMap(user:any){
-    return await userStore.addUserOnMap(user);
+  async shareUserOnMap(user:any){
+    return await userStore.shareUserOnMap(user);
   }
 
   async getFriendsOnMap(currentUserId: number) {
