@@ -162,7 +162,7 @@ class UserController {
   async getUserFavoriteEvents(req: Request, res: Response) {
     const userId = parseInt(String(req.params.userId));
     try {
-      const userFavoriteEvents = await userService.getUserFavorite(userId);
+      const userFavoriteEvents = await userService.getUserEventFavorite(userId);
       res.status(200).json(userFavoriteEvents);
     } catch (error: any) {
       console.error("Prisma retrieving user favorite events error:", error);

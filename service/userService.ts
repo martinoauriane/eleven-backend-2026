@@ -62,19 +62,19 @@ class UserService {
     return await userStore.updateUser(id, data);
   }
 
-  async addEventFavorite(eventId: number, userId: number) {
-    return await userStore.addEventFavorite(eventId, userId);
-  }
-  
   async getUserFriendsStatuses(userId:number){
     return await userStore.getUserFriendsStatuses(userId);
+  }
+
+  async addEventFavorite(eventId: number, userId: number) {
+    return await userStore.addEventFavorite(eventId, userId);
   }
   async removeEventFavorite(eventId: any, userId: any) {
     return await userStore.removeEventFavorite(eventId, userId);
   }
 
-  async getUserFavorite(userId: any) {
-    return await userStore.getUserFavorites(userId);
+  async getUserEventFavorite(userId: any) {
+    return await userStore.getUserEventFavorites(userId);
   }
 
   async updateUserStatus(userId:number, userStatus:any){

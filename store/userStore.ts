@@ -89,6 +89,22 @@ class UserStore implements IUserStore {
     }
   }
 
+  async getUserEventFavorites(userId: number){
+    try{
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        favorites: true,
+      },
+    });
+
+    return user?.favorites ?? [];
+  } catch (error) {
+    console.error("Prisma get user favorite events error:", error);
+    throw error;
+  }
+  }
+
   async addEventFavorite(userId: number, eventId: number) {
     try {
       const updatedUser = await prisma.user.update({
@@ -104,7 +120,7 @@ class UserStore implements IUserStore {
       });
       return updatedUser;
     } catch (error) {
-      console.error("Prisma add favorite error:", error);
+      console.error("Prisma add favorite events error:", error);
     }
   }
 
@@ -122,7 +138,7 @@ class UserStore implements IUserStore {
         },
       });
     } catch (error) {
-      console.error("Prisma remove favorite error:", error);
+      console.error("Prisma remove favorite events error:", error);
     }
   }
 

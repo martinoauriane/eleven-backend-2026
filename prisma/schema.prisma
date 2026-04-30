@@ -6,6 +6,13 @@ datasource db {
   provider = "postgresql"
 }
 
+enum MoodStatus {
+  CHILLING
+  WANTS_TO_GO_OUT
+  BORED
+  ABOUT_TO_LEAVE
+}
+
 model User {
   id                     Int             @id @default(autoincrement())
   firstName              String
@@ -94,11 +101,4 @@ model FriendRequest {
   receiverId Int
   emitter    User     @relation("EmitterFriendRequest", fields: [emitterId], references: [id])
   receiver   User     @relation("ReceiverFriendRequest", fields: [receiverId], references: [id])
-}
-
-enum MoodStatus {
-  CHILLING
-  WANTS_TO_GO_OUT
-  BORED
-  ABOUT_TO_LEAVE
 }
