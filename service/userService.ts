@@ -29,8 +29,8 @@ class UserService {
     return userStore.addFriend(userId, friendId);
   }
 
-  async logInUser(userLogin: any) {
-    const loggedInUser = await userStore.loginUser(userLogin);
+  async logInUser(email: string, password:string) {
+    const loggedInUser = await userStore.loginUser(email, password);
     if (loggedInUser != undefined) {
       return loggedInUser;
     }

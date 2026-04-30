@@ -31,16 +31,15 @@ class UserStore implements IUserStore {
     }
   }
 
-  async loginUser(userLogin: any): Promise<any> {
-    const email_login = userLogin.email;
+  async loginUser(email: string, password: string): Promise<any> {
     try {
       let userDb = await prisma.user.findUnique({
-        where: { email: email_login },
+        where: { email: email },
       });
       const userId = userDb?.id;
       if (userDb) {
         const isMatch = await bcrypt.compare(
-          userLogin.password,
+          password,
           userDb?.password,
         );
         if (isMatch && userId) {
@@ -69,7 +68,9 @@ class UserStore implements IUserStore {
 
   async getUserById(id: number) {
     try {
-      return await prisma.user.findUnique({ where: { id } });
+      let user = await prisma.user.findUnique({ where: { id } });
+      console.log("user", user);
+      return user;
     } catch (error) {
       console.error("Prisma retrieve error:", error);
     }

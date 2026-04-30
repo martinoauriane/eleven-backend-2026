@@ -25,12 +25,14 @@ class UserController {
   }
 
   async loginUser(req: Request, res: Response) {
-    const userLogin = {
-      email: req.body.email,
-      password: req.body.password,
-    };
+    const email= req.body.email;
+    const password= req.body.password;
+     if (!email || !password) {
+    console.log("Missing credentials");
+    return;
+  }
     try {
-      const answer = await userService.logInUser(userLogin);
+      const answer = await userService.logInUser(email, password);
       res.status(200).json({
         answer,
       });
