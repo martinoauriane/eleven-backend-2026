@@ -31,6 +31,7 @@ class UserController {
     console.log("Missing credentials");
     return;
   }
+  console.log("inside loginUser function", email, password);
     try {
       const answer = await userService.logInUser(email, password);
       res.status(200).json({

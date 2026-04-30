@@ -38,10 +38,7 @@ class UserStore implements IUserStore {
       });
       const userId = userDb?.id;
       if (userDb) {
-        const isMatch = await bcrypt.compare(
-          password,
-          userDb?.password,
-        );
+        const isMatch = await bcrypt.compare(password, userDb?.password);
         if (isMatch && userId) {
           const user = await prisma.user.findUnique({ where: { id: userId } });
           const token = jwt.sign({ userId: userId }, process.env.JWT_SECRET!, {
@@ -77,33 +74,35 @@ class UserStore implements IUserStore {
   }
 
   async addFriend(userId: number, friendId: number) {
+    const [smallId, bigId] =
+      userId < friendId ? [userId, friendId] : [friendId, userId];
+
     try {
-      const updatedUser = await prisma.friendship.create({
+      return await prisma.friendship.create({
         data: {
-          userId: userId,
-          friendId: friendId,
+          userId: smallId,
+          friendId: bigId,
         },
       });
-      return updatedUser;
     } catch (error) {
       console.error("Prisma adding friend error:", error);
     }
   }
 
-  async getUserEventFavorites(userId: number){
-    try{
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      include: {
-        favorites: true,
-      },
-    });
+  async getUserEventFavorites(userId: number) {
+    try {
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        include: {
+          favorites: true,
+        },
+      });
 
-    return user?.favorites ?? [];
-  } catch (error) {
-    console.error("Prisma get user favorite events error:", error);
-    throw error;
-  }
+      return user?.favorites ?? [];
+    } catch (error) {
+      console.error("Prisma get user favorite events error:", error);
+      throw error;
+    }
   }
 
   async addEventFavorite(userId: number, eventId: number) {
@@ -168,103 +167,90 @@ class UserStore implements IUserStore {
       throw error;
     }
   }
-async getFriendsOnMap(userId: number) {
-  try {
-    const friendships = await prisma.friendship.findMany({
-      where: {
-        OR: [
-          { userId },
-          { friendId: userId },
-        ],
-      },
-    });
-
-    const friendIds = friendships.map(f =>
-      f.userId === userId ? f.friendId : f.userId
-    );
-
-    const usersOnMap = await prisma.onMap.findMany({
-      where: {
-        userId: {
-          in: friendIds,
-        },
-      },
-      include: {
-        user: {
-          select: {
-            id: true,
-            firstName: true,
-            picture: true,
-          },
-        },
-      },
-    });
-
-    return usersOnMap;
-  } catch (error) {
-    console.error(error);
-    throw new Error("Failed to fetch users on map");
-  }
-}
-
-  async getUserFriendsStatuses(userId: number) {
-  try {
-    const friendships = await prisma.friendship.findMany({
-      where: {
-        OR: [
-          { userId },
-          { friendId: userId },
-        ],
-      },
-      include: {
-        user: true,
-        friend: true,
-      },
-    });
-
-    const friends = friendships.map(f =>
-      f.userId === userId ? f.friend : f.user
-    );
-
-    return friends.map(friend => ({
-      id: friend.id,
-      firstName: friend.firstName,
-      lastName: friend.lastName,
-      picture: friend.picture,
-      status: friend.status,
-    }));
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-}
-
-  async getUserFriends(id: string) {
-    const idNum = parseInt(id);
+  async getFriendsOnMap(userId: number) {
     try {
-      const user = await prisma.user.findUnique({
-        where: { id: idNum },
-        include: {
-          sentFriendships: {
-            include: {
-              friend: true,
-            },
+      const friendships = await prisma.friendship.findMany({
+        where: {
+          OR: [{ userId }, { friendId: userId }],
+        },
+      });
+
+      const friendIds = friendships.map((f) =>
+        f.userId === userId ? f.friendId : f.userId,
+      );
+
+      const usersOnMap = await prisma.onMap.findMany({
+        where: {
+          userId: {
+            in: friendIds,
           },
-          receivedFriendships: {
-            include: {
-              user: true,
+        },
+        include: {
+          user: {
+            select: {
+              id: true,
+              firstName: true,
+              picture: true,
             },
           },
         },
       });
 
-    const friends = [
-      ...(user?.sentFriendships.map(f => f.friend) ?? []),
-      ...(user?.receivedFriendships.map(f => f.user) ?? []),
-    ];
+      return usersOnMap;
+    } catch (error) {
+      console.error(error);
+      throw new Error("Failed to fetch users on map");
+    }
+  }
 
-    return friends;
+  async getUserFriendsStatuses(userId: number) {
+    try {
+      const friendships = await prisma.friendship.findMany({
+        where: {
+          OR: [{ userId }, { friendId: userId }],
+        },
+        include: {
+          user: true,
+          friend: true,
+        },
+      });
 
+      const friends = friendships.map((f) =>
+        f.userId === userId ? f.friend : f.user,
+      );
+
+      return friends.map((friend) => ({
+        id: friend.id,
+        firstName: friend.firstName,
+        lastName: friend.lastName,
+        picture: friend.picture,
+        status: friend.status,
+      }));
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  async getUserFriends(id: string) {
+    const idNum = parseInt(id);
+
+    try {
+      const friendships = await prisma.friendship.findMany({
+        where: {
+          OR: [{ userId: idNum }, { friendId: idNum }],
+        },
+        include: {
+          user: true,
+          friend: true,
+        },
+      });
+
+      const friends = friendships.map((f) =>
+        f.userId === idNum ? f.friend : f.user,
+      );
+
+      return friends;
     } catch (error) {
       console.error("Prisma retrieve error:", error);
     }

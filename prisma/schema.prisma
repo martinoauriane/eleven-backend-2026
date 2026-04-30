@@ -51,6 +51,7 @@ model Friendship {
   createdAt DateTime @default(now())
 
   @@unique([userId, friendId])
+  @@index([friendId, userId])
 }
 
 model OnMap {
