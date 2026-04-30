@@ -49,6 +49,8 @@ model Friendship {
   friend User @relation("FriendshipFriend", fields: [friendId], references: [id])
 
   createdAt DateTime @default(now())
+
+  @@unique([userId, friendId])
 }
 
 model OnMap {
