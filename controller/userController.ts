@@ -237,6 +237,16 @@ class UserController {
     }
   }
 
+  async getMessages(req:Request, res:Response){
+    const conversationId = parseInt(String(req.params.conversationId));
+     try {
+      let conversations = await userService.getMessages(conversationId);
+      res.status(200).json(conversations);
+    } catch (error) {
+      res.status(500).json({ error: "Error creating conversation" });
+    }
+  }
+
   async deleteUser(req: Request, res: Response) {
     const id = Number(req.query.id);
     try {
