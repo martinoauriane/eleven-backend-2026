@@ -82,6 +82,10 @@ class UserService {
     return await userStore.createConversation(userIds);
   }
 
+  async getConversations(userId: number){
+    return await userStore.getConversations(userId);
+  }
+
   async updateMood(userId:number, userMood:any){
     return await userStore.updateMood(userId, userMood);
   }
