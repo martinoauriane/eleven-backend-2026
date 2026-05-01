@@ -9,7 +9,7 @@ interface IUserStore {
   createUser(data: UserCreate): Promise<any>;
   getUserById(id: number): Promise<any>;
   updateUser(id: number, data: UserUpdate): Promise<any>;
-  UpdateUserStatus(userId: number, userStatus: any): Promise<any>;
+  updateMood(userId: number, mood: any): Promise<any>;
   deleteUser(id: number): Promise<any>;
 }
 
@@ -203,7 +203,7 @@ class UserStore implements IUserStore {
     }
   }
 
-  async getUserFriendsStatuses(userId: number) {
+  async getFriendsMood(userId: number) {
     try {
       const friendships = await prisma.friendship.findMany({
         where: {
@@ -224,7 +224,8 @@ class UserStore implements IUserStore {
         firstName: friend.firstName,
         lastName: friend.lastName,
         picture: friend.picture,
-        status: friend.status,
+        mood: friend.mood,
+        moodUpdatedat: friend.moodUpdatedAt,
       }));
     } catch (error) {
       console.error(error);
@@ -269,13 +270,13 @@ class UserStore implements IUserStore {
     }
   }
 
-  async UpdateUserStatus(userId: number, userStatus: MoodStatus) {
+  async updateMood(userId: number, userMood: MoodStatus) {
     try {
       const updatedUser = await prisma.user.update({
         where: { id: userId },
         data: {
-          status: userStatus,
-          statusUpdatedAt: new Date(),
+          mood: userMood,
+          moodUpdatedAt: new Date(),
         },
       });
       return updatedUser;

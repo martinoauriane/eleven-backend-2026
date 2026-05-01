@@ -24,8 +24,8 @@ model User {
   isOnline               Boolean         @default(false)
   lastLogin              DateTime        @default(now())
   attendingEventId       Int?
-  status                 MoodStatus?
-  statusUpdatedAt        DateTime?
+  mood                 MoodStatus?
+  moodUpdatedAt        DateTime?
   eventsCreated          Event[]         @relation("EventCreator")
   sentFriendRequests     FriendRequest[] @relation("EmitterFriendRequest")
   receivedFriendRequests FriendRequest[] @relation("ReceiverFriendRequest")

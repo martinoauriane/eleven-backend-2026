@@ -111,13 +111,13 @@ class UserController {
     }
   }
 
-  async updateUserStatus(req: Request, res: Response) {
-    const userId = parseInt(String(req.params.userId));
-    const userStatus = req.body.status;
+  async updateMood(req: Request, res: Response) {
+    const userId = parseInt(String(req.params.id));
+    const userMood = req.body.mood;
     try {
-      const updatedStatus = await userService.updateUserStatus(
+      const updatedStatus = await userService.updateMood(
         userId,
-        userStatus,
+        userMood,
       );
       res.status(200).json(updatedStatus);
     } catch (error: any) {
@@ -195,10 +195,10 @@ class UserController {
     }
   }
 
-  async getUserFriendsStatuses(req: Request, res: Response) {
-    const userId = parseInt(String(req.params.userId));
+  async getFriendsMood(req: Request, res: Response) {
+    const userId = parseInt(String(req.params.id));
     try {
-      let userFriendsArray = await userService.getUserFriendsStatuses(userId);
+      let userFriendsArray = await userService.getFriendsMood(userId);
       return userFriendsArray;
     } catch (error: any) {
       res.status(500).json({

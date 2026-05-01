@@ -10,6 +10,7 @@ interface UserService {
   updateUser(id: number, data: UserUpdate, ): Promise<any>;
   deleteUser(id: number): Promise<any>;
   updateUserStatus(userId:number, userStatus:any): Promise<any>;
+  getFriendsMood(userId:number): Promise<any>;
 }
 
 class UserService {
@@ -62,8 +63,8 @@ class UserService {
     return await userStore.updateUser(id, data);
   }
 
-  async getUserFriendsStatuses(userId:number){
-    return await userStore.getUserFriendsStatuses(userId);
+  async getFriendsMood(userId:number){
+    return await userStore.getFriendsMood(userId);
   }
 
   async addEventFavorite(eventId: number, userId: number) {
@@ -77,8 +78,8 @@ class UserService {
     return await userStore.getUserEventFavorites(userId);
   }
 
-  async updateUserStatus(userId:number, userStatus:any){
-    return await userStore.UpdateUserStatus(userId, userStatus);
+  async updateMood(userId:number, userMood:any){
+    return await userStore.updateMood(userId, userMood);
   }
 
   async deleteUser(id: number) {

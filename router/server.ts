@@ -62,9 +62,9 @@ router.get("/user/all", async (req: Request, res: Response) => {
 });
 
 // update user status
-router.post("/user/:userId/status-update", async(req: Request, res:Response) => {
+router.post("/user/:id/update-mood", async(req: Request, res:Response) => {
   try {
-    await userController.updateUserStatus(req, res);
+    await userController.updateMood(req, res);
   } catch (err) {
     console.error("ERROR trying to update status:", err);
     res.status(500).json({ error: "Internal server error" });
@@ -119,9 +119,9 @@ router.post("/user/:userId/friends-on-map", async (req: Request, res: Response) 
   }
 });
 
-router.post("/user/:userId/friends/statuses", async(req:Request, res:Response) => {
+router.post("/user/:id/friends/mood", async(req:Request, res:Response) => {
   try{
-    await userController.getUserFriendsStatuses(req, res);
+    await userController.getFriendsMood(req, res);
   }catch(err){
     console.error("ERROR trying to retrieve user statuses", err);
     res.status(500).json({error: "Internal server error"});
