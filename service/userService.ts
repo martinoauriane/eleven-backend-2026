@@ -78,6 +78,10 @@ class UserService {
     return await userStore.getUserEventFavorites(userId);
   }
 
+  async createConversation(userIds: []){
+    return await userStore.createConversation(userIds);
+  }
+
   async updateMood(userId:number, userMood:any){
     return await userStore.updateMood(userId, userMood);
   }

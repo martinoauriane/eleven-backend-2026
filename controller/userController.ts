@@ -25,12 +25,12 @@ class UserController {
   }
 
   async loginUser(req: Request, res: Response) {
-    const email= req.body.email;
-    const password= req.body.password;
-     if (!email || !password) {
-    console.log("Missing credentials");
-    return;
-  }
+    const email = req.body.email;
+    const password = req.body.password;
+    if (!email || !password) {
+      console.log("Missing credentials");
+      return;
+    }
     try {
       const answer = await userService.logInUser(email, password);
       res.status(200).json({
@@ -114,10 +114,7 @@ class UserController {
     const userId = parseInt(String(req.params.id));
     const userMood = req.body.mood;
     try {
-      const updatedStatus = await userService.updateMood(
-        userId,
-        userMood,
-      );
+      const updatedStatus = await userService.updateMood(userId, userMood);
       res.status(200).json(updatedStatus);
     } catch (error: any) {
       console.error("Prisma update error:", error);
@@ -209,7 +206,6 @@ class UserController {
 
   async getFriendsOnMap(req: Request, res: Response) {
     let userId = parseInt(String(req.params.userId));
-
     try {
       let usersOnMap = await userService.getFriendsOnMap(userId);
       res.status(200).json(usersOnMap);
@@ -218,6 +214,16 @@ class UserController {
         error: "Error retrieving users on map",
         details: error.message,
       });
+    }
+  }
+
+  async createConversation(req: Request, res: Response) {
+    const { userIds } = req.body;
+    try {
+      let answer = await userService.createConversation(userIds);
+      res.status(200).json(answer);
+    } catch (error) {
+      res.status(500).json({ error: "Error creating conversation" });
     }
   }
 

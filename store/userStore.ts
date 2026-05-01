@@ -286,6 +286,25 @@ class UserStore implements IUserStore {
     }
   }
 
+  async createConversation(userIds: []) {
+    try {
+      const conversation = await prisma.conversation.create({
+        data: {
+          participants: {
+            connect: userIds.map((id: number) => ({ id })),
+          },
+        },
+        include: {
+          participants: true,
+        },
+      });
+      return conversation;
+    } catch (error) {
+      console.error("Prisma creating new conversation error:", error);
+      throw error;
+    }
+  }
+
   async deleteUser(id: number) {
     try {
       return await prisma.user.delete({ where: { id } });

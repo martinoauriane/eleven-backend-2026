@@ -128,6 +128,14 @@ router.post("/user/:id/friends/mood", async(req:Request, res:Response) => {
   }
 })
 
+router.post("/conversations", async(req,res)=>{
+  try{
+    await userController.createConversation(req, res);
+  } catch(err){
+    console.error("ERROR trying to create a new conversation", err);
+    res.status(500).json({error:"Internal server error"});
+  }
+})
 
 
 // to do: create an endpoint for all users

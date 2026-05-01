@@ -37,6 +37,9 @@ model User {
 
   sentFriendships     Friendship[] @relation("FriendshipUser")
   receivedFriendships Friendship[] @relation("FriendshipFriend")
+
+  conversations Conversation[] @relation("ConversationParticipants")
+  messages      Message[]
 }
 
 model Friendship {
@@ -104,4 +107,26 @@ model FriendRequest {
   receiverId Int
   emitter    User     @relation("EmitterFriendRequest", fields: [emitterId], references: [id])
   receiver   User     @relation("ReceiverFriendRequest", fields: [receiverId], references: [id])
+}
+
+model Conversation {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  participants User[] @relation("ConversationParticipants")
+
+  messages Message[]
+}
+
+model Message {
+  id             Int      @id @default(autoincrement())
+  content        String
+  createdAt      DateTime @default(now())
+
+  senderId       Int
+  conversationId Int
+
+  sender         User         @relation(fields: [senderId], references: [id])
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
 }
