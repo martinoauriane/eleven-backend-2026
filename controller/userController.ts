@@ -229,7 +229,6 @@ class UserController {
 
   async getUserConversations(req:Request, res:Response){
     const userId = parseInt(String(req.params.userId));
-    console.log("user id", userId);
      try {
       let conversations = await userService.getUserConversations(userId);
       res.status(200).json(conversations);
@@ -239,9 +238,13 @@ class UserController {
   }
 
   async addMessage(req:Request, res:Response){
+    console.log("inside add message controller");
     const conversationId = parseInt(String(req.params.conversationId));
     const message = req.body.content;
     const senderId = req.body.senderId;
+    console.log("conversation id", conversationId);
+    console.log("message", message);
+    console.log("senderId", senderId);
      try {
       let conversations = await userService.addMessage(conversationId, message, senderId);
       res.status(200).json(conversations);
