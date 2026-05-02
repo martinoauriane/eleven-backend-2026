@@ -82,8 +82,8 @@ class UserService {
     return await userStore.createConversation(userId, friendId);
   }
 
-  async getConversations(userId: number){
-    return await userStore.getConversations(userId);
+  async getUserConversations(userId: number){
+    return await userStore.getUserConversations(userId);
   }
 
   async getMessages(conversationId: number){

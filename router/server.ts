@@ -138,10 +138,10 @@ router.post("/user/conversation-new/:userId/:friendId", async(req,res)=>{
   }
 })
 
-// get conversations
+// retrieve user conversations
 router.get("/user/:userId/conversations", async(req,res)=>{
   try{
-    await userController.getConversations(req, res);
+    await userController.getUserConversations(req, res);
   } catch(err){
     console.error("ERROR trying to create a new conversation", err);
     res.status(500).json({error:"Internal server error"});
