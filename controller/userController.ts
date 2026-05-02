@@ -218,9 +218,9 @@ class UserController {
   }
 
   async createConversation(req: Request, res: Response) {
-    const { userIds } = req.body;
+  const { userId, friendId } = req.params;
     try {
-      let answer = await userService.createConversation(userIds);
+      let answer = await userService.createConversation(Number(userId), Number(friendId));
       res.status(200).json(answer);
     } catch (error) {
       res.status(500).json({ error: "Error creating conversation" });
@@ -228,7 +228,7 @@ class UserController {
   }
 
   async getConversations(req:Request, res:Response){
-    const userId = parseInt(String(req.params.id));
+    const userId = parseInt(String(req.params.userId));
      try {
       let conversations = await userService.getConversations(userId);
       res.status(200).json(conversations);

@@ -286,12 +286,12 @@ class UserStore implements IUserStore {
     }
   }
 
-  async createConversation(userIds: []) {
+  async createConversation(userId: number, friendId: number) {
     try {
       const conversation = await prisma.conversation.create({
         data: {
           participants: {
-            connect: userIds.map((id: number) => ({ id })),
+            connect: [{ id: userId }, { id: friendId }],
           },
         },
         include: {
@@ -312,7 +312,7 @@ class UserStore implements IUserStore {
           conversationId: conversationId,
         },
         orderBy: {
-          createdAt: "desc",  
+          createdAt: "desc",
         },
         include: {
           sender: true,

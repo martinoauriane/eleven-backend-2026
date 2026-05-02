@@ -129,7 +129,7 @@ router.post("/user/:id/friends/mood", async(req:Request, res:Response) => {
 })
 
 // create new conversation
-router.post("/user/conversation-new", async(req,res)=>{
+router.post("/user/conversation-new/:userId/:friendId", async(req,res)=>{
   try{
     await userController.createConversation(req, res);
   } catch(err){
@@ -139,7 +139,7 @@ router.post("/user/conversation-new", async(req,res)=>{
 })
 
 // get conversations
-router.get("/user/:id/conversations", async(req,res)=>{
+router.get("/user/:userId/conversations", async(req,res)=>{
   try{
     await userController.getConversations(req, res);
   } catch(err){
@@ -148,7 +148,8 @@ router.get("/user/:id/conversations", async(req,res)=>{
   }
 })
 
-router.get("/user/:conversationId/messages",  async(req,res)=>{
+// get all messages related to a conversation
+router.get("/user/:conversationId/load-messages",  async(req,res)=>{
   try{
     await userController.getMessages(req, res);
   } catch(err){
