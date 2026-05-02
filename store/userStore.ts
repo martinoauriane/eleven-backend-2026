@@ -384,6 +384,11 @@ class UserStore implements IUserStore {
       },
     });
 
+       await prisma.conversation.update({
+      where: { id: conversationId },
+      data: {},
+    });
+
     return newMessage;
   } catch (error) {
     console.error("Error adding message:", error);
