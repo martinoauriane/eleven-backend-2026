@@ -367,6 +367,31 @@ class UserStore implements IUserStore {
 }
 
 
+  async addMessage(conversationId: number, senderId: number, message: string) {
+  try {
+    const newMessage = await prisma.message.create({
+      data: {
+        content: message,
+        conversation: {
+          connect: { id: conversationId },
+        },
+        sender: {
+          connect: { id: senderId },
+        },
+      },
+      include: {
+        sender: true,
+      },
+    });
+
+    return newMessage;
+  } catch (error) {
+    console.error("Error adding message:", error);
+    throw error;
+  }
+}
+
+
   async deleteUser(id: number) {
     try {
       return await prisma.user.delete({ where: { id } });
