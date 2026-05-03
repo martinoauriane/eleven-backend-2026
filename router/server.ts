@@ -52,7 +52,7 @@ router.post("/user/:userId/update", async (req: Request, res: Response) => {
 });
 
 //operationnal
-router.post("/user/:id/friends", async (req: Request, res: Response) => {
+router.get("/user/:id/friends", async (req: Request, res: Response) => {
   await userController.getUserFriends(req, res);
 });
 
