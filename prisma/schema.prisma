@@ -81,9 +81,8 @@ model Event {
   eventCountry   String
   isPublic       Boolean  @default(true)
   userId         Int
-  eventDate      DateTime @default(now())
-  eventEndTime   DateTime @default(now())
   eventStartTime DateTime @default(now())
+  eventEndTime   DateTime @default(now())
   createdBy      User     @relation("EventCreator", fields: [userId], references: [id])
   participants   User[]   @relation("EventParticipants")
   favoritedBy    User[]   @relation("UserFavorites")
