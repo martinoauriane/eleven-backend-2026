@@ -233,13 +233,11 @@ class UserStore implements IUserStore {
     }
   }
 
-  async getUserFriends(id: string) {
-    const idNum = parseInt(id);
-
+  async getUserFriends(id: number) {
     try {
       const friendships = await prisma.friendship.findMany({
         where: {
-          OR: [{ userId: idNum }, { friendId: idNum }],
+          OR: [{ userId: id }, { friendId: id }],
         },
         include: {
           user: true,
@@ -248,7 +246,7 @@ class UserStore implements IUserStore {
       });
 
       const friends = friendships.map((f) =>
-        f.userId === idNum ? f.friend : f.user,
+        f.userId === id ? f.friend : f.user,
       );
 
       return friends;

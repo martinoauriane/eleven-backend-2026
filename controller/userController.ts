@@ -75,7 +75,8 @@ class UserController {
   }
 
   async getUserFriends(req: Request, res: Response) {
-    const id: string = String(req.params.id);
+    const id: number = parseInt(String(req.params.id));
+    console.log("id bien reçu", id);
     try {
       const friendsList = await userService.getUserFriends(id);
       if (friendsList) {

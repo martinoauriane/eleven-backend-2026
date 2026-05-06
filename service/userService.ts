@@ -48,7 +48,7 @@ class UserService {
     return await userStore.getFriendsOnMap(currentUserId);
   }
 
-  async getUserFriends(userId: string): Promise<any> {
+  async getUserFriends(userId: number): Promise<any> {
     return await userStore.getUserFriends(userId);
   }
 
