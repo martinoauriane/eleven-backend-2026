@@ -76,6 +76,7 @@ class EventController {
     if (isNaN(eventId)) {
       res.status(400).json({ error: "Invalid event id" });
     }
+    console.log("eventId", eventId);
     const userId = Number(req.params.user_id);
     if (isNaN(userId)) {
       res.status(400).json({ error: "Invalid user id" });
@@ -85,14 +86,32 @@ class EventController {
         eventId,
         userId,
       );
-      return addedParticipant;
+      res.status(200).json(addedParticipant);
     } catch (error: any) {
+      console.error("ADD PARTICIPANT ERROR:", error);
       res.status(500).json({
         error: "Error adding participants to the event",
         details: error.message,
       });
     }
   }
+
+  async getParticipants(req: Request, res: Response) {
+    const eventId = Number(req.params.eventId);
+    if (isNaN(eventId)) {
+      return res.status(400).json({ error: "Invalid user id" });
+    }
+    try {
+      const participantsList = await eventService.getEventParticipants(eventId);
+      res.status(200).json(participantsList);
+    } catch (error: any) {
+      res.status(500).json({
+        error: "Error retrieving event participants",
+        details: error.message, 
+      });
+    }
+  }
+
 
   async deleteParticipant(req: Request, res: Response) {
     const userId = Number(req.params.user_id);
@@ -101,7 +120,7 @@ class EventController {
     }
     try {
       const removedParticipant = await eventService.deleteParticipant(userId);
-      return removedParticipant;
+      res.status(200).json(removedParticipant);
     } catch (error: any) {
       res.status(500).json({
         error: "Error adding participants to the event",

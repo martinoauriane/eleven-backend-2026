@@ -35,6 +35,10 @@ class EventService implements IEventService{
         return await eventStore.addEventParticipant(eventId, userId);
     }
 
+    async getEventParticipants(eventId: number): Promise<any>{
+        return await eventStore.getEventParticipants(eventId);
+    }
+
     async deleteParticipant(userId: number): Promise<any>{
         return await eventStore.deleteParticipant(userId);
     }

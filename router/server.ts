@@ -235,6 +235,22 @@ router.post(
 // EVENT ENDPOINTS
 
 // operationnal
+router.post( "/event/addParticipant/:event_id/:user_id", async (req: Request, res: Response) => {
+    await eventController.addParticipants(req, res);
+  },
+);
+
+// operationnal
+router.get("/event/getParticipants/:eventId", async (req: Request, res: Response) => { 
+  await eventController.getParticipants(req, res);
+});
+
+// operationnal
+router.post("/event/deleteParticipant/:user_id", async (req: Request, res: Response) => { 
+  await eventController.deleteParticipant(req, res)
+});
+
+// operationnal
 router.post("/event/create/:userId", async (req: Request, res: Response) => {
   await eventController.newEvent(req, res);
 });
@@ -253,22 +269,6 @@ router.get("/event/get/all", async (req: Request, res: Response) => {
 router.post("/event/update/:event_id", async (req: Request, res: Response) => {
   await eventController.updateEvent(req, res);
 });
-
-// operationnal
-router.post(
-  "/event/addParticipant/:event_id/:user_id",
-  async (req: Request, res: Response) => {
-    await eventController.addParticipants(req, res);
-  },
-);
-
-// operationnal
-router.post(
-  "/event/deleteParticipant/:user_id",
-  async (req: Request, res: Response) => {
-    await eventController.deleteParticipant(req, res);
-  },
-);
 
 // operationnal
 router.post("/event/delete/:event_id", async (req: Request, res: Response) => {

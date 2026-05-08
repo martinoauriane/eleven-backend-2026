@@ -17,6 +17,7 @@ interface IEventStore {
 }
 
 class EventStore implements IEventStore {
+
   async createEvent(data: EventCreate) {
     try {
       return await prisma.event.create({ data });
@@ -24,6 +25,7 @@ class EventStore implements IEventStore {
       console.error("Prisma creation error:", error);
     }
   }
+
 async getEventById(id: number) {
   try {
     const event : EventData | null = await prisma.event.findUnique({
@@ -47,6 +49,7 @@ async getAllEvents() {
     const events = await prisma.event.findMany({
       include: {
         createdBy: true,
+        participants: true
       },
     });
     return events;
@@ -78,7 +81,6 @@ async getAllEvents() {
     }
 
     if (user?.attendingEventId) {
-      // empêcher l'ubiquité
       throw new Error("User already attending an event");
     }
 
@@ -94,6 +96,26 @@ async getAllEvents() {
       throw error;
     }
   }
+async getEventParticipants(eventId: number) {
+  try {
+    const event = await prisma.event.findUnique({
+      where: {
+        id: eventId,
+      },
+      include: {
+        participants: true,
+      },
+    });
+
+    if (!event) {
+      throw new Error("Event not found");
+    }
+    return event.participants;
+  } catch (error) {
+    console.error("Prisma get event participants error:", error);
+    throw error;
+  }
+}
 
   async deleteParticipant(userId: number) {
     const user = await userStore.getUserById(userId);
