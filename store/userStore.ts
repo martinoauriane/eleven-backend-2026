@@ -297,8 +297,6 @@ class UserStore implements IUserStore {
         },
       });
       return conversation;
-      console.log("conversation");
-      console.log(conversation);
     } catch (error) {
       console.error("Prisma creating new conversation error:", error);
       throw error;

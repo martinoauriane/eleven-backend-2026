@@ -76,7 +76,6 @@ class EventController {
     if (isNaN(eventId)) {
       res.status(400).json({ error: "Invalid event id" });
     }
-    console.log("eventId", eventId);
     const userId = Number(req.params.user_id);
     if (isNaN(userId)) {
       res.status(400).json({ error: "Invalid user id" });
