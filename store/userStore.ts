@@ -179,7 +179,7 @@ class UserStore implements IUserStore {
         f.userId === userId ? f.friendId : f.userId,
       );
 
-      const usersOnMap = await prisma.onMap.findMany({
+      const friendsOnMap = await prisma.onMap.findMany({
         where: {
           userId: {
             in: friendIds,
@@ -196,7 +196,7 @@ class UserStore implements IUserStore {
         },
       });
 
-      return usersOnMap;
+      return friendsOnMap;
     } catch (error) {
       console.error(error);
       throw new Error("Failed to fetch users on map");
@@ -297,6 +297,8 @@ class UserStore implements IUserStore {
         },
       });
       return conversation;
+      console.log("conversation");
+      console.log(conversation);
     } catch (error) {
       console.error("Prisma creating new conversation error:", error);
       throw error;
