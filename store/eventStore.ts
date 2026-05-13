@@ -17,7 +17,6 @@ interface IEventStore {
 }
 
 class EventStore implements IEventStore {
-
   async createEvent(data: EventCreate) {
     try {
       return await prisma.event.create({ data });
@@ -26,37 +25,52 @@ class EventStore implements IEventStore {
     }
   }
 
-async getEventById(id: number) {
-  try {
-    const event : EventData | null = await prisma.event.findUnique({
-      where: { id },
-    });
-    if (!event) {
-      return null;
+  async getEventById(id: number) {
+    try {
+      const event: EventData | null = await prisma.event.findUnique({
+        where: { id },
+      });
+      if (!event) {
+        return null;
+      }
+      const user = await prisma.user.findUnique({
+        where: { id: event.userId },
+      });
+      return { event, user };
+    } catch (error) {
+      console.error("Prisma retrieve error:", error);
+      throw error;
     }
-    const user = await prisma.user.findUnique({
-      where: { id: event.userId }
-    });
-    return { event, user };
-  } catch (error) {
-    console.error("Prisma retrieve error:", error);
-    throw error;
   }
-}
 
-async getAllEvents() {
-  try {
-    const events = await prisma.event.findMany({
-      include: {
-        createdBy: true,
-        participants: true
+  async getEventsByDate(date: string) {
+    const startDate = new Date(date);
+    startDate.setHours(0, 0, 0, 0);
+    const endDate = new Date(date);
+    endDate.setHours(23, 59, 59, 999);
+    return prisma.event.findMany({
+      where: {
+        eventStartTime: {
+          gte: startDate,
+          lte: endDate,
+        },
       },
     });
-    return events;
-  } catch (error) {
-    console.error("Prisma retrieve error:", error);
   }
-}
+  
+  async getAllEvents() {
+    try {
+      const events = await prisma.event.findMany({
+        include: {
+          createdBy: true,
+          participants: true,
+        },
+      });
+      return events;
+    } catch (error) {
+      console.error("Prisma retrieve error:", error);
+    }
+  }
 
   async updateEvent(id: number, data: EventUpdate) {
     try {
@@ -96,26 +110,26 @@ async getAllEvents() {
       throw error;
     }
   }
-async getEventParticipants(eventId: number) {
-  try {
-    const event = await prisma.event.findUnique({
-      where: {
-        id: eventId,
-      },
-      include: {
-        participants: true,
-      },
-    });
+  async getEventParticipants(eventId: number) {
+    try {
+      const event = await prisma.event.findUnique({
+        where: {
+          id: eventId,
+        },
+        include: {
+          participants: true,
+        },
+      });
 
-    if (!event) {
-      throw new Error("Event not found");
+      if (!event) {
+        throw new Error("Event not found");
+      }
+      return event.participants;
+    } catch (error) {
+      console.error("Prisma get event participants error:", error);
+      throw error;
     }
-    return event.participants;
-  } catch (error) {
-    console.error("Prisma get event participants error:", error);
-    throw error;
   }
-}
 
   async deleteParticipant(userId: number) {
     const user = await userStore.getUserById(userId);

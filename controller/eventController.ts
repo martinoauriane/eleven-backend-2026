@@ -4,7 +4,6 @@ import { EventCreate } from "../store/interfaces/eventInterfaces";
 const eventService = new EventService();
 
 class EventController {
-
   async newEvent(req: Request, res: Response) {
     const userId = parseInt(String(req.params.userId));
     const newEvent: EventCreate = {
@@ -51,6 +50,18 @@ class EventController {
       res.status(200).json(controllersEvent);
     } catch (error) {
       res.status(500).json({ error: "Error retrieving event" });
+    }
+  }
+
+  async getEventsByDate(req: Request, res: Response) {
+    try {
+      const date  = String(req.params);
+      const events = await eventService.getEventsByDate(date);
+      res.status(200).json(events);
+    } catch (error) {
+      res.status(500).json({
+        error: "Error retrieving events by date",
+      });
     }
   }
 
@@ -106,11 +117,10 @@ class EventController {
     } catch (error: any) {
       res.status(500).json({
         error: "Error retrieving event participants",
-        details: error.message, 
+        details: error.message,
       });
     }
   }
-
 
   async deleteParticipant(req: Request, res: Response) {
     const userId = Number(req.params.user_id);

@@ -27,6 +27,10 @@ class EventService implements IEventService{
         return serviceEvents;
     }
 
+    async getEventsByDate(date: string): Promise<any>{
+        return await eventStore.getEventsByDate(date);
+    }
+
     async updateEvent(data: EventUpdate, id: number): Promise<any> {
         return await eventStore.updateEvent(id, data);
     }

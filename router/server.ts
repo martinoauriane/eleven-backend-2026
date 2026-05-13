@@ -275,7 +275,12 @@ router.post("/event/delete/:event_id", async (req: Request, res: Response) => {
   await eventController.deleteEvent(req, res);
 });
 
-
+// get event according to a specific date
+router.get(
+  "/events/date/:date", async(req: Request, res:Response) => {
+  await eventController.getEventsByDate(req, res);
+  }
+);
 
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
