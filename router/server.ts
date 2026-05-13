@@ -42,7 +42,7 @@ router.get("/logout", async(req:Request, res:Response) => {
 // USER ENDPOINTS
 
 // operationnal
-router.post("/user/:id", async (req: Request, res: Response) => {
+router.get("/user/:id", async (req: Request, res: Response) => {
   await userController.getUser(req, res);
 });
 
