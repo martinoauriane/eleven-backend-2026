@@ -22,12 +22,11 @@ const friendRequestController = new FriendRequestController();
 const eventController = new EventController();
 
 // welcome
-router.get("/", async (req: Request, res: Response) => {
+router.get("/", async(req: Request, res: Response) => {
   res.status(200).json("Welcome");
 });
 
 // AUTH
-
 router.post("/user/login", async(req: Request, res: Response) => {
   await userController.loginUser(req, res);
 });
@@ -275,13 +274,12 @@ router.post("/event/delete/:event_id", async (req: Request, res: Response) => {
   await eventController.deleteEvent(req, res);
 });
 
-// get event according to a specific date
 router.get(
   "/events/date/:date", async(req: Request, res:Response) => {
   await eventController.getEventsByDate(req, res);
   }
 );
 
-app.listen(process.env.SERVER_PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
+app.listen(3000, () => {
+  console.log(`Server is running on port 3000`);
 });

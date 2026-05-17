@@ -55,9 +55,13 @@ class EventStore implements IEventStore {
           lte: endDate,
         },
       },
+      include: {
+        createdBy: true,
+        participants: true,
+      },
     });
   }
-  
+
   async getAllEvents() {
     try {
       const events = await prisma.event.findMany({

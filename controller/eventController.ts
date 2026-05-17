@@ -54,8 +54,8 @@ class EventController {
   }
 
   async getEventsByDate(req: Request, res: Response) {
-    try {
-      const date  = String(req.params);
+     try {
+      const date  = String(req.params.date);
       const events = await eventService.getEventsByDate(date);
       res.status(200).json(events);
     } catch (error) {

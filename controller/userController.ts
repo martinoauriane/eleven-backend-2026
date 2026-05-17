@@ -20,7 +20,7 @@ class UserController {
       const userCreated = await userService.createUser(user);
       res.status(200).json(userCreated);
     } catch (error) {
-      res.status(500).json({ error: "Error creating new user" });
+      res.status(500).json({ "Error creating new user": error});
     }
   }
 
