@@ -56,7 +56,10 @@ class UserStore implements IUserStore {
 
   async getAllUsers() {
     try {
-      return await prisma.user.findMany();
+      let allusers =  await prisma.user.findMany();
+      console.log("all users");
+      console.log(allusers);
+      return allusers;
     } catch (error) {
       console.error("Prisma retrieving all users error:", error);
       throw error;
@@ -324,76 +327,77 @@ class UserStore implements IUserStore {
   }
 
   async getUserConversations(userId: number) {
-  try {
-    const conversations = await prisma.conversation.findMany({
-      where: {
-        participants: {
-          some: { id: userId },
-        },
-      },
-      include: {
-        participants: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            picture: true,
+    try {
+      const conversations = await prisma.conversation.findMany({
+        where: {
+          participants: {
+            some: { id: userId },
           },
         },
-        messages: {
-          orderBy: { createdAt: "desc" },
-          take: 1,
+        include: {
+          participants: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              picture: true,
+            },
+          },
+          messages: {
+            orderBy: { createdAt: "desc" },
+            take: 1,
+          },
         },
-      },
-    });
+      });
 
-    return conversations.map((conv) => {
-      const friend = conv.participants.find(
-        (p) => p.id !== userId
-      );
+      return conversations.map((conv) => {
+        const friend = conv.participants.find((p) => p.id !== userId);
 
-      return {
-        ...conv,
-        friend,
-        participants: undefined, 
-      };
-    });
-  } catch (error) {
-    console.error("Prisma retrieving conversation error:", error);
-    throw error;
+        return {
+          ...conv,
+          friend,
+          participants: undefined,
+        };
+      });
+    } catch (error) {
+      console.error("Prisma retrieving conversation error:", error);
+      throw error;
+    }
   }
-}
 
-
-  async addMessage(conversationId: number, message: string, senderId: number,) {
-  try {
-    const newMessage = await prisma.message.create({
-      data: {
-        content: message,
-        conversation: {
-          connect: { id: conversationId },
+  async addMessage(
+    conversationId: number,
+    type: string,
+    content: any,
+    senderId: number,
+  ) {
+    try {
+      const newMessage = await prisma.message.create({
+        data: {
+          type,
+          content,
+          conversation: {
+            connect: { id: conversationId },
+          },
+          sender: {
+            connect: { id: senderId },
+          },
         },
-        sender: {
-          connect: { id: senderId },
+        include: {
+          sender: true,
         },
-      },
-      include: {
-        sender: true,
-      },
-    });
+      });
+      await prisma.conversation.update({
+        where: { id: conversationId },
+        data: {},
+      });
 
-       await prisma.conversation.update({
-      where: { id: conversationId },
-      data: {},
-    });
-
-    return newMessage;
-  } catch (error) {
-    console.error("Error adding message:", error);
-    throw error;
+      return newMessage;
+    } catch (error) {
+      console.error("Error adding message:", error);
+      throw error;
+    }
   }
-}
-
 
   async deleteUser(id: number) {
     try {

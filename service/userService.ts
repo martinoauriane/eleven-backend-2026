@@ -86,8 +86,8 @@ class UserService {
     return await userStore.getUserConversations(userId);
   }
 
-  async addMessage(conversationId: number, message:string, senderId: number,){
-    return await userStore.addMessage(conversationId, message, senderId);
+  async addMessage(conversationId: number, type:string, message:string, senderId: number,){
+    return await userStore.addMessage(conversationId, type, message, senderId);
   }
 
   async getMessages(conversationId: number){

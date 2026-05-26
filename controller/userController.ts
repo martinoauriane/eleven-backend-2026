@@ -240,12 +240,13 @@ class UserController {
   async addMessage(req:Request, res:Response){
     const conversationId = parseInt(String(req.params.conversationId));
     const message = req.body.content;
-    const senderId = req.body.senderId;
+    const type = req.body.type;
+    const senderId = Number(req.body.senderId);
      try {
-      let conversations = await userService.addMessage(conversationId, message, senderId);
+      let conversations = await userService.addMessage(conversationId, type, message, senderId);
       res.status(200).json(conversations);
     } catch (error) {
-      res.status(500).json({ error: "Error creating conversation" });
+      console.error(error);
     }
   }
 

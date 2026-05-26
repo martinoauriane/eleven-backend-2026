@@ -23,6 +23,8 @@ FAIRE UNE MIGRATION (EN DEUX TEMPS)
    npx prisma migrate dev
 
 2. Puis, il faut nécessairement re-générer le client:
+npx prisma generate
+
 
 Vérifier que Prisma est bien connectée à la db:
 npx prisma db pull

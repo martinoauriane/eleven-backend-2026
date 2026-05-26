@@ -120,7 +120,8 @@ model Conversation {
 
 model Message {
   id             Int      @id @default(autoincrement())
-  content        String
+  type           String
+  content        Json
   createdAt      DateTime @default(now())
 
   senderId       Int

@@ -40,6 +40,11 @@ router.get("/logout", async(req:Request, res:Response) => {
 
 // USER ENDPOINTS
 
+//operationnal
+router.get("/user/all", async (req: Request, res: Response) => {
+  await userController.getAllUsers(req, res);
+});
+
 // operationnal
 router.get("/user/:id", async (req: Request, res: Response) => {
   await userController.getUser(req, res);
@@ -53,11 +58,6 @@ router.post("/user/:userId/update", async (req: Request, res: Response) => {
 //operationnal
 router.get("/user/:id/friends", async (req: Request, res: Response) => {
   await userController.getUserFriends(req, res);
-});
-
-//operationnal
-router.get("/user/all", async (req: Request, res: Response) => {
-  await userController.getAllUsers(req, res);
 });
 
 // update user status
