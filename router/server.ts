@@ -34,9 +34,7 @@ router.post("/user/login", async(req: Request, res: Response) => {
 router.post("/user/register", async (req: Request, res: Response) => {
   await userController.createUser(req, res);
 });
-router.get("/logout", async(req:Request, res:Response) => {
-  return res.status(200).json({ message: "Logged out" });
-})
+
 
 // USER ENDPOINTS
 
