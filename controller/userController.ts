@@ -239,8 +239,8 @@ class UserController {
 
   async addMessage(req:Request, res:Response){
     const conversationId = parseInt(String(req.params.conversationId));
-    const message = req.body.content;
-    const type = req.body.type;
+    const message = req.body.content.content;
+    const type = req.body.content.type;
     const senderId = Number(req.body.senderId);
      try {
       let conversations = await userService.addMessage(conversationId, type, message, senderId);

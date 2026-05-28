@@ -374,8 +374,8 @@ class UserStore implements IUserStore {
     try {
       const newMessage = await prisma.message.create({
         data: {
-          type,
-          content,
+          type: type,
+          content: content,
           conversation: {
             connect: { id: conversationId },
           },
