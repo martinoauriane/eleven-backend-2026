@@ -24,8 +24,6 @@ class UserController {
     }
   }
 
-  
-
   async loginUser(req: Request, res: Response) {
     const email = req.body.email;
     const password = req.body.password;
@@ -243,11 +241,15 @@ class UserController {
 
   async addMessage(req:Request, res:Response){
     const conversationId = parseInt(String(req.params.conversationId));
-    const message = req.body.content.content;
-    const type = req.body.content.type;
+    const content = req.body.content;
+    const type = req.body.type;
     const senderId = Number(req.body.senderId);
+    console.log("content", content);
+    console.log("type", type);
+    console.log("senderId", senderId);
+    console.log("conversation id", conversationId);
      try {
-      let conversations = await userService.addMessage(conversationId, type, message, senderId);
+      let conversations = await userService.addMessage(conversationId, type, content, senderId);
       res.status(200).json(conversations);
     } catch (error) {
       console.error(error);
