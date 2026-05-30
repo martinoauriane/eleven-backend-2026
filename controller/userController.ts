@@ -24,9 +24,13 @@ class UserController {
     }
   }
 
+  
+
   async loginUser(req: Request, res: Response) {
     const email = req.body.email;
     const password = req.body.password;
+    console.log("email");
+    console.log(email);
     if (!email || !password) {
       console.log("Missing credentials");
       return;

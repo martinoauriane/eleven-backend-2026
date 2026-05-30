@@ -68,8 +68,7 @@ class UserStore implements IUserStore {
 
   async getUserById(id: number) {
     try {
-      let user = await prisma.user.findUnique({ where: { id } });
-      console.log("user", user);
+      let user = await prisma.user.findUnique({ where: { id: id } });
       return user;
     } catch (error) {
       console.error("Prisma retrieve error:", error);
