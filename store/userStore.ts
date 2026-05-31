@@ -32,6 +32,10 @@ class UserStore implements IUserStore {
   }
 
   async loginUser(email: string, password: string): Promise<any> {
+    console.log("email");
+    console.log(email);
+    console.log("password");
+    console.log(password);
     try {
       let userDb = await prisma.user.findUnique({
         where: { email: email },

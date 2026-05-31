@@ -29,6 +29,8 @@ class UserController {
     const password = req.body.password;
     console.log("email");
     console.log(email);
+    console.log("password");
+    console.log(password);
     if (!email || !password) {
       console.log("Missing credentials");
       return;
@@ -244,10 +246,6 @@ class UserController {
     const content = req.body.content;
     const type = req.body.type;
     const senderId = Number(req.body.senderId);
-    console.log("content", content);
-    console.log("type", type);
-    console.log("senderId", senderId);
-    console.log("conversation id", conversationId);
      try {
       let conversations = await userService.addMessage(conversationId, type, content, senderId);
       res.status(200).json(conversations);
