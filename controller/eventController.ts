@@ -59,7 +59,8 @@ class EventController {
   async getEventsByDate(req: Request, res: Response) {
      try {
       const date  = String(req.params.date);
-      const events = await eventService.getEventsByDate(date);
+      const userId = parseInt(String(req.params.userId));
+      const events = await eventService.getEventsByDate(date, userId);
       res.status(200).json(events);
     } catch (error) {
       res.status(500).json({

@@ -273,7 +273,7 @@ router.post("/event/delete/:event_id", async (req: Request, res: Response) => {
 });
 
 router.get(
-  "/events/date/:date", async(req: Request, res:Response) => {
+  "/events/:userId/date/:date", async(req: Request, res:Response) => {
   await eventController.getEventsByDate(req, res);
   }
 );

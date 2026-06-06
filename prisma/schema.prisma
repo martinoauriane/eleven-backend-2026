@@ -13,6 +13,13 @@ enum MoodStatus {
   ABOUT_TO_LEAVE
 }
 
+enum JoinRequestStatus {
+  NONE
+  SENT
+  ACCEPTED
+  REJECTED
+}
+
 model User {
   id                     Int             @id @default(autoincrement())
   firstName              String
@@ -86,16 +93,25 @@ model Event {
   createdBy      User     @relation("EventCreator", fields: [userId], references: [id])
   participants   User[]   @relation("EventParticipants")
   favoritedBy    User[]   @relation("UserFavorites")
+  joinRequests    JoinRequest[]
 }
-
 model JoinRequest {
-  id         Int      @id @default(autoincrement())
-  sentAt     DateTime @default(now())
-  isAccepted Boolean  @default(false)
-  emitterId  Int
+  id        Int      @id @default(autoincrement())
+  sentAt    DateTime @default(now())
+
+  status    JoinRequestStatus @default(SENT)
+
+  emitterId Int
   receiverId Int
-  emitter    User     @relation("EmitterJoinRequest", fields: [emitterId], references: [id])
-  receiver   User     @relation("ReceiverJoinRequest", fields: [receiverId], references: [id])
+
+  eventId Int
+
+  emitter  User  @relation("EmitterJoinRequest", fields: [emitterId], references: [id])
+  receiver User  @relation("ReceiverJoinRequest", fields: [receiverId], references: [id])
+
+  event     Event @relation(fields: [eventId], references: [id])
+
+  @@unique([emitterId, eventId])
 }
 
 model FriendRequest {

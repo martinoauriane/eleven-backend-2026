@@ -14,10 +14,11 @@ interface IEventStore {
   getEventById(id: number): Promise<any>;
   updateEvent(id: number, data: EventData): Promise<any>;
   deleteEvent(id: number): Promise<any>;
+  getEventsByDate(date: string, userId: any): Promise<any>;
 }
 
 class EventStore implements IEventStore {
-  async createEvent(data: EventCreate) {
+  async createEvent(data: EventCreate): Promise<any> {
     try {
       return await prisma.event.create({ data });
     } catch (error) {
@@ -25,7 +26,7 @@ class EventStore implements IEventStore {
     }
   }
 
-  async getEventById(id: number) {
+  async getEventById(id: number): Promise<any> {
     try {
       const event: EventData | null = await prisma.event.findUnique({
         where: { id },
@@ -43,7 +44,7 @@ class EventStore implements IEventStore {
     }
   }
 
-  async getEventsByDate(date: string) {
+  async getEventsByDate(date: string, userId: any): Promise<any> {
     const startDate = new Date(date);
     startDate.setHours(0, 0, 0, 0);
     const endDate = new Date(date);
@@ -58,11 +59,16 @@ class EventStore implements IEventStore {
       include: {
         createdBy: true,
         participants: true,
+        joinRequests: {
+        where: {
+        emitterId: userId,
       },
+      },
+    }
     });
   }
 
-  async getAllEvents() {
+  async getAllEvents(): Promise<any> {
     try {
       const events = await prisma.event.findMany({
         include: {
@@ -88,7 +94,7 @@ class EventStore implements IEventStore {
     }
   }
 
-  async addEventParticipant(eventId: number, id: number) {
+  async addEventParticipant(eventId: number, id: number): Promise<any> {
     const event = await this.getEventById(eventId);
     if (!event) {
       throw new Error("Event not found");
@@ -114,7 +120,8 @@ class EventStore implements IEventStore {
       throw error;
     }
   }
-  async getEventParticipants(eventId: number) {
+
+  async getEventParticipants(eventId: number): Promise<any> {
     try {
       const event = await prisma.event.findUnique({
         where: {
@@ -135,7 +142,7 @@ class EventStore implements IEventStore {
     }
   }
 
-  async deleteParticipant(userId: number) {
+  async deleteParticipant(userId: number): Promise<any> {
     const user = await userStore.getUserById(userId);
     if (!user) {
       throw new Error("User not found");
@@ -152,7 +159,7 @@ class EventStore implements IEventStore {
     }
   }
 
-  async deleteEvent(eventId: number) {
+  async deleteEvent(eventId: number): Promise<any> {
     try {
       return await prisma.event.delete({ where: { id: eventId } });
     } catch (error) {
