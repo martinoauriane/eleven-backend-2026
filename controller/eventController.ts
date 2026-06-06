@@ -4,6 +4,7 @@ import { EventCreate } from "../store/interfaces/eventInterfaces";
 const eventService = new EventService();
 
 class EventController {
+
   async newEvent(req: Request, res: Response) {
     const userId = parseInt(String(req.params.userId));
     const newEvent: EventCreate = {
@@ -46,7 +47,9 @@ class EventController {
 
   async getAllEvents(req: Request, res: Response) {
     try {
-      const controllersEvent = await eventService.getAllEvents();
+      const controllersEvent = await eventService.getAllEvents(
+        
+      );
       res.status(200).json(controllersEvent);
     } catch (error) {
       res.status(500).json({ error: "Error retrieving event" });

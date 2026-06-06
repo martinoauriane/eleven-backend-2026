@@ -27,7 +27,10 @@ class UserController {
   async loginUser(req: Request, res: Response) {
     const email = req.body.email;
     const password = req.body.password;
-
+    console.log("email");
+    console.log(email);
+    console.log("password");
+    console.log(password);
     if (!email || !password) {
       console.log("Missing credentials");
       return;
@@ -232,7 +235,7 @@ class UserController {
     const userId = parseInt(String(req.params.userId));
      try {
       let conversations = await userService.getUserConversations(userId);
-      res.status(200).json(conversations);
+      res.status(200).json(conversations); 
     } catch (error) {
       res.status(500).json({ error: "Error creating conversation" });
     }

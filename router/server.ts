@@ -69,7 +69,7 @@ router.post("/user/:id/update-mood", async(req: Request, res:Response) => {
 })
 
 // to do: get user favorite events endpoints
-router.post(
+router.get(
   "/user/:userId/get-event-favorites",
   async (req: Request, res: Response) => {
     await userController.getUserFavoriteEvents(req, res);
