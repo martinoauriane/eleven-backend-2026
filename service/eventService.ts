@@ -8,6 +8,7 @@ interface IEventService {
     getEvent(id: number): Promise<any>;
     getAllEvents(): Promise<any>;
     addEventParticipants(eventId: number, userId: number):Promise<any>;
+    deleteParticipant(userId: number, eventId: number): Promise<any>;
     updateEvent(data:EventUpdate, id: number): Promise<any>
     deleteEvent(id: number): Promise<any>;
 }
@@ -43,8 +44,8 @@ class EventService implements IEventService{
         return await eventStore.getEventParticipants(eventId);
     }
 
-    async deleteParticipant(userId: number): Promise<any>{
-        return await eventStore.deleteParticipant(userId);
+    async deleteParticipant(userId: number, eventId: number): Promise<any>{
+        return await eventStore.deleteParticipant(userId, eventId);
     }
 
     async deleteEvent(id: number): Promise<any> {

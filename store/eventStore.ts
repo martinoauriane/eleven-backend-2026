@@ -60,11 +60,11 @@ class EventStore implements IEventStore {
         createdBy: true,
         participants: true,
         joinRequests: {
-        where: {
-        emitterId: userId,
+          where: {
+            emitterId: userId,
+          },
+        },
       },
-      },
-    }
     });
   }
 
@@ -103,16 +103,20 @@ class EventStore implements IEventStore {
     if (!user) {
       throw new Error("User not found");
     }
-
     if (user?.attendingEventId) {
       throw new Error("User already attending an event");
     }
-
     try {
-      return await prisma.user.update({
-        where: { id: id },
+      return await prisma.event.update({
+        where: {
+          id: eventId,
+        },
         data: {
-          attendingEventId: eventId,
+          participants: {
+            connect: {
+              id: user.id,
+            },
+          },
         },
       });
     } catch (error) {
@@ -142,15 +146,23 @@ class EventStore implements IEventStore {
     }
   }
 
-  async deleteParticipant(userId: number): Promise<any> {
+  async deleteParticipant(userId: number, eventId: number): Promise<any> {
     const user = await userStore.getUserById(userId);
     if (!user) {
       throw new Error("User not found");
     }
     try {
-      let deletedP = await prisma.user.update({
-        where: { id: userId },
-        data: { attendingEventId: null },
+      let deletedP = await prisma.event.update({
+        where: {
+          id: eventId,
+        },
+        data: {
+          participants: {
+            disconnect: {
+              id: userId,
+            },
+          },
+        },
       });
       return deletedP;
     } catch (error) {

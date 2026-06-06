@@ -243,7 +243,7 @@ router.get("/event/getParticipants/:eventId", async (req: Request, res: Response
 });
 
 // operationnal
-router.post("/event/deleteParticipant/:user_id", async (req: Request, res: Response) => { 
+router.post("/event/deleteParticipant/:eventId/:userId", async (req: Request, res: Response) => { 
   await eventController.deleteParticipant(req, res)
 });
 

@@ -30,7 +30,6 @@ model User {
   homeAddress            String?
   isOnline               Boolean         @default(false)
   lastLogin              DateTime        @default(now())
-  attendingEventId       Int?
   mood                 MoodStatus?
   moodUpdatedAt        DateTime?
   eventsCreated          Event[]         @relation("EventCreator")
@@ -39,11 +38,11 @@ model User {
   sentJoinRequests       JoinRequest[]   @relation("EmitterJoinRequest")
   receivedJoinRequests   JoinRequest[]   @relation("ReceiverJoinRequest")
   onMap                  OnMap?
-  attendingEvent         Event?          @relation("EventParticipants", fields: [attendingEventId], references: [id])
   favorites              Event[]         @relation("UserFavorites")
 
   sentFriendships     Friendship[] @relation("FriendshipUser")
   receivedFriendships Friendship[] @relation("FriendshipFriend")
+  attendingEvents Event[] @relation("EventParticipants")
 
   conversations Conversation[] @relation("ConversationParticipants")
   messages      Message[]
@@ -91,9 +90,10 @@ model Event {
   eventEndTime   DateTime @default(now())
   userId         Int
   createdBy      User     @relation("EventCreator", fields: [userId], references: [id])
-  participants   User[]   @relation("EventParticipants")
   favoritedBy    User[]   @relation("UserFavorites")
   joinRequests    JoinRequest[]
+  participants User[] @relation("EventParticipants")
+
 }
 model JoinRequest {
   id        Int      @id @default(autoincrement())

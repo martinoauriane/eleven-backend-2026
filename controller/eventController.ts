@@ -127,17 +127,18 @@ class EventController {
   }
 
   async deleteParticipant(req: Request, res: Response) {
-    const userId = Number(req.params.user_id);
+    const userId = Number(req.params.userId);
+    const eventId = Number(req.body.userId);
     if (isNaN(userId)) {
       return res.status(400).json({ error: "Invalid user id" });
     }
     try {
-      const removedParticipant = await eventService.deleteParticipant(userId);
+      const removedParticipant = await eventService.deleteParticipant(userId, eventId);
       res.status(200).json(removedParticipant);
     } catch (error: any) {
       res.status(500).json({
         error: "Error adding participants to the event",
-        details: error.message, //
+        details: error.message, 
       });
     }
   }

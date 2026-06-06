@@ -11,6 +11,7 @@ class JoinRequestController {
       const joinRequest: JoinRequestCreate = {
         emitterId: Number(req.params.emitter_id),
         receiverId: Number(req.params.receiver_id),
+        eventId: Number(req.body.eventId),
       };
       const joinRequestCreated =
         await joinRequestService.createJoinRequest(joinRequest);
@@ -25,6 +26,7 @@ class JoinRequestController {
       const joinRequest: JoinRequestCreate = {
         emitterId: Number(req.params.emitter_id),
         receiverId: Number(req.params.receiver_id),
+        eventId: Number(req.body.eventId),
       };
       const retrievedJoinRequest = await joinRequestService.getJoinRequest(joinRequest);
       res.status(200).json(retrievedJoinRequest);
@@ -38,6 +40,7 @@ class JoinRequestController {
       const joinRequestDelete: JoinRequestCreate = {
         emitterId: Number(req.params.emitter_id),
         receiverId: Number(req.params.receiver_id),
+        eventId: Number(req.body.eventId),
       };
       const joinRequestDeleted =
         await joinRequestService.deleteJoinRequest(joinRequestDelete);

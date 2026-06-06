@@ -1,14 +1,18 @@
 export interface JoinRequestCreate {
   emitterId: number;
   receiverId: number;  
+  eventId: number;
 }
 
+export type JoinRequestStatus = "NONE" | "SENT" | "ACCEPTED" | "REJECTED";
+
 export interface JoinRequestData {
-  id: number;
   sentAt: Date;
+  status: JoinRequestStatus;
+  id: number;
   emitterId: number;
   receiverId: number;
-  isAccepted: boolean;
+  eventId: number;
 }
 
 export interface JoinRequestSuccessCreate {
