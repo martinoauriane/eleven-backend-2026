@@ -103,9 +103,6 @@ class EventStore implements IEventStore {
     if (!user) {
       throw new Error("User not found");
     }
-    if (user?.attendingEventId) {
-      throw new Error("User already attending an event");
-    }
     try {
       return await prisma.event.update({
         where: {
