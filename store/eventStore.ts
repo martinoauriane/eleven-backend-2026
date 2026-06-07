@@ -9,7 +9,7 @@ import { UserStore } from "./userStore";
 
 const userStore = new UserStore();
 
-type JoinRequestStatus = "NONE" | "SENT" | "ACCEPTED" | "REJECTED"
+type JoinRequestStatus = "NONE" | "SENT" | "ACCEPTED" | "REJECTED";
 
 interface IEventStore {
   createEvent(data: EventCreate): Promise<any>;
@@ -17,7 +17,15 @@ interface IEventStore {
   updateEvent(id: number, data: EventData): Promise<any>;
   deleteEvent(id: number): Promise<any>;
   getEventsByDate(date: string, userId: any): Promise<any>;
-  updateJoinRequestStatus(joinRequestId: number, JoinRequestStatus: JoinRequestStatus): Promise<any>;
+  updateJoinRequestStatus(
+    joinRequestId: number,
+    JoinRequestStatus: JoinRequestStatus,
+  ): Promise<any>;
+  createJoinRequest(
+    emitterId: number,
+    receiverId: number,
+    eventId: number,
+  ): Promise<any>; 
 }
 
 class EventStore implements IEventStore {
@@ -180,7 +188,30 @@ class EventStore implements IEventStore {
     }
   }
 
-  async updateJoinRequestStatus(joinRequestId: number, JoinRequestStatus: JoinRequestStatus): Promise<any> {
+  async createJoinRequest(
+    emitterId: number,
+    receiverId: number,
+    eventId: number,
+  ): Promise<any> {
+    try {
+      const joinRequest = await prisma.joinRequest.create({
+        data: {
+          emitterId,
+          receiverId,
+          eventId,
+          status: "SENT",
+        },
+      });
+      return joinRequest;
+    } catch (error) {
+      console.error("Join Request Create Error");
+    }
+  }
+
+  async updateJoinRequestStatus(
+    joinRequestId: number,
+    JoinRequestStatus: JoinRequestStatus,
+  ): Promise<any> {
     try {
       const updatedStatus = prisma.joinRequest.update({
         where: {
