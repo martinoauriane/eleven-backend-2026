@@ -294,7 +294,7 @@ router.get(
 
 // create join request 
 router.post("/join-request/create/:eventId", async (req: Request, res: Response) => {
-    await eventController.updateJoinRequestStatus(req, res);
+    await eventController.createJoinRequest(req, res);
   },
 );
 
