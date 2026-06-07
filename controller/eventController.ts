@@ -4,7 +4,6 @@ import { EventCreate } from "../store/interfaces/eventInterfaces";
 const eventService = new EventService();
 
 class EventController {
-
   async newEvent(req: Request, res: Response) {
     const userId = parseInt(String(req.params.userId));
     const newEvent: EventCreate = {
@@ -47,9 +46,7 @@ class EventController {
 
   async getAllEvents(req: Request, res: Response) {
     try {
-      const controllersEvent = await eventService.getAllEvents(
-        
-      );
+      const controllersEvent = await eventService.getAllEvents();
       res.status(200).json(controllersEvent);
     } catch (error) {
       res.status(500).json({ error: "Error retrieving event" });
@@ -57,8 +54,8 @@ class EventController {
   }
 
   async getEventsByDate(req: Request, res: Response) {
-     try {
-      const date  = String(req.params.date);
+    try {
+      const date = String(req.params.date);
       const userId = parseInt(String(req.params.userId));
       const events = await eventService.getEventsByDate(date, userId);
       res.status(200).json(events);
@@ -71,17 +68,17 @@ class EventController {
 
   async updateEvent(req: Request, res: Response) {
     const data = req.body;
-    const event_id = Number(req.params.event_id);
-    if (isNaN(event_id)) {
+    const eventId = Number(req.params.eventId);
+    if (isNaN(eventId)) {
       res.status(400).json({ error: "Invalid id" });
     }
     try {
-      const updatedEvent = await eventService.updateEvent(data, event_id);
+      const updatedEvent = await eventService.updateEvent(data, eventId);
       res.status(200).json(updatedEvent);
     } catch (error: any) {
       res.status(500).json({
         error: "Error updating event",
-        details: error.message, //
+        details: error.message,
       });
     }
   }
@@ -133,12 +130,15 @@ class EventController {
       return res.status(400).json({ error: "Invalid user id" });
     }
     try {
-      const removedParticipant = await eventService.deleteParticipant(userId, eventId);
+      const removedParticipant = await eventService.deleteParticipant(
+        userId,
+        eventId,
+      );
       res.status(200).json(removedParticipant);
     } catch (error: any) {
       res.status(500).json({
         error: "Error adding participants to the event",
-        details: error.message, 
+        details: error.message,
       });
     }
   }
@@ -150,6 +150,22 @@ class EventController {
       res.status(200).json({ message: "Event deleted successfully" });
     } catch (error) {
       res.status(500).json({ error: "Error deleting user" });
+    }
+  }
+
+  async updateJoinRequestStatus(req: Request, res: Response) {
+    const joinRequestId = Number(req.params.joinRequestId);
+    const { status } = req.body;
+    try {
+      const request = await eventService.updateJoinRequestStatus(
+        joinRequestId,
+        status,
+      );
+      res.status(200).json(request);
+    } catch (error: any) {
+      res.status(500).json({
+        error: error.message,
+      });
     }
   }
 }

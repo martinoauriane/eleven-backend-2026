@@ -9,12 +9,15 @@ import { UserStore } from "./userStore";
 
 const userStore = new UserStore();
 
+type JoinRequestStatus = "NONE" | "SENT" | "ACCEPTED" | "REJECTED"
+
 interface IEventStore {
   createEvent(data: EventCreate): Promise<any>;
   getEventById(id: number): Promise<any>;
   updateEvent(id: number, data: EventData): Promise<any>;
   deleteEvent(id: number): Promise<any>;
   getEventsByDate(date: string, userId: any): Promise<any>;
+  updateJoinRequestStatus(joinRequestId: number, JoinRequestStatus: JoinRequestStatus): Promise<any>;
 }
 
 class EventStore implements IEventStore {
@@ -74,6 +77,7 @@ class EventStore implements IEventStore {
         include: {
           createdBy: true,
           participants: true,
+          joinRequests: true,
         },
       });
       return events;
@@ -173,6 +177,22 @@ class EventStore implements IEventStore {
       return await prisma.event.delete({ where: { id: eventId } });
     } catch (error) {
       console.error("Prisma delete error:", error);
+    }
+  }
+
+  async updateJoinRequestStatus(joinRequestId: number, JoinRequestStatus: JoinRequestStatus): Promise<any> {
+    try {
+      const updatedStatus = prisma.joinRequest.update({
+        where: {
+          id: joinRequestId,
+        },
+        data: {
+          status: JoinRequestStatus,
+        },
+      });
+      return updatedStatus;
+    } catch (error) {
+      console.error("Prisma updating join request status error");
     }
   }
 }
