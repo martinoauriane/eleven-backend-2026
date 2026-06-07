@@ -184,7 +184,7 @@ router.post("/user/:conversationId/add-message", async (req, res) => {
 
 // operationnal
 router.post(
-  "/join-request/create/:emitter_id/:receiver_id",
+  "/join-request/create/:eventId",
   async (req: Request, res: Response) => {
     await joinRequestController.newJoinRequest(req, res);
   },

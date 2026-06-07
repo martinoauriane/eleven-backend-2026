@@ -53,8 +53,8 @@ class EventService implements IEventService {
     return await eventStore.deleteEvent(id);
   }
 
-  async createJoinRequest(emitterId: number, receiverId: number, eventId:number){
-    return await eventStore.createJoinRequest(emitterId, receiverId, eventId);
+  async createJoinRequest(senderId: any, receiverId: any, eventId:any){
+    return await eventStore.createJoinRequest(senderId, receiverId, eventId);
   }
 
   async updateJoinRequestStatus(

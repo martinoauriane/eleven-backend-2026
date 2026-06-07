@@ -25,6 +25,7 @@ interface IEventStore {
     emitterId: number,
     receiverId: number,
     eventId: number,
+    sentAt: any
   ): Promise<any>;
 }
 
@@ -189,15 +190,13 @@ class EventStore implements IEventStore {
   }
 
   async createJoinRequest(
-    emitterId: number,
-    receiverId: number,
-    eventId: number,
+    senderId: any,
+    receiverId: any,
+    eventId: any,
   ): Promise<any> {
-    
     const existingJoinRequest = await prisma.joinRequest.findFirst({
       where: {
-        emitterId,
-        receiverId,
+        emitterId: senderId,
         eventId,
         status: {
           in: ["SENT", "ACCEPTED", "REJECTED"],
@@ -207,18 +206,22 @@ class EventStore implements IEventStore {
     if (existingJoinRequest) {
       throw new Error("Join request already exists");
     } else {
+      console.log("senderId in store");
+      console.log(senderId);
+      console.log("emitterId in store");
+      console.log(receiverId);
+      console.log("eventId in store");
+      console.log(eventId);
       try {
         const joinRequest = await prisma.joinRequest.create({
           data: {
-            emitterId,
-            receiverId,
-            eventId,
+            emitterId: senderId,
+            receiverId: receiverId,
+            eventId: eventId,
             status: "SENT",
           },
         });
-        console.log("join request created");
-        console.log(joinRequest);
-        return joinRequest;
+         return joinRequest;
       } catch (error) {
         console.error("Join Request Create Error", error);
       }
