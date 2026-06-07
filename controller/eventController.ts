@@ -158,11 +158,11 @@ class EventController {
     const receiverId = parseInt(req.body.receiverId);
     const eventId = parseInt(String(req.params.eventId));
     console.log("inside create Join Request Controller");
-     try {
-      await eventService.createJoinRequest(emitterId, receiverId, eventId);
-      res.status(200).json({ message: "Event created successfully" });
+    try {
+      let joinRequestCreated = await eventService.createJoinRequest(emitterId, receiverId, eventId);
+      res.status(200).json(joinRequestCreated);
     } catch (error) {
-      res.status(500).json({ error: "Error creating event" });
+      res.status(500).json({ error: "Error creating Join Request" });
     }
   }
 
