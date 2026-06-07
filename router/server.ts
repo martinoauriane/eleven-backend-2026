@@ -178,34 +178,6 @@ router.post("/user/:conversationId/add-message", async (req, res) => {
   }
 }); */
 
-// add get a list of friends endpoint
-
-// JOIN REQUEST ENDPOINTS
-
-// operationnal
-router.post(
-  "/join-request/create/:eventId",
-  async (req: Request, res: Response) => {
-    await joinRequestController.newJoinRequest(req, res);
-  },
-);
-
-// operationnal
-router.post(
-  "/join-request/get/:emitter_id/:receiver_id",
-  async (req: Request, res: Response) => {
-    await joinRequestController.getJoinRequest(req, res);
-  },
-);
-
-// operationnal
-router.post(
-  "/join-request/delete/:emitter_id/:receiver_id",
-  async (req: Request, res: Response) => {
-    await joinRequestController.deleteJoinRequest(req, res);
-  },
-);
-
 // FRIEND REQUEST ENDPOINTS
 
 // operationnal
@@ -299,7 +271,7 @@ router.post("/join-request/create/:eventId", async (req: Request, res: Response)
 );
 
 // update join Request status
-router.post("/join-request/:joinRequestId/status", async (req: Request, res: Response) => {
+router.post("/join-request/update/:id", async (req: Request, res: Response) => {
     await eventController.updateJoinRequestStatus(req, res);
   },
 );

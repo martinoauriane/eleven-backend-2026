@@ -154,14 +154,9 @@ class EventController {
   }
 
   async createJoinRequest(req: Request, res: Response){
-    const senderId = req.body.senderId;
-    const receiverId = req.body.receiverId;
-    const eventId = req.params.eventId;
-    console.log("sender Id", senderId);
-    console.log("receiver Id", receiverId);
-    console.log(req.body.senderId);
-    console.log(req.body.receiverId);
-    console.log(req.params.eventId);
+    const senderId = parseInt(req.body.senderId);
+    const receiverId = parseInt(req.body.receiverId);
+    const eventId = parseInt(String(req.params.eventId));
     try {
       let joinRequestCreated = await eventService.createJoinRequest(senderId, receiverId, eventId);
       res.status(200).json(joinRequestCreated);
@@ -171,14 +166,14 @@ class EventController {
   }
 
   async updateJoinRequestStatus(req: Request, res: Response) {
-    const joinRequestId = Number(req.params.joinRequestId);
+    const id = Number(req.params.id);
     const { status } = req.body;
     try {
-      const request = await eventService.updateJoinRequestStatus(
-        joinRequestId,
+      const updatedJoinRequest = await eventService.updateJoinRequestStatus(
+        id,
         status,
       );
-      res.status(200).json(request);
+      res.status(200).json(updatedJoinRequest);
     } catch (error: any) {
       res.status(500).json({
         error: error.message,
