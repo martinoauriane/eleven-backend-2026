@@ -30,8 +30,29 @@ interface IEventStore {
 
 class EventStore implements IEventStore {
   async createEvent(data: EventCreate): Promise<any> {
+    const existingEvent = await prisma.event.findFirst({
+      where: {
+        userId: data.userId,
+        AND: [
+          {
+            eventStartTime: {
+              lt: new Date(data.eventEndTime),
+            },
+          },
+          {
+            eventEndTime: {
+              gt: new Date(data.eventStartTime),
+            },
+          },
+        ],
+      },
+    });
+    if (existingEvent) {
+      throw new Error("You already have an event during this time slot");
+    }
     try {
-      return await prisma.event.create({ data });
+      let newEvent = await prisma.event.create({ data });
+      return newEvent;
     } catch (error) {
       console.error("Prisma creation error:", error);
     }
@@ -214,7 +235,7 @@ class EventStore implements IEventStore {
           },
         });
         console.log("join request created");
-        console.log(joinRequestCreated)
+        console.log(joinRequestCreated);
         return joinRequestCreated;
       } else {
         throw new Error("Join request already exists");

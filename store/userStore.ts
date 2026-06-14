@@ -100,7 +100,8 @@ class UserStore implements IUserStore {
         },
       });
 
-      return user?.favorites ?? [];
+      let eventFavorites = user?.favorites ?? [];
+      return eventFavorites;
     } catch (error) {
       console.error("Prisma get user favorite events error:", error);
       throw error;
