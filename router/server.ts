@@ -167,17 +167,7 @@ router.post("/user/:conversationId/add-message", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
-// to do: create an endpoint for all users
-/* router.post("/user/:userId/onmap-all", async (req: Request, res: Response) => {
-  try {
-    await userController.getUsersOnMap(req, res);
-  } catch (err) {
-    console.error("ERROR getAllEvents:", err);
-    res.status(500).json({ error: "Internal server error" });
-  }
-}); */
-
+ 
 // FRIEND REQUEST ENDPOINTS
 
 // operationnal
@@ -243,6 +233,10 @@ router.post("/event/get/:eventId", async (req: Request, res: Response) => {
 // operationnal
 router.get("/event/get/all", async (req: Request, res: Response) => {
   await eventController.getAllEvents(req, res);
+});
+
+router.get("/user/:userId/participating-events", async(req:Request, res:Response) =>{
+  await eventController.getUserParticipatingEvents(req, res);
 });
 
 // operationnal

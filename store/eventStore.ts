@@ -115,6 +115,27 @@ class EventStore implements IEventStore {
     }
   }
 
+  async getUserParticipatingEvents(userId: number) {
+    try {
+      const events = await prisma.event.findMany({
+        where: {
+          participants: {
+            some: {
+              id: userId,
+            },
+          },
+        },
+        include: {
+          createdBy: true,
+          participants: true,
+        },
+      });
+      return events;
+    } catch (error) {
+      return error;
+    }
+  }
+
   async updateEvent(id: number, data: EventUpdate) {
     try {
       return await prisma.event.update({
@@ -137,7 +158,7 @@ class EventStore implements IEventStore {
       throw new Error("User not found");
     }
     try {
-      return await prisma.event.update({
+      let newParticipant = await prisma.event.update({
         where: {
           id: eventId,
         },
@@ -149,6 +170,8 @@ class EventStore implements IEventStore {
           },
         },
       });
+      console.log("new participant");
+      console.log(newParticipant);
     } catch (error) {
       console.error("Prisma adding event participant error");
       throw error;
@@ -214,7 +237,12 @@ class EventStore implements IEventStore {
     receiverId: any,
     eventId: any,
   ): Promise<any> {
-    console.log("1");
+    console.log("senderId");
+    console.log(senderId);
+    console.log("receiverId");
+    console.log(receiverId);
+    console.log("eventId");
+    console.log(eventId);
     try {
       const existingJoinRequest = await prisma.joinRequest.findFirst({
         where: {

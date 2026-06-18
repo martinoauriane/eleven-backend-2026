@@ -317,6 +317,13 @@ class UserStore implements IUserStore {
         },
         include: {
           sender: true,
+          joinRequest: {
+            include: {
+              emitter: true, 
+              receiver: true, 
+              event: true,
+            }
+          }
         },
       });
       return messages;

@@ -123,6 +123,17 @@ class EventController {
     }
   }
 
+  async getUserParticipatingEvents(req: Request, res: Response) {
+    try {
+      const userId = parseInt(String(req.params.userId));
+      let eventArray = await eventService.getUserParticipatingEvents(userId);
+      return res.status(200).json(eventArray);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
   async deleteParticipant(req: Request, res: Response) {
     const userId = Number(req.params.userId);
     const eventId = Number(req.body.userId);
@@ -153,12 +164,16 @@ class EventController {
     }
   }
 
-  async createJoinRequest(req: Request, res: Response){
+  async createJoinRequest(req: Request, res: Response) {
     const senderId = parseInt(req.body.senderId);
     const receiverId = parseInt(req.body.receiverId);
     const eventId = parseInt(String(req.params.eventId));
     try {
-      let joinRequestCreated = await eventService.createJoinRequest(senderId, receiverId, eventId);
+      let joinRequestCreated = await eventService.createJoinRequest(
+        senderId,
+        receiverId,
+        eventId,
+      );
       res.status(200).json(joinRequestCreated);
     } catch (error) {
       res.status(500).json({ error: "Error creating Join Request" });
