@@ -66,6 +66,17 @@ class EventController {
     }
   }
 
+  async getEventsCreatedByUser(req: Request, res:Response){
+  const userId = parseInt(String(req.params.userId));
+    try{
+      const eventsCreatedByUser = await eventService.getEventsCreatedByUser(userId);
+    } catch(error){
+      res.status(500).json({
+        error: "Error retrieving events by date",
+      });
+    }
+  }
+
   async updateEvent(req: Request, res: Response) {
     const data = req.body;
     const eventId = Number(req.params.eventId);

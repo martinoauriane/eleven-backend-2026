@@ -212,6 +212,12 @@ router.get(
   },
 );
 
+router.get(
+  "/event/created/:userId", 
+  async(req:Request, res:Response) => {
+    await eventController.getEventsCreatedByUser(req, res);
+  }
+)
 // operationnal
 router.post(
   "/event/deleteParticipant/:eventId/:userId",
@@ -269,8 +275,6 @@ router.post("/join-request/update/:id", async (req: Request, res: Response) => {
     await eventController.updateJoinRequestStatus(req, res);
   },
 );
-
-
 
 app.listen(3000, "0.0.0.0", () => {
   console.log("Server running");

@@ -45,6 +45,11 @@ class EventService implements IEventService {
     return await eventStore.getEventParticipants(eventId);
   }
 
+  async getEventsCreatedByUser(userId: number){
+    return await eventStore.getEventsCreatedByUser(userId);
+
+  }
+
   async getUserParticipatingEvents(userId:number){
     return await eventStore.getUserParticipatingEvents(userId);
   }

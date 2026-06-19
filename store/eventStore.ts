@@ -100,6 +100,22 @@ class EventStore implements IEventStore {
     });
   }
 
+  async getEventsCreatedByUser(userId: number): Promise<any> {
+    try {
+      const eventsCreatedByUser = await prisma.event.findMany({
+        where: {
+          userId,
+        },
+        include: {
+          participants: true,
+        },
+      });
+      return eventsCreatedByUser;
+    } catch (error) {
+      console.error("Prisma retrieve error:", error);
+    }
+  }
+
   async getAllEvents(): Promise<any> {
     try {
       const events = await prisma.event.findMany({
