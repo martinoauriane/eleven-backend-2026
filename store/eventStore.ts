@@ -247,66 +247,6 @@ class EventStore implements IEventStore {
       console.error("Prisma delete error:", error);
     }
   }
-
-  async createJoinRequest(
-    senderId: any,
-    receiverId: any,
-    eventId: any,
-  ): Promise<any> {
-    console.log("senderId");
-    console.log(senderId);
-    console.log("receiverId");
-    console.log(receiverId);
-    console.log("eventId");
-    console.log(eventId);
-    try {
-      const existingJoinRequest = await prisma.joinRequest.findFirst({
-        where: {
-          emitterId: senderId,
-          eventId: eventId,
-          status: {
-            in: ["SENT", "ACCEPTED", "REJECTED"],
-          },
-        },
-      });
-      if (existingJoinRequest == null) {
-        const joinRequestCreated = await prisma.joinRequest.create({
-          data: {
-            emitterId: senderId,
-            receiverId: receiverId,
-            eventId: eventId,
-            status: "SENT",
-          },
-        });
-        console.log("join request created");
-        console.log(joinRequestCreated);
-        return joinRequestCreated;
-      } else {
-        throw new Error("Join request already exists");
-      }
-    } catch (error) {
-      throw new Error("ERROR IN createJoinRequest:");
-    }
-  }
-
-  async updateJoinRequestStatus(
-    joinRequestId: number,
-    JoinRequestStatus: JoinRequestStatus,
-  ): Promise<any> {
-    try {
-      const updatedStatus = prisma.joinRequest.update({
-        where: {
-          id: joinRequestId,
-        },
-        data: {
-          status: JoinRequestStatus,
-        },
-      });
-      return updatedStatus;
-    } catch (error) {
-      console.error("Prisma updating join request status error");
-    }
-  }
 }
 
 export { EventStore };

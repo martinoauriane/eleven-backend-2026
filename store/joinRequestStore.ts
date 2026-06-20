@@ -1,42 +1,93 @@
 import "dotenv/config"; // ⚡ force le chargement de ton .env
 import { prisma } from "../prisma/lib/prisma";
-import { JoinRequestCreate, JoinRequestData } from "./interfaces/joinRequestInterfaces";
+import {  JoinRequestData } from "./interfaces/joinRequestInterfaces";
+
+
+type JoinRequestStatus = "NONE" | "SENT" | "ACCEPTED" | "REJECTED";
+
 
 interface IJoinRequestStore {
-  CreateJoinRequest(data: JoinRequestCreate): Promise<any>;
+  CreateJoinRequest(senderId: any, receiverId: any, eventId: any): Promise<any>;
 }
 
 class JoinRequestStore implements IJoinRequestStore {
-
-  async CreateJoinRequest(data: JoinRequestCreate): Promise<any> {
+  async CreateJoinRequest(
+    senderId: any,
+    receiverId: any,
+    eventId: any,
+  ): Promise<any> {
     try {
-      let newJoinRequest = await prisma.joinRequest.create({ data });
-      return newJoinRequest;
+      const existingJoinRequest = await prisma.joinRequest.findFirst({
+        where: {
+          emitterId: senderId,
+          eventId: eventId,
+          status: {
+            in: ["SENT", "ACCEPTED", "REJECTED"],
+          },
+        },
+      });
+      if (existingJoinRequest == null) {
+        const joinRequestCreated = await prisma.joinRequest.create({
+          data: {
+            emitterId: senderId,
+            receiverId: receiverId,
+            eventId: eventId,
+            status: "SENT",
+          },
+        });
+         return joinRequestCreated;
+      } else {
+        throw new Error("Join request already exists");
+      }
     } catch (error) {
-      console.error(
-        "prisma error trying to create specific joinRequest",
-        error,
-      );
+      throw new Error("ERROR IN createJoinRequest:");
     }
   }
 
-  async getJoinRequest(emitterId: number, receiverId: number, eventId: number): Promise<JoinRequestData | null> {
+  async getJoinRequest(
+    emitterId: number,
+    receiverId: number,
+    eventId: number,
+  ): Promise<JoinRequestData | null> {
     try {
-      const response : JoinRequestData | null = await prisma.joinRequest.findFirst({
-        where: {
-          emitterId: emitterId,
-          receiverId: receiverId,
-          eventId: eventId
-        },
-        include: {
-        event: true,
-        emitter: true,
-      },
-      });
+      const response: JoinRequestData | null =
+        await prisma.joinRequest.findFirst({
+          where: {
+            emitterId: emitterId,
+            receiverId: receiverId,
+            eventId: eventId,
+          },
+          include: {
+            event: true,
+            emitter: true,
+          },
+        });
       return response;
     } catch (error) {
-      console.error("prisma error trying to retrieve specific joinRequest", error);
+      console.error(
+        "prisma error trying to retrieve specific joinRequest",
+        error,
+      );
       throw error;
+    }
+  }
+
+  async updateJoinRequestStatus(
+    joinRequestId: number,
+    JoinRequestStatus: JoinRequestStatus,
+  ): Promise<any> {
+    try {
+      const updatedStatus = prisma.joinRequest.update({
+        where: {
+          id: joinRequestId,
+        },
+        data: {
+          status: JoinRequestStatus,
+        },
+      });
+      return updatedStatus;
+    } catch (error) {
+      console.error("Prisma updating join request status error");
     }
   }
 
@@ -52,7 +103,10 @@ class JoinRequestStore implements IJoinRequestStore {
       });
       return result;
     } catch (error) {
-      console.error("prisma error trying to delete specific joinRequest", error);
+      console.error(
+        "prisma error trying to delete specific joinRequest",
+        error,
+      );
     }
   }
 }

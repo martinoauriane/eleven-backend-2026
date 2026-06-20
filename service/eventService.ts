@@ -61,17 +61,6 @@ class EventService implements IEventService {
   async deleteEvent(id: number): Promise<any> {
     return await eventStore.deleteEvent(id);
   }
-
-  async createJoinRequest(senderId: any, receiverId: any, eventId:any){
-    return await eventStore.createJoinRequest(senderId, receiverId, eventId);
-  }
-
-  async updateJoinRequestStatus(
-    joinRequestId: number,
-    status: JoinRequestStatus,
-  ) {
-    return await eventStore.updateJoinRequestStatus(joinRequestId, status);
-  }   
 }
 
 export { EventService };

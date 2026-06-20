@@ -10,7 +10,6 @@ dotenv.config();
 
 const app = express();
 const router = express.Router();
-const PORT = process.env.SERVER_PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -266,13 +265,13 @@ router.get(
 
 // create join request 
 router.post("/join-request/create/:eventId", async (req: Request, res: Response) => {
-    await eventController.createJoinRequest(req, res);
+    await joinRequestController.createJoinRequest(req, res);
   },
 );
 
 // update join Request status
 router.post("/join-request/update/:id", async (req: Request, res: Response) => {
-    await eventController.updateJoinRequestStatus(req, res);
+    await joinRequestController.updateJoinRequestStatus(req, res);
   },
 );
 

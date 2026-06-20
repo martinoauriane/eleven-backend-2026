@@ -327,6 +327,16 @@ class UserStore implements IUserStore {
         },
       });
 
+      console.log(
+        messages
+          .filter((m) => m.type === "joinRequest")
+          .map((m) => ({
+            id: m.id,
+            joinRequestId: m.joinRequestId,
+            hasJoinRequest: !!m.joinRequest,
+          })),
+      );
+
       const formattedMessages = messages.map((msg) => {
         if (msg.type === "joinRequest" && msg.joinRequest) {
           return {
@@ -409,12 +419,20 @@ class UserStore implements IUserStore {
     type: string,
     content: any,
     senderId: number,
+    joinRequestId: number,
   ) {
     try {
       const newMessage = await prisma.message.create({
         data: {
-          type: type,
-          content: content,
+          type,
+          content,
+          joinRequest: joinRequestId
+            ? {
+                connect: {
+                  id: joinRequestId,
+                },
+              }
+            : undefined,
           conversation: {
             connect: { id: conversationId },
           },
@@ -426,11 +444,6 @@ class UserStore implements IUserStore {
           sender: true,
         },
       });
-      await prisma.conversation.update({
-        where: { id: conversationId },
-        data: {},
-      });
-
       return newMessage;
     } catch (error) {
       console.error("Error adding message:", error);

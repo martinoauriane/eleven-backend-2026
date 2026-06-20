@@ -1,5 +1,5 @@
 export interface JoinRequestCreate {
-  emitterId: number;
+  senderId: number;
   receiverId: number;  
   eventId: number;
   eventName: string;

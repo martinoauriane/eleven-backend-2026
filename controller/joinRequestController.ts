@@ -6,11 +6,11 @@ const joinRequestService = new JoinRequestService();
 
 class JoinRequestController {
     
-  async newJoinRequest(req: Request, res: Response) {
+  async createJoinRequest(req: Request, res: Response) {
     try {
       const joinRequest: JoinRequestCreate = {
         eventId: Number(req.params.eventId),
-        emitterId: Number(req.body.emitterId),
+        senderId: Number(req.body.senderId),
         receiverId: Number(req.body.receiverId),
         eventName: String(req.body.eventName),
         eventAddress: req.body.eventAddress,
@@ -21,6 +21,22 @@ class JoinRequestController {
       res.status(200).json(joinRequestCreated);
     } catch (error) {
       res.status(500).json({ error: "Error creating new Join Request" });
+    }
+  }
+  
+  async updateJoinRequestStatus(req: Request, res: Response) {
+    const id = Number(req.params.id);
+    const { status } = req.body;
+    try {
+      const updatedJoinRequest = await joinRequestService.updateJoinRequestStatus(
+        id,
+        status,
+      );
+      res.status(200).json(updatedJoinRequest);
+    } catch (error: any) {
+      res.status(500).json({
+        error: error.message,
+      });
     }
   }
 
@@ -52,6 +68,7 @@ class JoinRequestController {
       res.status(500).json({ error: "Error deleting Join Request" });
     }
   }
+
 }
 
 export { JoinRequestController };

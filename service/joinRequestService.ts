@@ -4,15 +4,24 @@ import { JoinRequestCreate, JoinRequestData } from "../store/interfaces/joinRequ
 
 const joinRequestStore = new JoinRequestStore();
 
+type JoinRequestStatus = "NONE" | "SENT" | "ACCEPTED" | "REJECTED";
+
 class JoinRequestService {
 
   async createJoinRequest(data: JoinRequestCreate): Promise<any> {
-    return await joinRequestStore.CreateJoinRequest(data);
+    return await joinRequestStore.CreateJoinRequest(data.senderId, data.receiverId, data.eventId);
   }
+
+  async updateJoinRequestStatus(
+    joinRequestId: number,
+    status: JoinRequestStatus,
+  ) {
+    return await joinRequestStore.updateJoinRequestStatus(joinRequestId, status);
+  }   
 
   async getJoinRequest(data: JoinRequestCreate): Promise<JoinRequestData | null> {
     const response : JoinRequestData | null = await joinRequestStore.getJoinRequest(
-      data.emitterId,
+      data.senderId,
       data.receiverId,
       data.eventId,
     );
@@ -21,7 +30,7 @@ class JoinRequestService {
 
   async deleteJoinRequest(data: JoinRequestCreate): Promise<any> {
     return await joinRequestStore.deleteJoinRequest(
-      data.emitterId,
+      data.senderId,
       data.receiverId,
     );
   }

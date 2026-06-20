@@ -175,37 +175,6 @@ class EventController {
     }
   }
 
-  async createJoinRequest(req: Request, res: Response) {
-    const senderId = parseInt(req.body.senderId);
-    const receiverId = parseInt(req.body.receiverId);
-    const eventId = parseInt(String(req.params.eventId));
-    try {
-      let joinRequestCreated = await eventService.createJoinRequest(
-        senderId,
-        receiverId,
-        eventId,
-      );
-      res.status(200).json(joinRequestCreated);
-    } catch (error) {
-      res.status(500).json({ error: "Error creating Join Request" });
-    }
-  }
-
-  async updateJoinRequestStatus(req: Request, res: Response) {
-    const id = Number(req.params.id);
-    const { status } = req.body;
-    try {
-      const updatedJoinRequest = await eventService.updateJoinRequestStatus(
-        id,
-        status,
-      );
-      res.status(200).json(updatedJoinRequest);
-    } catch (error: any) {
-      res.status(500).json({
-        error: error.message,
-      });
-    }
-  }
 }
 
 export { EventController };
