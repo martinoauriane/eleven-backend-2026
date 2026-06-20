@@ -321,11 +321,14 @@ class UserStore implements IUserStore {
             include: {
               emitter: true,
               receiver: true,
-              event: true,
+              event: true,              
             },
           },
         },
       });
+
+      console.log("MESSAGES");
+      console.log(messages);
 
       console.log(
         messages

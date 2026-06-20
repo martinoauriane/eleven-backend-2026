@@ -241,9 +241,10 @@ class UserController {
     const conversationId = parseInt(String(req.params.conversationId));
     const content = req.body.content;
     const type = req.body.type;
+    const joinRequestId = req.body.joinRequestId;
     const senderId = Number(req.body.senderId);
      try {
-      let conversations = await userService.addMessage(conversationId, type, content, senderId);
+      let conversations = await userService.addMessage(conversationId, type, content, senderId, joinRequestId);
       res.status(200).json(conversations);
     } catch (error) {
       console.error(error);
@@ -253,8 +254,10 @@ class UserController {
   async getMessages(req:Request, res:Response){
     const conversationId = parseInt(String(req.params.conversationId));
      try {
-      let conversations = await userService.getMessages(conversationId);
-      res.status(200).json(conversations);
+      let messages = await userService.getMessages(conversationId);
+      console.log("messages");
+      console.log(messages);
+      res.status(200).json(messages);
     } catch (error) {
       res.status(500).json({ error: "Error creating conversation" });
     }

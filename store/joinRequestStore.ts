@@ -1,26 +1,24 @@
 import "dotenv/config"; // ⚡ force le chargement de ton .env
 import { prisma } from "../prisma/lib/prisma";
-import {  JoinRequestData } from "./interfaces/joinRequestInterfaces";
+import {  JoinRequestCreate, JoinRequestData } from "./interfaces/joinRequestInterfaces";
 
 
 type JoinRequestStatus = "NONE" | "SENT" | "ACCEPTED" | "REJECTED";
 
 
 interface IJoinRequestStore {
-  CreateJoinRequest(senderId: any, receiverId: any, eventId: any): Promise<any>;
+  CreateJoinRequest(senderId: any, receiverId: any, eventId: any,  eventName: string,
+    eventAddress: string, 
+    eventStartTime: any,): Promise<any>;
 }
 
 class JoinRequestStore implements IJoinRequestStore {
-  async CreateJoinRequest(
-    senderId: any,
-    receiverId: any,
-    eventId: any,
-  ): Promise<any> {
+  async CreateJoinRequest(data: JoinRequestCreate): Promise<any> {
     try {
       const existingJoinRequest = await prisma.joinRequest.findFirst({
         where: {
-          emitterId: senderId,
-          eventId: eventId,
+          emitterId: data.senderId,
+          eventId: data.eventId,
           status: {
             in: ["SENT", "ACCEPTED", "REJECTED"],
           },
@@ -29,9 +27,9 @@ class JoinRequestStore implements IJoinRequestStore {
       if (existingJoinRequest == null) {
         const joinRequestCreated = await prisma.joinRequest.create({
           data: {
-            emitterId: senderId,
-            receiverId: receiverId,
-            eventId: eventId,
+            emitterId: data.senderId,
+            receiverId: data.receiverId,
+            eventId: data.eventId,
             status: "SENT",
           },
         });

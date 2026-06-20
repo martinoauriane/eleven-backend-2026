@@ -12,12 +12,8 @@ class JoinRequestController {
         eventId: Number(req.params.eventId),
         senderId: Number(req.body.senderId),
         receiverId: Number(req.body.receiverId),
-        eventName: String(req.body.eventName),
-        eventAddress: req.body.eventAddress,
-        eventStartTime: req.body.eventStartTime,
       };
-      const joinRequestCreated =
-        await joinRequestService.createJoinRequest(joinRequest);
+      const joinRequestCreated = await joinRequestService.createJoinRequest(joinRequest);
       res.status(200).json(joinRequestCreated);
     } catch (error) {
       res.status(500).json({ error: "Error creating new Join Request" });

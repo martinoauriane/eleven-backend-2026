@@ -9,7 +9,7 @@ type JoinRequestStatus = "NONE" | "SENT" | "ACCEPTED" | "REJECTED";
 class JoinRequestService {
 
   async createJoinRequest(data: JoinRequestCreate): Promise<any> {
-    return await joinRequestStore.CreateJoinRequest(data.senderId, data.receiverId, data.eventId);
+    return await joinRequestStore.CreateJoinRequest(data);
   }
 
   async updateJoinRequestStatus(

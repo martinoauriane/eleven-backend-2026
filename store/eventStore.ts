@@ -17,15 +17,6 @@ interface IEventStore {
   updateEvent(id: number, data: EventData): Promise<any>;
   deleteEvent(id: number): Promise<any>;
   getEventsByDate(date: string, userId: any): Promise<any>;
-  updateJoinRequestStatus(
-    joinRequestId: number,
-    JoinRequestStatus: JoinRequestStatus,
-  ): Promise<any>;
-  createJoinRequest(
-    emitterId: number,
-    receiverId: number,
-    eventId: number,
-  ): Promise<any>;
 }
 
 class EventStore implements IEventStore {
