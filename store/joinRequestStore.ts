@@ -1,15 +1,23 @@
 import "dotenv/config"; // ⚡ force le chargement de ton .env
 import { prisma } from "../prisma/lib/prisma";
-import {  JoinRequestCreate, JoinRequestData } from "./interfaces/joinRequestInterfaces";
-
+import {
+  JoinRequestCreate,
+  JoinRequestData,
+} from "./interfaces/joinRequestInterfaces";
+import { UserStore } from "./userStore";
+const userStore = new UserStore();
 
 type JoinRequestStatus = "NONE" | "SENT" | "ACCEPTED" | "REJECTED";
 
-
 interface IJoinRequestStore {
-  CreateJoinRequest(senderId: any, receiverId: any, eventId: any,  eventName: string,
-    eventAddress: string, 
-    eventStartTime: any,): Promise<any>;
+  CreateJoinRequest(
+    senderId: any,
+    receiverId: any,
+    eventId: any,
+    eventName: string,
+    eventAddress: string,
+    eventStartTime: any,
+  ): Promise<any>;
 }
 
 class JoinRequestStore implements IJoinRequestStore {
@@ -24,21 +32,80 @@ class JoinRequestStore implements IJoinRequestStore {
           },
         },
       });
-      if (existingJoinRequest == null) {
-        const joinRequestCreated = await prisma.joinRequest.create({
-          data: {
-            emitterId: data.senderId,
-            receiverId: data.receiverId,
-            eventId: data.eventId,
-            status: "SENT",
-          },
-        });
-         return joinRequestCreated;
-      } else {
+
+      if (existingJoinRequest) {
         throw new Error("Join request already exists");
       }
+
+      const joinRequestCreated = await prisma.joinRequest.create({
+        data: {
+          emitterId: data.senderId,
+          receiverId: data.receiverId,
+          eventId: data.eventId,
+          status: "SENT",
+        },
+      });
+
+      let conversation = await prisma.conversation.findFirst({
+        where: {
+          AND: [
+            {
+              participants: {
+                some: {
+                  id: data.senderId,
+                },
+              },
+            },
+            {
+              participants: {
+                some: {
+                  id: data.receiverId,
+                },
+              },
+            },
+          ],
+        },
+      });
+
+      if (!conversation) {
+        conversation = await userStore.createConversation(
+          data.senderId,
+          data.receiverId,
+        );
+      }
+
+      const event = await prisma.event.findUnique({
+        where: {
+          id: data.eventId,
+        },
+      });
+
+      const emitter = await prisma.user.findUnique({
+        where: {
+          id: data.senderId,
+        },
+      });
+
+      await prisma.message.create({
+        data: {
+          type: "joinRequest",
+          senderId: data.senderId,
+          conversationId: conversation.id,
+          joinRequestId: joinRequestCreated.id,
+          content: {
+            friendId: emitter?.id,
+            friendName: `${emitter?.firstName} ${emitter?.lastName}`,
+            friendPicture: emitter?.picture,
+            eventId: event?.id,
+            joinRequestId: joinRequestCreated.id,
+            date: new Date(),
+          },
+        },
+      });
+      return joinRequestCreated;
     } catch (error) {
-      throw new Error("ERROR IN createJoinRequest:");
+      console.error(error);
+      throw new Error("ERROR IN createJoinRequest");
     }
   }
 
