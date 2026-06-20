@@ -10,7 +10,8 @@ class JoinRequestStore implements IJoinRequestStore {
 
   async CreateJoinRequest(data: JoinRequestCreate): Promise<any> {
     try {
-      return await prisma.joinRequest.create({ data });
+      let newJoinRequest = await prisma.joinRequest.create({ data });
+      return newJoinRequest;
     } catch (error) {
       console.error(
         "prisma error trying to create specific joinRequest",
@@ -19,13 +20,18 @@ class JoinRequestStore implements IJoinRequestStore {
     }
   }
 
-  async getJoinRequest(emitter_id: number, receiver_id: number): Promise< JoinRequestData | null> {
+  async getJoinRequest(emitterId: number, receiverId: number, eventId: number): Promise<JoinRequestData | null> {
     try {
       const response : JoinRequestData | null = await prisma.joinRequest.findFirst({
         where: {
-          emitterId: emitter_id,
-          receiverId: receiver_id,
+          emitterId: emitterId,
+          receiverId: receiverId,
+          eventId: eventId
         },
+        include: {
+        event: true,
+        emitter: true,
+      },
       });
       return response;
     } catch (error) {

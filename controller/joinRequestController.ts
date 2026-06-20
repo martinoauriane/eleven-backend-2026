@@ -9,9 +9,12 @@ class JoinRequestController {
   async newJoinRequest(req: Request, res: Response) {
     try {
       const joinRequest: JoinRequestCreate = {
-        emitterId: Number(req.params.emitter_id),
-        receiverId: Number(req.params.receiver_id),
-        eventId: Number(req.body.eventId),
+        eventId: Number(req.params.eventId),
+        emitterId: Number(req.body.emitterId),
+        receiverId: Number(req.body.receiverId),
+        eventName: String(req.body.eventName),
+        eventAddress: req.body.eventAddress,
+        eventStartTime: req.body.eventStartTime,
       };
       const joinRequestCreated =
         await joinRequestService.createJoinRequest(joinRequest);
@@ -23,10 +26,10 @@ class JoinRequestController {
 
   async getJoinRequest(req: Request, res: Response) {
     try {
-      const joinRequest: JoinRequestCreate = {
-        emitterId: Number(req.params.emitter_id),
-        receiverId: Number(req.params.receiver_id),
-        eventId: Number(req.body.eventId),
+      const joinRequest: any = {
+        eventId: Number(req.params.eventId),
+        emitterId: Number(req.body.emitterId),
+        receiverId: Number(req.body.receiverId),
       };
       const retrievedJoinRequest = await joinRequestService.getJoinRequest(joinRequest);
       res.status(200).json(retrievedJoinRequest);
@@ -37,13 +40,13 @@ class JoinRequestController {
 
   async deleteJoinRequest(req: Request, res: Response) {
     try {
-      const joinRequestDelete: JoinRequestCreate = {
-        emitterId: Number(req.params.emitter_id),
-        receiverId: Number(req.params.receiver_id),
-        eventId: Number(req.body.eventId),
+      const joinRequest: any = {
+        eventId: Number(req.params.eventId),
+        emitterId: Number(req.body.emitterId),
+        receiverId: Number(req.body.receiverId),
       };
       const joinRequestDeleted =
-        await joinRequestService.deleteJoinRequest(joinRequestDelete);
+        await joinRequestService.deleteJoinRequest(joinRequest);
       res.status(200).json(joinRequestDeleted);
     } catch (error) {
       res.status(500).json({ error: "Error deleting Join Request" });

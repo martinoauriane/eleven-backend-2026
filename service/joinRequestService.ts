@@ -14,6 +14,7 @@ class JoinRequestService {
     const response : JoinRequestData | null = await joinRequestStore.getJoinRequest(
       data.emitterId,
       data.receiverId,
+      data.eventId,
     );
     return response;
   }

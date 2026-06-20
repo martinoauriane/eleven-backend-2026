@@ -56,7 +56,7 @@ class UserStore implements IUserStore {
 
   async getAllUsers() {
     try {
-      let allusers =  await prisma.user.findMany();
+      let allusers = await prisma.user.findMany();
       console.log("all users");
       console.log(allusers);
       return allusers;
@@ -310,7 +310,7 @@ class UserStore implements IUserStore {
     try {
       const messages = await prisma.message.findMany({
         where: {
-          conversationId: conversationId,
+          conversationId,
         },
         orderBy: {
           createdAt: "desc",
@@ -319,14 +319,46 @@ class UserStore implements IUserStore {
           sender: true,
           joinRequest: {
             include: {
-              emitter: true, 
-              receiver: true, 
+              emitter: true,
+              receiver: true,
               event: true,
-            }
-          }
+            },
+          },
         },
       });
-      return messages;
+
+      const formattedMessages = messages.map((msg) => {
+        if (msg.type === "joinRequest" && msg.joinRequest) {
+          return {
+            id: msg.id,
+            type: msg.type,
+            senderId: msg.senderId,
+            createdAt: msg.createdAt,
+            status: msg.joinRequest.status,
+            content: {
+              friendId: msg.joinRequest.emitter.id,
+              friendName: `${msg.joinRequest.emitter.firstName} ${msg.joinRequest.emitter.lastName}`,
+              friendPicture: msg.joinRequest.emitter.picture,
+              date: msg.createdAt,
+              eventId: msg.joinRequest.event.id,
+              joinRequestId: msg.joinRequest.id,
+              eventName: msg.joinRequest.event.eventName,
+              eventAddress: msg.joinRequest.event.eventAddress,
+              eventStartTime: msg.joinRequest.event.eventStartTime,
+            },
+          };
+        }
+
+        return {
+          id: msg.id,
+          type: msg.type,
+          senderId: msg.senderId,
+          createdAt: msg.createdAt,
+          content: msg.content,
+        };
+      });
+
+      return formattedMessages;
     } catch (error) {
       console.error("Prisma retrieving messages error:", error);
       throw error;

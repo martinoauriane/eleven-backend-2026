@@ -2,6 +2,9 @@ export interface JoinRequestCreate {
   emitterId: number;
   receiverId: number;  
   eventId: number;
+  eventName: string;
+  eventAddress: string;
+  eventStartTime: any;
 }
 
 export type JoinRequestStatus = "NONE" | "SENT" | "ACCEPTED" | "REJECTED";
