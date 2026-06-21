@@ -57,9 +57,7 @@ class UserStore implements IUserStore {
   async getAllUsers() {
     try {
       let allusers = await prisma.user.findMany();
-      console.log("all users");
-      console.log(allusers);
-      return allusers;
+       return allusers;
     } catch (error) {
       console.error("Prisma retrieving all users error:", error);
       throw error;
@@ -101,7 +99,13 @@ class UserStore implements IUserStore {
       });
 
       let eventFavorites = user?.favorites ?? [];
-      return eventFavorites;
+      let newEventFavorites = eventFavorites.map((event) =>{
+        return {
+          user: user, 
+          event: event
+        }
+      })
+      return newEventFavorites;
     } catch (error) {
       console.error("Prisma get user favorite events error:", error);
       throw error;
@@ -326,10 +330,6 @@ class UserStore implements IUserStore {
           },
         },
       });
-
-      console.log("MESSAGES");
-      console.log(messages);
-
       console.log(
         messages
           .filter((m) => m.type === "joinRequest")
