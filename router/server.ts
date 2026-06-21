@@ -212,7 +212,7 @@ router.get(
 );
 
 router.get(
-  "/event/created/:userId", 
+  "/event/created/all/:userId", 
   async(req:Request, res:Response) => {
     await eventController.getEventsCreatedByUser(req, res);
   }

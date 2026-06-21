@@ -70,6 +70,7 @@ class EventController {
   const userId = parseInt(String(req.params.userId));
     try{
       const eventsCreatedByUser = await eventService.getEventsCreatedByUser(userId);
+      res.status(200).json(eventsCreatedByUser);
     } catch(error){
       res.status(500).json({
         error: "Error retrieving events by date",
