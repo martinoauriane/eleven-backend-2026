@@ -86,6 +86,10 @@ class UserService {
     return await userStore.getUserConversations(userId);
   }
 
+  async markConversationAsRead(conversationId:number, friendId:number){
+    return await userStore.markConversationAsRead(conversationId, friendId);
+  }
+
   async addMessage(conversationId: number, type:string, content:any, senderId: number, joinRequestId: number){
     return await userStore.addMessage(conversationId, type, content, senderId, joinRequestId);
   }

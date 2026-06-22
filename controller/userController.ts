@@ -261,6 +261,17 @@ class UserController {
     }
   }
 
+  async markConversationAsRead(req:Request, res:Response){
+    const conversationId = parseInt(String(req.params.conversationId));
+    const friendId = parseInt(req.body.friendId);
+     try {
+      let conversationRead = await userService.markConversationAsRead(conversationId, friendId);
+      res.status(200).json(conversationRead);
+    } catch (error) {
+      res.status(500).json({ error: "Error creating conversation" });
+    }
+  }
+
   async deleteUser(req: Request, res: Response) {
     const id = Number(req.query.id);
     try {

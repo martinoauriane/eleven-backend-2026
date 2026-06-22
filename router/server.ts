@@ -167,6 +167,14 @@ router.post("/user/:conversationId/add-message", async (req, res) => {
   }
 });
  
+router.post("/user/:conversationId/mark-as-read", async (req, res) => {
+  try {
+    await userController.markConversationAsRead(req, res);
+  } catch (err) {
+    console.error("ERROR trying to create a new conversation", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 // FRIEND REQUEST ENDPOINTS
 
 // operationnal

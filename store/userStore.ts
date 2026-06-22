@@ -57,7 +57,7 @@ class UserStore implements IUserStore {
   async getAllUsers() {
     try {
       let allusers = await prisma.user.findMany();
-       return allusers;
+      return allusers;
     } catch (error) {
       console.error("Prisma retrieving all users error:", error);
       throw error;
@@ -99,12 +99,12 @@ class UserStore implements IUserStore {
       });
 
       let eventFavorites = user?.favorites ?? [];
-      let newEventFavorites = eventFavorites.map((event) =>{
+      let newEventFavorites = eventFavorites.map((event) => {
         return {
-          user: user, 
-          event: event
-        }
-      })
+          user: user,
+          event: event,
+        };
+      });
       return newEventFavorites;
     } catch (error) {
       console.error("Prisma get user favorite events error:", error);
@@ -325,7 +325,7 @@ class UserStore implements IUserStore {
             include: {
               emitter: true,
               receiver: true,
-              event: true,              
+              event: true,
             },
           },
         },
@@ -410,6 +410,26 @@ class UserStore implements IUserStore {
           friend,
           participants: undefined,
         };
+      });
+    } catch (error) {
+      console.error("Prisma retrieving conversation error:", error);
+      throw error;
+    }
+  }
+
+  async markConversationAsRead(conversationId: number, friendId:number) {
+    try {
+      const conversationRead = await prisma.message.updateMany({
+        where: {
+          conversationId: Number(conversationId),
+          isRead: false,
+          senderId: {
+            not: friendId,
+          },
+        },
+        data: {
+          isRead: true,
+        },
       });
     } catch (error) {
       console.error("Prisma retrieving conversation error:", error);
