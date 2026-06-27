@@ -21,6 +21,7 @@ interface IEventStore {
 
 class EventStore implements IEventStore {
   async createEvent(data: EventCreate): Promise<any> {
+    console.log("INSIDE EVENT STORE");
     const existingEvent = await prisma.event.findFirst({
       where: {
         userId: data.userId,
@@ -39,13 +40,17 @@ class EventStore implements IEventStore {
       },
     });
     if (existingEvent) {
-      throw new Error("You already have an event during this time slot");
-    }
-    try {
-      let newEvent = await prisma.event.create({ data });
-      return newEvent;
-    } catch (error) {
-      console.error("Prisma creation error:", error);
+      console.log("EXISTING EVENT");
+      console.log(existingEvent);
+    } else {
+      try {
+        let newEvent = await prisma.event.create({ data });
+        console.log("NEW EVENT CREATED");
+        console.log(newEvent);
+        return newEvent;
+      } catch (error) {
+        console.error("Prisma creation error:", error);
+      }
     }
   }
 

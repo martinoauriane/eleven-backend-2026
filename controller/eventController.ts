@@ -4,7 +4,9 @@ import { EventCreate } from "../store/interfaces/eventInterfaces";
 const eventService = new EventService();
 
 class EventController {
+
   async newEvent(req: Request, res: Response) {
+    console.log("INSIDE EVENT CONTROLLER");
     const userId = parseInt(String(req.params.userId));
     const newEvent: EventCreate = {
       userId: userId,

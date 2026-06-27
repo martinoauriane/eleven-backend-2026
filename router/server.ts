@@ -284,5 +284,5 @@ router.post("/join-request/update/:id", async (req: Request, res: Response) => {
 );
 
 app.listen(3000, "0.0.0.0", () => {
-  console.log("Server running");
+  console.log("Server running", );
 });
