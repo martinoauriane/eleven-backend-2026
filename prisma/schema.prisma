@@ -6,6 +6,13 @@ datasource db {
   provider = "postgresql"
 }
 
+enum NotificationType {
+  ON_ITS_WAY
+  JOIN_REQUEST
+  JOIN_ACCEPTED
+  EVENT_UPDATED
+}
+
 enum MoodStatus {
   CHILLING
   WANTS_TO_GO_OUT
@@ -44,6 +51,9 @@ model User {
   receivedFriendships Friendship[] @relation("FriendshipFriend")
   attendingEvents Event[] @relation("EventParticipants")
 
+  sentNotifications Notification[] @relation("NotificationSender")
+  receivedNotifications Notification[] @relation("NotificationReceiver")
+  
   conversations Conversation[] @relation("ConversationParticipants")
   messages      Message[]
 }
@@ -93,7 +103,7 @@ model Event {
   favoritedBy    User[]   @relation("UserFavorites")
   joinRequests   JoinRequest[]
   participants   User[] @relation("EventParticipants")
-
+  notifications Notification[]
 }
 
 model JoinRequest {
@@ -153,4 +163,24 @@ model Message {
   sender         User         @relation(fields: [senderId], references: [id])
   conversation   Conversation @relation(fields: [conversationId], references: [id])
   joinRequest    JoinRequest? @relation(fields: [joinRequestId], references: [id])
+}
+
+model Notification {
+  id          Int   @id @default(autoincrement())
+  type        NotificationType
+
+  message     String
+
+  senderId    Int
+  sender      User @relation("NotificationSender", fields: [senderId], references: [id])
+
+  receiverId  Int
+  receiver    User @relation("NotificationReceiver", fields: [receiverId], references: [id])
+
+  eventId     Int?
+  event       Event? @relation(fields: [eventId], references: [id])
+
+  read        Boolean @default(false)
+
+  createdAt   DateTime @default(now())
 }
