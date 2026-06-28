@@ -119,7 +119,7 @@ router.post(
   },
 );
 
-router.post("/user/:id/friends/mood", async (req: Request, res: Response) => {
+router.get("/user/:id/friends/mood", async (req: Request, res: Response) => {
   try {
     await userController.getFriendsMood(req, res);
   } catch (err) {

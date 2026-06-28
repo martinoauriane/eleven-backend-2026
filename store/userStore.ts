@@ -226,7 +226,7 @@ class UserStore implements IUserStore {
         f.userId === userId ? f.friend : f.user,
       );
 
-      return friends.map((friend) => ({
+      let friendsMood = friends.map((friend) => ({
         id: friend.id,
         firstName: friend.firstName,
         lastName: friend.lastName,
@@ -234,6 +234,7 @@ class UserStore implements IUserStore {
         mood: friend.mood,
         moodUpdatedat: friend.moodUpdatedAt,
       }));
+      return friendsMood;
     } catch (error) {
       console.error(error);
       throw error;

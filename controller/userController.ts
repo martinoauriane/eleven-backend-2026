@@ -195,7 +195,7 @@ class UserController {
     const userId = parseInt(String(req.params.id));
     try {
       let userFriendsArray = await userService.getFriendsMood(userId);
-      return userFriendsArray;
+      res.status(200).json(userFriendsArray);
     } catch (error: any) {
       res.status(500).json({
         error: "Error retrieving user friends statuses",
