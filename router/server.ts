@@ -269,6 +269,15 @@ router.get(
   },
 );
 
+// post event notifications
+router.post(`/event/:eventId/:userId/notifications`, async(req:Request, res:Response) => {
+  await eventController.addNotifications(req, res);
+})
+// retrieve event notifications
+router.get(`/event/:eventId/notifications`, async(req:Request, res:Response) => {
+  await eventController.loadNotifications(req, res);
+})
+
 // JOIN REQUESTS ENDPOINT
 
 // create join request 

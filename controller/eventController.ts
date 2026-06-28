@@ -6,7 +6,6 @@ const eventService = new EventService();
 class EventController {
 
   async newEvent(req: Request, res: Response) {
-    console.log("INSIDE EVENT CONTROLLER");
     const userId = parseInt(String(req.params.userId));
     const newEvent: EventCreate = {
       userId: userId,
@@ -68,12 +67,13 @@ class EventController {
     }
   }
 
-  async getEventsCreatedByUser(req: Request, res:Response){
-  const userId = parseInt(String(req.params.userId));
-    try{
-      const eventsCreatedByUser = await eventService.getEventsCreatedByUser(userId);
+  async getEventsCreatedByUser(req: Request, res: Response) {
+    const userId = parseInt(String(req.params.userId));
+    try {
+      const eventsCreatedByUser =
+        await eventService.getEventsCreatedByUser(userId);
       res.status(200).json(eventsCreatedByUser);
-    } catch(error){
+    } catch (error) {
       res.status(500).json({
         error: "Error retrieving events by date",
       });
@@ -148,6 +148,30 @@ class EventController {
     }
   }
 
+  async addNotifications(req: Request, res: Response){
+    let eventId = parseInt(String(req.params.eventId));
+    let userId = parseInt(String(req.params.userId));
+    let username = String(req.body.username);
+    try {
+      let notifications = await eventService.addNotifications(username, userId, eventId);
+      return res.status(200).json(notifications);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
+  async loadNotifications(req: Request, res: Response) {
+    let eventId = parseInt(String(req.params.eventId));
+    try {
+      let notifications = await eventService.loadNotifications(eventId);
+      return res.status(200).json(notifications);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
   async deleteParticipant(req: Request, res: Response) {
     const userId = Number(req.params.userId);
     const eventId = Number(req.body.userId);
@@ -177,7 +201,6 @@ class EventController {
       res.status(500).json({ error: "Error deleting user" });
     }
   }
-
 }
 
 export { EventController };

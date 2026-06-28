@@ -21,8 +21,7 @@ interface IEventStore {
 
 class EventStore implements IEventStore {
   async createEvent(data: EventCreate): Promise<any> {
-    console.log("INSIDE EVENT STORE");
-    const existingEvent = await prisma.event.findFirst({
+     const existingEvent = await prisma.event.findFirst({
       where: {
         userId: data.userId,
         AND: [
@@ -45,9 +44,7 @@ class EventStore implements IEventStore {
     } else {
       try {
         let newEvent = await prisma.event.create({ data });
-        console.log("NEW EVENT CREATED");
-        console.log(newEvent);
-        return newEvent;
+         return newEvent;
       } catch (error) {
         console.error("Prisma creation error:", error);
       }
@@ -182,8 +179,7 @@ class EventStore implements IEventStore {
           },
         },
       });
-      console.log("new participant");
-      console.log(newParticipant);
+      return newParticipant;
     } catch (error) {
       console.error("Prisma adding event participant error");
       throw error;
@@ -207,6 +203,52 @@ class EventStore implements IEventStore {
       return event.participants;
     } catch (error) {
       console.error("Prisma get event participants error:", error);
+      throw error;
+    }
+  }
+
+  async addNotifications(
+    userName: string,
+    userId: number,
+    eventId: number,
+  ) {
+    const event = await prisma.event.findUnique({
+      where: { id: eventId },
+      select: { userId: true, eventName: true },
+    });
+    if (!event) throw new Error("Event not found");
+
+    try {
+      let notificationCreated = await prisma.notification.create({
+        data: {
+          type: "ON_ITS_WAY",
+          message: `${userName} is on their way to ${event.eventName}`,
+          senderId: userId,
+          receiverId: event.userId, 
+          eventId,
+        },
+      });
+      return notificationCreated;
+    } catch (error) {
+      console.error(
+        "Error trying to create the event related notification:",
+        error,
+      );
+    }
+  }
+
+  async loadNotifications(eventId: number) {
+    try {
+      const notifications = await prisma.notification.findMany({
+        where: { eventId },
+        orderBy: { createdAt: "desc" },
+      });
+      if (!notifications) {
+        throw new Error("Error");
+      }
+      return notifications;
+    } catch (error) {
+      console.error("Error trying to retrieve notifications:", error);
       throw error;
     }
   }
