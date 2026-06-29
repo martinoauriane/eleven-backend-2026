@@ -21,7 +21,7 @@ interface IEventStore {
 
 class EventStore implements IEventStore {
   async createEvent(data: EventCreate): Promise<any> {
-     const existingEvent = await prisma.event.findFirst({
+    const existingEvent = await prisma.event.findFirst({
       where: {
         userId: data.userId,
         AND: [
@@ -44,7 +44,7 @@ class EventStore implements IEventStore {
     } else {
       try {
         let newEvent = await prisma.event.create({ data });
-         return newEvent;
+        return newEvent;
       } catch (error) {
         console.error("Prisma creation error:", error);
       }
@@ -207,24 +207,31 @@ class EventStore implements IEventStore {
     }
   }
 
-  async addNotifications(
-    userName: string,
-    userId: number,
-    eventId: number,
-  ) {
+  async addNotifications(userName: string, userId: number, eventId: number) {
     const event = await prisma.event.findUnique({
       where: { id: eventId },
       select: { userId: true, eventName: true },
     });
     if (!event) throw new Error("Event not found");
+    const existingNotification = await prisma.notification.findFirst({
+      where: {
+        type: "ON_ITS_WAY",
+        senderId: userId,
+        receiverId: event.userId,
+        eventId: eventId,
+      },
+    });
 
+    if (existingNotification) {
+      throw new Error("Notification already exists");
+    }
     try {
       let notificationCreated = await prisma.notification.create({
         data: {
           type: "ON_ITS_WAY",
-          message: `${userName} is on their way to ${event.eventName}`,
+          message: `${userName} is on their way`,
           senderId: userId,
-          receiverId: event.userId, 
+          receiverId: event.userId,
           eventId,
         },
       });

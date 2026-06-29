@@ -151,9 +151,11 @@ class EventController {
   async addNotifications(req: Request, res: Response){
     let eventId = parseInt(String(req.params.eventId));
     let userId = parseInt(String(req.params.userId));
-    let username = String(req.body.username);
+    let userName = String(req.body.userName);
+    console.log("userNae");
+    console.log(userName);
     try {
-      let notifications = await eventService.addNotifications(username, userId, eventId);
+      let notifications = await eventService.addNotifications(userName, userId, eventId);
       return res.status(200).json(notifications);
     } catch (error) {
       console.error(error);
