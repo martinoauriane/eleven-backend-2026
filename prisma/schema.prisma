@@ -56,6 +56,7 @@ model User {
   
   conversations Conversation[] @relation("ConversationParticipants")
   messages      Message[]
+  uploadedEventPhotos EventPhoto[]
 }
 
 model Friendship {
@@ -104,6 +105,7 @@ model Event {
   joinRequests   JoinRequest[]
   participants   User[] @relation("EventParticipants")
   notifications Notification[]
+  photos         EventPhoto[]
 }
 
 model JoinRequest {
@@ -183,4 +185,16 @@ model Notification {
   read        Boolean @default(false)
 
   createdAt   DateTime @default(now())
+}
+
+model EventPhoto {
+  id        Int      @id @default(autoincrement())
+  url       String
+  createdAt DateTime @default(now())
+
+  eventId   Int
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  uploadedById Int?
+  uploadedBy   User? @relation(fields: [uploadedById], references: [id])
 }
