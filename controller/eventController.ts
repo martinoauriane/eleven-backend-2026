@@ -194,6 +194,38 @@ class EventController {
     }
   }
 
+  async addPhotos(req: Request, res: Response) {
+    const eventId = Number(req.params.eventId);
+    const { photos, userId } = req.body;
+    try {
+    const result = await eventService.addPhotos(eventId, userId, photos);
+      res.status(200).json(result);
+    } catch (error) {
+      res.status(500).json({ error: "Error deleting user" });
+    }
+  }
+
+  async getPhotos(req: Request, res: Response) {
+    const eventId = Number(req.params.eventId);
+    const { photos, userId } = req.body;
+    try {
+    const photos = await eventService.getPhotos(eventId);
+      res.status(200).json(photos);
+    } catch (error) {
+      res.status(500).json({ error: "Error deleting user" });
+    }
+  }
+
+  async deletePhoto(req: Request, res: Response) {
+    const photoId = Number(req.params.photoId);
+    try {
+      await eventService.deletePhoto(photoId);
+      res.status(200).json({ message: "Event deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ error: "Error deleting user" });
+    }
+  }
+
   async deleteEvent(req: Request, res: Response) {
     const event_id = Number(req.params.event_id);
     try {

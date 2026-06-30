@@ -278,6 +278,30 @@ router.get(`/event/:eventId/notifications`, async(req:Request, res:Response) => 
   await eventController.loadNotifications(req, res);
 })
 
+// upload photos
+router.post(
+  "/event/:eventId/photos",
+  async (req: Request, res: Response) => {
+    await eventController.addPhotos(req, res);
+  },
+);
+
+// récupérer les photos
+router.get(
+  "/event/:eventId/photos",
+  async (req: Request, res: Response) => {
+    await eventController.getPhotos(req, res);
+  },
+);
+
+// supprimer une photo
+router.delete(
+  "/event/photo/:photoId",
+  async (req: Request, res: Response) => {
+    await eventController.deletePhoto(req, res);
+  },
+);
+
 // JOIN REQUESTS ENDPOINT
 
 // create join request 
