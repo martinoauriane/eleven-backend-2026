@@ -207,9 +207,8 @@ class EventController {
 
   async getPhotos(req: Request, res: Response) {
     const eventId = Number(req.params.eventId);
-    const { photos, userId } = req.body;
     try {
-    const photos = await eventService.getPhotos(eventId, userId, photos);
+    const photos = await eventService.getPhotos(eventId);
       res.status(200).json(photos);
     } catch (error) {
       res.status(500).json({ error: "Error deleting user" });

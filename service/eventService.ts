@@ -69,7 +69,7 @@ class EventService implements IEventService {
     return await eventStore.addPhotos(eventId, userId, photos);
   }
 
-   async getPhotos(eventId:number, userId:number, photos:any){
+   async getPhotos(eventId:number){
     return await eventStore.getPhotos(eventId);
   }
 
