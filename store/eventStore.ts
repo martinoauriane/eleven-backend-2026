@@ -285,6 +285,59 @@ class EventStore implements IEventStore {
     }
   }
 
+  async addPhotos(eventId: number, userId: number, photos: string[]) {
+    if (photos.length > 1) {
+      try {
+        let createdP = await prisma.eventPhoto.createMany({
+          data: photos.map((url) => ({
+            url,
+            eventId,
+            uploadedById: userId,
+          })),
+        });
+        return createdP;
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      try {
+        let createdP = await prisma.eventPhoto.create({
+          data: {
+            url: photos[0],
+            eventId,
+            uploadedById: userId,
+          },
+        });
+        return createdP;
+      } catch (error) {}
+    }
+  }
+
+  async getPhotos(eventId: number): Promise<any> {
+    try {
+      let photos = await prisma.eventPhoto.findMany({
+        where: {
+          eventId,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+      return photos;
+    } catch (error) {
+      console.error("Prisma delete error:", error);
+    }
+  }
+
+  async deletePhoto(photoId: number): Promise<any> {
+    try {
+      let deletedP = await prisma.eventPhoto.delete({ where: { id: photoId } });
+      return deletedP;
+    } catch (error) {
+      console.error("Prisma delete error:", error);
+    }
+  }
+
   async deleteEvent(eventId: number): Promise<any> {
     try {
       return await prisma.event.delete({ where: { id: eventId } });

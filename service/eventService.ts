@@ -65,6 +65,19 @@ class EventService implements IEventService {
     return await eventStore.deleteParticipant(userId, eventId);
   }
 
+  async addPhotos(eventId:number, userId:number, photos:any){
+    return await eventStore.addPhotos(eventId, userId, photos);
+  }
+
+   async getPhotos(eventId:number, userId:number, photos:any){
+    return await eventStore.getPhotos(eventId);
+  }
+
+   async deletePhoto(photoId:number){
+    return await eventStore.deletePhoto(photoId);
+  }
+
+
   async deleteEvent(id: number): Promise<any> {
     return await eventStore.deleteEvent(id);
   }
