@@ -194,16 +194,18 @@ class EventController {
     }
   }
 
-  async addPhotos(req: Request, res: Response) {
-    const eventId = Number(req.params.eventId);
-    const { photos, userId } = req.body;
-    try {
-    const result = await eventService.addPhotos(eventId, userId, photos);
-      res.status(200).json(result);
-    } catch (error) {
-      res.status(500).json({ error: "Error deleting user" });
-    }
+ async addPhotos(req: Request, res: Response) {
+  const eventId = Number(req.params.eventId);
+  const { photoUrl, userId } = req.body;
+
+  try {
+    const result = await eventService.addPhoto(eventId, userId, photoUrl);
+    res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error adding photo" });
   }
+}
 
   async getPhotos(req: Request, res: Response) {
     const eventId = Number(req.params.eventId);

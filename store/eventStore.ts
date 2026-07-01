@@ -285,31 +285,18 @@ class EventStore implements IEventStore {
     }
   }
 
-  async addPhotos(eventId: number, userId: number, photos: string[]) {
-    if (photos.length > 1) {
-      try {
-        let createdP = await prisma.eventPhoto.createMany({
-          data: photos.map((url) => ({
-            url,
-            eventId,
-            uploadedById: userId,
-          })),
-        });
-        return createdP;
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
-      try {
-        let createdP = await prisma.eventPhoto.create({
-          data: {
-            url: photos[0],
-            eventId,
-            uploadedById: userId,
-          },
-        });
-        return createdP;
-      } catch (error) {}
+  async addPhoto(eventId: number, userId: number, photoUrl: string) {
+    try {
+      let createdP = prisma.eventPhoto.create({
+        data: {
+          url: photoUrl,
+          eventId,
+          uploadedById: userId,
+        },
+      });
+      return createdP;
+    } catch (error) {
+      console.error(error);
     }
   }
 
