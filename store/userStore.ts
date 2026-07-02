@@ -89,17 +89,21 @@ class UserStore implements IUserStore {
     }
   }
 
-  async getUserEventFavorites(userId: number) {
+  async getUserFavoriteEvents(userId: number) {
     try {
       const user = await prisma.user.findUnique({
         where: { id: userId },
         include: {
-          favorites: true,
+          favorites: {
+            include: {
+              createdBy: true,
+            },
+          },
         },
       });
 
       let eventFavorites = user?.favorites ?? [];
-      let newEventFavorites = eventFavorites.map((event) => {
+      let newEventFavorites = eventFavorites.map((event: any) => {
         return {
           user: user,
           event: event,
@@ -418,7 +422,7 @@ class UserStore implements IUserStore {
     }
   }
 
-  async markConversationAsRead(conversationId: number, friendId:number) {
+  async markConversationAsRead(conversationId: number, friendId: number) {
     try {
       const conversationRead = await prisma.message.updateMany({
         where: {

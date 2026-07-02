@@ -290,7 +290,7 @@ router.post(
 router.get(
   "/event/:eventId/photos",
   async (req: Request, res: Response) => {
-    await eventController.getPhotos(req, res);
+    await eventController.getEventPhotos(req, res);
   },
 );
 
