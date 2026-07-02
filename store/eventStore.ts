@@ -290,7 +290,7 @@ class EventStore implements IEventStore {
       let createdP = prisma.eventPhoto.create({
         data: {
           url: photoUrl,
-          eventId,
+          eventId: eventId,
           uploadedById: userId,
         },
       });
@@ -300,7 +300,7 @@ class EventStore implements IEventStore {
     }
   }
 
-  async getPhotos(eventId: number): Promise<any> {
+  async getEventPhotos(eventId: number): Promise<any> {
     try {
       let photos = await prisma.eventPhoto.findMany({
         where: {

@@ -197,7 +197,9 @@ class EventController {
  async addPhotos(req: Request, res: Response) {
   const eventId = Number(req.params.eventId);
   const { photoUrl, userId } = req.body;
-
+  console.log("photoUrl", photoUrl);
+  console.log("eventId", eventId);
+  console.log("userId", userId);
   try {
     const result = await eventService.addPhoto(eventId, userId, photoUrl);
     res.status(200).json(result);
