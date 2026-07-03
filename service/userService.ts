@@ -74,8 +74,8 @@ class UserService {
     return await userStore.removeEventFavorite(eventId, userId);
   }
 
-  async getUserFavoriteEvents(userId: any) {
-    return await userStore.getUserFavoriteEvents(userId);
+  async getUserSavedEvents(userId: any) {
+    return await userStore.getUserSavedEvents(userId);
   }
 
   async createConversation(userId: number, friendId: number){

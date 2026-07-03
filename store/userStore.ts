@@ -89,27 +89,17 @@ class UserStore implements IUserStore {
     }
   }
 
-  async getUserFavoriteEvents(userId: number) {
+  async getUserSavedEvents(userId: number) {
     try {
-      const user = await prisma.user.findUnique({
-        where: { id: userId },
-        include: {
-          favorites: {
-            include: {
-              createdBy: true,
-            },
-          },
-        },
-      });
-
-      let eventFavorites = user?.favorites ?? [];
-      let newEventFavorites = eventFavorites.map((event: any) => {
-        return {
-          user: user,
-          event: event,
-        };
-      });
-      return newEventFavorites;
+      const userSavedEvents = await prisma.event.findMany({
+        where:{
+          userId
+        }, 
+        include:{
+          participants: true,
+        }
+      })
+      return userSavedEvents;
     } catch (error) {
       console.error("Prisma get user favorite events error:", error);
       throw error;

@@ -70,7 +70,7 @@ router.post("/user/:id/update-mood", async (req: Request, res: Response) => {
 router.get(
   "/user/:userId/get-event-favorites",
   async (req: Request, res: Response) => {
-    await userController.getUserFavoriteEvents(req, res);
+    await userController.getUserSavedEvents(req, res);
   },
 );
 
