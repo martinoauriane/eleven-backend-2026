@@ -175,7 +175,7 @@ class UserController {
   async shareUserOnMap(req: Request, res: Response) {
     const user = {
       id: Number(req.params.userId),
-      activity: req.body.activity,
+      activity: req.body.eventName,
       latitude: req.body.latitude,
       longitude: req.body.longitude,
       address: req.body.address,
