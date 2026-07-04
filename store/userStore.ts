@@ -412,14 +412,14 @@ class UserStore implements IUserStore {
     }
   }
 
-  async markConversationAsRead(conversationId: number, friendId: number) {
+  async markConversationAsRead(conversationId: number, userId: number) {
     try {
       const conversationRead = await prisma.message.updateMany({
         where: {
           conversationId: Number(conversationId),
           isRead: false,
           senderId: {
-            not: friendId,
+            not: userId,
           },
         },
         data: {

@@ -263,9 +263,9 @@ class UserController {
 
   async markConversationAsRead(req:Request, res:Response){
     const conversationId = parseInt(String(req.params.conversationId));
-    const friendId = parseInt(req.body.friendId);
+    const userId = parseInt(req.body.userId);
      try {
-      let conversationRead = await userService.markConversationAsRead(conversationId, friendId);
+      let conversationRead = await userService.markConversationAsRead(conversationId, userId);
       res.status(200).json(conversationRead);
     } catch (error) {
       res.status(500).json({ error: "Error creating conversation" });
