@@ -310,6 +310,11 @@ router.post("/join-request/create/:eventId", async (req: Request, res: Response)
   },
 );
 
+// 
+router.post("/meet-request/friend", async (req: Request, res: Response) => {
+    await joinRequestController.createMeetRequest(req, res);
+  },
+);
 // update join Request status
 router.post("/join-request/update/:id", async (req: Request, res: Response) => {
     await joinRequestController.updateJoinRequestStatus(req, res);

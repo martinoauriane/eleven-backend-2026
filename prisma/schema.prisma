@@ -20,6 +20,13 @@ enum MoodStatus {
   ABOUT_TO_LEAVE
 }
 
+enum MeetRequestStatus {
+  SENT
+  ACCEPTED
+  REJECTED
+  EXPIRED
+}
+
 enum JoinRequestStatus {
   NONE
   SENT
@@ -54,6 +61,9 @@ model User {
   sentNotifications Notification[] @relation("NotificationSender")
   receivedNotifications Notification[] @relation("NotificationReceiver")
   
+  sentMeetRequests     MeetRequest[] @relation("EmitterMeetRequest")
+  receivedMeetRequests MeetRequest[] @relation("ReceiverMeetRequest")
+
   conversations Conversation[] @relation("ConversationParticipants")
   messages      Message[]
   uploadedEventPhotos EventPhoto[]
@@ -129,6 +139,31 @@ model JoinRequest {
   @@unique([emitterId, eventId])
 }
 
+model MeetRequest {
+  id Int @id @default(autoincrement())
+
+  emitterId Int
+  receiverId Int
+
+  emitter User @relation("EmitterMeetRequest", fields: [emitterId], references: [id])
+  receiver User @relation("ReceiverMeetRequest", fields: [receiverId], references: [id])
+
+  latitude Float
+  longitude Float
+  address String?
+
+  activity String?
+
+  status MeetRequestStatus @default(SENT)
+
+  sentAt DateTime @default(now())
+  expiresAt DateTime?
+
+  message Message?
+
+  @@unique([emitterId, receiverId])
+}
+
 model FriendRequest {
   id         Int      @id @default(autoincrement())
   sentAt     DateTime @default(now())
@@ -161,10 +196,14 @@ model Message {
   senderId       Int
   conversationId Int
   joinRequestId  Int? @unique
+  meetRequestId Int? @unique
 
   sender         User         @relation(fields: [senderId], references: [id])
   conversation   Conversation @relation(fields: [conversationId], references: [id])
   joinRequest    JoinRequest? @relation(fields: [joinRequestId], references: [id])
+  meetRequest MeetRequest? @relation(fields: [meetRequestId], references: [id])
+
+  
 }
 
 model Notification {

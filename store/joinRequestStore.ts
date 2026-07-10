@@ -137,6 +137,94 @@ class JoinRequestStore implements IJoinRequestStore {
     }
   }
 
+  async createMeetRequest(data: any): Promise<any> {
+    try {
+      const existingMeetRequest = await prisma.meetRequest.findFirst({
+        where: {
+          emitterId: data.senderId,
+          receiverId: data.receiverId,
+          status: {
+            in: ["SENT", "ACCEPTED"],
+          },
+        },
+      });
+
+      if (existingMeetRequest) {
+        throw new Error("Meet request already exists");
+      }
+
+      const meetRequestCreated = await prisma.meetRequest.create({
+        data: {
+          emitterId: data.senderId,
+          receiverId: data.receiverId,
+          latitude: data.latitude,
+          longitude: data.longitude,
+          address: data.address,
+          activity: data.activity,
+          status: "SENT",
+          expiresAt: new Date(Date.now() + 30 * 60 * 1000),
+        },
+      });
+
+      let conversation = await prisma.conversation.findFirst({
+        where: {
+          AND: [
+            {
+              participants: {
+                some: {
+                  id: data.senderId,
+                },
+              },
+            },
+            {
+              participants: {
+                some: {
+                  id: data.receiverId,
+                },
+              },
+            },
+          ],
+        },
+      });
+
+      if (!conversation) {
+        conversation = await userStore.createConversation(
+          data.senderId,
+          data.receiverId,
+        );
+      }
+
+      const emitter = await prisma.user.findUnique({
+        where: {
+          id: data.senderId,
+        },
+      });
+
+      await prisma.message.create({
+        data: {
+          type: "meetRequest",
+          senderId: data.senderId,
+          conversationId: conversation.id,
+          content: {
+            meetRequestId: meetRequestCreated.id,
+            friendId: emitter?.id,
+            friendName: `${emitter?.firstName} ${emitter?.lastName}`,
+            friendPicture: emitter?.picture,
+            latitude: meetRequestCreated.latitude,
+            longitude: meetRequestCreated.longitude,
+            address: meetRequestCreated.address,
+            activity: meetRequestCreated.activity,
+            date: new Date(),
+          },
+        },
+      });
+      return meetRequestCreated;
+    } catch (error) {
+      console.error(error);
+      throw new Error("ERROR IN createMeetRequest");
+    }
+  }
+
   async updateJoinRequestStatus(
     joinRequestId: number,
     JoinRequestStatus: JoinRequestStatus,

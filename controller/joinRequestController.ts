@@ -50,6 +50,22 @@ class JoinRequestController {
     }
   }
 
+  async createMeetRequest(req: Request, res: Response){
+      try {
+      const meetRequest: any = {
+        senderId: Number(req.params.senderId),
+        receiverId: Number(req.body.receiverId),
+        latitude: Number(req.body.latitude),
+        longitude: Number(req.body.longitude),
+        activity: String(req.body.longitude),
+      };
+      const createdMeetRequest = await joinRequestService.createMeetRequest(meetRequest);
+      res.status(200).json(createdMeetRequest);
+    } catch (error) {
+      res.status(500).json({ error: "Error creating new Join Request" });
+    }
+    }
+
   async deleteJoinRequest(req: Request, res: Response) {
     try {
       const joinRequest: any = {
