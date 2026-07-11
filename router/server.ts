@@ -321,6 +321,14 @@ router.post("/join-request/update/:id", async (req: Request, res: Response) => {
   },
 );
 
-app.listen(3000, "0.0.0.0", () => {
-  console.log("Server running", );
-});
+try {
+  const server = app.listen(3000, "0.0.0.0", () => {
+    console.log("Server running on port 3000");
+  });
+
+  server.on("error", (err) => {
+    console.error("Server error:", err);
+  });
+} catch (err) {
+  console.error(err);
+}
