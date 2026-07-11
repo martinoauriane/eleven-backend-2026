@@ -78,6 +78,10 @@ class JoinRequestStore implements IJoinRequestStore {
         where: {
           id: data.eventId,
         },
+        include: {
+          participants: true,
+          createdBy: true,
+        },
       });
 
       const emitter = await prisma.user.findUnique({
@@ -96,7 +100,18 @@ class JoinRequestStore implements IJoinRequestStore {
             friendId: emitter?.id,
             friendName: `${emitter?.firstName} ${emitter?.lastName}`,
             friendPicture: emitter?.picture,
+
             eventId: event?.id,
+            eventName: event?.eventName,
+            eventAddress: event?.eventAddress,
+            eventStartTime: event?.eventStartTime,
+
+            hostId: event?.createdBy.id,
+            hostName: `${event?.createdBy.firstName} ${event?.createdBy.lastName}`,
+            hostPicture: event?.createdBy.picture,
+
+            participants: event?.participants,
+
             joinRequestId: joinRequestCreated.id,
             date: new Date(),
           },

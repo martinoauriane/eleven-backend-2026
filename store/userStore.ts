@@ -342,6 +342,7 @@ class UserStore implements IUserStore {
             type: msg.type,
             senderId: msg.senderId,
             createdAt: msg.createdAt,
+            isRead: msg.isRead,
             status: msg.joinRequest.status,
             content: {
               friendId: msg.joinRequest.emitter.id,
@@ -361,6 +362,7 @@ class UserStore implements IUserStore {
           id: msg.id,
           type: msg.type,
           senderId: msg.senderId,
+          isRead: msg.isRead,
           createdAt: msg.createdAt,
           content: msg.content,
         };
@@ -426,6 +428,8 @@ class UserStore implements IUserStore {
           isRead: true,
         },
       });
+      console.log("conversation read");
+      console.log(conversationRead);
     } catch (error) {
       console.error("Prisma retrieving conversation error:", error);
       throw error;
