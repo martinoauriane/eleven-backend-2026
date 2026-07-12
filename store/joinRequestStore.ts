@@ -39,8 +39,8 @@ class JoinRequestStore implements IJoinRequestStore {
 
       const joinRequestCreated = await prisma.joinRequest.create({
         data: {
-          emitterId: data.friendId,
-          receiverId: data.eventHostId,
+          friendId: data.friendId,
+          eventHostId: data.eventHostId,
           eventId: data.eventId,
           status: "SENT",
         },
@@ -258,14 +258,14 @@ class JoinRequestStore implements IJoinRequestStore {
     }
   }
 
-  async deleteJoinRequest(emitter_id: number, receiver_id: number) {
+  async deleteJoinRequest(friendId: number, eventHostId: number) {
     // delete n'en supprime qu'un seul à la fois
     // deleteMany en supprime plusieurs
     try {
       const result = await prisma.joinRequest.deleteMany({
         where: {
-          emitterId: emitter_id,
-          receiverId: receiver_id,
+          friendId: friendId,
+          eventHostId: eventHostId,
         },
       });
       return result;
