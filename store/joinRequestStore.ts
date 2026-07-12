@@ -25,7 +25,7 @@ class JoinRequestStore implements IJoinRequestStore {
     try {
       const existingJoinRequest = await prisma.joinRequest.findFirst({
         where: {
-          emitterId: data.senderId,
+          friendId: data.friendId,
           eventId: data.eventId,
           status: {
             in: ["SENT", "ACCEPTED", "REJECTED"],
@@ -39,8 +39,8 @@ class JoinRequestStore implements IJoinRequestStore {
 
       const joinRequestCreated = await prisma.joinRequest.create({
         data: {
-          emitterId: data.senderId,
-          receiverId: data.receiverId,
+          emitterId: data.friendId,
+          receiverId: data.eventHostId,
           eventId: data.eventId,
           status: "SENT",
         },
@@ -52,14 +52,14 @@ class JoinRequestStore implements IJoinRequestStore {
             {
               participants: {
                 some: {
-                  id: data.senderId,
+                  id: data.friendId,
                 },
               },
             },
             {
               participants: {
                 some: {
-                  id: data.receiverId,
+                  id: data.eventHostId,
                 },
               },
             },
@@ -69,8 +69,8 @@ class JoinRequestStore implements IJoinRequestStore {
 
       if (!conversation) {
         conversation = await userStore.createConversation(
-          data.senderId,
-          data.receiverId,
+          data.friendId,
+          data.eventHostId,
         );
       }
 
@@ -84,22 +84,22 @@ class JoinRequestStore implements IJoinRequestStore {
         },
       });
 
-      const emitter = await prisma.user.findUnique({
+      const friend = await prisma.user.findUnique({
         where: {
-          id: data.senderId,
+          id: data.friendId,
         },
       });
 
       await prisma.message.create({
         data: {
           type: "joinRequest",
-          senderId: data.senderId,
+          senderId: data.friendId,
           conversationId: conversation.id,
           joinRequestId: joinRequestCreated.id,
           content: {
-            friendId: emitter?.id,
-            friendName: `${emitter?.firstName} ${emitter?.lastName}`,
-            friendPicture: emitter?.picture,
+            friendId: friend?.id,
+            friendName: `${friend?.firstName} ${friend?.lastName}`,
+            friendPicture: friend?.picture,
 
             eventId: event?.id,
             eventName: event?.eventName,
@@ -112,7 +112,6 @@ class JoinRequestStore implements IJoinRequestStore {
 
             participants: event?.participants,
 
-            joinRequestId: joinRequestCreated.id,
             date: new Date(),
           },
         },
@@ -125,24 +124,24 @@ class JoinRequestStore implements IJoinRequestStore {
   }
 
   async getJoinRequest(
-    emitterId: number,
-    receiverId: number,
+    friendId: number,
+    eventHostId: number,
     eventId: number,
-  ): Promise<JoinRequestData | null> {
+  ): Promise<any> {
     try {
-      const response: JoinRequestData | null =
-        await prisma.joinRequest.findFirst({
-          where: {
-            emitterId: emitterId,
-            receiverId: receiverId,
-            eventId: eventId,
+      const message = await prisma.message.findFirst({
+        where: {
+          joinRequest: {
+            friendId,
+            eventHostId,
+            eventId,
           },
-          include: {
-            event: true,
-            emitter: true,
-          },
-        });
-      return response;
+        },
+        include: {
+          joinRequest: true,
+        },
+      });
+      return message;
     } catch (error) {
       console.error(
         "prisma error trying to retrieve specific joinRequest",

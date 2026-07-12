@@ -29,8 +29,8 @@ class JoinRequestService {
   ): Promise<JoinRequestData | null> {
     const response: JoinRequestData | null =
       await joinRequestStore.getJoinRequest(
-        data.senderId,
-        data.receiverId,
+        data.friendId,
+        data.eventHostId,
         data.eventId,
       );
     return response;
@@ -42,8 +42,8 @@ class JoinRequestService {
   }
   async deleteJoinRequest(data: JoinRequestCreate): Promise<any> {
     return await joinRequestStore.deleteJoinRequest(
-      data.senderId,
-      data.receiverId,
+      data.friendId,
+      data.eventHostId,
     );
   }
 }

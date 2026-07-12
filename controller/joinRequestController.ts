@@ -10,8 +10,8 @@ class JoinRequestController {
     try {
       const joinRequest: JoinRequestCreate = {
         eventId: Number(req.params.eventId),
-        senderId: Number(req.body.senderId),
-        receiverId: Number(req.body.receiverId),
+        friendId: Number(req.body.friendId),
+        eventHostId: Number(req.body.eventHostId),
       };
       const joinRequestCreated = await joinRequestService.createJoinRequest(joinRequest);
       res.status(200).json(joinRequestCreated);

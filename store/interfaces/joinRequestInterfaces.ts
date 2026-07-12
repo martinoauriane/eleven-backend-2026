@@ -1,6 +1,6 @@
 export interface JoinRequestCreate {
-  senderId: number;
-  receiverId: number;  
+  eventHostId: number;
+  friendId: number;  
   eventId: number;
 }
 

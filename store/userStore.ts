@@ -65,6 +65,9 @@ class UserStore implements IUserStore {
   }
 
   async getUserById(id: number) {
+    if(id == null){
+      return; 
+    }
     try {
       let user = await prisma.user.findUnique({ where: { id: id } });
       return user;
@@ -318,8 +321,8 @@ class UserStore implements IUserStore {
           sender: true,
           joinRequest: {
             include: {
-              emitter: true,
-              receiver: true,
+              friend: true,
+              eventHost: true,
               event: true,
             },
           },
@@ -345,9 +348,9 @@ class UserStore implements IUserStore {
             isRead: msg.isRead,
             status: msg.joinRequest.status,
             content: {
-              friendId: msg.joinRequest.emitter.id,
-              friendName: `${msg.joinRequest.emitter.firstName} ${msg.joinRequest.emitter.lastName}`,
-              friendPicture: msg.joinRequest.emitter.picture,
+              friendId: msg.joinRequest.friend.id,
+              friendName: `${msg.joinRequest.friend.firstName} ${msg.joinRequest.friend.lastName}`,
+              friendPicture: msg.joinRequest.friend.picture,
               date: msg.createdAt,
               eventId: msg.joinRequest.event.id,
               joinRequestId: msg.joinRequest.id,

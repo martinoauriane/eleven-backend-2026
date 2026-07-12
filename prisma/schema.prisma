@@ -124,19 +124,17 @@ model JoinRequest {
 
   status    JoinRequestStatus @default(SENT)
 
-  emitterId Int
-  receiverId Int
-
+  friendId Int
+  eventHostId Int
   eventId Int
 
-  emitter  User  @relation("EmitterJoinRequest", fields: [emitterId], references: [id])
-  receiver User  @relation("ReceiverJoinRequest", fields: [receiverId], references: [id])
-
+  friend  User  @relation("EmitterJoinRequest", fields: [friendId], references: [id])
+  eventHost User  @relation("ReceiverJoinRequest", fields: [eventHostId], references: [id])
   event     Event @relation(fields: [eventId], references: [id])
 
   message   Message?
 
-  @@unique([emitterId, eventId])
+  @@unique([friendId, eventId])
 }
 
 model MeetRequest {
