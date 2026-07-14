@@ -151,6 +151,34 @@ class JoinRequestStore implements IJoinRequestStore {
     }
   }
 
+  async getUserDailyJoinRequests(day: Date, userId: number) {
+    const start = new Date(day);
+    start.setHours(0, 0, 0, 0);
+    const end = new Date(day);
+    end.setHours(23, 59, 59, 999);
+    try {
+      const allJoinRequest = await prisma.joinRequest.findMany({
+        where: {
+          eventHostId: userId,
+          sentAt: {
+            gte: start,
+            lte: end,
+          },
+        },
+        include:{
+            friend:true,
+            event: true,
+          }
+      });
+      console.log("all join request found");
+      console.log(allJoinRequest);
+      return allJoinRequest;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
   async createMeetRequest(data: any): Promise<any> {
     try {
       const existingMeetRequest = await prisma.meetRequest.findFirst({

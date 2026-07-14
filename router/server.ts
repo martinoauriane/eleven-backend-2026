@@ -304,6 +304,11 @@ router.delete(
 
 // JOIN REQUESTS ENDPOINT
 
+
+router.get("/join-request/daily/:userId", async(req:Request, res:Response)=>{
+  await joinRequestController.getAllUserDailyJoinRequests(req, res);
+})
+
 // create join request 
 router.post("/join-request/create/:eventId", async (req: Request, res: Response) => {
     await joinRequestController.createJoinRequest(req, res);

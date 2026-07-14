@@ -255,6 +255,8 @@ class UserController {
     const conversationId = parseInt(String(req.params.conversationId));
      try {
       let messages = await userService.getMessages(conversationId);
+      console.log("conversation messages");
+      console.log(messages);
       res.status(200).json(messages);
     } catch (error) {
       res.status(500).json({ error: "Error creating conversation" });

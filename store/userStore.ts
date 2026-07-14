@@ -65,8 +65,8 @@ class UserStore implements IUserStore {
   }
 
   async getUserById(id: number) {
-    if(id == null){
-      return; 
+    if (id == null) {
+      return;
     }
     try {
       let user = await prisma.user.findUnique({ where: { id: id } });
@@ -95,13 +95,13 @@ class UserStore implements IUserStore {
   async getUserSavedEvents(userId: number) {
     try {
       const userSavedEvents = await prisma.event.findMany({
-        where:{
-          userId
-        }, 
-        include:{
+        where: {
+          userId,
+        },
+        include: {
           participants: true,
-        }
-      })
+        },
+      });
       return userSavedEvents;
     } catch (error) {
       console.error("Prisma get user favorite events error:", error);
@@ -323,7 +323,18 @@ class UserStore implements IUserStore {
             include: {
               friend: true,
               eventHost: true,
-              event: true,
+              event: {
+                include: {
+                  participants: {
+                    select: {
+                      id: true,
+                      firstName: true,
+                      lastName: true,
+                      picture: true,
+                    },
+                  },
+                },
+              },
             },
           },
         },
@@ -351,12 +362,21 @@ class UserStore implements IUserStore {
               friendId: msg.joinRequest.friend.id,
               friendName: `${msg.joinRequest.friend.firstName} ${msg.joinRequest.friend.lastName}`,
               friendPicture: msg.joinRequest.friend.picture,
+
+              hostId: msg.joinRequest.eventHost.id,
+              hostName: `${msg.joinRequest.eventHost.firstName} ${msg.joinRequest.eventHost.lastName}`,
+              hostPicture: msg.joinRequest.eventHost.picture,
+
               date: msg.createdAt,
+
               eventId: msg.joinRequest.event.id,
               joinRequestId: msg.joinRequest.id,
               eventName: msg.joinRequest.event.eventName,
               eventAddress: msg.joinRequest.event.eventAddress,
               eventStartTime: msg.joinRequest.event.eventStartTime,
+
+              participants: msg.joinRequest.event.participants,
+              participantsNumber: msg.joinRequest.event.participants.length,
             },
           };
         }
@@ -431,8 +451,6 @@ class UserStore implements IUserStore {
           isRead: true,
         },
       });
-      console.log("conversation read");
-      console.log(conversationRead);
     } catch (error) {
       console.error("Prisma retrieving conversation error:", error);
       throw error;
