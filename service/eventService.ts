@@ -54,7 +54,7 @@ class EventService implements IEventService {
   }
 
   async loadNotifications(eventId:number){
-    return await eventStore.loadNotifications(eventId);
+    return await eventStore.loadEventNotifications(eventId);
   }
 
   async getUserParticipatingEvents(userId:number){

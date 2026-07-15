@@ -244,7 +244,7 @@ class EventStore implements IEventStore {
     }
   }
 
-  async loadNotifications(eventId: number) {
+  async loadEventNotifications(eventId: number) {
     try {
       const notifications = await prisma.notification.findMany({
         where: { eventId },

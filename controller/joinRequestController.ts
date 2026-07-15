@@ -6,14 +6,19 @@ const joinRequestService = new JoinRequestService();
 
 class JoinRequestController {
   async createJoinRequest(req: Request, res: Response) {
+    console.log('creating join request');
     try {
       const joinRequest: JoinRequestCreate = {
         eventId: Number(req.params.eventId),
         friendId: Number(req.body.friendId),
         eventHostId: Number(req.body.eventHostId),
       };
+      console.log("joinrequest");
+      console.log(joinRequest);
       const joinRequestCreated =
         await joinRequestService.createJoinRequest(joinRequest);
+        console.log("join request successfullly created");
+        console.log(joinRequestCreated);
       res.status(200).json(joinRequestCreated);
     } catch (error) {
       res.status(500).json({ error: "Error creating new Join Request" });

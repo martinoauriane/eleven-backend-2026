@@ -163,7 +163,7 @@ class EventController {
     }
   }
 
-  async loadNotifications(req: Request, res: Response) {
+  async loadEventNotifications(req: Request, res: Response) {
     let eventId = parseInt(String(req.params.eventId));
     try {
       let notifications = await eventService.loadNotifications(eventId);
@@ -174,6 +174,7 @@ class EventController {
     }
   }
 
+ 
   async deleteParticipant(req: Request, res: Response) {
     const userId = Number(req.params.userId);
     const eventId = Number(req.body.userId);

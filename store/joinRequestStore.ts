@@ -46,6 +46,9 @@ class JoinRequestStore implements IJoinRequestStore {
         },
       });
 
+      console.log("join request successfully created");
+      console.log(joinRequestCreated);
+
       let conversation = await prisma.conversation.findFirst({
         where: {
           AND: [
@@ -90,7 +93,7 @@ class JoinRequestStore implements IJoinRequestStore {
         },
       });
 
-      await prisma.message.create({
+     let joinRequestMessage = await prisma.message.create({
         data: {
           type: "joinRequest",
           senderId: data.friendId,
@@ -116,6 +119,8 @@ class JoinRequestStore implements IJoinRequestStore {
           },
         },
       });
+      console.log("join request message succesfully created");
+      console.log(joinRequestMessage);
       return joinRequestCreated;
     } catch (error) {
       console.error(error);

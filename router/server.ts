@@ -275,8 +275,9 @@ router.post(`/event/:eventId/:userId/notifications`, async(req:Request, res:Resp
 })
 // retrieve event notifications
 router.get(`/event/:eventId/notifications`, async(req:Request, res:Response) => {
-  await eventController.loadNotifications(req, res);
+  await eventController.loadEventNotifications(req, res);
 })
+
 
 // upload photos
 router.post(
