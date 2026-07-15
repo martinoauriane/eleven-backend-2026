@@ -1,13 +1,11 @@
 import { EventService } from "../service/eventService";
 import { Request, Response } from "express";
-import { EventCreate } from "../store/interfaces/eventInterfaces";
 const eventService = new EventService();
 
 class EventController {
-
   async newEvent(req: Request, res: Response) {
     const userId = parseInt(String(req.params.userId));
-    const newEvent: EventCreate = {
+    const newEvent: any = {
       userId: userId,
       eventName: String(req.body.eventName),
       eventLat: parseFloat(req.body.eventLat),
@@ -25,6 +23,28 @@ class EventController {
     try {
       const eventCreated = await eventService.createEvent(newEvent);
       res.status(200).json(eventCreated);
+    } catch (error) {
+      res.status(500).json({ error: "Error creating new event" });
+    }
+  }
+
+  async createEventInvite(req: Request, res: Response): Promise<any> {
+    const conversationId = Number(req.params.id);
+    const eventId = req.body.eventId;
+    const eventHostId = req.body.eventHostId;
+    const friendId = Number(req.body.friendId);
+    const type = req.body.type;
+    const content = req.body.content;
+    try {
+      const eventInvite = await eventService.createEventInvite(
+        type,
+        eventHostId,
+        friendId,
+        content,
+        eventId,
+        conversationId,
+      );
+      res.status(200).json(eventInvite);
     } catch (error) {
       res.status(500).json({ error: "Error creating new event" });
     }
@@ -148,14 +168,18 @@ class EventController {
     }
   }
 
-  async addNotifications(req: Request, res: Response){
+  async addNotifications(req: Request, res: Response) {
     let eventId = parseInt(String(req.params.eventId));
     let userId = parseInt(String(req.params.userId));
     let userName = String(req.body.userName);
     console.log("userNae");
     console.log(userName);
     try {
-      let notifications = await eventService.addNotifications(userName, userId, eventId);
+      let notifications = await eventService.addNotifications(
+        userName,
+        userId,
+        eventId,
+      );
       return res.status(200).json(notifications);
     } catch (error) {
       console.error(error);
@@ -174,7 +198,6 @@ class EventController {
     }
   }
 
- 
   async deleteParticipant(req: Request, res: Response) {
     const userId = Number(req.params.userId);
     const eventId = Number(req.body.userId);
@@ -195,25 +218,25 @@ class EventController {
     }
   }
 
- async addPhotos(req: Request, res: Response) {
-  const eventId = Number(req.params.eventId);
-  const { photoUrl, userId } = req.body;
-  console.log("photoUrl", photoUrl);
-  console.log("eventId", eventId);
-  console.log("userId", userId);
-  try {
-    const result = await eventService.addPhoto(eventId, userId, photoUrl);
-    res.status(200).json(result);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error adding photo" });
+  async addPhotos(req: Request, res: Response) {
+    const eventId = Number(req.params.eventId);
+    const { photoUrl, userId } = req.body;
+    console.log("photoUrl", photoUrl);
+    console.log("eventId", eventId);
+    console.log("userId", userId);
+    try {
+      const result = await eventService.addPhoto(eventId, userId, photoUrl);
+      res.status(200).json(result);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Error adding photo" });
+    }
   }
-}
 
   async getEventPhotos(req: Request, res: Response) {
     const eventId = Number(req.params.eventId);
     try {
-    const photos = await eventService.getEventPhotos(eventId);
+      const photos = await eventService.getEventPhotos(eventId);
       res.status(200).json(photos);
     } catch (error) {
       res.status(500).json({ error: "Error deleting user" });

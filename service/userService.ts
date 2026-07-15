@@ -90,8 +90,8 @@ class UserService {
     return await userStore.markConversationAsRead(conversationId, userId);
   }
 
-  async addMessage(conversationId: number, type:string, content:any, senderId: number, joinRequestId: number){
-    return await userStore.addMessage(conversationId, type, content, senderId, joinRequestId);
+  async addMessage(conversationId: number, type:string, content:any, senderId: number, joinRequestId: number, meetRequestId:number){
+    return await userStore.addMessage(conversationId, type, content, senderId, joinRequestId, meetRequestId);
   }
 
   async getMessages(conversationId: number){

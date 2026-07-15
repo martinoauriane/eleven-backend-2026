@@ -381,6 +381,28 @@ class UserStore implements IUserStore {
           };
         }
 
+        if (msg.type === "event") {
+          const event = msg.content as any;
+
+          return {
+            id: msg.id,
+            type: msg.type,
+            senderId: msg.senderId,
+            createdAt: msg.createdAt,
+            isRead: msg.isRead,
+            content: {
+              title: event.title,
+              description: event.description,
+              location: event.location,
+              date: event.date,
+              eventId: event.eventId,
+              hostId: msg.sender.id,
+              hostName: `${msg.sender.firstName} ${msg.sender.lastName}`,
+              hostPicture: msg.sender.picture,
+            },
+          };
+        }
+
         return {
           id: msg.id,
           type: msg.type,
@@ -456,19 +478,28 @@ class UserStore implements IUserStore {
       throw error;
     }
   }
-
   async addMessage(
     conversationId: number,
     type: string,
     content: any,
     senderId: number,
-    joinRequestId: number,
+    joinRequestId?: number,
+    meetRequestId?: number,
   ) {
     try {
       const newMessage = await prisma.message.create({
         data: {
           type,
           content,
+
+          conversation: {
+            connect: { id: conversationId },
+          },
+
+          sender: {
+            connect: { id: senderId },
+          },
+
           joinRequest: joinRequestId
             ? {
                 connect: {
@@ -476,17 +507,20 @@ class UserStore implements IUserStore {
                 },
               }
             : undefined,
-          conversation: {
-            connect: { id: conversationId },
-          },
-          sender: {
-            connect: { id: senderId },
-          },
+
+          meetRequest: meetRequestId
+            ? {
+                connect: {
+                  id: meetRequestId,
+                },
+              }
+            : undefined,
         },
         include: {
           sender: true,
         },
       });
+
       return newMessage;
     } catch (error) {
       console.error("Error adding message:", error);

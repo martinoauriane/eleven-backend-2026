@@ -20,6 +20,7 @@ interface IEventStore {
 }
 
 class EventStore implements IEventStore {
+
   async createEvent(data: EventCreate): Promise<any> {
     const existingEvent = await prisma.event.findFirst({
       where: {
@@ -50,6 +51,79 @@ class EventStore implements IEventStore {
       }
     }
   }
+
+  async createEventInvite(
+  type:any,
+  eventHostId: number,  // L'hôte qui invite
+  friendId: number,    // L'ami invité
+  content:any,
+  eventId: number,      // L'événement
+  conversationId:number
+   ) {
+  try {
+
+    // 1. Vérifier que l'événement existe
+    const event = await prisma.event.findUnique({
+      where: { id: eventId },
+      include: { createdBy: true, participants: true },
+    });
+    if (!event) throw new Error("Event not found");
+
+    // 2. Vérifier que l'hôte est bien le créateur de l'événement
+    if (event.userId !== eventHostId) {
+      throw new Error("Only the event host can send invites");
+    }
+
+    // 3. Trouver ou créer une conversation entre l'hôte et l'ami
+    let conversation = await prisma.conversation.findFirst({
+      where: {
+        participants: {
+          every: { id: { in: [eventHostId, friendId] } },
+        },
+      },
+    });
+
+    if (!conversation) {
+      conversation = await prisma.conversation.create({
+        data: {
+          participants: {
+            connect: [{ id: eventHostId }, { id: friendId }],
+          },
+        },
+      });
+    }
+
+    // 4. Récupérer les infos de l'hôte et de l'ami
+    const host = await prisma.user.findUnique({ where: { id: eventHostId } });
+    const friend = await prisma.user.findUnique({ where: { id: friendId } });
+    if (!host || !friend) throw new Error("User not found");
+
+    // 5. Créer un message pour l'invitation (SANS JoinRequest)
+    const message = await prisma.message.create({
+      data: {
+        type: "event",
+        senderId: eventHostId,
+        conversationId: conversation.id,
+        content: {
+          hostId: host.id,
+          hostName: `${host.firstName} ${host.lastName}`,
+          hostPicture: host.picture,
+          friendId: friend.id,
+          friendName: `${friend.firstName} ${friend.lastName}`,
+          eventId: event.id,
+          eventName: event.eventName,
+          eventAddress: event.eventAddress,
+          eventStartTime: event.eventStartTime,
+          date: new Date(),
+        },
+      },
+    });
+    return message;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to send event invite");
+  }
+}
 
   async getEventById(id: number): Promise<any> {
     try {

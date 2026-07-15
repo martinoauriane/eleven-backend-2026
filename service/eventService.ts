@@ -16,8 +16,12 @@ interface IEventService {
 }
 
 class EventService implements IEventService {
-  async createEvent(newEvent: EventCreate): Promise<any> {
+  async createEvent(newEvent: any): Promise<any> {
     return await eventStore.createEvent(newEvent);
+  }
+
+  async createEventInvite(type:any, eventHostId:number, friendId: number, content:any, eventId:number, conversationId: number):Promise<any> {
+    return await eventStore.createEventInvite(type, eventHostId, friendId, content, eventId, conversationId );
   }
 
   async getEvent(id: number): Promise<any> {

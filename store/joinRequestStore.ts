@@ -21,6 +21,7 @@ interface IJoinRequestStore {
 }
 
 class JoinRequestStore implements IJoinRequestStore {
+  
   async CreateJoinRequest(data: JoinRequestCreate): Promise<any> {
     try {
       const existingJoinRequest = await prisma.joinRequest.findFirst({

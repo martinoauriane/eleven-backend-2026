@@ -237,19 +237,35 @@ class UserController {
     }
   }
 
-  async addMessage(req:Request, res:Response){
-    const conversationId = parseInt(String(req.params.conversationId));
-    const content = req.body.content;
-    const type = req.body.type;
-    const joinRequestId = req.body.joinRequestId;
-    const senderId = Number(req.body.senderId);
-     try {
-      let conversations = await userService.addMessage(conversationId, type, content, senderId, joinRequestId);
-      res.status(200).json(conversations);
-    } catch (error) {
-      console.error(error);
-    }
+  async addMessage(req: Request, res: Response) {
+  try {
+    const conversationId = Number(req.params.conversationId);
+
+    const {
+      senderId,
+      type,
+      content,
+      joinRequestId,
+      meetRequestId,
+    } = req.body;
+
+    const message = await userService.addMessage(
+      conversationId,
+      type,
+      content,
+      Number(senderId),
+      joinRequestId,
+      meetRequestId,
+    );
+
+    return res.status(201).json(message);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Unable to add message",
+    });
   }
+}
 
   async getMessages(req:Request, res:Response){
     const conversationId = parseInt(String(req.params.conversationId));

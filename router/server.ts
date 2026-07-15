@@ -211,6 +211,12 @@ router.post(
   },
 );
 
+router.post("/event/create-invite/:conversationId", 
+  async (req: Request, res: Response) => {
+    await eventController.createEventInvite(req, res);
+  },
+)
+
 // operationnal
 router.get(
   "/event/getParticipants/:eventId",
