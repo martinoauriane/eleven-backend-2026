@@ -109,14 +109,20 @@ async createEventInvite(
     }
 
     // 5. Récupérer les infos de l'hôte
-    const host = await prisma.user.findUnique({
+    const sender = await prisma.user.findUnique({
       where: {
-        id: eventHostId,
+        id: senderId,
       },
     });
 
-    if (!host) {
-      throw new Error("Host not found");
+    const receiver =  await prisma.user.findUnique({
+      where: {
+        id: receiverId,
+      },
+    });
+
+    if (!sender || !receiver) {
+      throw new Error("sender/receiver not found");
     }
 
     // 6. Créer le message d'invitation
@@ -127,17 +133,18 @@ async createEventInvite(
         conversationId,
         type,
         content: {
-          ...content,
-          eventId: event.id,
+          senderId: senderId, 
+          senderName : `${sender.firstName} ${sender.lastName}`,
+          receiverId: receiverId,
+          receiverName: `${receiver.firstName} ${receiver.lastName}`,
           eventName: event.eventName,
+          eventId: event.id,
           eventStartTime: event.eventStartTime,
           eventAddress: event.eventAddress,
-          hostId: host.id,
-          hostName: `${host.firstName} ${host.lastName}`,
-          hostPicture: host.picture,
-          createdAt: new Date(),
-          senderId: senderId, 
-          receiverId: receiverId,
+          eventHostId: content.eventHostId,
+          eventHostName : content.hostName,
+          eventHostPicture: content.eventHostPicture,
+          sentAt: new Date(),
         },
       },
     });
