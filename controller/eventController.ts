@@ -30,13 +30,20 @@ class EventController {
   }
 
   async createEventInvite(req: Request, res: Response): Promise<any> {
-    const senderId = Number(req.body.friendId);
+    const senderId = Number(req.body.senderId);
     const receiverId = req.body.receiverId;
     const eventId = req.body.eventId;
     const eventHostId = req.body.eventHostId;
     const content = req.body.content;
-    const conversationId = Number(req.params.id);
+    const conversationId = Number(req.params.conversationId);
     const type = req.body.type;
+    console.log(senderId);
+    console.log(receiverId);
+    console.log(eventId);
+    console.log(eventHostId);
+    console.log(content);
+    console.log(conversationId);
+    console.log(type);
     try {
       const eventInvite = await eventService.createEventInvite(senderId, receiverId, eventId, eventHostId, content, conversationId, type);
       console.log("event invite succesfully created");

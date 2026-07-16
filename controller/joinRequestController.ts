@@ -5,16 +5,15 @@ import { JoinRequestCreate } from "../store/interfaces/joinRequestInterfaces";
 const joinRequestService = new JoinRequestService();
 
 class JoinRequestController {
+
   async createJoinRequest(req: Request, res: Response) {
-    console.log('creating join request');
     try {
-      const joinRequest: JoinRequestCreate = {
+      const joinRequest: any = {
         eventId: Number(req.params.eventId),
         friendId: Number(req.body.friendId),
         eventHostId: Number(req.body.eventHostId),
+        receiverId: Number(req.body.receiverId)
       };
-      console.log("joinrequest");
-      console.log(joinRequest);
       const joinRequestCreated =
         await joinRequestService.createJoinRequest(joinRequest);
         console.log("join request successfullly created");

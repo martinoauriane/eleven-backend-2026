@@ -136,6 +136,8 @@ async createEventInvite(
           hostName: `${host.firstName} ${host.lastName}`,
           hostPicture: host.picture,
           createdAt: new Date(),
+          senderId: senderId, 
+          receiverId: receiverId,
         },
       },
     });

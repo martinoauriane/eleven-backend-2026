@@ -10,7 +10,7 @@ const joinRequestStore = new JoinRequestStore();
 type JoinRequestStatus = "NONE" | "SENT" | "ACCEPTED" | "REJECTED";
 
 class JoinRequestService {
-  async createJoinRequest(data: JoinRequestCreate): Promise<any> {
+  async createJoinRequest(data: any): Promise<any> {
     return await joinRequestStore.CreateJoinRequest(data);
   }
 

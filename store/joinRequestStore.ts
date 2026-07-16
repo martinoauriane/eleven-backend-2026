@@ -22,7 +22,7 @@ interface IJoinRequestStore {
 
 class JoinRequestStore implements IJoinRequestStore {
   
-  async CreateJoinRequest(data: JoinRequestCreate): Promise<any> {
+  async CreateJoinRequest(data: any): Promise<any> {
     try {
       const existingJoinRequest = await prisma.joinRequest.findFirst({
         where: {
@@ -98,6 +98,7 @@ class JoinRequestStore implements IJoinRequestStore {
         data: {
           type: "joinRequest",
           senderId: data.friendId,
+          receiverId: data.receiverId,
           conversationId: conversation.id,
           joinRequestId: joinRequestCreated.id,
           content: {
@@ -246,10 +247,11 @@ class JoinRequestStore implements IJoinRequestStore {
         },
       });
 
-      await prisma.message.create({
+      let meetRequestMessage = await prisma.message.create({
         data: {
           type: "meetRequest",
           senderId: data.senderId,
+          receiverId: data.receiverId,
           conversationId: conversation.id,
           content: {
             meetRequestId: meetRequestCreated.id,
