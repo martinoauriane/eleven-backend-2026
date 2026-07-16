@@ -3,7 +3,7 @@ import { EventCreate, EventUpdate } from "../store/interfaces/eventInterfaces";
 
 const eventStore = new EventStore();
 
-type JoinRequestStatus = "NONE" | "SENT" | "ACCEPTED" | "REJECTED"
+type JoinRequestStatus = "NONE" | "SENT" | "ACCEPTED" | "REJECTED";
 
 interface IEventService {
   createEvent(data: EventCreate): Promise<any>;
@@ -20,8 +20,24 @@ class EventService implements IEventService {
     return await eventStore.createEvent(newEvent);
   }
 
-  async createEventInvite(type:any, eventHostId:number, friendId: number, content:any, eventId:number, conversationId: number):Promise<any> {
-    return await eventStore.createEventInvite(type, eventHostId, friendId, content, eventId, conversationId );
+  async createEventInvite(
+    senderId: number,
+    receiverId: number,
+    eventId: number,
+    eventHostId: number,
+    content: any,
+    conversationId: number,
+    type: string,
+  ): Promise<any> {
+    return await eventStore.createEventInvite(
+      senderId,
+      receiverId,
+      eventId,
+      eventHostId,
+      content,
+      conversationId,
+      type,
+    );
   }
 
   async getEvent(id: number): Promise<any> {
@@ -49,19 +65,19 @@ class EventService implements IEventService {
     return await eventStore.getEventParticipants(eventId);
   }
 
-  async getEventsCreatedByUser(userId: number){
+  async getEventsCreatedByUser(userId: number) {
     return await eventStore.getEventsCreatedByUser(userId);
   }
 
-  async addNotifications(userName: string, userId: number, eventId: number){
+  async addNotifications(userName: string, userId: number, eventId: number) {
     return await eventStore.addNotifications(userName, userId, eventId);
   }
 
-  async loadNotifications(eventId:number){
+  async loadNotifications(eventId: number) {
     return await eventStore.loadEventNotifications(eventId);
   }
 
-  async getUserParticipatingEvents(userId:number){
+  async getUserParticipatingEvents(userId: number) {
     return await eventStore.getUserParticipatingEvents(userId);
   }
 
@@ -69,18 +85,17 @@ class EventService implements IEventService {
     return await eventStore.deleteParticipant(userId, eventId);
   }
 
-  async addPhoto(eventId:number, userId:number, photos:any){
+  async addPhoto(eventId: number, userId: number, photos: any) {
     return await eventStore.addPhoto(eventId, userId, photos);
   }
 
-   async getEventPhotos(eventId:number){
+  async getEventPhotos(eventId: number) {
     return await eventStore.getEventPhotos(eventId);
   }
 
-   async deletePhoto(photoId:number){
+  async deletePhoto(photoId: number) {
     return await eventStore.deletePhoto(photoId);
   }
-
 
   async deleteEvent(id: number): Promise<any> {
     return await eventStore.deleteEvent(id);

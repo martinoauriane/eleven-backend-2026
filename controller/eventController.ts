@@ -20,6 +20,7 @@ class EventController {
       isFull: req.body.isFull,
       isPublic: req.body.isPublic,
     };
+    console.log("new even")
     try {
       const eventCreated = await eventService.createEvent(newEvent);
       res.status(200).json(eventCreated);
@@ -29,24 +30,20 @@ class EventController {
   }
 
   async createEventInvite(req: Request, res: Response): Promise<any> {
-    const conversationId = Number(req.params.id);
+    const senderId = Number(req.body.friendId);
+    const receiverId = req.body.receiverId;
     const eventId = req.body.eventId;
     const eventHostId = req.body.eventHostId;
-    const friendId = Number(req.body.friendId);
-    const type = req.body.type;
     const content = req.body.content;
+    const conversationId = Number(req.params.id);
+    const type = req.body.type;
     try {
-      const eventInvite = await eventService.createEventInvite(
-        type,
-        eventHostId,
-        friendId,
-        content,
-        eventId,
-        conversationId,
-      );
+      const eventInvite = await eventService.createEventInvite(senderId, receiverId, eventId, eventHostId, content, conversationId, type);
+      console.log("event invite succesfully created");
+      console.log(eventInvite);
       res.status(200).json(eventInvite);
     } catch (error) {
-      res.status(500).json({ error: "Error creating new event" });
+      res.status(500).json({ error: "Error creating new event invite" });
     }
   }
 

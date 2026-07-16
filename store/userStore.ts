@@ -383,7 +383,8 @@ class UserStore implements IUserStore {
 
         if (msg.type === "event") {
           const event = msg.content as any;
-
+          console.log("event");
+          console.log(event);
           return {
             id: msg.id,
             type: msg.type,
@@ -396,9 +397,9 @@ class UserStore implements IUserStore {
               location: event.location,
               date: event.date,
               eventId: event.eventId,
-              hostId: msg.sender.id,
-              hostName: `${msg.sender.firstName} ${msg.sender.lastName}`,
-              hostPicture: msg.sender.picture,
+              friendId: msg.sender.id,
+              friendName: `${msg.sender.firstName} ${msg.sender.lastName}`,
+              friendPicture: msg.sender.picture,
             },
           };
         }
@@ -478,11 +479,13 @@ class UserStore implements IUserStore {
       throw error;
     }
   }
+
   async addMessage(
     conversationId: number,
     type: string,
     content: any,
     senderId: number,
+    receiverId: number,
     joinRequestId?: number,
     meetRequestId?: number,
   ) {
@@ -491,36 +494,31 @@ class UserStore implements IUserStore {
         data: {
           type,
           content,
-
           conversation: {
             connect: { id: conversationId },
           },
-
           sender: {
             connect: { id: senderId },
           },
-
+          receiver: {
+            connect: { id: receiverId },
+          },
           joinRequest: joinRequestId
             ? {
-                connect: {
-                  id: joinRequestId,
-                },
+                connect: { id: joinRequestId },
               }
             : undefined,
-
           meetRequest: meetRequestId
             ? {
-                connect: {
-                  id: meetRequestId,
-                },
+                connect: { id: meetRequestId },
               }
             : undefined,
         },
         include: {
           sender: true,
+          receiver: true,
         },
       });
-
       return newMessage;
     } catch (error) {
       console.error("Error adding message:", error);

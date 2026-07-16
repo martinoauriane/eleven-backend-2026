@@ -176,8 +176,6 @@ class JoinRequestStore implements IJoinRequestStore {
             event: true,
           }
       });
-      console.log("all join request found");
-      console.log(allJoinRequest);
       return allJoinRequest;
     } catch (error) {
       console.error(error);

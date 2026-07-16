@@ -51,73 +51,95 @@ class EventStore implements IEventStore {
       }
     }
   }
-
-  async createEventInvite(
-  type:any,
-  eventHostId: number,  // L'hôte qui invite
-  friendId: number,    // L'ami invité
-  content:any,
-  eventId: number,      // L'événement
-  conversationId:number
-   ) {
+async createEventInvite(
+  senderId: number,
+  receiverId: number,
+  eventId: number,
+  eventHostId: number,
+  content: any,
+  conversationId: number,
+  type: string,
+) {
   try {
-
     // 1. Vérifier que l'événement existe
     const event = await prisma.event.findUnique({
       where: { id: eventId },
-      include: { createdBy: true, participants: true },
+      include: {
+        createdBy: true,
+        participants: true,
+      },
     });
-    if (!event) throw new Error("Event not found");
 
-    // 2. Vérifier que l'hôte est bien le créateur de l'événement
+    if (!event) {
+      throw new Error("Event not found");
+    }
+
+    // 2. Vérifier que l'hôte est bien le créateur
     if (event.userId !== eventHostId) {
       throw new Error("Only the event host can send invites");
     }
 
-    // 3. Trouver ou créer une conversation entre l'hôte et l'ami
-    let conversation = await prisma.conversation.findFirst({
+    // 3. Vérifier qu'une invitation n'existe pas déjà
+    const existingEventInvite = await prisma.message.findFirst({
       where: {
-        participants: {
-          every: { id: { in: [eventHostId, friendId] } },
+        senderId,
+        receiverId,
+        conversationId,
+        type,
+        content: {
+          path: ["eventId"],
+          equals: eventId,
         },
+      },
+    });
+
+    if (existingEventInvite) {
+      return existingEventInvite;
+    }
+
+    // 4. Vérifier que la conversation existe
+    const conversation = await prisma.conversation.findUnique({
+      where: {
+        id: conversationId,
       },
     });
 
     if (!conversation) {
-      conversation = await prisma.conversation.create({
-        data: {
-          participants: {
-            connect: [{ id: eventHostId }, { id: friendId }],
-          },
-        },
-      });
+      throw new Error("Conversation not found");
     }
 
-    // 4. Récupérer les infos de l'hôte et de l'ami
-    const host = await prisma.user.findUnique({ where: { id: eventHostId } });
-    const friend = await prisma.user.findUnique({ where: { id: friendId } });
-    if (!host || !friend) throw new Error("User not found");
+    // 5. Récupérer les infos de l'hôte
+    const host = await prisma.user.findUnique({
+      where: {
+        id: eventHostId,
+      },
+    });
 
-    // 5. Créer un message pour l'invitation (SANS JoinRequest)
+    if (!host) {
+      throw new Error("Host not found");
+    }
+
+    // 6. Créer le message d'invitation
     const message = await prisma.message.create({
       data: {
-        type: "event",
-        senderId: eventHostId,
-        conversationId: conversation.id,
+        senderId,
+        receiverId,
+        conversationId,
+        type,
         content: {
+          ...content,
+          eventId: event.id,
+          eventName: event.eventName,
+          eventStartTime: event.eventStartTime,
+          eventAddress: event.eventAddress,
           hostId: host.id,
           hostName: `${host.firstName} ${host.lastName}`,
           hostPicture: host.picture,
-          friendId: friend.id,
-          friendName: `${friend.firstName} ${friend.lastName}`,
-          eventId: event.id,
-          eventName: event.eventName,
-          eventAddress: event.eventAddress,
-          eventStartTime: event.eventStartTime,
-          date: new Date(),
+          createdAt: new Date(),
         },
       },
     });
+
     return message;
   } catch (error) {
     console.error(error);

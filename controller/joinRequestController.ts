@@ -59,8 +59,6 @@ class JoinRequestController {
       const day = new Date();
       let userId = Number(req.params.userId);
       const allUserJoinRequest = await joinRequestService.getAllUserDailyJoinRequests(day, userId);
-      console.log("allUserJoinRequest");
-      console.log(allUserJoinRequest);
       res.status(200).json(allUserJoinRequest);
     } catch (error) {
       res.status(500).json({ error: "Error creating new Join Request" });

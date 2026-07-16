@@ -247,6 +247,7 @@ class UserController {
       content,
       joinRequestId,
       meetRequestId,
+      receiverId,
     } = req.body;
 
     const message = await userService.addMessage(
@@ -254,6 +255,7 @@ class UserController {
       type,
       content,
       Number(senderId),
+      Number(receiverId),
       joinRequestId,
       meetRequestId,
     );
@@ -271,7 +273,6 @@ class UserController {
     const conversationId = parseInt(String(req.params.conversationId));
      try {
       let messages = await userService.getMessages(conversationId);
-      console.log("conversation messages");
       console.log(messages);
       res.status(200).json(messages);
     } catch (error) {

@@ -37,7 +37,6 @@ class JoinRequestService {
   }
 
    async getAllUserDailyJoinRequests(day:Date, userId:number) {
-    console.log("inside daily join request service");
         return await joinRequestStore.getUserDailyJoinRequests(day, userId);
     }
 
