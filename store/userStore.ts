@@ -383,7 +383,7 @@ class UserStore implements IUserStore {
 
         if (msg.type === "event") {
           const event = msg.content as any;
-          console.log("event");
+          console.log("EVENT FROM DB");
           console.log(event);
           return {
             id: msg.id,
@@ -392,14 +392,25 @@ class UserStore implements IUserStore {
             createdAt: msg.createdAt,
             isRead: msg.isRead,
             content: {
-              title: event.title,
-              description: event.description,
-              location: event.location,
-              date: event.date,
+              eventName: event.eventName,
               eventId: event.eventId,
-              friendId: msg.sender.id,
-              friendName: `${msg.sender.firstName} ${msg.sender.lastName}`,
-              friendPicture: msg.sender.picture,
+              eventDescription: event.eventDescription,
+              eventStartTime: event.eventStartTime, 
+              eventEndTime: event.eventEndTime, 
+              eventAddress: event.eventLocation, 
+
+              hostName: event.hostName,
+              hostPicture: event.hostPicture,
+              hostId: event.hostId,
+
+              senderName: event.senderName, 
+              senderId: event.senderId, 
+              senderPicture : msg.sender.picture,
+
+              receiverName: event.receiverName, 
+              receiverId: event.receiverId, 
+
+              participants: event.participants
             },
           };
         }
