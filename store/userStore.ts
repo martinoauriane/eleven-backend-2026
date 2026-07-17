@@ -397,7 +397,7 @@ class UserStore implements IUserStore {
               eventDescription: event.eventDescription,
               eventStartTime: event.eventStartTime, 
               eventEndTime: event.eventEndTime, 
-              eventAddress: event.eventLocation, 
+              eventAddress: event.eventAddress, 
 
               hostName: event.hostName,
               hostPicture: event.hostPicture,
@@ -405,7 +405,7 @@ class UserStore implements IUserStore {
 
               senderName: event.senderName, 
               senderId: event.senderId, 
-              senderPicture : msg.sender.picture,
+              senderPicture : event.senderPicture,
 
               receiverName: event.receiverName, 
               receiverId: event.receiverId, 

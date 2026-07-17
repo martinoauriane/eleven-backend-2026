@@ -131,7 +131,7 @@ class EventStore implements IEventStore {
           senderId,
           receiverId,
           conversationId,
-          type,
+          type,          
           content: {
             senderId,
             senderName: `${sender.firstName} ${sender.lastName}`,
@@ -152,11 +152,12 @@ class EventStore implements IEventStore {
             eventAddress: event.eventAddress,
 
             participants: event.participants,
-
-            sentAt: new Date(),
           },
         },
       });
+
+      console.log("event message created");
+      console.log(message);
 
       return message;
     } catch (error) {
