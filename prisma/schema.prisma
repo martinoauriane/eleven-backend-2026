@@ -187,7 +187,8 @@ model Message {
   id             Int      @id @default(autoincrement())
   type           String
   content        Json
-  createdAt      DateTime @default(now())
+
+  sentAt         DateTime @default(now())
 
   isRead         Boolean  @default(false)
   readAt         DateTime?
@@ -197,14 +198,14 @@ model Message {
 
   conversationId Int
   joinRequestId  Int? @unique
-  meetRequestId Int? @unique
+  meetRequestId  Int? @unique
 
   sender         User         @relation(fields: [senderId], references: [id])
-  receiver       User @relation("MessageReceiver", fields: [receiverId], references: [id])
+  receiver       User         @relation("MessageReceiver", fields: [receiverId], references: [id])
 
   conversation   Conversation @relation(fields: [conversationId], references: [id])
   joinRequest    JoinRequest? @relation(fields: [joinRequestId], references: [id])
-  meetRequest MeetRequest? @relation(fields: [meetRequestId], references: [id])
+  meetRequest    MeetRequest? @relation(fields: [meetRequestId], references: [id])
 }
 
 model Notification {

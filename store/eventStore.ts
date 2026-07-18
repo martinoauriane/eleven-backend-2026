@@ -359,12 +359,28 @@ class EventStore implements IEventStore {
     }
   }
 
-  async loadEventNotifications(eventId: number) {
+  async loadEventsNotifications(userId:number, startOfDay:any, endOfDay:any) {
     try {
       const notifications = await prisma.notification.findMany({
-        where: { eventId },
-        orderBy: { createdAt: "desc" },
-      });
+      where: {
+        event: {
+          userId: userId,  
+        },
+        createdAt: {
+          gte: startOfDay,
+          lte: endOfDay,
+        },
+      },
+      include: {
+        sender: true,
+        receiver: true,
+        event: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
       if (!notifications) {
         throw new Error("Error");
       }

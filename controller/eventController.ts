@@ -20,7 +20,7 @@ class EventController {
       isFull: req.body.isFull,
       isPublic: req.body.isPublic,
     };
-    console.log("new even")
+    console.log("new even");
     try {
       const eventCreated = await eventService.createEvent(newEvent);
       res.status(200).json(eventCreated);
@@ -45,7 +45,15 @@ class EventController {
     console.log(conversationId);
     console.log(type);
     try {
-      const eventInvite = await eventService.createEventInvite(senderId, receiverId, eventId, eventHostId, content, conversationId, type);
+      const eventInvite = await eventService.createEventInvite(
+        senderId,
+        receiverId,
+        eventId,
+        eventHostId,
+        content,
+        conversationId,
+        type,
+      );
       console.log("event invite succesfully created");
       console.log(eventInvite);
       res.status(200).json(eventInvite);
@@ -191,10 +199,19 @@ class EventController {
     }
   }
 
-  async loadEventNotifications(req: Request, res: Response) {
-    let eventId = parseInt(String(req.params.eventId));
+  async loadEventsNotifications(req: Request, res: Response) {
+    let userId = parseInt(String(req.params.userId));
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+
+    const endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59, 999);
     try {
-      let notifications = await eventService.loadNotifications(eventId);
+      let notifications = await eventService.loadEventsNotifications(
+         userId,
+         startOfDay, 
+         endOfDay
+      );
       return res.status(200).json(notifications);
     } catch (error) {
       console.error(error);

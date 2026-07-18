@@ -35,7 +35,6 @@ router.post("/user/register", async (req: Request, res: Response) => {
 });
 
 // USER ENDPOINTS
-
 //operationnal
 router.get("/user/all", async (req: Request, res: Response) => {
   await userController.getAllUsers(req, res);
@@ -175,8 +174,9 @@ router.post("/user/:conversationId/mark-as-read", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-// FRIEND REQUEST ENDPOINTS
 
+
+// FRIEND REQUEST ENDPOINTS
 // operationnal
 router.post(
   "/friend-request/create/:emitter_id/:receiver_id",
@@ -202,8 +202,6 @@ router.post(
 );
 
 // EVENT ENDPOINTS
-
-// operationnal
 router.post(
   "/event/addParticipant/:event_id/:user_id",
   async (req: Request, res: Response) => {
@@ -279,9 +277,10 @@ router.get(
 router.post(`/event/:eventId/:userId/notifications`, async(req:Request, res:Response) => {
   await eventController.addNotifications(req, res);
 })
+
 // retrieve event notifications
-router.get(`/event/:eventId/notifications`, async(req:Request, res:Response) => {
-  await eventController.loadEventNotifications(req, res);
+router.get(`/event/:userId/notifications`, async(req:Request, res:Response) => {
+  await eventController.loadEventsNotifications(req, res);
 })
 
 
@@ -310,8 +309,6 @@ router.delete(
 );
 
 // JOIN REQUESTS ENDPOINT
-
-
 router.get("/join-request/daily/:userId", async(req:Request, res:Response)=>{
   await joinRequestController.getAllUserDailyJoinRequests(req, res);
 })

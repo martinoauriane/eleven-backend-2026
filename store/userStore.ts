@@ -315,7 +315,7 @@ class UserStore implements IUserStore {
           conversationId,
         },
         orderBy: {
-          createdAt: "desc",
+          sentAt: "desc",
         },
         include: {
           sender: true,
@@ -355,9 +355,10 @@ class UserStore implements IUserStore {
             id: msg.id,
             type: msg.type,
             senderId: msg.senderId,
-            createdAt: msg.createdAt,
+            sentAt: msg.sentAt,
             isRead: msg.isRead,
             status: msg.joinRequest.status,
+            joinRequestId: msg.joinRequest.id,
             content: {
               friendId: msg.joinRequest.friend.id,
               friendName: `${msg.joinRequest.friend.firstName} ${msg.joinRequest.friend.lastName}`,
@@ -367,10 +368,7 @@ class UserStore implements IUserStore {
               hostName: `${msg.joinRequest.eventHost.firstName} ${msg.joinRequest.eventHost.lastName}`,
               hostPicture: msg.joinRequest.eventHost.picture,
 
-              date: msg.createdAt,
-
               eventId: msg.joinRequest.event.id,
-              joinRequestId: msg.joinRequest.id,
               eventName: msg.joinRequest.event.eventName,
               eventAddress: msg.joinRequest.event.eventAddress,
               eventStartTime: msg.joinRequest.event.eventStartTime,
@@ -389,7 +387,7 @@ class UserStore implements IUserStore {
             id: msg.id,
             type: msg.type,
             senderId: msg.senderId,
-            createdAt: msg.createdAt,
+            sentAt: msg.sentAt,
             isRead: msg.isRead,
             content: {
               eventName: event.eventName,
@@ -417,10 +415,10 @@ class UserStore implements IUserStore {
 
         return {
           id: msg.id,
-          type: msg.type,
           senderId: msg.senderId,
+          type: msg.type,
           isRead: msg.isRead,
-          createdAt: msg.createdAt,
+          sentAt: msg.sentAt,
           content: msg.content,
         };
       });
@@ -450,7 +448,7 @@ class UserStore implements IUserStore {
             },
           },
           messages: {
-            orderBy: { createdAt: "desc" },
+            orderBy: { sentAt: "desc" },
             take: 1,
           },
         },
