@@ -6,27 +6,27 @@ const friendRequestService = new FriendRequestService();
 
 class FriendRequestController {
     
-  async newFriendRequest(req: Request, res: Response) {
+  async createFriendInvite(req: Request, res: Response) {
     try {
-      const friendRequest: FriendRequestCreate = {
+      const friendInvite: FriendRequestCreate = {
         emitterId: Number(req.params.emitter_id),
         receiverId: Number(req.params.receiver_id),
       };
-      const friendRequestCreated =
-        await friendRequestService.createFriendRequest(friendRequest);
-      res.status(200).json(friendRequestCreated);
+      const friendInviteCreated =
+        await friendRequestService.createFriendInvite(friendInvite);
+      res.status(200).json(friendInviteCreated);
     } catch (error) {
       res.status(500).json({ error: "Error creating new Friend Request" });
     }
   }
 
-  async getFriendRequest(req: Request, res: Response) {
+  async getUserFriendsRequests(req: Request, res: Response) {
     try {
       const friendRequest: FriendRequestCreate = {
         emitterId: Number(req.params.emitter_id),
         receiverId: Number(req.params.receiver_id),
       };
-      const retrievedFriendRequest = await friendRequestService.getFriendRequest(friendRequest);
+      const retrievedFriendRequest = await friendRequestService.getUserFriendsRequests(friendRequest);
       res.status(200).json(retrievedFriendRequest);
     } catch (error) {
       res.status(500).json({ error: "Error creating new Friend Request" });

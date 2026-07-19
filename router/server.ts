@@ -77,11 +77,26 @@ router.post("/user/:userId/onmap", async (req: Request, res: Response) => {
   await userController.shareUserOnMap(req, res);
 });
 
+// send friend invite
+router.post(
+  "/user/send-friend-invitation/:emitter_id/:receiver_id",
+  async (req: Request, res: Response) => {
+    await friendRequestController.createFriendInvite(req, res);
+  },
+);
+
 // add friend method
 router.post(
   "/user/add-friend/:userId/:friendId",
   async (req: Request, res: Response) => {
     await userController.addFriend(req, res);
+  },
+);
+
+router.get(
+  "/user/get-friends-requests/:userId",
+  async (req: Request, res: Response) => {
+    await friendRequestController.getUserFriendsRequests(req, res);
   },
 );
 
@@ -177,13 +192,6 @@ router.post("/user/:conversationId/mark-as-read", async (req, res) => {
 
 
 // FRIEND REQUEST ENDPOINTS
-// operationnal
-router.post(
-  "/friend-request/create/:emitter_id/:receiver_id",
-  async (req: Request, res: Response) => {
-    await friendRequestController.newFriendRequest(req, res);
-  },
-);
 
 // operationnal
 router.post(

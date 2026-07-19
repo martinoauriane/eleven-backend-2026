@@ -6,12 +6,12 @@ const friendRequestStore = new FriendRequestStore();
 
 class FriendRequestService {
 
-  async createFriendRequest(data: FriendRequestCreate): Promise<any> {
-    return await friendRequestStore.CreateFriendRequest(data);
+  async createFriendInvite(data: FriendRequestCreate): Promise<any> {
+    return await friendRequestStore.createFriendInvite(data);
   }
 
-  async getFriendRequest(data: FriendRequestCreate): Promise<FriendRequestData | null> {
-    const response : FriendRequestData | null = await friendRequestStore.GetFriendRequest(
+  async getUserFriendsRequests(data: FriendRequestCreate): Promise<FriendRequestData | null> {
+    const response : FriendRequestData | null = await friendRequestStore.getUserFriendsRequests(
       data.emitterId,
       data.receiverId,
     );

@@ -3,12 +3,12 @@ import { prisma } from "../prisma/lib/prisma";
 import { FriendRequestCreate, FriendRequestData } from "../store/interfaces/friendRequestInterfaces";
 
 interface IFriendRequestStore {
-    CreateFriendRequest(data:FriendRequestCreate): Promise<any> 
+    createFriendInvite(data:FriendRequestCreate): Promise<any> 
 } 
 
 class FriendRequestStore implements IFriendRequestStore {
 
-  async CreateFriendRequest(data:FriendRequestCreate): Promise<any> {
+  async createFriendInvite(data:FriendRequestCreate): Promise<any> {
     try {
       const response = await prisma.friendRequest.create({ data });
       return response;
@@ -20,7 +20,7 @@ class FriendRequestStore implements IFriendRequestStore {
     }
   }
 
-  async GetFriendRequest(emitter_id: number, receiver_id: number): Promise<FriendRequestData | null> {
+  async getUserFriendsRequests(emitter_id: number, receiver_id: number): Promise<FriendRequestData | null> {
     try {
       const response : FriendRequestData | null = await prisma.friendRequest.findFirst({
         where: {
