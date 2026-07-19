@@ -131,7 +131,8 @@ class EventStore implements IEventStore {
           senderId,
           receiverId,
           conversationId,
-          type,          
+          type,
+
           content: {
             senderId,
             senderName: `${sender.firstName} ${sender.lastName}`,
@@ -140,18 +141,7 @@ class EventStore implements IEventStore {
             receiverId,
             receiverName: `${receiver.firstName} ${receiver.lastName}`,
 
-            hostId: event.createdBy.id,
-            hostName: `${event.createdBy.firstName} ${event.createdBy.lastName}`,
-            hostPicture: event.createdBy.picture,
-
             eventId: event.id,
-            eventName: event.eventName,
-            eventDescription: content.eventDescription,
-            eventStartTime: event.eventStartTime,
-            eventEndTime: event.eventEndTime,
-            eventAddress: event.eventAddress,
-
-            participants: event.participants,
           },
         },
       });
@@ -359,27 +349,31 @@ class EventStore implements IEventStore {
     }
   }
 
-  async loadEventsNotifications(userId:number, startOfDay:any, endOfDay:any) {
+  async loadEventsNotifications(
+    userId: number,
+    startOfDay: any,
+    endOfDay: any,
+  ) {
     try {
       const notifications = await prisma.notification.findMany({
-      where: {
-        event: {
-          userId: userId,  
+        where: {
+          event: {
+            userId: userId,
+          },
+          createdAt: {
+            gte: startOfDay,
+            lte: endOfDay,
+          },
         },
-        createdAt: {
-          gte: startOfDay,
-          lte: endOfDay,
+        include: {
+          sender: true,
+          receiver: true,
+          event: true,
         },
-      },
-      include: {
-        sender: true,
-        receiver: true,
-        event: true,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
 
       if (!notifications) {
         throw new Error("Error");

@@ -349,79 +349,68 @@ class UserStore implements IUserStore {
           })),
       );
 
-      const formattedMessages = messages.map((msg) => {
-        if (msg.type === "joinRequest" && msg.joinRequest) {
+      const formattedMessages = await Promise.all(
+        messages.map(async (msg) => {
+          if (msg.type === "joinRequest" && msg.joinRequest) {
+            return {
+              // ...
+            };
+          }
+
+          if (msg.type === "event") {
+            const content = msg.content as any;
+
+            const event = await prisma.event.findUnique({
+              where: {
+                id: content.eventId,
+              },
+              include: {
+                createdBy: true,
+                participants: true,
+              },
+            });
+
+            if (!event) {
+              return {
+                id: msg.id,
+                type: "event",
+                senderId: msg.senderId,
+                sentAt: msg.sentAt,
+                content,
+              };
+            }
+
+            return {
+              id: msg.id,
+              type: "event",
+              senderId: msg.senderId,
+              sentAt: msg.sentAt,
+              content: {
+                ...content,
+                eventName: event.eventName,
+                eventAddress: event.eventAddress,
+                eventStartTime: event.eventStartTime,
+                eventEndTime: event.eventEndTime,
+
+                hostId: event.createdBy.id,
+                hostName: `${event.createdBy.firstName} ${event.createdBy.lastName}`,
+                hostPicture: event.createdBy.picture,
+
+                participants: event.participants,
+              },
+            };
+          }
+
           return {
             id: msg.id,
-            type: msg.type,
             senderId: msg.senderId,
-            sentAt: msg.sentAt,
-            isRead: msg.isRead,
-            status: msg.joinRequest.status,
-            joinRequestId: msg.joinRequest.id,
-            content: {
-              friendId: msg.joinRequest.friend.id,
-              friendName: `${msg.joinRequest.friend.firstName} ${msg.joinRequest.friend.lastName}`,
-              friendPicture: msg.joinRequest.friend.picture,
-
-              hostId: msg.joinRequest.eventHost.id,
-              hostName: `${msg.joinRequest.eventHost.firstName} ${msg.joinRequest.eventHost.lastName}`,
-              hostPicture: msg.joinRequest.eventHost.picture,
-
-              eventId: msg.joinRequest.event.id,
-              eventName: msg.joinRequest.event.eventName,
-              eventAddress: msg.joinRequest.event.eventAddress,
-              eventStartTime: msg.joinRequest.event.eventStartTime,
-
-              participants: msg.joinRequest.event.participants,
-              participantsNumber: msg.joinRequest.event.participants.length,
-            },
-          };
-        }
-
-        if (msg.type === "event") {
-          const event = msg.content as any;
-          console.log("EVENT FROM DB");
-          console.log(event);
-          return {
-            id: msg.id,
             type: msg.type,
-            senderId: msg.senderId,
-            sentAt: msg.sentAt,
             isRead: msg.isRead,
-            content: {
-              eventName: event.eventName,
-              eventId: event.eventId,
-              eventDescription: event.eventDescription,
-              eventStartTime: event.eventStartTime, 
-              eventEndTime: event.eventEndTime, 
-              eventAddress: event.eventAddress, 
-
-              hostName: event.hostName,
-              hostPicture: event.hostPicture,
-              hostId: event.hostId,
-
-              senderName: event.senderName, 
-              senderId: event.senderId, 
-              senderPicture : event.senderPicture,
-
-              receiverName: event.receiverName, 
-              receiverId: event.receiverId, 
-
-              participants: event.participants
-            },
+            sentAt: msg.sentAt,
+            content: msg.content,
           };
-        }
-
-        return {
-          id: msg.id,
-          senderId: msg.senderId,
-          type: msg.type,
-          isRead: msg.isRead,
-          sentAt: msg.sentAt,
-          content: msg.content,
-        };
-      });
+        }),
+      );
 
       return formattedMessages;
     } catch (error) {
