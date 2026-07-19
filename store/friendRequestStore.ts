@@ -1,14 +1,16 @@
 import "dotenv/config"; // ⚡ force le chargement de ton .env
 import { prisma } from "../prisma/lib/prisma";
-import { FriendRequestCreate, FriendRequestData } from "../store/interfaces/friendRequestInterfaces";
+import {
+  FriendRequestCreate,
+  FriendRequestData,
+} from "../store/interfaces/friendRequestInterfaces";
 
 interface IFriendRequestStore {
-    createFriendInvite(data:FriendRequestCreate): Promise<any> 
-} 
+  createFriendInvite(data: FriendRequestCreate): Promise<any>;
+}
 
 class FriendRequestStore implements IFriendRequestStore {
-
-  async createFriendInvite(data:FriendRequestCreate): Promise<any> {
+  async createFriendInvite(data: FriendRequestCreate): Promise<any> {
     try {
       const response = await prisma.friendRequest.create({ data });
       return response;
@@ -20,17 +22,36 @@ class FriendRequestStore implements IFriendRequestStore {
     }
   }
 
-  async getUserFriendsRequests(emitter_id: number, receiver_id: number): Promise<FriendRequestData | null> {
+  async getUserFriendsRequests(userId: number): Promise<any[]> {
     try {
-      const response : FriendRequestData | null = await prisma.friendRequest.findFirst({
+      const responses = await prisma.friendRequest.findMany({
         where: {
-          emitterId: emitter_id,
-          receiverId: receiver_id,
+          receiverId: userId,
         },
       });
-      return response;
+      const enrichedResponses = await Promise.all(
+        responses.map(async (response) => {
+          const sender = await prisma.user.findUnique({
+            where: {
+              id: response.emitterId,
+            },
+          });
+          const receiver = await prisma.user.findUnique({
+            where: {
+              id: response.receiverId,
+            },
+          });
+
+          return {
+            ...response,
+            sender,
+            receiver,
+          };
+        }),
+      );
+      return enrichedResponses;
     } catch (error) {
-      console.error("prisma error trying to retrieve specific joinRequest", error);
+      console.error("prisma error trying to retrieve friend requests", error);
       throw error;
     }
   }
@@ -47,7 +68,10 @@ class FriendRequestStore implements IFriendRequestStore {
       });
       return result;
     } catch (error) {
-      console.error("prisma error trying to delete specific friendRequest", error);
+      console.error(
+        "prisma error trying to delete specific friendRequest",
+        error,
+      );
     }
   }
 }

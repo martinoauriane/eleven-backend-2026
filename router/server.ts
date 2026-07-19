@@ -194,12 +194,12 @@ router.post("/user/:conversationId/mark-as-read", async (req, res) => {
 // FRIEND REQUEST ENDPOINTS
 
 // operationnal
-router.post(
+/* router.post(
   "/friend-request/get/:emitter_id/:receiver_id",
   async (req: Request, res: Response) => {
     await friendRequestController.getFriendRequest(req, res);
   },
-);
+); */
 
 // operationnal
 router.post(

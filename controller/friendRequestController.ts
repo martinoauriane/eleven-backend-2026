@@ -21,15 +21,14 @@ class FriendRequestController {
   }
 
   async getUserFriendsRequests(req: Request, res: Response) {
+    const userId = Number(req.params.userId);
     try {
-      const friendRequest: FriendRequestCreate = {
-        emitterId: Number(req.params.emitter_id),
-        receiverId: Number(req.params.receiver_id),
-      };
-      const retrievedFriendRequest = await friendRequestService.getUserFriendsRequests(friendRequest);
+      const retrievedFriendRequest = await friendRequestService.getUserFriendsRequests(userId);
+      console.log("friends requests");
+      console.log(retrievedFriendRequest);
       res.status(200).json(retrievedFriendRequest);
     } catch (error) {
-      res.status(500).json({ error: "Error creating new Friend Request" });
+      res.status(500).json({ error: "Error retrieving friend requests" });
     }
   }
 
