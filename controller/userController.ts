@@ -240,7 +240,6 @@ class UserController {
   async addMessage(req: Request, res: Response) {
   try {
     const conversationId = Number(req.params.conversationId);
-
     const {
       senderId,
       type,

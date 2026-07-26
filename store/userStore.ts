@@ -487,6 +487,14 @@ class UserStore implements IUserStore {
     joinRequestId?: number,
     meetRequestId?: number,
   ) {
+    console.log({
+  conversationId,
+  type,
+  senderId,
+  receiverId,
+  joinRequestId,
+  meetRequestId,
+});
     try {
       const newMessage = await prisma.message.create({
         data: {

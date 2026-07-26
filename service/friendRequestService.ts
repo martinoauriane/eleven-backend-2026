@@ -12,9 +12,7 @@ class FriendRequestService {
     return await friendRequestStore.createFriendInvite(data);
   }
 
-  async getUserFriendsRequests(
-    userId: number,
-  ): Promise<FriendRequestData | null> {
+  async getUserFriendsRequests(userId: number): Promise<any | null> {
     return await friendRequestStore.getUserFriendsRequests(userId);
   }
 
