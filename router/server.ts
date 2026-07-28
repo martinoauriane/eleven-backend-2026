@@ -2,6 +2,7 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import { UserController } from "../controller/userController";
+import { StoryController } from "../controller/storyController";
 import { JoinRequestController } from "../controller/joinRequestController";
 import { FriendRequestController } from "../controller/friendRequestController";
 import { EventController } from "../controller/eventController";
@@ -19,6 +20,7 @@ const userController = new UserController();
 const joinRequestController = new JoinRequestController();
 const friendRequestController = new FriendRequestController();
 const eventController = new EventController();
+const storyController = new StoryController();
 
 // welcome
 router.get("/", async (req: Request, res: Response) => {
@@ -337,6 +339,20 @@ router.post("/join-request/update/:id", async (req: Request, res: Response) => {
     await joinRequestController.updateJoinRequestStatus(req, res);
   },
 );
+
+// STORIES ENDPOINTS
+// post friend story 
+router.post("/user/:userId/story/create", async (req: Request, res: Response) => {
+    await storyController.createStory(req, res);
+  },
+);
+// get friend story
+router.get("/friend/:friendId/story", async (req: Request, res: Response) => {
+    await storyController.getStory(req, res);
+  },
+);
+
+
 
 try {
   const server = app.listen(3000, "0.0.0.0", () => {

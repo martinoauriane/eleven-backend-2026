@@ -68,6 +68,7 @@ model User {
   messages      Message[]
   receivedMessages Message[] @relation("MessageReceiver")
   uploadedEventPhotos EventPhoto[]
+  stories Story[]
 }
 
 model Friendship {
@@ -238,4 +239,14 @@ model EventPhoto {
 
   uploadedById Int?
   uploadedBy   User? @relation(fields: [uploadedById], references: [id])
+}
+
+model Story {
+  id        Int      @id @default(autoincrement())
+  url       String
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  userId    Int
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
