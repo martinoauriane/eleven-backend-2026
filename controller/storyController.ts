@@ -7,9 +7,11 @@ class StoryController {
     
   async createStory(req: Request, res: Response) {
     try {
-      const { image } = req.body;
+      const { imageUrl } = req.body;
+      console.log("image url");
+      console.log(imageUrl);
       const userId = Number(req.params.userId);
-      const storyCreated = await storyService.createStory(image, userId);
+      const storyCreated = await storyService.createStory(imageUrl, userId);
       console.log("story successfullly created");
       console.log(storyCreated);
       res.status(200).json(storyCreated);
