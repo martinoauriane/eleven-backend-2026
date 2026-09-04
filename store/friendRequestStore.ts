@@ -22,37 +22,55 @@ class FriendRequestStore implements IFriendRequestStore {
     }
   }
 
-  async getUserFriendsRequests(userId: number): Promise<any[]> {
+  async getReceivedFriendRequests(userId: number) {
     try {
-      const responses = await prisma.friendRequest.findMany({
+      const receivedfriendsRequests = await prisma.friendRequest.findMany({
         where: {
           receiverId: userId,
         },
+        orderBy: {
+          sentAt: "desc",
+        },
+        include: {
+          emitter: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              picture: true,
+            },
+          },
+        },
       });
-      const enrichedResponses = await Promise.all(
-        responses.map(async (response) => {
-          const sender = await prisma.user.findUnique({
-            where: {
-              id: response.emitterId,
-            },
-          });
-          const receiver = await prisma.user.findUnique({
-            where: {
-              id: response.receiverId,
-            },
-          });
-
-          return {
-            ...response,
-            sender,
-            receiver,
-          };
-        }),
-      );
-      return enrichedResponses;
+      return receivedfriendsRequests;
     } catch (error) {
-      console.error("prisma error trying to retrieve friend requests", error);
-      throw error;
+      console.error("Prisma retrieving received friend requests error:", error);
+    }
+  }
+
+  async getSentFriendRequests(userId: number) {
+    try{
+      const sentFriendRequests = await prisma.friendRequest.findMany({
+      where: {
+        emitterId: userId,
+      },
+      orderBy: {
+        sentAt: "desc",
+      },
+      include: {
+        receiver: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            picture: true,
+          },
+        },
+      },
+    });
+    return sentFriendRequests;
+    } catch(error){
+      console.error("Prisma retrieving sent friend requests error:", error);
     }
   }
 
