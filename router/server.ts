@@ -95,10 +95,19 @@ router.post(
   },
 );
 
+// FRIEND REQUESTS - received
 router.get(
-  "/user/get-friends-requests/:userId",
+  "/user/:userId/friend-requests/received",
   async (req: Request, res: Response) => {
-    await friendRequestController.getUserFriendsRequests(req, res);
+    await friendRequestController.getReceivedFriendRequests(req, res);
+  },
+);
+
+// FRIEND REQUESTS - sent
+router.get(
+  "/user/:userId/friend-requests/sent",
+  async (req: Request, res: Response) => {
+    await friendRequestController.getSentFriendRequests(req, res);
   },
 );
 
