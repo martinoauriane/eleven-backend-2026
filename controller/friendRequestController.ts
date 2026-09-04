@@ -20,17 +20,53 @@ class FriendRequestController {
     }
   }
 
-  async getUserFriendsRequests(req: Request, res: Response) {
+  async getReceivedFriendRequests(req: Request, res: Response) {
+  try {
     const userId = Number(req.params.userId);
-    try {
-      const retrievedFriendRequest = await friendRequestService.getUserFriendsRequests(userId);
-      console.log("friends requests");
-      console.log(retrievedFriendRequest);
-      res.status(200).json(retrievedFriendRequest);
-    } catch (error) {
-      res.status(500).json({ error: "Error retrieving friend requests" });
+
+    if (isNaN(userId)) {
+      return res.status(400).json({
+        error: "Invalid userId",
+      });
     }
+
+    const requests = await friendRequestService.getReceivedFriendRequests(
+      userId,
+    );
+
+    return res.status(200).json(requests);
+  } catch (error) {
+    console.error("Error getting received friend requests:", error);
+
+    return res.status(500).json({
+      error: "Internal server error",
+    });
   }
+}
+
+async getSentFriendRequests(req: Request, res: Response) {
+  try {
+    const userId = Number(req.params.userId);
+
+    if (isNaN(userId)) {
+      return res.status(400).json({
+        error: "Invalid userId",
+      });
+    }
+
+    const requests = await friendRequestService.getSentFriendRequests(
+      userId,
+    );
+
+    return res.status(200).json(requests);
+  } catch (error) {
+    console.error("Error getting sent friend requests:", error);
+
+    return res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+}
 
   async deleteFriendRequest(req: Request, res: Response) {
     try {

@@ -12,8 +12,12 @@ class FriendRequestService {
     return await friendRequestStore.createFriendInvite(data);
   }
 
-  async getUserFriendsRequests(userId: number): Promise<any | null> {
-    return await friendRequestStore.getUserFriendsRequests(userId);
+  async getReceivedFriendRequests(userId: number): Promise<any | null> {
+    return await friendRequestStore.getReceivedFriendRequests(userId);
+  }
+
+  async getSentFriendRequests(userId: number): Promise<any | null> {
+    return await friendRequestStore.getSentFriendRequests(userId);
   }
 
   async deleteFriendRequest(data: FriendRequestCreate): Promise<any> {
