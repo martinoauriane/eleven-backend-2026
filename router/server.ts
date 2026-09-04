@@ -119,7 +119,7 @@ router.post(
 );
 
 // operationnal
-router.post("/user/delete", async (req: Request, res: Response) => {
+router.post("/user/delete/:id", async (req: Request, res: Response) => {
   await userController.deleteUser(req, res);
 });
 

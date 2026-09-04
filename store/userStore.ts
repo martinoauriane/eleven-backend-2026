@@ -94,14 +94,26 @@ class UserStore implements IUserStore {
 
   async getUserSavedEvents(userId: number) {
     try {
-      const userSavedEvents = await prisma.event.findMany({
+      const user = await prisma.user.findUnique({
         where: {
-          userId,
+          id: userId,
         },
         include: {
-          participants: true,
+          favorites: {
+            include: {
+              participants: true,
+              createdBy: true,
+              joinRequests: true,
+            },
+          },
         },
       });
+
+      const userSavedEvents = user?.favorites ?? [];
+
+      console.log("user saved events");
+      console.log(userSavedEvents);
+
       return userSavedEvents;
     } catch (error) {
       console.error("Prisma get user favorite events error:", error);
@@ -164,13 +176,13 @@ class UserStore implements IUserStore {
           activity: user.activity,
         },
       });
-
       return newUserOnMap;
     } catch (error) {
       console.error("Error adding user on map", error);
       throw error;
     }
   }
+
   async getFriendsOnMap(userId: number) {
     try {
       const friendships = await prisma.friendship.findMany({
@@ -189,7 +201,12 @@ class UserStore implements IUserStore {
             in: friendIds,
           },
         },
-        include: {
+        select: {
+          latitude: true,
+          longitude: true,
+          address: true,
+          activity: true,
+          updatedAt: true,
           user: {
             select: {
               id: true,
@@ -472,9 +489,62 @@ class UserStore implements IUserStore {
           isRead: true,
         },
       });
+      return conversationRead;
     } catch (error) {
       console.error("Prisma retrieving conversation error:", error);
       throw error;
+    }
+  }
+
+  async getReceivedFriendRequests(userId: number) {
+    try {
+      const receivedfriendsRequests = await prisma.friendRequest.findMany({
+        where: {
+          receiverId: userId,
+        },
+        orderBy: {
+          sentAt: "desc",
+        },
+        include: {
+          emitter: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              picture: true,
+            },
+          },
+        },
+      });
+      return receivedfriendsRequests;
+    } catch (error) {
+      console.error("Prisma retrieving received friend requests error:", error);
+    }
+  }
+
+  async getSentFriendRequests(userId: number) {
+    try{
+      const sentFriendRequests = await prisma.friendRequest.findMany({
+      where: {
+        emitterId: userId,
+      },
+      orderBy: {
+        sentAt: "desc",
+      },
+      include: {
+        receiver: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            picture: true,
+          },
+        },
+      },
+    });
+    return sentFriendRequests;
+    } catch(error){
+      console.error("Prisma retrieving sent friend requests error:", error);
     }
   }
 
@@ -488,13 +558,13 @@ class UserStore implements IUserStore {
     meetRequestId?: number,
   ) {
     console.log({
-  conversationId,
-  type,
-  senderId,
-  receiverId,
-  joinRequestId,
-  meetRequestId,
-});
+      conversationId,
+      type,
+      senderId,
+      receiverId,
+      joinRequestId,
+      meetRequestId,
+    });
     try {
       const newMessage = await prisma.message.create({
         data: {

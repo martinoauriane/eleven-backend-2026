@@ -162,6 +162,8 @@ class UserController {
     const userId = parseInt(String(req.params.userId));
     try {
       const userFavoriteEvents = await userService.getUserSavedEvents(userId);
+      console.log("user favorite events");
+      console.log(userFavoriteEvents);
       res.status(200).json(userFavoriteEvents);
     } catch (error: any) {
       console.error("Prisma retrieving user favorite events error:", error);
@@ -291,7 +293,7 @@ class UserController {
   }
 
   async deleteUser(req: Request, res: Response) {
-    const id = Number(req.query.id);
+    const id = Number(req.params.id);
     try {
       await userService.deleteUser(id);
       res.status(200).json({ message: "User deleted successfully" });

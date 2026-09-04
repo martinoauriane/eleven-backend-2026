@@ -35,51 +35,55 @@ enum JoinRequestStatus {
 }
 
 model User {
-  id                     Int             @id @default(autoincrement())
-  firstName              String
-  lastName               String
-  email                  String          @unique
-  picture                String?         @unique
-  password               String
-  homeAddress            String?
-  isOnline               Boolean         @default(false)
-  lastLogin              DateTime        @default(now())
-  mood                   MoodStatus?
-  moodUpdatedAt          DateTime?
+  id            Int         @id @default(autoincrement())
+  firstName     String
+  lastName      String
+  email         String      @unique
+  picture       String?     @unique
+  password      String
+  homeAddress   String?
+  isOnline      Boolean     @default(false)
+  lastLogin     DateTime    @default(now())
+  mood          MoodStatus?
+  moodUpdatedAt DateTime?
+
   eventsCreated          Event[]         @relation("EventCreator")
   sentFriendRequests     FriendRequest[] @relation("EmitterFriendRequest")
   receivedFriendRequests FriendRequest[] @relation("ReceiverFriendRequest")
-  sentJoinRequests       JoinRequest[]   @relation("EmitterJoinRequest")
-  receivedJoinRequests   JoinRequest[]   @relation("ReceiverJoinRequest")
-  onMap                  OnMap?
-  favorites              Event[]         @relation("UserFavorites")
+
+  sentJoinRequests     JoinRequest[] @relation("EmitterJoinRequest")
+  receivedJoinRequests JoinRequest[] @relation("ReceiverJoinRequest")
+
+  onMap     OnMap?
+  favorites Event[] @relation("UserFavorites")
 
   sentFriendships     Friendship[] @relation("FriendshipUser")
   receivedFriendships Friendship[] @relation("FriendshipFriend")
+
   attendingEvents Event[] @relation("EventParticipants")
 
-  sentNotifications Notification[] @relation("NotificationSender")
+  sentNotifications     Notification[] @relation("NotificationSender")
   receivedNotifications Notification[] @relation("NotificationReceiver")
-  
+
   sentMeetRequests     MeetRequest[] @relation("EmitterMeetRequest")
   receivedMeetRequests MeetRequest[] @relation("ReceiverMeetRequest")
 
   conversations Conversation[] @relation("ConversationParticipants")
-  messages      Message[]
+
+  messages         Message[] @relation("MessageSender")
   receivedMessages Message[] @relation("MessageReceiver")
+
   uploadedEventPhotos EventPhoto[]
+
   stories Story[]
 }
 
 model Friendship {
-  id Int @id @default(autoincrement())
-
-  userId   Int
-  friendId Int
-
-  user   User @relation("FriendshipUser", fields: [userId], references: [id])
-  friend User @relation("FriendshipFriend", fields: [friendId], references: [id])
-
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  friendId  Int
+  user      User     @relation("FriendshipUser", fields: [userId], references: [id], onDelete: Cascade)
+  friend    User     @relation("FriendshipFriend", fields: [friendId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 
   @@unique([userId, friendId])
@@ -95,71 +99,60 @@ model OnMap {
   activity  String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Event {
-  id             Int      @id @default(autoincrement())
+  id             Int            @id @default(autoincrement())
   eventName      String
   eventType      String
   eventLat       Float
   eventLon       Float
   eventAddress   String
-  isFull         Boolean  @default(false)
+  isFull         Boolean        @default(false)
   eventCity      String
   eventCountry   String
-  isPublic       Boolean  @default(true)
-  eventStartTime DateTime @default(now())
-  eventEndTime   DateTime @default(now())
+  isPublic       Boolean        @default(true)
+  eventStartTime DateTime       @default(now())
+  eventEndTime   DateTime       @default(now())
   userId         Int
-  createdBy      User     @relation("EventCreator", fields: [userId], references: [id])
-  favoritedBy    User[]   @relation("UserFavorites")
+  createdBy      User           @relation("EventCreator", fields: [userId], references: [id], onDelete: Cascade)
+  favoritedBy    User[]         @relation("UserFavorites")
   joinRequests   JoinRequest[]
-  participants   User[] @relation("EventParticipants")
-  notifications Notification[]
+  participants   User[]         @relation("EventParticipants")
+  notifications  Notification[]
   photos         EventPhoto[]
 }
 
 model JoinRequest {
-  id        Int      @id @default(autoincrement())
-  sentAt    DateTime @default(now())
-
-  status    JoinRequestStatus @default(SENT)
-
-  friendId Int
+  id          Int               @id @default(autoincrement())
+  sentAt      DateTime          @default(now())
+  status      JoinRequestStatus @default(SENT)
+  friendId    Int
   eventHostId Int
-  eventId Int
-
-  friend  User  @relation("EmitterJoinRequest", fields: [friendId], references: [id])
-  eventHost User  @relation("ReceiverJoinRequest", fields: [eventHostId], references: [id])
-  event     Event @relation(fields: [eventId], references: [id])
-
-  message   Message?
+  eventId     Int
+  friend      User              @relation("EmitterJoinRequest", fields: [friendId], references: [id], onDelete: Cascade)
+  eventHost   User              @relation("ReceiverJoinRequest", fields: [eventHostId], references: [id], onDelete: Cascade)
+  event       Event             @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  message     Message?
 
   @@unique([friendId, eventId])
 }
 
 model MeetRequest {
-  id Int @id @default(autoincrement())
-
-  emitterId Int
+  id         Int               @id @default(autoincrement())
+  emitterId  Int
   receiverId Int
-
-  emitter User @relation("EmitterMeetRequest", fields: [emitterId], references: [id])
-  receiver User @relation("ReceiverMeetRequest", fields: [receiverId], references: [id])
-
-  latitude Float
-  longitude Float
-  address String?
-
-  activity String?
-
-  status MeetRequestStatus @default(SENT)
-
-  sentAt DateTime @default(now())
-  expiresAt DateTime?
-
-  message Message?
+  emitter    User              @relation("EmitterMeetRequest", fields: [emitterId], references: [id], onDelete: Cascade)
+  receiver   User              @relation("ReceiverMeetRequest", fields: [receiverId], references: [id], onDelete: Cascade)
+  latitude   Float
+  longitude  Float
+  address    String?
+  activity   String?
+  status     MeetRequestStatus @default(SENT)
+  sentAt     DateTime          @default(now())
+  expiresAt  DateTime?
+  message    Message?
 
   @@unique([emitterId, receiverId])
 }
@@ -170,75 +163,59 @@ model FriendRequest {
   isAccepted Boolean  @default(false)
   emitterId  Int
   receiverId Int
-  emitter    User     @relation("EmitterFriendRequest", fields: [emitterId], references: [id])
-  receiver   User     @relation("ReceiverFriendRequest", fields: [receiverId], references: [id])
+  emitter    User     @relation("EmitterFriendRequest", fields: [emitterId], references: [id], onDelete: Cascade)
+  receiver   User     @relation("ReceiverFriendRequest", fields: [receiverId], references: [id], onDelete: Cascade)
 }
 
 model Conversation {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  participants User[] @relation("ConversationParticipants")
-
-  messages Message[]
+  id           Int       @id @default(autoincrement())
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  participants User[]    @relation("ConversationParticipants")
+  messages     Message[]
 }
 
 model Message {
-  id             Int      @id @default(autoincrement())
+  id             Int          @id @default(autoincrement())
   type           String
   content        Json
-
-  sentAt         DateTime @default(now())
-
-  isRead         Boolean  @default(false)
+  sentAt         DateTime     @default(now())
+  isRead         Boolean      @default(false)
   readAt         DateTime?
-
   senderId       Int
   receiverId     Int
-
   conversationId Int
-  joinRequestId  Int? @unique
-  meetRequestId  Int? @unique
-
-  sender         User         @relation(fields: [senderId], references: [id])
-  receiver       User         @relation("MessageReceiver", fields: [receiverId], references: [id])
-
-  conversation   Conversation @relation(fields: [conversationId], references: [id])
-  joinRequest    JoinRequest? @relation(fields: [joinRequestId], references: [id])
-  meetRequest    MeetRequest? @relation(fields: [meetRequestId], references: [id])
+  joinRequestId  Int?         @unique
+  meetRequestId  Int?         @unique
+  sender         User         @relation("MessageSender", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver       User         @relation("MessageReceiver", fields: [receiverId], references: [id], onDelete: Cascade)
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  joinRequest    JoinRequest? @relation(fields: [joinRequestId], references: [id], onDelete: Cascade)
+  meetRequest    MeetRequest? @relation(fields: [meetRequestId], references: [id], onDelete: Cascade)
 }
 
 model Notification {
-  id          Int   @id @default(autoincrement())
-  type        NotificationType
-
-  message     String
-
-  senderId    Int
-  sender      User @relation("NotificationSender", fields: [senderId], references: [id])
-
-  receiverId  Int
-  receiver    User @relation("NotificationReceiver", fields: [receiverId], references: [id])
-
-  eventId     Int?
-  event       Event? @relation(fields: [eventId], references: [id])
-
-  read        Boolean @default(false)
-
-  createdAt   DateTime @default(now())
+  id         Int              @id @default(autoincrement())
+  type       NotificationType
+  message    String
+  senderId   Int
+  sender     User             @relation("NotificationSender", fields: [senderId], references: [id], onDelete: Cascade)
+  receiverId Int
+  receiver   User             @relation("NotificationReceiver", fields: [receiverId], references: [id], onDelete: Cascade)
+  eventId    Int?
+  event      Event?           @relation(fields: [eventId], references: [id], onDelete: SetNull)
+  read       Boolean          @default(false)
+  createdAt  DateTime         @default(now())
 }
 
 model EventPhoto {
-  id        Int      @id @default(autoincrement())
-  url       String
-  createdAt DateTime @default(now())
-
-  eventId   Int
-  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
-
+  id           Int      @id @default(autoincrement())
+  url          String
+  createdAt    DateTime @default(now())
+  eventId      Int
+  event        Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
   uploadedById Int?
-  uploadedBy   User? @relation(fields: [uploadedById], references: [id])
+  uploadedBy   User?    @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
 }
 
 model Story {
@@ -246,7 +223,6 @@ model Story {
   url       String
   createdAt DateTime @default(now())
   expiresAt DateTime
-
   userId    Int
-  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
