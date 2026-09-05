@@ -163,8 +163,11 @@ model FriendRequest {
   isAccepted Boolean  @default(false)
   emitterId  Int
   receiverId Int
-  emitter    User     @relation("EmitterFriendRequest", fields: [emitterId], references: [id], onDelete: Cascade)
-  receiver   User     @relation("ReceiverFriendRequest", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  emitter    User @relation("EmitterFriendRequest", fields: [emitterId], references: [id], onDelete: Cascade)
+  receiver   User @relation("ReceiverFriendRequest", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  @@unique([emitterId, receiverId])
 }
 
 model Conversation {
