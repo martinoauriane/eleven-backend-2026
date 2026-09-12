@@ -128,15 +128,15 @@ model JoinRequest {
   id          Int               @id @default(autoincrement())
   sentAt      DateTime          @default(now())
   status      JoinRequestStatus @default(SENT)
-  friendId    Int
-  eventHostId Int
+  senderId    Int
+  receiverId Int
   eventId     Int
-  friend      User              @relation("EmitterJoinRequest", fields: [friendId], references: [id], onDelete: Cascade)
-  eventHost   User              @relation("ReceiverJoinRequest", fields: [eventHostId], references: [id], onDelete: Cascade)
+  sender      User              @relation("EmitterJoinRequest", fields: [senderId], references: [id], onDelete: Cascade)
+  eventHost   User              @relation("ReceiverJoinRequest", fields: [receiverId], references: [id], onDelete: Cascade)
   event       Event             @relation(fields: [eventId], references: [id], onDelete: Cascade)
   message     Message?
 
-  @@unique([friendId, eventId])
+  @@unique([senderId, eventId])
 }
 
 model MeetRequest {
