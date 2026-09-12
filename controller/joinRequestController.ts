@@ -10,8 +10,7 @@ class JoinRequestController {
     try {
       const joinRequest: any = {
         eventId: Number(req.params.eventId),
-        friendId: Number(req.body.friendId),
-        eventHostId: Number(req.body.eventHostId),
+        senderId: Number(req.body.senderId),
         receiverId: Number(req.body.receiverId)
       };
       const joinRequestCreated =

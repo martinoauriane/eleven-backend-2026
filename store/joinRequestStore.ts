@@ -26,7 +26,7 @@ class JoinRequestStore implements IJoinRequestStore {
     try {
       const existingJoinRequest = await prisma.joinRequest.findFirst({
         where: {
-          friendId: data.friendId,
+          friendId: data.receiverId,
           eventId: data.eventId,
           status: {
             in: ["SENT", "ACCEPTED", "REJECTED"],
@@ -40,8 +40,8 @@ class JoinRequestStore implements IJoinRequestStore {
 
       const joinRequestCreated = await prisma.joinRequest.create({
         data: {
-          friendId: data.friendId,
-          eventHostId: data.eventHostId,
+          friendId: data.senderId,
+          eventHostId: data.receiverId,
           eventId: data.eventId,
           status: "SENT",
         },
