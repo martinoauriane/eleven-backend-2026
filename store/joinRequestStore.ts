@@ -73,7 +73,7 @@ class JoinRequestStore implements IJoinRequestStore {
 
       if (!conversation) {
         conversation = await userStore.createConversation(
-          data.friendId,
+          data.senderId,
           data.eventHostId,
         );
       }
@@ -90,14 +90,14 @@ class JoinRequestStore implements IJoinRequestStore {
 
       const friend = await prisma.user.findUnique({
         where: {
-          id: data.friendId,
+          id: data.senderId,
         },
       });
 
      let joinRequestMessage = await prisma.message.create({
         data: {
           type: "joinRequest",
-          senderId: data.friendId,
+          senderId: data.senderId,
           receiverId: data.receiverId,
           conversationId: conversation.id,
           joinRequestId: joinRequestCreated.id,
