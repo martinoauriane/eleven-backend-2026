@@ -26,7 +26,7 @@ class JoinRequestStore implements IJoinRequestStore {
     try {
       const existingJoinRequest = await prisma.joinRequest.findFirst({
         where: {
-          friendId: data.receiverId,
+          senderId: data.receiverId,
           eventId: data.eventId,
           status: {
             in: ["SENT", "ACCEPTED", "REJECTED"],
@@ -40,8 +40,8 @@ class JoinRequestStore implements IJoinRequestStore {
 
       const joinRequestCreated = await prisma.joinRequest.create({
         data: {
-          friendId: data.senderId,
-          eventHostId: data.receiverId,
+          senderId: data.senderId,
+          receiverId: data.receiverId,
           eventId: data.eventId,
           status: "SENT",
         },
@@ -131,16 +131,16 @@ class JoinRequestStore implements IJoinRequestStore {
   }
 
   async getJoinRequest(
-    friendId: number,
-    eventHostId: number,
+    senderId: number,
+    receiverId: number,
     eventId: number,
   ): Promise<any> {
     try {
       const message = await prisma.message.findFirst({
         where: {
           joinRequest: {
-            friendId,
-            eventHostId,
+            senderId,
+            receiverId,
             eventId,
           },
         },
@@ -166,14 +166,14 @@ class JoinRequestStore implements IJoinRequestStore {
     try {
       const allJoinRequest = await prisma.joinRequest.findMany({
         where: {
-          eventHostId: userId,
+          receiverId: userId,
           sentAt: {
             gte: start,
             lte: end,
           },
         },
         include:{
-            friend:true,
+            sender:true,
             event: true,
           }
       });
@@ -292,14 +292,14 @@ class JoinRequestStore implements IJoinRequestStore {
     }
   }
 
-  async deleteJoinRequest(friendId: number, eventHostId: number) {
+  async deleteJoinRequest(senderId: number, receiverId: number) {
     // delete n'en supprime qu'un seul à la fois
     // deleteMany en supprime plusieurs
     try {
       const result = await prisma.joinRequest.deleteMany({
         where: {
-          friendId: friendId,
-          eventHostId: eventHostId,
+          senderId: senderId,
+          receiverId: receiverId,
         },
       });
       return result;

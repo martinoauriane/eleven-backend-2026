@@ -191,7 +191,7 @@ class EventStore implements IEventStore {
         participants: true,
         joinRequests: {
           where: {
-            friendId: userId,
+            senderId: userId,
           },
         },
       },

@@ -132,7 +132,7 @@ model JoinRequest {
   receiverId Int
   eventId     Int
   sender      User              @relation("EmitterJoinRequest", fields: [senderId], references: [id], onDelete: Cascade)
-  eventHost   User              @relation("ReceiverJoinRequest", fields: [receiverId], references: [id], onDelete: Cascade)
+  receiver   User               @relation("ReceiverJoinRequest", fields: [receiverId], references: [id], onDelete: Cascade)
   event       Event             @relation(fields: [eventId], references: [id], onDelete: Cascade)
   message     Message?
 

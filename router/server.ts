@@ -44,7 +44,7 @@ router.get("/user/all", async (req: Request, res: Response) => {
 
 // operationnal
 router.get("/user/:id", async (req: Request, res: Response) => {
-  await userController.getUser(req, res);
+  await userController.getUserById(req, res);
 });
 
 // operationnal

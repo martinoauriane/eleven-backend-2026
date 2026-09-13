@@ -50,16 +50,16 @@ class StoryStore implements IStoryStore {
   }
 
   async getStory(
-    friendId: number,
-    eventHostId: number,
+    senderId: number,
+    receiverId: number,
     eventId: number,
   ): Promise<any> {
     try {
       const message = await prisma.message.findFirst({
         where: {
           joinRequest: {
-            friendId,
-            eventHostId,
+            senderId,
+            receiverId,
             eventId,
           },
         },
@@ -77,14 +77,14 @@ class StoryStore implements IStoryStore {
     }
   }
 
-  async deleteStory(friendId: number, eventHostId: number) {
+  async deleteStory(senderId: number, receiverId: number) {
     // delete n'en supprime qu'un seul à la fois
     // deleteMany en supprime plusieurs
     try {
       const result = await prisma.joinRequest.deleteMany({
         where: {
-          friendId: friendId,
-          eventHostId: eventHostId,
+          senderId: senderId,
+          receiverId: receiverId,
         },
       });
       return result;

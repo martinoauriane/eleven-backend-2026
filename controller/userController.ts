@@ -42,15 +42,15 @@ class UserController {
     }
   }
 
-  async getUser(req: Request, res: Response) {
+  async getUserById(req: Request, res: Response) {
     const id = Number(req.params.id);
     try {
       const user = await userService.getUserById(id);
       if (user) {
-        res.status(200).json(user);
+        return res.status(200).json(user);
       }
     } catch (error) {
-      res.status(500).json({ error: "Error retrieving user" });
+      return res.status(500).json({ error: "Error retrieving user" });
     }
   }
 

@@ -66,10 +66,11 @@ class UserStore implements IUserStore {
 
   async getUserById(id: number) {
     if (id == null) {
+      console.log("❌ getUserById called without an id");
       return;
     }
     try {
-      let user = await prisma.user.findUnique({ where: { id: id } });
+      let user = await prisma.user.findUnique({ where: { id: Number(id) } });
       return user;
     } catch (error) {
       console.error("Prisma retrieve error:", error);
@@ -338,8 +339,8 @@ class UserStore implements IUserStore {
           sender: true,
           joinRequest: {
             include: {
-              friend: true,
-              eventHost: true,
+              sender: true,
+              receiver: true,
               event: {
                 include: {
                   participants: {
@@ -523,27 +524,27 @@ class UserStore implements IUserStore {
   }
 
   async getSentFriendRequests(userId: number) {
-    try{
+    try {
       const sentFriendRequests = await prisma.friendRequest.findMany({
-      where: {
-        emitterId: userId,
-      },
-      orderBy: {
-        sentAt: "desc",
-      },
-      include: {
-        receiver: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            picture: true,
+        where: {
+          emitterId: userId,
+        },
+        orderBy: {
+          sentAt: "desc",
+        },
+        include: {
+          receiver: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              picture: true,
+            },
           },
         },
-      },
-    });
-    return sentFriendRequests;
-    } catch(error){
+      });
+      return sentFriendRequests;
+    } catch (error) {
       console.error("Prisma retrieving sent friend requests error:", error);
     }
   }
