@@ -298,6 +298,28 @@ class JoinRequestStore implements IJoinRequestStore {
     }
   }
 
+  async getJoinRequestStatus(userId: number, eventId: number) {
+  try {
+    const joinRequest = await prisma.joinRequest.findUnique({
+      where: {
+        senderId_eventId: {
+          senderId: userId,
+          eventId: eventId,
+        },
+      },
+      select: {
+        id: true,
+        status: true,
+      },
+    });
+
+    return joinRequest;
+  } catch (error) {
+    console.error("Prisma retrieving join request status error:", error);
+    throw error;
+  }
+}
+
   async updateJoinRequestStatus(
     joinRequestId: number,
     JoinRequestStatus: JoinRequestStatus,

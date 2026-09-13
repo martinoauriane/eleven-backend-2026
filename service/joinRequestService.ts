@@ -40,6 +40,10 @@ class JoinRequestService {
         return await joinRequestStore.getUserDailyJoinRequests(day, userId);
     }
 
+    async getJoinRequestStatus(userId: number, eventId: number){
+      return await joinRequestStore.getJoinRequestStatus(userId, eventId)
+    }
+
   async createMeetRequest(data: any) {
     const response = await joinRequestStore.createMeetRequest(data);
     return response;

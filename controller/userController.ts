@@ -230,7 +230,7 @@ class UserController {
   }
 
   async getUserConversations(req:Request, res:Response){
-    const userId = parseInt(String(req.params.userId));
+    const userId = Number(String(req.params.userId));
      try {
       let conversations = await userService.getUserConversations(userId);
       res.status(200).json(conversations); 

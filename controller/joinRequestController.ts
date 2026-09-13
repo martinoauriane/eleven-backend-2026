@@ -52,6 +52,19 @@ class JoinRequestController {
     }
   }
 
+  async getJoinRequestStatus(req: Request, res: Response){
+     try {
+      const joinRequest: any = {
+        eventId: Number(req.params.eventId),
+        userId: Number(req.params.userId),
+      };
+      const allUserJoinRequest = await joinRequestService.getJoinRequestStatus(joinRequest.userId, joinRequest.eventId);
+      res.status(200).json(allUserJoinRequest);
+    } catch (error) {
+      res.status(500).json({ error: "Error creating new Join Request" });
+    }
+  }
+
   async getAllUserDailyJoinRequests(req: Request, res: Response) {
     try {
       const day = new Date();
