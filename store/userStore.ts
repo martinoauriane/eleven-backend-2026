@@ -369,23 +369,48 @@ class UserStore implements IUserStore {
 
       const formattedMessages = await Promise.all(
         messages.map(async (msg) => {
-          if (msg.type === "joinRequest" && msg.joinRequest) {
+          // 1. GESTION DES JOIN REQUESTS
+          if (msg.type === "joinRequest") {
+            const req = msg.joinRequest;
+
+            // Récupération de l'event et du créateur si joinRequest est présent
             return {
-              // ...
+              id: msg.id,
+              type: "joinRequest",
+              senderId: msg.senderId,
+              receiverId: msg.receiverId,
+              sentAt: msg.sentAt,
+              isRead: msg.isRead,
+              joinRequestId: msg.joinRequestId,
+              status: req?.status ?? "SENT",
+              content: req
+                ? {
+                    friendId: req.sender.id,
+                    friendName: `${req.sender.firstName} ${req.sender.lastName}`,
+                    friendPicture: req.sender.picture,
+
+                    hostId: req.receiver.id,
+                    hostName: `${req.receiver.firstName} ${req.receiver.lastName}`,
+                    hostPicture: req.receiver.picture,
+
+                    eventId: req.event.id,
+                    eventName: req.event.eventName,
+                    eventAddress: req.event.eventAddress,
+                    eventStartTime: req.event.eventStartTime,
+
+                    participants: req.event.participants,
+                  }
+                : msg.content, // Fallback sur msg.content si la relation Prisma n'est pas chargée
             };
           }
 
+          // 2. GESTION DES EVENEMENTS
           if (msg.type === "event") {
             const content = msg.content as any;
 
             const event = await prisma.event.findUnique({
-              where: {
-                id: content.eventId,
-              },
-              include: {
-                createdBy: true,
-                participants: true,
-              },
+              where: { id: content.eventId },
+              include: { createdBy: true, participants: true },
             });
 
             if (!event) {
@@ -419,6 +444,7 @@ class UserStore implements IUserStore {
             };
           }
 
+          // 3. GESTION DES TEXTES ET AUTRES MESSAGES
           return {
             id: msg.id,
             senderId: msg.senderId,

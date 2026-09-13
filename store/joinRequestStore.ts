@@ -23,22 +23,27 @@ interface IJoinRequestStore {
 class JoinRequestStore implements IJoinRequestStore {
   
   async CreateJoinRequest(data: any): Promise<any> {
-    try {
-      const existingJoinRequest = await prisma.joinRequest.findFirst({
+  try {
+    // 1. Vérifier qu'une demande n'existe pas déjà
+    const existingJoinRequest =
+      await prisma.joinRequest.findFirst({
         where: {
-          senderId: data.receiverId,
+          senderId: data.senderId,
+          receiverId: data.receiverId,
           eventId: data.eventId,
           status: {
-            in: ["SENT", "ACCEPTED", "REJECTED"],
+            in: ["SENT", "ACCEPTED"],
           },
         },
       });
 
-      if (existingJoinRequest) {
-        throw new Error("Join request already exists");
-      }
+    if (existingJoinRequest) {
+      throw new Error("Join request already exists");
+    }
 
-      const joinRequestCreated = await prisma.joinRequest.create({
+    // 2. Créer la demande
+    const joinRequestCreated =
+      await prisma.joinRequest.create({
         data: {
           senderId: data.senderId,
           receiverId: data.receiverId,
@@ -47,23 +52,48 @@ class JoinRequestStore implements IJoinRequestStore {
         },
       });
 
-      console.log("join request successfully created");
-      console.log(joinRequestCreated);
+    // 3. Récupérer l'événement
+    const event = await prisma.event.findUnique({
+      where: {
+        id: data.eventId,
+      },
+      include: {
+        participants: true,
+        createdBy: true,
+      },
+    });
 
-      let conversation = await prisma.conversation.findFirst({
+    if (!event) {
+      throw new Error("Event not found");
+    }
+
+    // 4. Récupérer l'utilisateur qui fait la demande
+    const friend = await prisma.user.findUnique({
+      where: {
+        id: data.senderId,
+      },
+    });
+
+    if (!friend) {
+      throw new Error("Sender not found");
+    }
+
+    // 5. Chercher la conversation
+    let conversation =
+      await prisma.conversation.findFirst({
         where: {
           AND: [
             {
               participants: {
                 some: {
-                  id: data.friendId,
+                  id: data.senderId,
                 },
               },
             },
             {
               participants: {
                 some: {
-                  id: data.eventHostId,
+                  id: data.receiverId,
                 },
               },
             },
@@ -71,64 +101,59 @@ class JoinRequestStore implements IJoinRequestStore {
         },
       });
 
-      if (!conversation) {
-        conversation = await userStore.createConversation(
+    // 6. La créer si nécessaire
+    if (!conversation) {
+      conversation =
+        await userStore.createConversation(
           data.senderId,
-          data.eventHostId,
+          data.receiverId,
         );
-      }
+    }
 
-      const event = await prisma.event.findUnique({
-        where: {
-          id: data.eventId,
-        },
-        include: {
-          participants: true,
-          createdBy: true,
-        },
-      });
-
-      const friend = await prisma.user.findUnique({
-        where: {
-          id: data.senderId,
-        },
-      });
-
-     let joinRequestMessage = await prisma.message.create({
+    // 7. Créer le message de demande
+    const joinRequestMessage =
+      await prisma.message.create({
         data: {
           type: "joinRequest",
           senderId: data.senderId,
           receiverId: data.receiverId,
           conversationId: conversation.id,
           joinRequestId: joinRequestCreated.id,
+
           content: {
-            friendId: friend?.id,
-            friendName: `${friend?.firstName} ${friend?.lastName}`,
-            friendPicture: friend?.picture,
+            friendId: friend.id,
+            friendName: `${friend.firstName} ${friend.lastName}`,
+            friendPicture: friend.picture,
 
-            eventId: event?.id,
-            eventName: event?.eventName,
-            eventAddress: event?.eventAddress,
-            eventStartTime: event?.eventStartTime,
+            eventId: event.id,
+            eventName: event.eventName,
+            eventAddress: event.eventAddress,
+            eventStartTime: event.eventStartTime,
 
-            hostId: event?.createdBy.id,
-            hostName: `${event?.createdBy.firstName} ${event?.createdBy.lastName}`,
-            hostPicture: event?.createdBy.picture,
+            hostId: event.createdBy.id,
+            hostName: `${event.createdBy.firstName} ${event.createdBy.lastName}`,
+            hostPicture: event.createdBy.picture,
 
-            participants: event?.participants,
+            participants: event.participants,
 
             date: new Date(),
           },
         },
       });
-      console.log("join request message succesfully created");
-      console.log(joinRequestMessage);
-      return joinRequestCreated;
-    } catch (error) {
-      console.error(error);
-      throw new Error("ERROR IN createJoinRequest");
-    }
+
+    console.log(
+      "join request message successfully created",
+      joinRequestMessage,
+    );
+
+    return joinRequestCreated;
+
+  } catch (error) {
+    console.error(error);
+    throw new Error("ERROR IN createJoinRequest");
   }
+}
+
 
   async getJoinRequest(
     senderId: number,
