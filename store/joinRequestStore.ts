@@ -321,23 +321,58 @@ class JoinRequestStore implements IJoinRequestStore {
 }
 
   async updateJoinRequestStatus(
-    joinRequestId: number,
-    JoinRequestStatus: JoinRequestStatus,
-  ): Promise<any> {
-    try {
-      const updatedStatus = prisma.joinRequest.update({
+  joinRequestId: number,
+  joinRequestStatus: JoinRequestStatus,
+): Promise<any> {
+  try {
+    const result = await prisma.$transaction(async (tx) => {
+      // 1. Récupérer la JoinRequest
+      const joinRequest = await tx.joinRequest.findUnique({
+        where: {
+          id: joinRequestId,
+        },
+      });
+
+      if (!joinRequest) {
+        throw new Error("Join request not found");
+      }
+
+      // 2. Mettre à jour le statut
+      const updatedStatus = await tx.joinRequest.update({
         where: {
           id: joinRequestId,
         },
         data: {
-          status: JoinRequestStatus,
+          status: joinRequestStatus,
         },
       });
+
+      // 3. Si la demande est acceptée,
+      //    ajouter le demandeur aux participants
+      if (joinRequestStatus === "ACCEPTED") {
+        await tx.event.update({
+          where: {
+            id: joinRequest.eventId,
+          },
+          data: {
+            participants: {
+              connect: {
+                id: joinRequest.senderId,
+              },
+            },
+          },
+        });
+      }
+
       return updatedStatus;
-    } catch (error) {
-      console.error("Prisma updating join request status error");
-    }
+    });
+
+    return result;
+  } catch (error) {
+    console.error("Prisma updating join request status error:", error);
+    throw error;
   }
+}
 
   async deleteJoinRequest(senderId: number, receiverId: number) {
     // delete n'en supprime qu'un seul à la fois
