@@ -21,12 +21,10 @@ interface IJoinRequestStore {
 }
 
 class JoinRequestStore implements IJoinRequestStore {
-  
   async CreateJoinRequest(data: any): Promise<any> {
-  try {
-    // 1. Vérifier qu'une demande n'existe pas déjà
-    const existingJoinRequest =
-      await prisma.joinRequest.findFirst({
+    try {
+      // 1. Vérifier qu'une demande n'existe pas déjà
+      const existingJoinRequest = await prisma.joinRequest.findFirst({
         where: {
           senderId: data.senderId,
           receiverId: data.receiverId,
@@ -37,13 +35,12 @@ class JoinRequestStore implements IJoinRequestStore {
         },
       });
 
-    if (existingJoinRequest) {
-      throw new Error("Join request already exists");
-    }
+      if (existingJoinRequest) {
+        throw new Error("Join request already exists");
+      }
 
-    // 2. Créer la demande
-    const joinRequestCreated =
-      await prisma.joinRequest.create({
+      // 2. Créer la demande
+      const joinRequestCreated = await prisma.joinRequest.create({
         data: {
           senderId: data.senderId,
           receiverId: data.receiverId,
@@ -52,35 +49,34 @@ class JoinRequestStore implements IJoinRequestStore {
         },
       });
 
-    // 3. Récupérer l'événement
-    const event = await prisma.event.findUnique({
-      where: {
-        id: data.eventId,
-      },
-      include: {
-        participants: true,
-        createdBy: true,
-      },
-    });
+      // 3. Récupérer l'événement
+      const event = await prisma.event.findUnique({
+        where: {
+          id: data.eventId,
+        },
+        include: {
+          participants: true,
+          createdBy: true,
+        },
+      });
 
-    if (!event) {
-      throw new Error("Event not found");
-    }
+      if (!event) {
+        throw new Error("Event not found");
+      }
 
-    // 4. Récupérer l'utilisateur qui fait la demande
-    const friend = await prisma.user.findUnique({
-      where: {
-        id: data.senderId,
-      },
-    });
+      // 4. Récupérer l'utilisateur qui fait la demande
+      const friend = await prisma.user.findUnique({
+        where: {
+          id: data.senderId,
+        },
+      });
 
-    if (!friend) {
-      throw new Error("Sender not found");
-    }
+      if (!friend) {
+        throw new Error("Sender not found");
+      }
 
-    // 5. Chercher la conversation
-    let conversation =
-      await prisma.conversation.findFirst({
+      // 5. Chercher la conversation
+      let conversation = await prisma.conversation.findFirst({
         where: {
           AND: [
             {
@@ -101,18 +97,16 @@ class JoinRequestStore implements IJoinRequestStore {
         },
       });
 
-    // 6. La créer si nécessaire
-    if (!conversation) {
-      conversation =
-        await userStore.createConversation(
+      // 6. La créer si nécessaire
+      if (!conversation) {
+        conversation = await userStore.createConversation(
           data.senderId,
           data.receiverId,
         );
-    }
+      }
 
-    // 7. Créer le message de demande
-    const joinRequestMessage =
-      await prisma.message.create({
+      // 7. Créer le message de demande
+      const joinRequestMessage = await prisma.message.create({
         data: {
           type: "joinRequest",
           senderId: data.senderId,
@@ -141,19 +135,17 @@ class JoinRequestStore implements IJoinRequestStore {
         },
       });
 
-    console.log(
-      "join request message successfully created",
-      joinRequestMessage,
-    );
+      console.log(
+        "join request message successfully created",
+        joinRequestMessage,
+      );
 
-    return joinRequestCreated;
-
-  } catch (error) {
-    console.error(error);
-    throw new Error("ERROR IN createJoinRequest");
+      return joinRequestCreated;
+    } catch (error) {
+      console.error(error);
+      throw new Error("ERROR IN createJoinRequest");
+    }
   }
-}
-
 
   async getJoinRequest(
     senderId: number,
@@ -197,10 +189,10 @@ class JoinRequestStore implements IJoinRequestStore {
             lte: end,
           },
         },
-        include:{
-            sender:true,
-            event: true,
-          }
+        include: {
+          sender: true,
+          event: true,
+        },
       });
       return allJoinRequest;
     } catch (error) {
@@ -299,80 +291,93 @@ class JoinRequestStore implements IJoinRequestStore {
   }
 
   async getJoinRequestStatus(userId: number, eventId: number) {
-  try {
-    const joinRequest = await prisma.joinRequest.findUnique({
-      where: {
-        senderId_eventId: {
-          senderId: userId,
-          eventId: eventId,
+    try {
+      const joinRequest = await prisma.joinRequest.findUnique({
+        where: {
+          senderId_eventId: {
+            senderId: userId,
+            eventId: eventId,
+          },
         },
-      },
-      select: {
-        id: true,
-        status: true,
-      },
-    });
+        select: {
+          id: true,
+          status: true,
+        },
+      });
 
-    return joinRequest;
-  } catch (error) {
-    console.error("Prisma retrieving join request status error:", error);
-    throw error;
+      return joinRequest;
+    } catch (error) {
+      console.error("Prisma retrieving join request status error:", error);
+      throw error;
+    }
   }
-}
 
   async updateJoinRequestStatus(
-  joinRequestId: number,
-  joinRequestStatus: JoinRequestStatus,
-): Promise<any> {
-  try {
-    const result = await prisma.$transaction(async (tx) => {
-      // 1. Récupérer la JoinRequest
-      const joinRequest = await tx.joinRequest.findUnique({
-        where: {
-          id: joinRequestId,
-        },
-      });
-
-      if (!joinRequest) {
-        throw new Error("Join request not found");
-      }
-
-      // 2. Mettre à jour le statut
-      const updatedStatus = await tx.joinRequest.update({
-        where: {
-          id: joinRequestId,
-        },
-        data: {
-          status: joinRequestStatus,
-        },
-      });
-
-      // 3. Si la demande est acceptée,
-      //    ajouter le demandeur aux participants
-      if (joinRequestStatus === "ACCEPTED") {
-        await tx.event.update({
+    joinRequestId: number,
+    joinRequestStatus: JoinRequestStatus,
+  ): Promise<any> {
+    try {
+      console.log("join request id");
+      console.log(joinRequestId);
+      console.log("join request status");
+      console.log(joinRequestStatus);
+      return await prisma.$transaction(async (tx) => {
+        const joinRequest = await tx.joinRequest.findUnique({
           where: {
-            id: joinRequest.eventId,
-          },
-          data: {
-            participants: {
-              connect: {
-                id: joinRequest.senderId,
-              },
-            },
+            id: joinRequestId,
           },
         });
-      }
 
-      return updatedStatus;
-    });
+        if (!joinRequest) {
+          throw new Error("Join request not found");
+        }
 
-    return result;
-  } catch (error) {
-    console.error("Prisma updating join request status error:", error);
-    throw error;
+        const updatedStatus = await tx.joinRequest.update({
+          where: {
+            id: joinRequestId,
+          },
+          data: {
+            status: joinRequestStatus,
+          },
+        });
+
+        if (joinRequestStatus === "ACCEPTED") {
+          await tx.event.update({
+            where: {
+              id: joinRequest.eventId,
+            },
+            data: {
+              participants: {
+                connect: {
+                  id: joinRequest.senderId,
+                },
+              },
+            },
+          });
+        }
+
+        if (joinRequestStatus === "REJECTED") {
+          await tx.event.update({
+            where: {
+              id: joinRequest.eventId,
+            },
+            data: {
+              participants: {
+                disconnect: {
+                  id: joinRequest.senderId,
+                },
+              },
+            },
+          });
+        }
+
+        return updatedStatus;
+      });
+    } catch (error) {
+      console.error("Prisma updating join request status error:", error);
+      throw error;
+    }
   }
-}
 
   async deleteJoinRequest(senderId: number, receiverId: number) {
     // delete n'en supprime qu'un seul à la fois
