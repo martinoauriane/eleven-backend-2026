@@ -243,12 +243,12 @@ class UserController {
   try {
     const conversationId = Number(req.params.conversationId);
     const {
-      senderId,
       type,
+      senderId,
+      receiverId,
       content,
       joinRequestId,
       meetRequestId,
-      receiverId,
     } = req.body;
 
     const message = await userService.addMessage(
