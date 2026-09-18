@@ -115,8 +115,8 @@ model Event {
   isPublic       Boolean        @default(true)
   eventStartTime DateTime       @default(now())
   eventEndTime   DateTime       @default(now())
-  userId         Int
-  createdBy      User           @relation("EventCreator", fields: [userId], references: [id], onDelete: Cascade)
+  HostId         Int
+  Host           User           @relation("EventCreator", fields: [HostId], references: [id], onDelete: Cascade)
   favoritedBy    User[]         @relation("UserFavorites")
   joinRequests   JoinRequest[]
   participants   User[]         @relation("EventParticipants")

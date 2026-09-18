@@ -12,8 +12,18 @@ interface IFriendRequestStore {
 class FriendRequestStore implements IFriendRequestStore {
   async createFriendInvite(data: FriendRequestCreate): Promise<any> {
     try {
+      const existingFriendRequest = await prisma.friendRequest.findFirst({
+          where: {
+            emitterId: data.emitterId,
+            receiverId: data.receiverId
+          }
+      })
+      if(existingFriendRequest){
+        return;
+      }else {
       const response = await prisma.friendRequest.create({ data });
       return response;
+      }
     } catch (error) {
       console.error(
         "prisma error trying to create specific joinRequest",
