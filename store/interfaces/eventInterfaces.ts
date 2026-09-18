@@ -1,5 +1,5 @@
 export interface EventCreate{
-  userId: number;
+  HostId: number;
   eventName: string;
   eventType: string // flat-party // clubbing night out // drinks with friends
   eventDate: Date;
@@ -27,7 +27,7 @@ export interface EventUpdate {
 }
 
 export interface EventData {
-  userId: number;
+  HostId: number;
   eventName: string;
   eventType: string
   eventLat: number;

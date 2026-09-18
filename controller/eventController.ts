@@ -6,7 +6,7 @@ class EventController {
   async newEvent(req: Request, res: Response) {
     const userId = parseInt(String(req.params.userId));
     const newEvent: any = {
-      userId: userId,
+      HostId: userId,
       eventName: String(req.body.eventName),
       eventLat: parseFloat(req.body.eventLat),
       eventLon: parseFloat(req.body.eventLon),

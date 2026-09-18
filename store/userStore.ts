@@ -103,7 +103,7 @@ class UserStore implements IUserStore {
           favorites: {
             include: {
               participants: true,
-              createdBy: true,
+              Host: true,
               joinRequests: true,
             },
           },
@@ -410,7 +410,7 @@ class UserStore implements IUserStore {
 
             const event = await prisma.event.findUnique({
               where: { id: content.eventId },
-              include: { createdBy: true, participants: true },
+              include: { Host: true, participants: true },
             });
 
             if (!event) {
@@ -435,9 +435,9 @@ class UserStore implements IUserStore {
                 eventStartTime: event.eventStartTime,
                 eventEndTime: event.eventEndTime,
 
-                hostId: event.createdBy.id,
-                hostName: `${event.createdBy.firstName} ${event.createdBy.lastName}`,
-                hostPicture: event.createdBy.picture,
+                hostId: event.Host.id,
+                hostName: `${event.Host.firstName} ${event.Host.lastName}`,
+                hostPicture: event.Host.picture,
 
                 participants: event.participants,
               },

@@ -23,7 +23,7 @@ class EventStore implements IEventStore {
   async createEvent(data: EventCreate): Promise<any> {
     const existingEvent = await prisma.event.findFirst({
       where: {
-        userId: data.userId,
+        HostId: data.HostId,
         AND: [
           {
             eventStartTime: {
@@ -65,7 +65,7 @@ class EventStore implements IEventStore {
       const event = await prisma.event.findUnique({
         where: { id: eventId },
         include: {
-          createdBy: true,
+          Host: true,
           participants: true,
         },
       });
@@ -75,7 +75,7 @@ class EventStore implements IEventStore {
       }
 
       // 2. Vérifier que l'hôte est bien le créateur
-      if (event.userId !== eventHostId) {
+      if (event.HostId !== eventHostId) {
         throw new Error("Only the event host can send invites");
       }
 
@@ -164,10 +164,10 @@ class EventStore implements IEventStore {
       if (!event) {
         return null;
       }
-      const user = await prisma.user.findUnique({
-        where: { id: event.userId },
+      const host = await prisma.user.findUnique({
+        where: { id: event.HostId },
       });
-      return { event, user };
+      return { event, host };
     } catch (error) {
       console.error("Prisma retrieve error:", error);
       throw error;
@@ -187,7 +187,7 @@ class EventStore implements IEventStore {
         },
       },
       include: {
-        createdBy: true,
+        Host: true,
         participants: true,
         joinRequests: {
           where: {
@@ -202,7 +202,7 @@ class EventStore implements IEventStore {
     try {
       const eventsCreatedByUser = await prisma.event.findMany({
         where: {
-          userId,
+          HostId: userId,
         },
         include: {
           participants: true,
@@ -218,7 +218,7 @@ class EventStore implements IEventStore {
     try {
       const events = await prisma.event.findMany({
         include: {
-          createdBy: true,
+          Host: true,
           participants: true,
           joinRequests: true,
         },
@@ -240,7 +240,7 @@ class EventStore implements IEventStore {
           },
         },
         include: {
-          createdBy: true,
+          Host: true,
           participants: true,
         },
       });
@@ -315,14 +315,14 @@ class EventStore implements IEventStore {
   async addNotifications(userName: string, userId: number, eventId: number) {
     const event = await prisma.event.findUnique({
       where: { id: eventId },
-      select: { userId: true, eventName: true },
+      select: { HostId: true, eventName: true },
     });
     if (!event) throw new Error("Event not found");
     const existingNotification = await prisma.notification.findFirst({
       where: {
         type: "ON_ITS_WAY",
         senderId: userId,
-        receiverId: event.userId,
+        receiverId: event.HostId,
         eventId: eventId,
       },
     });
@@ -336,7 +336,7 @@ class EventStore implements IEventStore {
           type: "ON_ITS_WAY",
           message: `${userName} is on their way`,
           senderId: userId,
-          receiverId: event.userId,
+          receiverId: event.HostId,
           eventId,
         },
       });
@@ -358,7 +358,7 @@ class EventStore implements IEventStore {
       const notifications = await prisma.notification.findMany({
         where: {
           event: {
-            userId: userId,
+            HostId: userId,
           },
           createdAt: {
             gte: startOfDay,

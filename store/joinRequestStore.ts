@@ -56,7 +56,7 @@ class JoinRequestStore implements IJoinRequestStore {
         },
         include: {
           participants: true,
-          createdBy: true,
+          Host: true,
         },
       });
 
@@ -124,9 +124,9 @@ class JoinRequestStore implements IJoinRequestStore {
             eventAddress: event.eventAddress,
             eventStartTime: event.eventStartTime,
 
-            hostId: event.createdBy.id,
-            hostName: `${event.createdBy.firstName} ${event.createdBy.lastName}`,
-            hostPicture: event.createdBy.picture,
+            hostId: event.Host.id,
+            hostName: `${event.Host.firstName} ${event.Host.lastName}`,
+            hostPicture: event.Host.picture,
 
             participants: event.participants,
 
