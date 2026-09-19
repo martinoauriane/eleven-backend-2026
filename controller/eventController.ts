@@ -64,13 +64,16 @@ class EventController {
 
   async returnEventById(req: Request, res: Response) {
     const eventId = Number(req.params.eventId);
+    console.log("eventId RECEIVED IN EVENT CONTROLLER");
+    console.log(eventId);
     try {
       const { event, user } = await eventService.getEvent(eventId);
       const finalResult = {
         ...event,
         userCreator: user,
       };
-
+      console.log("event BEFORE SENDING");
+      console.log(event);
       res.status(200).json(finalResult);
     } catch (error) {
       res.status(500).json({ error: "Error retrieving event" });

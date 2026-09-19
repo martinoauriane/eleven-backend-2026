@@ -584,14 +584,6 @@ class UserStore implements IUserStore {
     joinRequestId?: number,
     meetRequestId?: number,
   ) {
-    console.log({
-      conversationId,
-      type,
-      senderId,
-      receiverId,
-      joinRequestId,
-      meetRequestId,
-    });
     try {
       const newMessage = await prisma.message.create({
         data: {
@@ -622,6 +614,8 @@ class UserStore implements IUserStore {
           receiver: true,
         },
       });
+      console.log("new message successfully created");
+      console.log(newMessage);
       return newMessage;
     } catch (error) {
       console.error("Error adding message:", error);
