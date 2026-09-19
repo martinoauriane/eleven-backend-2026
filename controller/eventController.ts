@@ -20,7 +20,6 @@ class EventController {
       isFull: req.body.isFull,
       isPublic: req.body.isPublic,
     };
-    console.log("new even");
     try {
       const eventCreated = await eventService.createEvent(newEvent);
       res.status(200).json(eventCreated);
@@ -37,13 +36,6 @@ class EventController {
     const content = req.body.content;
     const conversationId = Number(req.params.conversationId);
     const type = req.body.type;
-    console.log(senderId);
-    console.log(receiverId);
-    console.log(eventId);
-    console.log(eventHostId);
-    console.log(content);
-    console.log(conversationId);
-    console.log(type);
     try {
       const eventInvite = await eventService.createEventInvite(
         senderId,

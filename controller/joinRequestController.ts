@@ -13,6 +13,8 @@ class JoinRequestController {
         senderId: Number(req.body.senderId),
         receiverId: Number(req.body.receiverId)
       };
+      console.log("join Request received");
+      console.log(joinRequest);
       const joinRequestCreated =
         await joinRequestService.createJoinRequest(joinRequest);
         console.log("join request successfullly created");
