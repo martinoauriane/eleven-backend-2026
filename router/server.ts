@@ -339,8 +339,8 @@ router.post("/join-request/create/:eventId", async (req: Request, res: Response)
 );
 
 // get join request status
-router.post("/join-request/get/:eventId/:userId", async (req: Request, res: Response) => {
-    await joinRequestController.createJoinRequest(req, res);
+router.post("/join-request/status/:eventId/:userId", async (req: Request, res: Response) => {
+    await joinRequestController.getJoinRequestStatus(req, res);
   },
 );
 

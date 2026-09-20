@@ -60,8 +60,10 @@ class JoinRequestController {
         eventId: Number(req.params.eventId),
         userId: Number(req.params.userId),
       };
-      const allUserJoinRequest = await joinRequestService.getJoinRequestStatus(joinRequest.userId, joinRequest.eventId);
-      res.status(200).json(allUserJoinRequest);
+      const joinRequestStatus = await joinRequestService.getJoinRequestStatus(joinRequest.userId, joinRequest.eventId);
+      console.log("join request status");
+      console.log(joinRequestStatus);
+      res.status(200).json(joinRequestStatus);
     } catch (error) {
       res.status(500).json({ error: "Error creating new Join Request" });
     }

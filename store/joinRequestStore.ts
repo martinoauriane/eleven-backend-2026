@@ -317,10 +317,6 @@ class JoinRequestStore implements IJoinRequestStore {
     joinRequestStatus: JoinRequestStatus,
   ): Promise<any> {
     try {
-      console.log("join request id");
-      console.log(joinRequestId);
-      console.log("join request status");
-      console.log(joinRequestStatus);
       return await prisma.$transaction(async (tx) => {
         const joinRequest = await tx.joinRequest.findUnique({
           where: {
