@@ -9,8 +9,8 @@ class FriendRequestController {
   async createFriendInvite(req: Request, res: Response) {
     try {
       const friendInvite: FriendRequestCreate = {
-        emitterId: Number(req.params.emitter_id),
-        receiverId: Number(req.params.receiver_id),
+        emitterId: Number(req.params.emitterId),
+        receiverId: Number(req.params.receiverId),
       };
       const friendInviteCreated =
         await friendRequestService.createFriendInvite(friendInvite);
@@ -74,6 +74,8 @@ async getSentFriendRequests(req: Request, res: Response) {
         emitterId: Number(req.params.emitter_id),
         receiverId: Number(req.params.receiver_id),
       };
+      console.log("friend request delete");
+      console.log(friendRequestDelete);
       const friendRequestDeleted =
         await friendRequestService.deleteFriendRequest(friendRequestDelete);
       res.status(200).json(friendRequestDeleted);

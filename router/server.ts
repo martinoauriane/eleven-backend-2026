@@ -214,7 +214,7 @@ router.post("/user/:conversationId/mark-as-read", async (req, res) => {
 
 // operationnal
 router.post(
-  "/friend-request/delete/:emitter_id/:receiver_id",
+  "/friend-request/delete/:emitterId/:receiverId",
   async (req: Request, res: Response) => {
     await friendRequestController.deleteFriendRequest(req, res);
   },

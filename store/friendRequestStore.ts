@@ -84,14 +84,18 @@ class FriendRequestStore implements IFriendRequestStore {
     }
   }
 
-  async deleteFriendRequest(emitter_id: number, receiver_id: number) {
+  async deleteFriendRequest(emitterId: number, receiverId: number) {
     // delete n'en supprime qu'un seul à la fois
     // deleteMany en supprime plusieurs
+    console.log("emitterId");
+    console.log(emitterId);
+    console.log("receiverId");
+    console.log(receiverId);
     try {
       const result = await prisma.friendRequest.deleteMany({
         where: {
-          emitterId: emitter_id,
-          receiverId: receiver_id,
+          emitterId: emitterId,
+          receiverId: receiverId,
         },
       });
       return result;
