@@ -21,35 +21,46 @@ interface IEventStore {
 
 class EventStore implements IEventStore {
   async createEvent(data: EventCreate): Promise<any> {
-    const existingEvent = await prisma.event.findFirst({
-      where: {
-        HostId: data.HostId,
-        AND: [
-          {
-            eventStartTime: {
-              lt: new Date(data.eventEndTime),
-            },
-          },
-          {
-            eventEndTime: {
-              gt: new Date(data.eventStartTime),
-            },
-          },
-        ],
+  const startTime = new Date(data.eventStartTime);
+  const endTime = new Date(data.eventEndTime);
+
+  // Vérification de la validité des dates
+  if (startTime >= endTime) {
+    throw new Error("La date de fin doit être après la date de début.");
+  }
+
+  // Recherche d'un événement qui chevauche le nouveau
+  const existingEvent = await prisma.event.findFirst({
+    where: {
+      HostId: data.HostId,
+      eventStartTime: {
+        lt: endTime,
+      },
+      eventEndTime: {
+        gt: startTime,
+      },
+    },
+  });
+
+  if (existingEvent) {
+    throw new Error(
+      "Vous avez déjà un événement prévu sur cette plage horaire."
+    );
+  }
+
+  try {
+    return await prisma.event.create({
+      data: {
+        ...data,
+        eventStartTime: startTime,
+        eventEndTime: endTime,
       },
     });
-    if (existingEvent) {
-      console.log("EXISTING EVENT");
-      console.log(existingEvent);
-    } else {
-      try {
-        let newEvent = await prisma.event.create({ data });
-        return newEvent;
-      } catch (error) {
-        console.error("Prisma creation error:", error);
-      }
-    }
+  } catch (error) {
+    console.error("Prisma creation error:", error);
+    throw error;
   }
+}
 
   async createEventInvite(
     senderId: number,
