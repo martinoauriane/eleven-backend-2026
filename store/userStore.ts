@@ -639,55 +639,65 @@ class UserStore implements IUserStore {
       console.error("Prisma retrieving sent friend requests error:", error);
     }
   }
+  
+async addMessage(
+  conversationId: number,
+  type: string,
+  content: any,
+  senderId: number,
+  receiverId?: number,
+  joinRequestId?: number,
+  meetRequestId?: number,
+) {
+  try {
+    const newMessage = await prisma.message.create({
+      data: {
+        type,
+        content,
 
-  async addMessage(
-    conversationId: number,
-    type: string,
-    content: any,
-    senderId: number,
-    receiverId?: number,
-    joinRequestId?: number,
-    meetRequestId?: number,
-  ) {
-    try {
-      const newMessage = await prisma.message.create({
-        data: {
-          type,
-          content,
-          conversation: {
-            connect: { id: conversationId },
-          },
-          sender: {
-            connect: { id: senderId },
-          },
-          receiver: 
-            receiverId ? {
-            connect: { id: receiverId }}: undefined,
-          },
-          joinRequest: joinRequestId
-            ? {
-                connect: { id: joinRequestId },
-              }
-            : undefined,
-          meetRequest: meetRequestId
-            ? {
-                connect: { id: meetRequestId },
-              }
-            : undefined,
+        conversation: {
+          connect: { id: conversationId },
         },
-        include: {
-          sender: true,
-          receiver: true,
+
+        sender: {
+          connect: { id: senderId },
         },
-      });
-      console.log("new message successfully created");
-      console.log(newMessage);
-      return newMessage;
-    } catch (error) {
-      console.error("Error adding message:", error);
-      throw error;
-    }
+
+        receiver: receiverId
+          ? {
+              connect: { id: receiverId },
+            }
+          : undefined,
+
+        joinRequest: joinRequestId
+          ? {
+              connect: { id: joinRequestId },
+            }
+          : undefined,
+
+        meetRequest: meetRequestId
+          ? {
+              connect: { id: meetRequestId },
+            }
+          : undefined,
+      },
+
+      include: {
+        sender: true,
+        receiver: true,
+      },
+    });
+
+    console.log("new message successfully created");
+    console.log(newMessage);
+
+    return newMessage;
+  } catch (error) {
+    console.error("Error adding message:", error);
+    throw error;
   }
+}
+
 
   async deleteUser(id: number) {
     try {
