@@ -134,8 +134,7 @@ model Event {
   participants   User[]         @relation("EventParticipants")
   notifications  Notification[]
   photos         EventPhoto[]
-  conversations Conversation[]
-
+  conversations  Conversation[]
 }
 
 model JoinRequest {
@@ -201,8 +200,8 @@ model Conversation {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  members  ConversationMember[]
-  messages Message[]
+  participants ConversationMember[]
+  messages     Message[]
 
   @@index([eventId])
   @@index([createdBy])
@@ -230,16 +229,15 @@ model Message {
   isRead         Boolean      @default(false)
   readAt         DateTime?
   senderId       Int
-  receiverId     Int
+  receiverId     Int?
   conversationId Int
   joinRequestId  Int?         @unique
   meetRequestId  Int?         @unique
   sender         User         @relation("MessageSender", fields: [senderId], references: [id], onDelete: Cascade)
-  receiver       User         @relation("MessageReceiver", fields: [receiverId], references: [id], onDelete: Cascade)
+  receiver       User?        @relation("MessageReceiver", fields: [receiverId], references: [id], onDelete: Cascade)
   conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
   joinRequest    JoinRequest? @relation(fields: [joinRequestId], references: [id], onDelete: Cascade)
   meetRequest    MeetRequest? @relation(fields: [meetRequestId], references: [id], onDelete: Cascade)
-
 }
 
 model Notification {

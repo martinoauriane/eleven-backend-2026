@@ -311,14 +311,38 @@ class UserStore implements IUserStore {
     try {
       const conversation = await prisma.conversation.create({
         data: {
+          type: "DIRECT",
+          createdBy: userId,
+
           participants: {
-            connect: [{ id: userId }, { id: friendId }],
+            create: [
+              {
+                userId,
+                role: "ADMIN",
+              },
+              {
+                userId: friendId,
+                role: "MEMBER",
+              },
+            ],
           },
         },
         include: {
-          participants: true,
+          participants: {
+            include: {
+              user: {
+                select: {
+                  id: true,
+                  firstName: true,
+                  lastName: true,
+                  picture: true,
+                },
+              },
+            },
+          },
         },
       });
+
       return conversation;
     } catch (error) {
       console.error("Prisma creating new conversation error:", error);
@@ -468,32 +492,73 @@ class UserStore implements IUserStore {
       const conversations = await prisma.conversation.findMany({
         where: {
           participants: {
-            some: { id: userId },
-          },
-        },
-        include: {
-          participants: {
-            select: {
-              id: true,
-              firstName: true,
-              lastName: true,
-              picture: true,
+            some: {
+              userId,
             },
           },
+        },
+
+        include: {
+          participants: {
+            include: {
+              user: {
+                select: {
+                  id: true,
+                  firstName: true,
+                  lastName: true,
+                  picture: true,
+                },
+              },
+            },
+          },
+
           messages: {
-            orderBy: { sentAt: "desc" },
+            orderBy: {
+              sentAt: "desc",
+            },
             take: 1,
           },
+        },
+
+        orderBy: {
+          updatedAt: "desc",
         },
       });
 
       return conversations.map((conv) => {
-        const friend = conv.participants.find((p) => p.id !== userId);
+        // ==============================
+        // DIRECT CONVERSATION
+        // ==============================
+
+        if (conv.type === "DIRECT") {
+          const friendMember = conv.participants.find(
+            (p) => p.user.id !== userId,
+          );
+
+          const friend = friendMember?.user;
+
+          return {
+            ...conv,
+
+            friend,
+
+            // Pour ne pas exposer toute la structure
+            // ConversationMember au frontend si ton frontend
+            // attend encore participants.
+            participants: conv.participants.map((p) => p.user),
+          };
+        }
+
+        // ==============================
+        // GROUP CONVERSATION
+        // ==============================
 
         return {
           ...conv,
-          friend,
-          participants: undefined,
+
+          friend: null,
+
+          participants: conv.participants.map((p) => p.user),
         };
       });
     } catch (error) {
@@ -580,7 +645,7 @@ class UserStore implements IUserStore {
     type: string,
     content: any,
     senderId: number,
-    receiverId: number,
+    receiverId?: number,
     joinRequestId?: number,
     meetRequestId?: number,
   ) {
@@ -595,8 +660,9 @@ class UserStore implements IUserStore {
           sender: {
             connect: { id: senderId },
           },
-          receiver: {
-            connect: { id: receiverId },
+          receiver: 
+            receiverId ? {
+            connect: { id: receiverId }}: undefined,
           },
           joinRequest: joinRequestId
             ? {
