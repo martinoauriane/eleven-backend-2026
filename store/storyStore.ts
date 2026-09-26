@@ -1,13 +1,5 @@
 import "dotenv/config"; // ⚡ force le chargement de ton .env
 import { prisma } from "../prisma/lib/prisma";
-import {
-  JoinRequestCreate,
-  JoinRequestData,
-} from "./interfaces/joinRequestInterfaces";
-import { UserStore } from "./userStore";
-const userStore = new UserStore();
-
-type JoinRequestStatus = "NONE" | "SENT" | "ACCEPTED" | "REJECTED";
 
 interface IStoryStore {
   CreateStory(
