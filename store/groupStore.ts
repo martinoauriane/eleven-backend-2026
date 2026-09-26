@@ -1,169 +1,123 @@
 import { prisma } from "../prisma/lib/prisma";
-import { ConversationType, ConversationMemberRole } from "@prisma/client";
 
 interface CreateGroupData {
   name: string;
-  picture?: string;
+  picture?: string | null;
   createdBy: number;
   memberIds: number[];
   eventId?: number;
 }
 
+interface UpdateGroupData {
+  name?: string;
+  picture?: string | null;
+}
+
 class GroupStore {
   /**
-   * Créer un groupe de conversation
+   * CREATE GROUP
    */
   async createGroup(data: CreateGroupData) {
-    const { name, picture, createdBy, memberIds, eventId } = data;
+    const {
+      name,
+      picture,
+      createdBy,
+      memberIds,
+      eventId,
+    } = data;
 
-    // Vérifier que le créateur existe
-    const creator = await prisma.user.findUnique({
-      where: {
-        id: createdBy,
-      },
-    });
-
-    if (!creator) {
-      throw new Error("Creator not found");
-    }
-
-    // Vérifier que tous les utilisateurs existent
     const uniqueMemberIds = [
-      ...new Set([createdBy, ...memberIds]),
+      ...new Set([
+        createdBy,
+        ...memberIds,
+      ]),
     ];
 
-    const users = await prisma.user.findMany({
-      where: {
-        id: {
-          in: uniqueMemberIds,
-        },
-      },
-      select: {
-        id: true,
-      },
-    });
-
-    if (users.length !== uniqueMemberIds.length) {
-      throw new Error("One or more users do not exist");
-    }
-
-    // Si un eventId est fourni, vérifier qu'il existe
-    if (eventId) {
-      const event = await prisma.event.findUnique({
-        where: {
-          id: eventId,
-        },
-      });
-
-      if (!event) {
-        throw new Error("Event not found");
-      }
-    }
-
-    // Création du groupe + membres dans une transaction
-    const group = await prisma.conversation.create({
+    return await prisma.conversation.create({
       data: {
+        type: "GROUP",
         name,
-        picture,
-        type: ConversationType.GROUP,
+        picture: picture ?? null,
         createdBy,
-        eventId,
+
+        ...(eventId !== undefined
+          ? {
+              eventId,
+            }
+          : {}),
 
         participants: {
-          create: uniqueMemberIds.map((userId) => ({
-            userId,
+          create: uniqueMemberIds.map((memberId) => ({
+            userId: memberId,
             role:
-              userId === createdBy
-                ? ConversationMemberRole.ADMIN
-                : ConversationMemberRole.MEMBER,
+              memberId === createdBy
+                ? "ADMIN"
+                : "MEMBER",
           })),
         },
       },
 
       include: {
-        creator: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            picture: true,
-          },
-        },
-
         participants: {
           include: {
-            user: {
-              select: {
-                id: true,
-                firstName: true,
-                lastName: true,
-                picture: true,
-              },
-            },
+            user: true,
           },
         },
 
-        event: true,
+        messages: {
+          orderBy: {
+            sentAt: "desc",
+          },
+          take: 50,
+        },
       },
     });
-
-    return group;
   }
 
   /**
-   * Récupérer un groupe
+   * GET GROUP BY ID
    */
   async getGroupById(groupId: number) {
-    const group = await prisma.conversation.findUnique({
-      where: {
-        id: groupId,
-      },
-
-      include: {
-        creator: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            picture: true,
-          },
+    const group =
+      await prisma.conversation.findFirst({
+        where: {
+          id: groupId,
+          type: "GROUP",
         },
 
-        participants: {
-          include: {
-            user: {
-              select: {
-                id: true,
-                firstName: true,
-                lastName: true,
-                picture: true,
-              },
+        include: {
+          participants: {
+            include: {
+              user: true,
+            },
+          },
+
+          messages: {
+            orderBy: {
+              sentAt: "asc",
+            },
+
+            include: {
+              sender: true,
             },
           },
         },
-
-        event: true,
-      },
-    });
+      });
 
     if (!group) {
       throw new Error("Group not found");
     }
 
-    if (group.type !== ConversationType.GROUP) {
-      throw new Error("This conversation is not a group");
-    }
-
     return group;
   }
 
   /**
-   * Récupérer les groupes d'un utilisateur
+   * GET USER GROUPS
    */
   async getUserGroups(userId: number) {
-    const groups = await prisma.conversation.findMany({
+    return await prisma.conversation.findMany({
       where: {
-        type: ConversationType.GROUP,
+        type: "GROUP",
 
         participants: {
           some: {
@@ -172,133 +126,99 @@ class GroupStore {
         },
       },
 
-      orderBy: {
-        updatedAt: "desc",
-      },
-
       include: {
-        creator: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            picture: true,
-          },
-        },
-
         participants: {
           include: {
-            user: {
-              select: {
-                id: true,
-                firstName: true,
-                lastName: true,
-                picture: true,
-              },
-            },
+            user: true,
           },
         },
-
-        event: true,
 
         messages: {
           orderBy: {
             sentAt: "desc",
           },
 
-          take: 1,
-
-          select: {
-            id: true,
-            type: true,
-            content: true,
-            sentAt: true,
-            senderId: true,
-          },
+          take: 50,
         },
       },
-    });
 
-    return groups;
+      orderBy: {
+        updatedAt: "desc",
+      },
+    });
   }
 
   /**
-   * Ajouter un membre au groupe
+   * ADD MEMBER
    */
   async addMember(
     groupId: number,
     userId: number,
     requesterId: number,
   ) {
-    const group = await prisma.conversation.findUnique({
-      where: {
-        id: groupId,
-      },
-
-      include: {
-        participants: true,
-      },
-    });
+    const group =
+      await prisma.conversation.findFirst({
+        where: {
+          id: groupId,
+          type: "GROUP",
+        },
+      });
 
     if (!group) {
       throw new Error("Group not found");
     }
 
-    if (group.type !== ConversationType.GROUP) {
-      throw new Error("This conversation is not a group");
-    }
-
-    // Vérifier que celui qui ajoute est membre
-    const requester = group.participants.find(
-      (member) => member.userId === requesterId,
-    );
+    const requester =
+      await prisma.conversationMember.findFirst({
+        where: {
+          conversationId: groupId,
+          userId: requesterId,
+          role: "ADMIN",
+        },
+      });
 
     if (!requester) {
-      throw new Error("You are not a member of this group");
-    }
-
-    // Seuls les admins peuvent ajouter
-    if (requester.role !== ConversationMemberRole.ADMIN) {
-      throw new Error("Only admins can add members");
-    }
-
-    // Vérifier que l'utilisateur existe
-    const user = await prisma.user.findUnique({
-      where: {
-        id: userId,
-      },
-    });
-
-    if (!user) {
-      throw new Error("User not found");
-    }
-
-    // Vérifier qu'il n'est pas déjà membre
-    const existingMember =
-      group.participants.find(
-        (member) => member.userId === userId,
+      throw new Error(
+        "Only an admin can add members",
       );
-
-    if (existingMember) {
-      throw new Error("User is already a member");
     }
 
-    const member = await prisma.conversationMember.create({
-      data: {
-        conversationId: groupId,
-        userId,
-        role: ConversationMemberRole.MEMBER,
-      },
-
-      include: {
-        user: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            picture: true,
+    const existingMember =
+      await prisma.conversationMember.findUnique({
+        where: {
+          conversationId_userId: {
+            conversationId: groupId,
+            userId,
           },
         },
+      });
+
+    if (existingMember) {
+      throw new Error(
+        "User is already a member",
+      );
+    }
+
+    const member =
+      await prisma.conversationMember.create({
+        data: {
+          conversationId: groupId,
+          userId,
+          role: "MEMBER",
+        },
+
+        include: {
+          user: true,
+        },
+      });
+
+    await prisma.conversation.update({
+      where: {
+        id: groupId,
+      },
+
+      data: {
+        updatedAt: new Date(),
       },
     });
 
@@ -306,208 +226,210 @@ class GroupStore {
   }
 
   /**
-   * Supprimer un membre
+   * REMOVE MEMBER
    */
   async removeMember(
     groupId: number,
     userId: number,
     requesterId: number,
   ) {
-    const group = await prisma.conversation.findUnique({
-      where: {
-        id: groupId,
-      },
-
-      include: {
-        participants: true,
-      },
-    });
+    const group =
+      await prisma.conversation.findFirst({
+        where: {
+          id: groupId,
+          type: "GROUP",
+        },
+      });
 
     if (!group) {
       throw new Error("Group not found");
     }
 
-    if (group.type !== ConversationType.GROUP) {
-      throw new Error("This conversation is not a group");
-    }
-
-    const requester = group.participants.find(
-      (member) => member.userId === requesterId,
-    );
+    const requester =
+      await prisma.conversationMember.findFirst({
+        where: {
+          conversationId: groupId,
+          userId: requesterId,
+          role: "ADMIN",
+        },
+      });
 
     if (!requester) {
-      throw new Error("You are not a member of this group");
+      throw new Error(
+        "Only an admin can remove members",
+      );
     }
 
-    // Un admin peut supprimer quelqu'un.
-    // Un membre peut également quitter le groupe lui-même.
-    const isSelf = userId === requesterId;
-
-    if (
-      !isSelf &&
-      requester.role !== ConversationMemberRole.ADMIN
-    ) {
-      throw new Error("Only admins can remove members");
-    }
-
-    const member = group.participants.find(
-      (member) => member.userId === userId,
-    );
+    const member =
+      await prisma.conversationMember.findUnique({
+        where: {
+          conversationId_userId: {
+            conversationId: groupId,
+            userId,
+          },
+        },
+      });
 
     if (!member) {
-      throw new Error("User is not a member of this group");
+      throw new Error(
+        "User is not a member",
+      );
     }
 
-    // Éviter de supprimer le dernier admin
-    if (
-      member.role === ConversationMemberRole.ADMIN &&
-      !isSelf
-    ) {
-      const adminCount = group.participants.filter(
-        (member) =>
-          member.role === ConversationMemberRole.ADMIN,
-      ).length;
+    if (member.role === "ADMIN") {
+      const adminCount =
+        await prisma.conversationMember.count({
+          where: {
+            conversationId: groupId,
+            role: "ADMIN",
+          },
+        });
 
-      if (adminCount === 1) {
+      if (adminCount <= 1) {
         throw new Error(
           "The last admin cannot be removed",
         );
       }
     }
 
-    await prisma.conversationMember.delete({
-      where: {
-        conversationId_userId: {
-          conversationId: groupId,
-          userId,
+    const deletedMember =
+      await prisma.conversationMember.delete({
+        where: {
+          conversationId_userId: {
+            conversationId: groupId,
+            userId,
+          },
         },
-      },
-    });
+      });
 
-    return {
-      success: true,
-      message: "Member removed successfully",
-    };
-  }
-
-  /**
-   * Modifier le groupe
-   */
-  async updateGroup(
-    groupId: number,
-    requesterId: number,
-    data: {
-      name?: string;
-      picture?: string;
-    },
-  ) {
-    const group = await prisma.conversation.findUnique({
+    await prisma.conversation.update({
       where: {
         id: groupId,
       },
 
-      include: {
-        participants: true,
+      data: {
+        updatedAt: new Date(),
       },
     });
+
+    return deletedMember;
+  }
+
+  /**
+   * UPDATE GROUP
+   */
+  async updateGroup(
+    groupId: number,
+    requesterId: number,
+    data: UpdateGroupData,
+  ) {
+    const group =
+      await prisma.conversation.findFirst({
+        where: {
+          id: groupId,
+          type: "GROUP",
+        },
+      });
 
     if (!group) {
       throw new Error("Group not found");
     }
 
-    if (group.type !== ConversationType.GROUP) {
-      throw new Error("This conversation is not a group");
-    }
-
-    const requester = group.participants.find(
-      (member) => member.userId === requesterId,
-    );
-
-    if (!requester) {
-      throw new Error("You are not a member of this group");
-    }
-
-    if (requester.role !== ConversationMemberRole.ADMIN) {
-      throw new Error("Only admins can update the group");
-    }
-
-    const updatedGroup =
-      await prisma.conversation.update({
+    const requester =
+      await prisma.conversationMember.findFirst({
         where: {
-          id: groupId,
-        },
-
-        data: {
-          name: data.name,
-          picture: data.picture,
-        },
-
-        include: {
-          participants: {
-            include: {
-              user: {
-                select: {
-                  id: true,
-                  firstName: true,
-                  lastName: true,
-                  picture: true,
-                },
-              },
-            },
-          },
+          conversationId: groupId,
+          userId: requesterId,
+          role: "ADMIN",
         },
       });
 
-    return updatedGroup;
+    if (!requester) {
+      throw new Error(
+        "Only an admin can update the group",
+      );
+    }
+
+    const updateData: {
+      name?: string;
+      picture?: string | null;
+      updatedAt: Date;
+    } = {
+      updatedAt: new Date(),
+    };
+
+    if (data.name !== undefined) {
+      updateData.name = data.name;
+    }
+
+    if (data.picture !== undefined) {
+      updateData.picture = data.picture;
+    }
+
+    return await prisma.conversation.update({
+      where: {
+        id: groupId,
+      },
+
+      data: updateData,
+
+      include: {
+        participants: {
+          include: {
+            user: true,
+          },
+        },
+
+        messages: {
+          orderBy: {
+            sentAt: "desc",
+          },
+
+          take: 50,
+        },
+      },
+    });
   }
 
   /**
-   * Supprimer le groupe
+   * DELETE GROUP
    */
   async deleteGroup(
     groupId: number,
     requesterId: number,
   ) {
-    const group = await prisma.conversation.findUnique({
-      where: {
-        id: groupId,
-      },
-
-      include: {
-        participants: true,
-      },
-    });
+    const group =
+      await prisma.conversation.findFirst({
+        where: {
+          id: groupId,
+          type: "GROUP",
+        },
+      });
 
     if (!group) {
       throw new Error("Group not found");
     }
 
-    if (group.type !== ConversationType.GROUP) {
-      throw new Error("This conversation is not a group");
+    const admin =
+      await prisma.conversationMember.findFirst({
+        where: {
+          conversationId: groupId,
+          userId: requesterId,
+          role: "ADMIN",
+        },
+      });
+
+    if (!admin) {
+      throw new Error(
+        "Only an admin can delete the group",
+      );
     }
 
-    const requester = group.participants.find(
-      (member) => member.userId === requesterId,
-    );
-
-    if (!requester) {
-      throw new Error("You are not a member of this group");
-    }
-
-    if (requester.role !== ConversationMemberRole.ADMIN) {
-      throw new Error("Only admins can delete the group");
-    }
-
-    await prisma.conversation.delete({
+    return await prisma.conversation.delete({
       where: {
         id: groupId,
       },
     });
-
-    return {
-      success: true,
-      message: "Group deleted successfully",
-    };
   }
 }
 

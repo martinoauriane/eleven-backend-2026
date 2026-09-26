@@ -6,6 +6,7 @@ import { StoryController } from "../controller/storyController";
 import { JoinRequestController } from "../controller/joinRequestController";
 import { FriendRequestController } from "../controller/friendRequestController";
 import { EventController } from "../controller/eventController";
+import { GroupController } from "../controller/groupController";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -21,6 +22,8 @@ const joinRequestController = new JoinRequestController();
 const friendRequestController = new FriendRequestController();
 const eventController = new EventController();
 const storyController = new StoryController();
+const groupController = new GroupController();
+
 
 // welcome
 router.get("/", async (req: Request, res: Response) => {
@@ -368,7 +371,67 @@ router.get("/friend/:friendId/story", async (req: Request, res: Response) => {
   },
 );
 
+// ================================
+// GROUP ENDPOINTS
+// ================================
 
+router.post(
+  "/group/create",
+  async (req: Request, res: Response) => {
+    await groupController.createGroup(req, res);
+  },
+);
+
+router.get(
+  "/group/:groupId",
+  async (req: Request, res: Response) => {
+    await groupController.getGroupById(req, res);
+  },
+);
+
+router.get(
+  "/user/:userId/groups",
+  async (req: Request, res: Response) => {
+    await groupController.getUserGroups(req, res);
+  },
+);
+
+router.post(
+  "/group/:groupId/members",
+  async (req: Request, res: Response) => {
+    await groupController.addMember(req, res);
+  },
+);
+
+router.delete(
+  "/group/:groupId/members/:userId",
+  async (req: Request, res: Response) => {
+    await groupController.removeMember(
+      req,
+      res,
+    );
+  },
+);
+
+router.patch(
+  "/group/:groupId",
+  async (req: Request, res: Response) => {
+    await groupController.updateGroup(
+      req,
+      res,
+    );
+  },
+);
+
+router.delete(
+  "/group/:groupId",
+  async (req: Request, res: Response) => {
+    await groupController.deleteGroup(
+      req,
+      res,
+    );
+  },
+);
 
 try {
   const server = app.listen(3000, "0.0.0.0", () => {

@@ -9,64 +9,61 @@ class GroupController {
   }
 
   /**
-   * POST /group/create
+   * POST /user/:userId/groups
    *
    * Body:
    * {
    *   "name": "Soirée Paris",
    *   "picture": "...",
-   *   "createdBy": 1,
-   *   "memberIds": [2, 3, 4],
-   *   "eventId": 10
+   *   "memberIds": [2, 3, 4]
    * }
    */
   async createGroup(req: Request, res: Response) {
     try {
+      const userId = Number(req.params.userId);
+
       const {
         name,
         picture,
-        createdBy,
         memberIds,
-        eventId,
       } = req.body;
 
-      if (!name) {
+      if (Number.isNaN(userId)) {
+        return res.status(400).json({
+          error: "Invalid userId",
+        });
+      }
+
+      if (!name || typeof name !== "string") {
         return res.status(400).json({
           error: "Group name is required",
         });
       }
 
-      if (!createdBy) {
-        return res.status(400).json({
-          error: "createdBy is required",
-        });
-      }
-
-      if (
-        !Array.isArray(memberIds)
-      ) {
+      if (!Array.isArray(memberIds)) {
         return res.status(400).json({
           error: "memberIds must be an array",
         });
       }
 
-      const group =
-        await this.groupService.createGroup({
-          name,
-          picture,
-          createdBy: Number(createdBy),
-          memberIds: memberIds.map(Number),
-          eventId: eventId
-            ? Number(eventId)
-            : undefined,
+      const parsedMemberIds = memberIds.map(Number);
+
+      if (parsedMemberIds.some((id) => Number.isNaN(id))) {
+        return res.status(400).json({
+          error: "memberIds must contain valid user IDs",
         });
+      }
+
+      const group = await this.groupService.createGroup(
+        userId,
+        name,
+        picture ?? null,
+        parsedMemberIds,
+      );
 
       return res.status(201).json(group);
     } catch (error: any) {
-      console.error(
-        "Error creating group:",
-        error,
-      );
+      console.error("Error creating group:", error);
 
       return res.status(500).json({
         error: error.message || "Error creating group",
@@ -75,53 +72,11 @@ class GroupController {
   }
 
   /**
-   * GET /group/:groupId
-   */
-  async getGroupById(
-    req: Request,
-    res: Response,
-  ) {
-    try {
-      const groupId = Number(
-        req.params.groupId,
-      );
-
-      if (Number.isNaN(groupId)) {
-        return res.status(400).json({
-          error: "Invalid groupId",
-        });
-      }
-
-      const group =
-        await this.groupService.getGroupById(
-          groupId,
-        );
-
-      return res.status(200).json(group);
-    } catch (error: any) {
-      console.error(
-        "Error retrieving group:",
-        error,
-      );
-
-      return res.status(404).json({
-        error:
-          error.message || "Group not found",
-      });
-    }
-  }
-
-  /**
    * GET /user/:userId/groups
    */
-  async getUserGroups(
-    req: Request,
-    res: Response,
-  ) {
+  async getUserGroups(req: Request, res: Response) {
     try {
-      const userId = Number(
-        req.params.userId,
-      );
+      const userId = Number(req.params.userId);
 
       if (Number.isNaN(userId)) {
         return res.status(400).json({
@@ -129,256 +84,199 @@ class GroupController {
         });
       }
 
-      const groups =
-        await this.groupService.getUserGroups(
-          userId,
-        );
+      const groups = await this.groupService.getUserGroups(
+        userId,
+      );
 
       return res.status(200).json(groups);
     } catch (error: any) {
-      console.error(
-        "Error retrieving user groups:",
-        error,
-      );
+      console.error("Error retrieving user groups:", error);
 
       return res.status(500).json({
         error:
-          error.message ||
-          "Error retrieving groups",
+          error.message || "Error retrieving groups",
       });
     }
   }
 
   /**
-   * POST /group/:groupId/members
-   *
-   * Body:
-   * {
-   *   "userId": 5,
-   *   "requesterId": 1
-   * }
+   * GET /user/:userId/groups/:groupId
    */
-  async addMember(
-    req: Request,
-    res: Response,
-  ) {
+  async getGroupById(req: Request, res: Response) {
     try {
-      const groupId = Number(
-        req.params.groupId,
-      );
+      const userId = Number(req.params.userId);
+      const groupId = Number(req.params.groupId);
 
-      const {
-        userId,
-        requesterId,
-      } = req.body;
-
-      if (
-        Number.isNaN(groupId) ||
-        !userId ||
-        !requesterId
-      ) {
+      if (Number.isNaN(userId)) {
         return res.status(400).json({
-          error:
-            "groupId, userId and requesterId are required",
+          error: "Invalid userId",
         });
       }
 
-      const member =
-        await this.groupService.addMember(
-          groupId,
-          Number(userId),
-          Number(requesterId),
-        );
+      if (Number.isNaN(groupId)) {
+        return res.status(400).json({
+          error: "Invalid groupId",
+        });
+      }
+
+      const group = await this.groupService.getGroupById(
+        groupId,
+        userId,
+      );
+
+      if (!group) {
+        return res.status(404).json({
+          error: "Group not found",
+        });
+      }
+
+      return res.status(200).json(group);
+    } catch (error: any) {
+      console.error("Error retrieving group:", error);
+
+      return res.status(500).json({
+        error:
+          error.message || "Error retrieving group",
+      });
+    }
+  }
+
+  /**
+   * POST /user/:userId/groups/:groupId/members
+   *
+   * Body:
+   * {
+   *   "userId": 5
+   * }
+   *
+   * userId dans l'URL = celui qui effectue l'action
+   * userId dans le body = personne à ajouter
+   */
+  async addMember(req: Request, res: Response) {
+    try {
+      const requesterId = Number(req.params.userId);
+      const groupId = Number(req.params.groupId);
+      const userId = Number(req.body.userId);
+
+      if (Number.isNaN(requesterId)) {
+        return res.status(400).json({
+          error: "Invalid requester userId",
+        });
+      }
+
+      if (Number.isNaN(groupId)) {
+        return res.status(400).json({
+          error: "Invalid groupId",
+        });
+      }
+
+      if (Number.isNaN(userId)) {
+        return res.status(400).json({
+          error: "Invalid userId",
+        });
+      }
+
+      const member = await this.groupService.addMember(
+        groupId,
+        userId,
+        requesterId,
+      );
 
       return res.status(201).json(member);
     } catch (error: any) {
-      console.error(
-        "Error adding group member:",
-        error,
-      );
+      console.error("Error adding group member:", error);
 
       return res.status(400).json({
         error:
-          error.message ||
-          "Error adding member",
+          error.message || "Error adding member",
       });
     }
   }
 
   /**
-   * DELETE /group/:groupId/members/:userId
+   * DELETE /user/:userId/groups/:groupId/members
    *
    * Body:
    * {
-   *   "requesterId": 1
+   *   "userId": 5
    * }
+   *
+   * userId dans l'URL = admin/requester
+   * userId dans le body = membre à supprimer
    */
-  async removeMember(
-    req: Request,
-    res: Response,
-  ) {
+  async removeMember(req: Request, res: Response) {
     try {
-      const groupId = Number(
-        req.params.groupId,
-      );
+      const requesterId = Number(req.params.userId);
+      const groupId = Number(req.params.groupId);
+      const userId = Number(req.body.userId);
 
-      const userId = Number(
-        req.params.userId,
-      );
-
-      const requesterId = Number(
-        req.body.requesterId,
-      );
-
-      if (
-        Number.isNaN(groupId) ||
-        Number.isNaN(userId) ||
-        Number.isNaN(requesterId)
-      ) {
+      if (Number.isNaN(requesterId)) {
         return res.status(400).json({
-          error: "Invalid IDs",
+          error: "Invalid requester userId",
         });
       }
 
-      const result =
-        await this.groupService.removeMember(
-          groupId,
-          userId,
-          requesterId,
-        );
+      if (Number.isNaN(groupId)) {
+        return res.status(400).json({
+          error: "Invalid groupId",
+        });
+      }
 
-      return res.status(200).json(result);
-    } catch (error: any) {
-      console.error(
-        "Error removing member:",
-        error,
-      );
+      if (Number.isNaN(userId)) {
+        return res.status(400).json({
+          error: "Invalid userId",
+        });
+      }
 
-      return res.status(400).json({
-        error:
-          error.message ||
-          "Error removing member",
-      });
-    }
-  }
-
-  /**
-   * PATCH /group/:groupId
-   *
-   * Body:
-   * {
-   *   "requesterId": 1,
-   *   "name": "Nouveau nom",
-   *   "picture": "..."
-   * }
-   */
-  async updateGroup(
-    req: Request,
-    res: Response,
-  ) {
-    try {
-      const groupId = Number(
-        req.params.groupId,
-      );
-
-      const {
+      const result = await this.groupService.removeMember(
+        groupId,
+        userId,
         requesterId,
-        name,
-        picture,
-      } = req.body;
-
-      if (
-        Number.isNaN(groupId) ||
-        !requesterId
-      ) {
-        return res.status(400).json({
-          error:
-            "groupId and requesterId are required",
-        });
-      }
-
-      if (!name && !picture) {
-        return res.status(400).json({
-          error:
-            "Nothing to update",
-        });
-      }
-
-      const updatedGroup =
-        await this.groupService.updateGroup(
-          groupId,
-          Number(requesterId),
-          {
-            name,
-            picture,
-          },
-        );
-
-      return res.status(200).json(
-        updatedGroup,
       );
+
+      return res.status(200).json(result);
     } catch (error: any) {
-      console.error(
-        "Error updating group:",
-        error,
-      );
+      console.error("Error removing group member:", error);
 
       return res.status(400).json({
         error:
-          error.message ||
-          "Error updating group",
+          error.message || "Error removing member",
       });
     }
   }
 
   /**
-   * DELETE /group/:groupId
-   *
-   * Body:
-   * {
-   *   "requesterId": 1
-   * }
+   * DELETE /user/:userId/groups/:groupId
    */
-  async deleteGroup(
-    req: Request,
-    res: Response,
-  ) {
+  async deleteGroup(req: Request, res: Response) {
     try {
-      const groupId = Number(
-        req.params.groupId,
-      );
+      const userId = Number(req.params.userId);
+      const groupId = Number(req.params.groupId);
 
-      const requesterId = Number(
-        req.body.requesterId,
-      );
-
-      if (
-        Number.isNaN(groupId) ||
-        Number.isNaN(requesterId)
-      ) {
+      if (Number.isNaN(userId)) {
         return res.status(400).json({
-          error:
-            "groupId and requesterId are required",
+          error: "Invalid userId",
         });
       }
 
-      const result =
-        await this.groupService.deleteGroup(
-          groupId,
-          requesterId,
-        );
+      if (Number.isNaN(groupId)) {
+        return res.status(400).json({
+          error: "Invalid groupId",
+        });
+      }
+
+      const result = await this.groupService.deleteGroup(
+        groupId,
+        userId,
+      );
 
       return res.status(200).json(result);
     } catch (error: any) {
-      console.error(
-        "Error deleting group:",
-        error,
-      );
+      console.error("Error deleting group:", error);
 
       return res.status(400).json({
         error:
-          error.message ||
-          "Error deleting group",
+          error.message || "Error deleting group",
       });
     }
   }

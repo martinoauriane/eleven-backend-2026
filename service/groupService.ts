@@ -2,10 +2,15 @@ import { GroupStore } from "../store/groupStore";
 
 interface CreateGroupData {
   name: string;
-  picture?: string;
+  picture?: string | null;
   createdBy: number;
   memberIds: number[];
   eventId?: number;
+}
+
+interface UpdateGroupData {
+  name?: string;
+  picture?: string | null;
 }
 
 class GroupService {
@@ -15,18 +20,31 @@ class GroupService {
     this.groupStore = new GroupStore();
   }
 
+  /**
+   * Créer un groupe
+   */
   async createGroup(data: CreateGroupData) {
     return await this.groupStore.createGroup(data);
   }
 
+  /**
+   * Récupérer un groupe
+   */
   async getGroupById(groupId: number) {
     return await this.groupStore.getGroupById(groupId);
   }
 
+  /**
+   * Récupérer tous les groupes
+   * dont l'utilisateur est membre.
+   */
   async getUserGroups(userId: number) {
     return await this.groupStore.getUserGroups(userId);
   }
 
+  /**
+   * Ajouter un membre à un groupe
+   */
   async addMember(
     groupId: number,
     userId: number,
@@ -39,6 +57,9 @@ class GroupService {
     );
   }
 
+  /**
+   * Supprimer un membre d'un groupe
+   */
   async removeMember(
     groupId: number,
     userId: number,
@@ -51,13 +72,13 @@ class GroupService {
     );
   }
 
+  /**
+   * Modifier le nom / la photo du groupe
+   */
   async updateGroup(
     groupId: number,
     requesterId: number,
-    data: {
-      name?: string;
-      picture?: string;
-    },
+    data: UpdateGroupData,
   ) {
     return await this.groupStore.updateGroup(
       groupId,
@@ -66,6 +87,9 @@ class GroupService {
     );
   }
 
+  /**
+   * Supprimer un groupe
+   */
   async deleteGroup(
     groupId: number,
     requesterId: number,
