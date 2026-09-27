@@ -187,6 +187,12 @@ router.get("/user/:conversationId/load-messages", async (req, res) => {
 });
 
 router.post("/user/:conversationId/add-message", async (req, res) => {
+  console.log("🔥 ADD PRIVATE MESSAGE", {
+    conversationId: req.params.conversationId,
+    body: req.body,
+    time: new Date().toISOString(),
+  });
+
   try {
     await userController.addMessage(req, res);
   } catch (err) {
@@ -452,6 +458,12 @@ router.get(
 router.post(
   "/group/:groupId/messages",
   async (req: Request, res: Response) => {
+    console.log("🔥 ADD GROUP MESSAGE", {
+      groupId: req.params.groupId,
+      body: req.body,
+      time: new Date().toISOString(),
+    });
+
     try {
       await groupController.addGroupMessage(req, res);
     } catch (err) {

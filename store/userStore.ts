@@ -478,89 +478,6 @@ class UserStore implements IUserStore {
     }
   }
 
-  async getUserConversations(userId: number) {
-    try {
-      const conversations = await prisma.conversation.findMany({
-        where: {
-          participants: {
-            some: {
-              userId,
-            },
-          },
-        },
-
-        include: {
-          participants: {
-            include: {
-              user: {
-                select: {
-                  id: true,
-                  firstName: true,
-                  lastName: true,
-                  picture: true,
-                },
-              },
-            },
-          },
-
-          messages: {
-            where: {
-              type: "text",
-            },
-            orderBy: {
-              sentAt: "desc",
-            },
-            take: 1,
-          },
-        },
-
-        orderBy: {
-          updatedAt: "desc",
-        },
-      });
-
-      return conversations.map((conv) => {
-        // ==============================
-        // DIRECT CONVERSATION
-        // ==============================
-
-        if (conv.type === "DIRECT") {
-          const friendMember = conv.participants.find(
-            (p) => p.user.id !== userId,
-          );
-
-          const friend = friendMember?.user;
-
-          return {
-            ...conv,
-
-            friend,
-
-            // Pour ne pas exposer toute la structure
-            // ConversationMember au frontend si ton frontend
-            // attend encore participants.
-            participants: conv.participants.map((p) => p.user),
-          };
-        }
-
-        // ==============================
-        // GROUP CONVERSATION
-        // ==============================
-
-        return {
-          ...conv,
-
-          friend: null,
-
-          participants: conv.participants.map((p) => p.user),
-        };
-      });
-    } catch (error) {
-      console.error("Prisma retrieving conversation error:", error);
-      throw error;
-    }
-  }
-
   async markConversationAsRead(conversationId: number, userId: number) {
     try {
       const conversationRead = await prisma.message.updateMany({
@@ -719,6 +636,70 @@ class UserStore implements IUserStore {
       console.error("Prisma delete error:", error);
     }
   }
+
+  async getUserConversations(userId: number) {
+  try {
+    const conversations = await prisma.conversation.findMany({
+      where: {
+        type: "DIRECT",
+        participants: {
+          some: {
+            userId,
+          },
+        },
+      },
+
+      include: {
+        participants: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                picture: true,
+              },
+            },
+          },
+        },
+
+        messages: {
+          where: {
+            type: "text",
+          },
+          orderBy: {
+            sentAt: "desc",
+          },
+          take: 1,
+        },
+      },
+
+      orderBy: {
+        updatedAt: "desc",
+      },
+    });
+
+    return conversations.map((conv) => {
+      const friendMember = conv.participants.find(
+        (p) => p.user.id !== userId,
+      );
+
+      const friend = friendMember?.user;
+
+      return {
+        ...conv,
+
+        friend,
+
+        participants: conv.participants.map((p) => p.user),
+      };
+    });
+  } catch (error) {
+    console.error("Prisma retrieving conversation error:", error);
+    throw error;
+  }
+}
+
 }
 
 export { UserStore };
