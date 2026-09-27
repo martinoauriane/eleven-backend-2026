@@ -376,7 +376,7 @@ router.get("/friend/:friendId/story", async (req: Request, res: Response) => {
 // ================================
 
 router.post(
-  "/group/create",
+  "/group/create/:userId",
   async (req: Request, res: Response) => {
     await groupController.createGroup(req, res);
   },
@@ -397,7 +397,7 @@ router.get(
 );
 
 router.post(
-  "/group/:groupId/members",
+  "/group/:userId/:groupId/members",
   async (req: Request, res: Response) => {
     await groupController.addMember(req, res);
   },
