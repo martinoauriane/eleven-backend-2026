@@ -1,4 +1,5 @@
 import { GroupStore } from "../store/groupStore";
+import { Prisma } from "@prisma/client";
 
 interface CreateGroupData {
   name: string;
@@ -11,10 +12,6 @@ interface CreateGroupData {
 interface UpdateGroupData {
   name?: string;
   picture?: string | null;
-}
-
-interface GroupMessageContent {
-  [key: string]: unknown;
 }
 
 class GroupService {
@@ -114,19 +111,19 @@ class GroupService {
   /**
    * Ajouter un message dans un groupe
    */
-  async addGroupMessage(
-    groupId: number,
-    senderId: number,
-    type: string,
-    content: GroupMessageContent,
-  ) {
-    return await this.groupStore.addGroupMessage(
-      groupId,
-      senderId,
-      type,
-      content,
-    );
-  }
+async addGroupMessage(
+  groupId: number,
+  senderId: number,
+  type: string,
+  content: Prisma.InputJsonValue,
+) {
+  return await this.groupStore.addGroupMessage(
+    groupId,
+    senderId,
+    type,
+    content,
+  );
+}
 
   /**
    * Marquer les messages du groupe comme lus
