@@ -352,9 +352,20 @@ class UserStore implements IUserStore {
 
   async getMessages(conversationId: number) {
     try {
+      const conversation = await prisma.conversation.findFirst({
+        where: {
+          id: conversationId,
+          type: "DIRECT",
+        },
+      });
+      if (!conversation) {
+        throw new Error(
+          `Conversation privée introuvable pour l'id ${conversationId}`,
+        );
+      }
       const messages = await prisma.message.findMany({
         where: {
-          conversationId,
+          conversationId: conversation.id,
         },
         orderBy: {
           sentAt: "desc",
@@ -381,23 +392,11 @@ class UserStore implements IUserStore {
           },
         },
       });
-      console.log(
-        messages
-          .filter((m) => m.type === "joinRequest")
-          .map((m) => ({
-            id: m.id,
-            joinRequestId: m.joinRequestId,
-            hasJoinRequest: !!m.joinRequest,
-          })),
-      );
 
       const formattedMessages = await Promise.all(
         messages.map(async (msg) => {
-          // 1. GESTION DES JOIN REQUESTS
           if (msg.type === "joinRequest") {
             const req = msg.joinRequest;
-
-            // Récupération de l'event et du créateur si joinRequest est présent
             return {
               id: msg.id,
               type: "joinRequest",
@@ -412,31 +411,29 @@ class UserStore implements IUserStore {
                     friendId: req.sender.id,
                     friendName: `${req.sender.firstName} ${req.sender.lastName}`,
                     friendPicture: req.sender.picture,
-
                     hostId: req.receiver.id,
                     hostName: `${req.receiver.firstName} ${req.receiver.lastName}`,
                     hostPicture: req.receiver.picture,
-
                     eventId: req.event.id,
                     eventName: req.event.eventName,
                     eventAddress: req.event.eventAddress,
                     eventStartTime: req.event.eventStartTime,
-
                     participants: req.event.participants,
                   }
-                : msg.content, // Fallback sur msg.content si la relation Prisma n'est pas chargée
+                : msg.content,
             };
           }
-
-          // 2. GESTION DES EVENEMENTS
           if (msg.type === "event") {
             const content = msg.content as any;
-
             const event = await prisma.event.findUnique({
-              where: { id: content.eventId },
-              include: { Host: true, participants: true },
+              where: {
+                id: content.eventId,
+              },
+              include: {
+                Host: true,
+                participants: true,
+              },
             });
-
             if (!event) {
               return {
                 id: msg.id,
@@ -446,7 +443,6 @@ class UserStore implements IUserStore {
                 content,
               };
             }
-
             return {
               id: msg.id,
               type: "event",
@@ -458,17 +454,13 @@ class UserStore implements IUserStore {
                 eventAddress: event.eventAddress,
                 eventStartTime: event.eventStartTime,
                 eventEndTime: event.eventEndTime,
-
                 hostId: event.Host.id,
                 hostName: `${event.Host.firstName} ${event.Host.lastName}`,
                 hostPicture: event.Host.picture,
-
                 participants: event.participants,
               },
             };
           }
-
-          // 3. GESTION DES TEXTES ET AUTRES MESSAGES
           return {
             id: msg.id,
             senderId: msg.senderId,
@@ -479,10 +471,9 @@ class UserStore implements IUserStore {
           };
         }),
       );
-
       return formattedMessages;
     } catch (error) {
-      console.error("Prisma retrieving messages error:", error);
+      console.error("Prisma retrieving private messages error:", error);
       throw error;
     }
   }
@@ -513,6 +504,9 @@ class UserStore implements IUserStore {
           },
 
           messages: {
+            where: {
+              type: "text",
+            },
             orderBy: {
               sentAt: "desc",
             },
@@ -639,65 +633,84 @@ class UserStore implements IUserStore {
       console.error("Prisma retrieving sent friend requests error:", error);
     }
   }
-  
-async addMessage(
-  conversationId: number,
-  type: string,
-  content: any,
-  senderId: number,
-  receiverId?: number,
-  joinRequestId?: number,
-  meetRequestId?: number,
-) {
-  try {
-    const newMessage = await prisma.message.create({
-      data: {
-        type,
-        content,
 
-        conversation: {
-          connect: { id: conversationId },
+  async addMessage(
+    conversationId: number,
+    type: string,
+    content: any,
+    senderId: number,
+    receiverId?: number,
+    joinRequestId?: number,
+    meetRequestId?: number,
+  ) {
+    try {
+      const conversation = await prisma.conversation.findFirst({
+        where: {
+          id: conversationId,
+          type: "DIRECT",
+        },
+      });
+
+      if (!conversation) {
+        throw new Error(
+          `Impossible d'ajouter un message : ${conversationId} n'est pas une conversation privée`,
+        );
+      }
+      const newMessage = await prisma.message.create({
+        data: {
+          type,
+          content,
+
+          conversation: {
+            connect: { id: conversationId },
+          },
+
+          sender: {
+            connect: { id: senderId },
+          },
+
+          receiver: receiverId
+            ? {
+                connect: { id: receiverId },
+              }
+            : undefined,
+
+          joinRequest: joinRequestId
+            ? {
+                connect: { id: joinRequestId },
+              }
+            : undefined,
+
+          meetRequest: meetRequestId
+            ? {
+                connect: { id: meetRequestId },
+              }
+            : undefined,
         },
 
-        sender: {
-          connect: { id: senderId },
+        include: {
+          sender: true,
+          receiver: true,
         },
+      });
 
-        receiver: receiverId
-          ? {
-              connect: { id: receiverId },
-            }
-          : undefined,
+      if (type === "text") {
+        await prisma.conversation.update({
+          where: {
+            id: conversationId,
+          },
+          data: {
+            updatedAt: new Date(),
+          },
+        });
+      }
 
-        joinRequest: joinRequestId
-          ? {
-              connect: { id: joinRequestId },
-            }
-          : undefined,
-
-        meetRequest: meetRequestId
-          ? {
-              connect: { id: meetRequestId },
-            }
-          : undefined,
-      },
-
-      include: {
-        sender: true,
-        receiver: true,
-      },
-    });
-
-    console.log("new message successfully created");
-    console.log(newMessage);
-
-    return newMessage;
-  } catch (error) {
-    console.error("Error adding message:", error);
-    throw error;
+      return newMessage;
+    } catch (error) {
+      console.error("Error adding message:", error);
+      throw error;
+    }
   }
-}
-
 
   async deleteUser(id: number) {
     try {

@@ -486,21 +486,28 @@ class GroupStore {
   /**
    * MARK GROUP MESSAGES AS READ
    */
-  async markGroupMessagesAsRead(groupId: number, userId: number) {
-    // Vérifier que le groupe existe
-    const group = await prisma.conversation.findFirst({
-      where: {
-        id: groupId,
-        type: "GROUP",
-      },
-    });
+/**
+ * MARK GROUP MESSAGES AS READ
+ */
+async markGroupMessagesAsRead(
+  groupId: number,
+  userId: number,
+) {
+  // Vérifier que le groupe existe
+  const group = await prisma.conversation.findFirst({
+    where: {
+      id: groupId,
+      type: "GROUP",
+    },
+  });
 
-    if (!group) {
-      throw new Error("Group not found");
-    }
+  if (!group) {
+    throw new Error("Group not found");
+  }
 
-    // Vérifier que l'utilisateur est membre
-    const member = await prisma.conversationMember.findUnique({
+  // Vérifier que l'utilisateur est membre du groupe
+  const member =
+    await prisma.conversationMember.findUnique({
       where: {
         conversationId_userId: {
           conversationId: groupId,
@@ -509,31 +516,33 @@ class GroupStore {
       },
     });
 
-    if (!member) {
-      throw new Error("User is not a member of this group");
-    }
-
-    // Marquer les messages comme lus
-    const result = await prisma.message.updateMany({
-      where: {
-        conversationId: groupId,
-
-        // On ne met à jour que les messages
-        // qui ne sont pas encore lus par cet utilisateur.
-        reads: {
-          none: {
-            userId,
-          },
-        },
-      },
-
-      data: {
-        // À adapter selon ton modèle Prisma
-      },
-    });
-
-    return result;
+  if (!member) {
+    throw new Error(
+      "User is not a member of this group",
+    );
   }
+
+  // Marquer comme lus les messages
+  // qui ne sont pas encore lus
+  const result = await prisma.message.updateMany({
+    where: {
+      conversationId: groupId,
+      isRead: false,
+    },
+
+    data: {
+      isRead: true,
+      readAt: new Date(),
+    },
+  });
+
+  return {
+    success: true,
+    groupId,
+    userId,
+    messagesMarkedAsRead: result.count,
+  };
+}
 }
 
 export { GroupStore };
