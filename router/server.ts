@@ -433,6 +433,46 @@ router.delete(
   },
 );
 
+// ================================
+// GROUP MESSAGE ENDPOINTS
+// ================================
+
+router.get(
+  "/group/:groupId/messages",
+  async (req: Request, res: Response) => {
+    try {
+      await groupController.getGroupMessages(req, res);
+    } catch (err) {
+      console.error("ERROR getting group messages:", err);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  },
+);
+
+router.post(
+  "/group/:groupId/messages",
+  async (req: Request, res: Response) => {
+    try {
+      await groupController.addGroupMessage(req, res);
+    } catch (err) {
+      console.error("ERROR adding group message:", err);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  },
+);
+
+router.post(
+  "/group/:groupId/mark-as-read",
+  async (req: Request, res: Response) => {
+    try {
+      await groupController.markGroupMessagesAsRead(req, res);
+    } catch (err) {
+      console.error("ERROR marking group messages as read:", err);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  },
+);
+
 try {
   const server = app.listen(3000, "0.0.0.0", () => {
     console.log("Server running on port 3000");

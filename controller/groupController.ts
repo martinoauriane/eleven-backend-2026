@@ -492,6 +492,219 @@ class GroupController {
       });
     }
   }
+
+    /**
+   * GET /group/:groupId/messages
+   *
+   * Récupère uniquement les messages appartenant au groupe.
+   */
+  async getGroupMessages(
+    req: Request,
+    res: Response,
+  ) {
+    try {
+      const groupId = Number(req.params.groupId);
+
+      if (Number.isNaN(groupId)) {
+        return res.status(400).json({
+          error: "Invalid groupId",
+        });
+      }
+
+      const messages =
+        await this.groupService.getGroupMessages(groupId);
+
+      return res.status(200).json(messages);
+    } catch (error: any) {
+      console.error(
+        "Error retrieving group messages:",
+        error,
+      );
+
+      if (error.message === "Group not found") {
+        return res.status(404).json({
+          error: "Group not found",
+        });
+      }
+
+      return res.status(500).json({
+        error:
+          error.message ||
+          "Error retrieving group messages",
+      });
+    }
+  }
+
+  /**
+   * POST /group/:groupId/messages
+   *
+   * Body:
+   * {
+   *   "senderId": 5,
+   *   "type": "text",
+   *   "content": {
+   *     "text": "Salut tout le monde"
+   *   }
+   * }
+   */
+  async addGroupMessage(
+    req: Request,
+    res: Response,
+  ) {
+    try {
+      const groupId = Number(req.params.groupId);
+
+      const {
+        senderId,
+        type,
+        content,
+      } = req.body;
+
+      // -------------------------
+      // VALIDATION
+      // -------------------------
+
+      if (Number.isNaN(groupId)) {
+        return res.status(400).json({
+          error: "Invalid groupId",
+        });
+      }
+
+      const parsedSenderId = Number(senderId);
+
+      if (Number.isNaN(parsedSenderId)) {
+        return res.status(400).json({
+          error: "Invalid senderId",
+        });
+      }
+
+      if (!type || typeof type !== "string") {
+        return res.status(400).json({
+          error: "Message type is required",
+        });
+      }
+
+      if (!content || typeof content !== "object") {
+        return res.status(400).json({
+          error: "Message content is required",
+        });
+      }
+
+      if (
+        type === "text" &&
+        (!content.text ||
+          typeof content.text !== "string" ||
+          !content.text.trim())
+      ) {
+        return res.status(400).json({
+          error: "Message text is required",
+        });
+      }
+
+      // -------------------------
+      // CREATE MESSAGE
+      // -------------------------
+
+      const message =
+        await this.groupService.addGroupMessage(
+          groupId,
+          parsedSenderId,
+          type,
+          content,
+        );
+
+      return res.status(201).json(message);
+    } catch (error: any) {
+      console.error(
+        "Error adding group message:",
+        error,
+      );
+
+      if (
+        error.message === "Group not found"
+      ) {
+        return res.status(404).json({
+          error: "Group not found",
+        });
+      }
+
+      if (
+        error.message ===
+          "User is not a member of this group" ||
+        error.message ===
+          "Sender is not a member of this group"
+      ) {
+        return res.status(403).json({
+          error: error.message,
+        });
+      }
+
+      return res.status(400).json({
+        error:
+          error.message ||
+          "Error adding group message",
+      });
+    }
+  }
+
+  /**
+   * POST /group/:groupId/mark-as-read
+   *
+   * Body:
+   * {
+   *   "userId": 5
+   * }
+   */
+  async markGroupMessagesAsRead(
+    req: Request,
+    res: Response,
+  ) {
+    try {
+      const groupId = Number(req.params.groupId);
+      const userId = Number(req.body.userId);
+
+      if (Number.isNaN(groupId)) {
+        return res.status(400).json({
+          error: "Invalid groupId",
+        });
+      }
+
+      if (Number.isNaN(userId)) {
+        return res.status(400).json({
+          error: "Invalid userId",
+        });
+      }
+
+      const result =
+        await this.groupService.markGroupMessagesAsRead(
+          groupId,
+          userId,
+        );
+
+      return res.status(200).json(result);
+    } catch (error: any) {
+      console.error(
+        "Error marking group messages as read:",
+        error,
+      );
+
+      if (
+        error.message ===
+        "User is not a member of this group"
+      ) {
+        return res.status(403).json({
+          error: error.message,
+        });
+      }
+
+      return res.status(400).json({
+        error:
+          error.message ||
+          "Error marking group messages as read",
+      });
+    }
+  }
+
 }
 
 export { GroupController };

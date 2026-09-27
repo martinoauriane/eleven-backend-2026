@@ -13,6 +13,10 @@ interface UpdateGroupData {
   picture?: string | null;
 }
 
+interface GroupMessageContent {
+  [key: string]: unknown;
+}
+
 class GroupService {
   private groupStore: GroupStore;
 
@@ -97,6 +101,43 @@ class GroupService {
     return await this.groupStore.deleteGroup(
       groupId,
       requesterId,
+    );
+  }
+
+  /**
+   * Récupérer les messages d'un groupe
+   */
+  async getGroupMessages(groupId: number) {
+    return await this.groupStore.getGroupMessages(groupId);
+  }
+
+  /**
+   * Ajouter un message dans un groupe
+   */
+  async addGroupMessage(
+    groupId: number,
+    senderId: number,
+    type: string,
+    content: GroupMessageContent,
+  ) {
+    return await this.groupStore.addGroupMessage(
+      groupId,
+      senderId,
+      type,
+      content,
+    );
+  }
+
+  /**
+   * Marquer les messages du groupe comme lus
+   */
+  async markGroupMessagesAsRead(
+    groupId: number,
+    userId: number,
+  ) {
+    return await this.groupStore.markGroupMessagesAsRead(
+      groupId,
+      userId,
     );
   }
 }
