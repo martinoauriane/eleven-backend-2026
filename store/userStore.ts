@@ -638,68 +638,64 @@ class UserStore implements IUserStore {
   }
 
   async getUserConversations(userId: number) {
-  try {
-    const conversations = await prisma.conversation.findMany({
-      where: {
-        type: "DIRECT",
-        participants: {
-          some: {
-            userId,
-          },
-        },
-      },
-
-      include: {
-        participants: {
-          include: {
-            user: {
-              select: {
-                id: true,
-                firstName: true,
-                lastName: true,
-                picture: true,
-              },
+    try {
+      const conversations = await prisma.conversation.findMany({
+        where: {
+          type: "DIRECT",
+          participants: {
+            some: {
+              userId,
             },
           },
         },
 
-        messages: {
-          where: {
-            type: "text",
+        include: {
+          participants: {
+            include: {
+              user: {
+                select: {
+                  id: true,
+                  firstName: true,
+                  lastName: true,
+                  picture: true,
+                },
+              },
+            },
           },
-          orderBy: {
-            sentAt: "desc",
+
+          messages: {
+            orderBy: {
+              sentAt: "desc",
+            },
+            take: 1,
           },
-          take: 1,
         },
-      },
 
-      orderBy: {
-        updatedAt: "desc",
-      },
-    });
+        orderBy: {
+          updatedAt: "desc",
+        },
+      });
 
-    return conversations.map((conv) => {
-      const friendMember = conv.participants.find(
-        (p) => p.user.id !== userId,
-      );
+      return conversations.map((conv) => {
+        const friendMember = conv.participants.find(
+          (p) => p.user.id !== userId,
+        );
 
-      const friend = friendMember?.user;
+        const friend = friendMember?.user;
 
-      return {
-        ...conv,
+        return {
+          ...conv,
 
-        friend,
+          friend,
 
-        participants: conv.participants.map((p) => p.user),
-      };
-    });
-  } catch (error) {
-    console.error("Prisma retrieving conversation error:", error);
-    throw error;
+          participants: conv.participants.map((p) => p.user),
+        };
+      });
+    } catch (error) {
+      console.error("Prisma retrieving conversation error:", error);
+      throw error;
+    }
   }
-}
-
 }
 
 export { UserStore };
