@@ -83,17 +83,23 @@ class JoinRequestController {
   async createMeetRequest(req: Request, res: Response) {
     try {
       const meetRequest: any = {
-        senderId: Number(req.params.senderId),
+        senderId: Number(req.body.senderId),
         receiverId: Number(req.body.receiverId),
         latitude: Number(req.body.latitude),
         longitude: Number(req.body.longitude),
         activity: String(req.body.longitude),
       };
+      console.log("senderId");
+      console.log(meetRequest.senderId);
+
+      console.log("receiverId");
+      console.log(meetRequest.receiverId);
+
       const createdMeetRequest =
         await joinRequestService.createMeetRequest(meetRequest);
       res.status(200).json(createdMeetRequest);
     } catch (error) {
-      res.status(500).json({ error: "Error creating new Join Request" });
+      res.status(500).json({ error: "Error creating new meet Request" });
     }
   }
 

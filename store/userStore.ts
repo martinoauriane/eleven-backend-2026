@@ -33,24 +33,35 @@ class UserStore implements IUserStore {
 
   async loginUser(email: string, password: string): Promise<any> {
     try {
-      let userDb = await prisma.user.findUnique({
-        where: { email: email },
+      const userDb = await prisma.user.findUnique({
+        where: { email },
       });
-      const userId = userDb?.id;
-      if (userDb) {
-        const isMatch = await bcrypt.compare(password, userDb?.password);
-        if (isMatch && userId) {
-          const user = await prisma.user.findUnique({ where: { id: userId } });
-          const token = jwt.sign({ userId: userId }, process.env.JWT_SECRET!, {
-            expiresIn: "7d",
-          });
-          return { token, user };
-        } else {
-          throw new Error("Invalid credentials");
-        }
+      console.log("userDb:", userDb);
+      if (!userDb) {
+        throw new Error("Invalid credentials");
       }
+
+      const isMatch = await bcrypt.compare(password, userDb.password);
+
+      console.log("PASSWORD RECEIVED:", JSON.stringify(password));
+      console.log("HASH FROM DB:", userDb.password);
+      console.log("IS MATCH:", isMatch);
+
+      if (!isMatch) {
+        throw new Error("Invalid credentials");
+      }
+
+      const token = jwt.sign({ userId: userDb.id }, process.env.JWT_SECRET!, {
+        expiresIn: "7d",
+      });
+
+      return {
+        token,
+        user: userDb,
+      };
     } catch (error) {
-      console.error(error);
+      console.error("LOGIN ERROR:", error);
+      throw error;
     }
   }
 
@@ -390,6 +401,12 @@ class UserStore implements IUserStore {
               },
             },
           },
+          meetRequest: {
+            include: {
+              emitter: true,
+              receiver: true,
+            },
+          },
         },
       });
 
@@ -419,6 +436,30 @@ class UserStore implements IUserStore {
                     eventAddress: req.event.eventAddress,
                     eventStartTime: req.event.eventStartTime,
                     participants: req.event.participants,
+                  }
+                : msg.content,
+            };
+          }
+          if (msg.type === "meetRequest") {
+            const req = msg.meetRequest;
+            return {
+              id: msg.id,
+              type: "meetRequest",
+              senderId: msg.senderId,
+              receiverId: msg.receiverId,
+              sentAt: msg.sentAt,
+              isRead: msg.isRead,
+              meetRequestId: msg.meetRequestId,
+              status: req?.status ?? "SENT",
+              content: req
+                ? {
+                    friendId: req.emitter.id,
+                    friendName: `${req.emitter.firstName} ${req.emitter.lastName}`,
+                    friendPicture: req.emitter.picture,
+                    latitude: req.latitude,
+                    longitude: req.longitude,
+                    address: req.address,
+                    activity: req.activity,
                   }
                 : msg.content,
             };

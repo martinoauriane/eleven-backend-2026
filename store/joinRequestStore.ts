@@ -264,14 +264,14 @@ class JoinRequestStore implements IJoinRequestStore {
         },
       });
 
-      let meetRequestMessage = await prisma.message.create({
+      const meetRequestMessage = await prisma.message.create({
         data: {
           type: "meetRequest",
           senderId: data.senderId,
           receiverId: data.receiverId,
           conversationId: conversation.id,
+          meetRequestId: meetRequestCreated.id,
           content: {
-            meetRequestId: meetRequestCreated.id,
             friendId: emitter?.id,
             friendName: `${emitter?.firstName} ${emitter?.lastName}`,
             friendPicture: emitter?.picture,
@@ -283,7 +283,8 @@ class JoinRequestStore implements IJoinRequestStore {
           },
         },
       });
-      return meetRequestCreated;
+
+      return meetRequestMessage;
     } catch (error) {
       console.error(error);
       throw new Error("ERROR IN createMeetRequest");
