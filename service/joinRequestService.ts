@@ -4,6 +4,7 @@ import {
   JoinRequestCreate,
   JoinRequestData,
 } from "../store/interfaces/joinRequestInterfaces";
+import { MeetRequestStatus } from "@prisma/client";
 
 const joinRequestStore = new JoinRequestStore();
 
@@ -48,6 +49,17 @@ class JoinRequestService {
     const response = await joinRequestStore.createMeetRequest(data);
     return response;
   }
+
+  async updateMeetRequestStatus(
+    meetRequestId: number,
+    status: MeetRequestStatus,
+  ) {
+    return await joinRequestStore.updateMeetRequestStatus(
+      meetRequestId,
+      status,
+    );
+  }
+
   async deleteJoinRequest(data: JoinRequestCreate): Promise<any> {
     return await joinRequestStore.deleteJoinRequest(
       data.friendId,

@@ -6,6 +6,8 @@ export interface JoinRequestCreate {
 
 export type JoinRequestStatus = "NONE" | "SENT" | "ACCEPTED" | "REJECTED";
 
+export type MeetRequestStatus =   "SENT" | "ACCEPTED" | "REJECTED" | "EXPIRED" ;
+
 export interface JoinRequestData {
   sentAt: Date;
   status: JoinRequestStatus;

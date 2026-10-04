@@ -89,17 +89,25 @@ class JoinRequestController {
         longitude: Number(req.body.longitude),
         activity: String(req.body.longitude),
       };
-      console.log("senderId");
-      console.log(meetRequest.senderId);
-
-      console.log("receiverId");
-      console.log(meetRequest.receiverId);
-
       const createdMeetRequest =
         await joinRequestService.createMeetRequest(meetRequest);
       res.status(200).json(createdMeetRequest);
     } catch (error) {
       res.status(500).json({ error: "Error creating new meet Request" });
+    }
+  }
+
+  async updateMeetRequestStatus(req: Request, res: Response) {
+    const meetRequestId = Number(req.params.id);
+    const { status } = req.body;
+    try {
+      const updatedJoinRequest =
+        await joinRequestService.updateJoinRequestStatus(meetRequestId, status);
+      res.status(200).json(updatedJoinRequest);
+    } catch (error: any) {
+      res.status(500).json({
+        error: error.message,
+      });
     }
   }
 

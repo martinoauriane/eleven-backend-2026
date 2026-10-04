@@ -6,6 +6,7 @@ import {
 } from "./interfaces/joinRequestInterfaces";
 import { UserStore } from "./userStore";
 const userStore = new UserStore();
+import { MeetRequestStatus } from "@prisma/client";
 
 type JoinRequestStatus = "NONE" | "SENT" | "ACCEPTED" | "REJECTED";
 
@@ -310,6 +311,39 @@ class JoinRequestStore implements IJoinRequestStore {
       return joinRequest;
     } catch (error) {
       console.error("Prisma retrieving join request status error:", error);
+      throw error;
+    }
+  }
+
+  async updateMeetRequestStatus(
+    meetRequestId: number,
+    meetRequestStatus: MeetRequestStatus,
+  ): Promise<any> {
+    try {
+      return await prisma.$transaction(async (tx) => {
+        const meetRequest = await tx.meetRequest.findUnique({
+          where: {
+            id: meetRequestId,
+          },
+        });
+
+        if (!meetRequest) {
+          throw new Error("Meet request not found");
+        }
+
+        const updatedStatus = await tx.meetRequest.update({
+          where: {
+            id: meetRequestId,
+          },
+          data: {
+            status: meetRequestStatus,
+          },
+        });
+
+        return updatedStatus;
+      });
+    } catch (error) {
+      console.error("Prisma updating meet request status error:", error);
       throw error;
     }
   }
