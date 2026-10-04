@@ -36,16 +36,10 @@ class UserStore implements IUserStore {
       const userDb = await prisma.user.findUnique({
         where: { email },
       });
-      console.log("userDb:", userDb);
       if (!userDb) {
         throw new Error("Invalid credentials");
       }
-
       const isMatch = await bcrypt.compare(password, userDb.password);
-
-      console.log("PASSWORD RECEIVED:", JSON.stringify(password));
-      console.log("HASH FROM DB:", userDb.password);
-      console.log("IS MATCH:", isMatch);
 
       if (!isMatch) {
         throw new Error("Invalid credentials");

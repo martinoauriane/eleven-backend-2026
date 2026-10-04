@@ -214,7 +214,8 @@ class JoinRequestStore implements IJoinRequestStore {
       });
 
       if (existingMeetRequest) {
-        throw new Error("Meet request already exists");
+        console.error("Meet request already exists");
+        return "Meet request already exists";
       }
 
       const meetRequestCreated = await prisma.meetRequest.create({
