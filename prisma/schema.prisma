@@ -6,6 +6,50 @@ datasource db {
   provider = "postgresql"
 }
 
+enum ActivityCategory {
+  CULTURE
+  PARTY
+  DRINKS
+  FOOD
+  SPORT
+  OUTDOOR
+}
+
+enum ActivityType {
+  CONCERT
+  CINEMA
+  MUSEUM
+  EXHIBITION
+  THEATRE
+
+  CLUBBING
+  HOUSE_PARTY
+  FESTIVAL
+  NIGHT_OUT
+
+  DRINKS_WITH_FRIENDS
+  APERITIF
+  BAR
+  COFFEE
+
+  RESTAURANT
+  DINNER
+  LUNCH
+  BRUNCH
+
+  FOOTBALL
+  RUNNING
+  TENNIS
+  GYM
+  CYCLING
+
+  WALK
+  HIKING
+  BEACH
+  PARK
+  PICNIC
+}
+
 enum NotificationType {
   ON_ITS_WAY
   JOIN_REQUEST
@@ -103,31 +147,33 @@ model Friendship {
 }
 
 model OnMap {
-  id        Int      @id @default(autoincrement())
-  userId    Int      @unique
-  latitude  Float
-  longitude Float
-  address   String?
-  activity  String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         Int             @id @default(autoincrement())
+  userId     Int             @unique
+  latitude   Float
+  longitude  Float
+  address    String?
+  category   ActivityCategory
+  activity   ActivityType
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Event {
-  id             Int      @id @default(autoincrement())
+  id             Int             @id @default(autoincrement())
   eventName      String
-  eventType      String
+  category       ActivityCategory
+  activityType   ActivityType
   eventLat       Float
   eventLon       Float
   eventAddress   String
   eventCity      String
-  eventCountry   String
-  isFull         Boolean  @default(false)
-  isPublic       Boolean  @default(true)
-  eventStartTime DateTime @default(now())
-  eventEndTime   DateTime @default(now())
+  eventCountry  String
+  isFull         Boolean         @default(false)
+  isPublic       Boolean         @default(true)
+  eventStartTime DateTime        @default(now())
+  eventEndTime   DateTime        @default(now())
 
   HostId Int
   Host   User @relation("EventCreator", fields: [HostId], references: [id], onDelete: Cascade)
@@ -137,10 +183,11 @@ model Event {
   participants User[]         @relation("EventParticipants")
   notifications Notification[]
   photos       EventPhoto[]
-
   conversations Conversation[]
 
   @@index([HostId])
+  @@index([category])
+  @@index([activityType])
 }
 
 model JoinRequest {
