@@ -20,7 +20,7 @@ class UserController {
       const userCreated = await userService.createUser(user);
       res.status(200).json(userCreated);
     } catch (error) {
-      res.status(500).json({ "Error creating new user": error});
+      res.status(500).json({ "Error creating new user": error });
     }
   }
 
@@ -177,12 +177,11 @@ class UserController {
   async shareUserOnMap(req: Request, res: Response) {
     const user = {
       id: Number(req.params.userId),
-      activity: req.body.eventName,
+      activity: req.body.activity,
       latitude: req.body.latitude,
       longitude: req.body.longitude,
       address: req.body.address,
       category: req.body.category,
-
     };
     try {
       const newUserOnMap = await userService.shareUserOnMap(user);
@@ -222,59 +221,62 @@ class UserController {
   }
 
   async createConversation(req: Request, res: Response) {
-  const { userId, friendId } = req.params;
+    const { userId, friendId } = req.params;
     try {
-      let answer = await userService.createConversation(Number(userId), Number(friendId));
+      let answer = await userService.createConversation(
+        Number(userId),
+        Number(friendId),
+      );
       res.status(200).json(answer);
     } catch (error) {
       res.status(500).json({ error: "Error creating conversation" });
     }
   }
 
-  async getUserConversations(req:Request, res:Response){
+  async getUserConversations(req: Request, res: Response) {
     const userId = Number(String(req.params.userId));
-     try {
+    try {
       let conversations = await userService.getUserConversations(userId);
-      res.status(200).json(conversations); 
+      res.status(200).json(conversations);
     } catch (error) {
       res.status(500).json({ error: "Error creating conversation" });
     }
   }
 
   async addMessage(req: Request, res: Response) {
-  try {
-    const conversationId = Number(req.params.conversationId);
-    const {
-      type,
-      senderId,
-      receiverId,
-      content,
-      joinRequestId,
-      meetRequestId,
-    } = req.body;
+    try {
+      const conversationId = Number(req.params.conversationId);
+      const {
+        type,
+        senderId,
+        receiverId,
+        content,
+        joinRequestId,
+        meetRequestId,
+      } = req.body;
 
-    const message = await userService.addMessage(
-      conversationId,
-      type,
-      content,
-      Number(senderId),
-      Number(receiverId),
-      joinRequestId,
-      meetRequestId,
-    );
+      const message = await userService.addMessage(
+        conversationId,
+        type,
+        content,
+        Number(senderId),
+        Number(receiverId),
+        joinRequestId,
+        meetRequestId,
+      );
 
-    return res.status(201).json(message);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      message: "Unable to add message",
-    });
+      return res.status(201).json(message);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({
+        message: "Unable to add message",
+      });
+    }
   }
-}
 
-  async getMessages(req:Request, res:Response){
+  async getMessages(req: Request, res: Response) {
     const conversationId = parseInt(String(req.params.conversationId));
-     try {
+    try {
       let messages = await userService.getMessages(conversationId);
       console.log(messages);
       res.status(200).json(messages);
@@ -283,11 +285,14 @@ class UserController {
     }
   }
 
-  async markConversationAsRead(req:Request, res:Response){
+  async markConversationAsRead(req: Request, res: Response) {
     const conversationId = parseInt(String(req.params.conversationId));
     const userId = parseInt(req.body.userId);
-     try {
-      let conversationRead = await userService.markConversationAsRead(conversationId, userId);
+    try {
+      let conversationRead = await userService.markConversationAsRead(
+        conversationId,
+        userId,
+      );
       res.status(200).json(conversationRead);
     } catch (error) {
       res.status(500).json({ error: "Error creating conversation" });
