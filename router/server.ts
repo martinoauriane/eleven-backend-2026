@@ -82,6 +82,10 @@ router.post("/user/:userId/onmap", async (req: Request, res: Response) => {
   await userController.shareUserOnMap(req, res);
 });
 
+router.get("/user/presence/onmap/:userId", async(req: Request, res:Response) => {
+  await userController.getMyMapPresence(req, res);
+})
+
 // send friend invite
 router.post(
   "/user/send-friend-invitation/:emitter_id/:receiver_id",

@@ -7,10 +7,10 @@ const userStore = new UserStore();
 interface UserService {
   createUser(data: UserCreate): Promise<any>;
   getUserById(id: number): Promise<any>;
-  updateUser(id: number, data: UserUpdate, ): Promise<any>;
+  updateUser(id: number, data: UserUpdate): Promise<any>;
   deleteUser(id: number): Promise<any>;
-  updateUserStatus(userId:number, userStatus:any): Promise<any>;
-  getFriendsMood(userId:number): Promise<any>;
+  updateUserStatus(userId: number, userStatus: any): Promise<any>;
+  getFriendsMood(userId: number): Promise<any>;
 }
 
 class UserService {
@@ -30,7 +30,7 @@ class UserService {
     return userStore.addFriend(userId, friendId);
   }
 
-  async logInUser(email: string, password:string) {
+  async logInUser(email: string, password: string) {
     const loggedInUser = await userStore.loginUser(email, password);
     if (loggedInUser != undefined) {
       return loggedInUser;
@@ -40,7 +40,7 @@ class UserService {
     return await userStore.getAllUsers();
   }
 
-  async shareUserOnMap(user:any){
+  async shareUserOnMap(user: any) {
     return await userStore.shareUserOnMap(user);
   }
 
@@ -56,6 +56,10 @@ class UserService {
     return await userStore.getUserById(id);
   }
 
+  async getMyMapPresence(userId: number) {
+    return userStore.getMyMapPresence(userId);
+  }
+
   async updateUser(id: number, data: UserUpdate) {
     const passwordHash = await hashPassword(String(data.password));
     // updating data with new passwordHash
@@ -63,7 +67,7 @@ class UserService {
     return await userStore.updateUser(id, data);
   }
 
-  async getFriendsMood(userId:number){
+  async getFriendsMood(userId: number) {
     return await userStore.getFriendsMood(userId);
   }
 
@@ -78,27 +82,43 @@ class UserService {
     return await userStore.getUserSavedEvents(userId);
   }
 
-  async createConversation(userId: number, friendId: number){
+  async createConversation(userId: number, friendId: number) {
     return await userStore.createConversation(userId, friendId);
   }
 
-  async getUserConversations(userId: number){
+  async getUserConversations(userId: number) {
     return await userStore.getUserConversations(userId);
   }
 
-  async markConversationAsRead(conversationId:number, userId:number){
+  async markConversationAsRead(conversationId: number, userId: number) {
     return await userStore.markConversationAsRead(conversationId, userId);
   }
 
-  async addMessage(conversationId: number, type:string, content:any, senderId: number, receiverId:number, joinRequestId: number, meetRequestId:number){
-    return await userStore.addMessage(conversationId, type, content, senderId, receiverId, joinRequestId, meetRequestId);
+  async addMessage(
+    conversationId: number,
+    type: string,
+    content: any,
+    senderId: number,
+    receiverId: number,
+    joinRequestId: number,
+    meetRequestId: number,
+  ) {
+    return await userStore.addMessage(
+      conversationId,
+      type,
+      content,
+      senderId,
+      receiverId,
+      joinRequestId,
+      meetRequestId,
+    );
   }
 
-  async getMessages(conversationId: number){
+  async getMessages(conversationId: number) {
     return await userStore.getMessages(conversationId);
   }
 
-  async updateMood(userId:number, userMood:any){
+  async updateMood(userId: number, userMood: any) {
     return await userStore.updateMood(userId, userMood);
   }
 

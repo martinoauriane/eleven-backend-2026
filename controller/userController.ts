@@ -194,6 +194,25 @@ class UserController {
     }
   }
 
+  async getMyMapPresence(req: Request, res: Response) {
+    const userId = Number(req.params.userId);
+    if (!Number.isInteger(userId) || userId <= 0) {
+      return res.status(400).json({
+        message: "Invalid userId",
+      });
+    }
+    try {
+      const presence = await userService.getMyMapPresence(userId);
+      return res.status(200).json(presence);
+    } catch (error: any) {
+      console.error("getMyMapPresence controller error:", error);
+      return res.status(500).json({
+        error: "Error retrieving user on map",
+        details: error.message,
+      });
+    }
+  }
+
   async getFriendsMood(req: Request, res: Response) {
     const userId = parseInt(String(req.params.id));
     try {

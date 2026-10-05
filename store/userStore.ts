@@ -11,6 +11,7 @@ interface IUserStore {
   updateUser(id: number, data: UserUpdate): Promise<any>;
   updateMood(userId: number, mood: any): Promise<any>;
   deleteUser(id: number): Promise<any>;
+  getMyMapPresence(userId: number): Promise<any>;
 }
 
 class UserStore implements IUserStore {
@@ -534,6 +535,30 @@ class UserStore implements IUserStore {
     } catch (error) {
       console.error("Prisma retrieving conversation error:", error);
       throw error;
+    }
+  }
+
+  async getMyMapPresence(userId: number) {
+    try {
+      return await prisma.onMap.findUnique({
+        where: {
+          userId,
+        },
+        select: {
+          id: true,
+          userId: true,
+          latitude: true,
+          longitude: true,
+          address: true,
+          category: true,
+          activity: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      });
+    } catch (error) {
+      console.error("Prisma getMyMapPresence error:", error);
+      throw new Error("Failed to fetch user's map presence");
     }
   }
 
