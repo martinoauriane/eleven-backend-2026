@@ -172,6 +172,7 @@ class UserStore implements IUserStore {
           latitude: user.latitude,
           longitude: user.longitude,
           address: user.address,
+          category: user.category,
           activity: user.activity,
         },
         create: {
@@ -179,9 +180,11 @@ class UserStore implements IUserStore {
           latitude: user.latitude,
           longitude: user.longitude,
           address: user.address,
+          category: user.category,
           activity: user.activity,
         },
       });
+
       return newUserOnMap;
     } catch (error) {
       console.error("Error adding user on map", error);

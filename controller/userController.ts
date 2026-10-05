@@ -181,6 +181,8 @@ class UserController {
       latitude: req.body.latitude,
       longitude: req.body.longitude,
       address: req.body.address,
+      category: req.body.category,
+
     };
     try {
       const newUserOnMap = await userService.shareUserOnMap(user);
