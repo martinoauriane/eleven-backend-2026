@@ -194,6 +194,27 @@ class UserController {
     }
   }
 
+  async unshareUserOnMap(req: Request, res: Response) {
+  const userId = Number(req.params.userId);
+
+  if (!userId || Number.isNaN(userId)) {
+    return res.status(400).json({ message: "Invalid userId" });
+  }
+
+  try {
+    const result = await userService.unshareUserOnMap(userId);
+
+    return res.status(200).json(result);
+  } catch (error: any) {
+    console.error("Error unsharing user from map:", error);
+
+    return res.status(500).json({
+      error: "Error unsharing user from map",
+      details: error.message,
+    });
+  }
+}
+
   async getMyMapPresence(req: Request, res: Response) {
     const userId = Number(req.params.userId);
     if (!Number.isInteger(userId) || userId <= 0) {

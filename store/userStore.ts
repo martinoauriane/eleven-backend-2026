@@ -193,6 +193,20 @@ class UserStore implements IUserStore {
     }
   }
 
+  async unshareUserOnMap(userId: number) {
+    try {
+      const deletedUserOnMap = await prisma.onMap.delete({
+        where: {
+          userId,
+        },
+      });
+      return deletedUserOnMap;
+    } catch (error) {
+      console.error("Error removing user from map:", error);
+      throw error;
+    }
+  }
+
   async getFriendsOnMap(userId: number) {
     try {
       const friendships = await prisma.friendship.findMany({
