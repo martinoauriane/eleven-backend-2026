@@ -81,13 +81,16 @@ class JoinRequestController {
   }
 
   async createMeetRequest(req: Request, res: Response) {
+    console.log("address");
+    console.log()
     try {
       const meetRequest: any = {
         senderId: Number(req.body.senderId),
         receiverId: Number(req.body.receiverId),
         latitude: Number(req.body.latitude),
         longitude: Number(req.body.longitude),
-        activity: String(req.body.longitude),
+        activity: String(req.body.activity),
+        address: String(req.body.address),
       };
       const createdMeetRequest =
         await joinRequestService.createMeetRequest(meetRequest);
@@ -98,7 +101,7 @@ class JoinRequestController {
   }
 
   async updateMeetRequestStatus(req: Request, res: Response) {
-    const meetRequestId = Number(req.params.id);
+    const meetRequestId = Number(req.params.meetRequestId);
     const { status } = req.body;
     try {
       const updatedJoinRequest =

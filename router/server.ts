@@ -369,7 +369,7 @@ router.post("/meet-request/friend", async (req: Request, res: Response) => {
 );
 
 router.post("/meet-request/update/:meetRequestId", async (req: Request, res: Response) => {
-    await joinRequestController.createMeetRequest(req, res);
+    await joinRequestController.updateMeetRequestStatus(req, res);
   },
 );
 // STORIES ENDPOINTS
