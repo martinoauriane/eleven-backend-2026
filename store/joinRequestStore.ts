@@ -1,9 +1,5 @@
 import "dotenv/config"; // ⚡ force le chargement de ton .env
 import { prisma } from "../prisma/lib/prisma";
-import {
-  JoinRequestCreate,
-  JoinRequestData,
-} from "./interfaces/joinRequestInterfaces";
 import { UserStore } from "./userStore";
 const userStore = new UserStore();
 import { MeetRequestStatus } from "@prisma/client";
@@ -76,35 +72,10 @@ class JoinRequestStore implements IJoinRequestStore {
         throw new Error("Sender not found");
       }
 
-      // 5. Chercher la conversation
-      let conversation = await prisma.conversation.findFirst({
-        where: {
-          AND: [
-            {
-              participants: {
-                some: {
-                  id: data.senderId,
-                },
-              },
-            },
-            {
-              participants: {
-                some: {
-                  id: data.receiverId,
-                },
-              },
-            },
-          ],
-        },
-      });
-
-      // 6. La créer si nécessaire
-      if (!conversation) {
-        conversation = await userStore.createConversation(
-          data.senderId,
-          data.receiverId,
-        );
-      }
+      const conversation = await this.getOrCreatePrivateConversation(
+        data.senderId,
+        data.receiverId,
+      );
 
       // 7. Créer le message de demande
       const joinRequestMessage = await prisma.message.create({
@@ -202,6 +173,44 @@ class JoinRequestStore implements IJoinRequestStore {
     }
   }
 
+  async getOrCreatePrivateConversation(userId: number, friendId: number) {
+    let conversation = await prisma.conversation.findFirst({
+      where: {
+        AND: [
+          {
+            participants: {
+              some: {
+                id: userId,
+              },
+            },
+          },
+          {
+            participants: {
+              some: {
+                id: friendId,
+              },
+            },
+          },
+          {
+            participants: {
+              every: {
+                id: {
+                  in: [userId, friendId],
+                },
+              },
+            },
+          },
+        ],
+      },
+    });
+
+    if (!conversation) {
+      conversation = await userStore.createConversation(userId, friendId);
+    }
+
+    return conversation;
+  }
+
   async createMeetRequest(data: any): Promise<any> {
     try {
       const existingMeetRequest = await prisma.meetRequest.findFirst({
@@ -232,33 +241,10 @@ class JoinRequestStore implements IJoinRequestStore {
         },
       });
 
-      let conversation = await prisma.conversation.findFirst({
-        where: {
-          AND: [
-            {
-              participants: {
-                some: {
-                  id: data.senderId,
-                },
-              },
-            },
-            {
-              participants: {
-                some: {
-                  id: data.receiverId,
-                },
-              },
-            },
-          ],
-        },
-      });
-
-      if (!conversation) {
-        conversation = await userStore.createConversation(
-          data.senderId,
-          data.receiverId,
-        );
-      }
+      const conversation = await this.getOrCreatePrivateConversation(
+        data.senderId,
+        data.receiverId,
+      );
 
       const emitter = await prisma.user.findUnique({
         where: {
