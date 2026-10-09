@@ -102,10 +102,14 @@ class JoinRequestController {
 
   async updateMeetRequestStatus(req: Request, res: Response) {
     const meetRequestId = Number(req.params.meetRequestId);
+    console.log("meet request id");
+    console.log(meetRequestId);
     const { status } = req.body;
+    console.log("status");
+    console.log(status);
     try {
       const updatedJoinRequest =
-        await joinRequestService.updateJoinRequestStatus(meetRequestId, status);
+        await joinRequestService.updateMeetRequestStatus(meetRequestId, status);
       res.status(200).json(updatedJoinRequest);
     } catch (error: any) {
       res.status(500).json({
