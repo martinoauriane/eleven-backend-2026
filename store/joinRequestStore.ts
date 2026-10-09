@@ -173,44 +173,41 @@ class JoinRequestStore implements IJoinRequestStore {
     }
   }
 
-  async getOrCreatePrivateConversation(userId: number, friendId: number) {
-    let conversation = await prisma.conversation.findFirst({
-      where: {
-        AND: [
-          {
-            participants: {
-              some: {
-                id: userId,
-              },
+ async getOrCreatePrivateConversation(
+  userId: number,
+  friendId: number,
+) {
+  const conversation = await prisma.conversation.findFirst({
+    where: {
+      type: "DIRECT",
+      AND: [
+        {
+          participants: {
+            some: { userId: userId },
+          },
+        },
+        {
+          participants: {
+            some: { userId: friendId },
+          },
+        },
+        {
+          participants: {
+            every: {
+              userId: { in: [userId, friendId] },
             },
           },
-          {
-            participants: {
-              some: {
-                id: friendId,
-              },
-            },
-          },
-          {
-            participants: {
-              every: {
-                id: {
-                  in: [userId, friendId],
-                },
-              },
-            },
-          },
-        ],
-      },
-    });
+        },
+      ],
+    },
+  });
 
-    if (!conversation) {
-      conversation = await userStore.createConversation(userId, friendId);
-    }
-
+  if (conversation) {
     return conversation;
   }
 
+  return await userStore.createConversation(userId, friendId);
+}
   async createMeetRequest(data: any): Promise<any> {
     try {
       const existingMeetRequest = await prisma.meetRequest.findFirst({
