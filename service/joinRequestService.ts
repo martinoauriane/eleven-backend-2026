@@ -60,6 +60,10 @@ class JoinRequestService {
     );
   }
 
+  async getSentMeetRequests(userId: number){
+    return await joinRequestStore.getSentMeetRequests(userId);
+  }
+
   async deleteJoinRequest(data: JoinRequestCreate): Promise<any> {
     return await joinRequestStore.deleteJoinRequest(
       data.friendId,

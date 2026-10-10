@@ -173,41 +173,39 @@ class JoinRequestStore implements IJoinRequestStore {
     }
   }
 
- async getOrCreatePrivateConversation(
-  userId: number,
-  friendId: number,
-) {
-  const conversation = await prisma.conversation.findFirst({
-    where: {
-      type: "DIRECT",
-      AND: [
-        {
-          participants: {
-            some: { userId: userId },
-          },
-        },
-        {
-          participants: {
-            some: { userId: friendId },
-          },
-        },
-        {
-          participants: {
-            every: {
-              userId: { in: [userId, friendId] },
+  async getOrCreatePrivateConversation(userId: number, friendId: number) {
+    const conversation = await prisma.conversation.findFirst({
+      where: {
+        type: "DIRECT",
+        AND: [
+          {
+            participants: {
+              some: { userId: userId },
             },
           },
-        },
-      ],
-    },
-  });
+          {
+            participants: {
+              some: { userId: friendId },
+            },
+          },
+          {
+            participants: {
+              every: {
+                userId: { in: [userId, friendId] },
+              },
+            },
+          },
+        ],
+      },
+    });
 
-  if (conversation) {
-    return conversation;
+    if (conversation) {
+      return conversation;
+    }
+
+    return await userStore.createConversation(userId, friendId);
   }
 
-  return await userStore.createConversation(userId, friendId);
-}
   async createMeetRequest(data: any): Promise<any> {
     try {
       const existingMeetRequest = await prisma.meetRequest.findFirst({
@@ -242,6 +240,13 @@ class JoinRequestStore implements IJoinRequestStore {
         data.senderId,
         data.receiverId,
       );
+
+      console.log("🔎 MEET REQUEST DEBUG", {
+        senderId: data.senderId,
+        receiverId: data.receiverId,
+        meetRequestId: meetRequestCreated.id,
+        conversationId: conversation.id,
+      });
 
       const emitter = await prisma.user.findUnique({
         where: {
@@ -391,6 +396,26 @@ class JoinRequestStore implements IJoinRequestStore {
     } catch (error) {
       console.error("Prisma updating join request status error:", error);
       throw error;
+    }
+  }
+
+  async getSentMeetRequests(userId:number) {
+    try {
+      const sentMeetRequests = await prisma.meetRequest.findMany({
+        where: {
+          emitterId: userId,
+          status: "SENT",
+        },
+        select: {
+          receiverId: true,
+        },
+      });
+      return sentMeetRequests;
+    } catch (error) {
+      console.error(
+        "prisma error trying to delete specific joinRequest",
+        error,
+      );
     }
   }
 

@@ -372,6 +372,13 @@ router.post("/meet-request/update/:meetRequestId", async (req: Request, res: Res
     await joinRequestController.updateMeetRequestStatus(req, res);
   },
 );
+
+router.get(
+  "/meet-request/sent/:userId",
+  async (req: Request, res: Response) => {
+    await joinRequestController.getSentMeetRequests(req, res);
+  },
+);
 // STORIES ENDPOINTS
 // post friend story 
 router.post("/user/:userId/story/create", async (req: Request, res: Response) => {

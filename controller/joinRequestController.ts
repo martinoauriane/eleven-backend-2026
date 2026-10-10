@@ -132,6 +132,20 @@ class JoinRequestController {
       res.status(500).json({ error: "Error deleting Join Request" });
     }
   }
+
+  async getSentMeetRequests(req: Request, res: Response) {
+  try {
+    const userId = Number(req.params.userId);
+    const sentMeetRequests = await joinRequestService.getSentMeetRequests(userId);
+    res.status(200).json(sentMeetRequests);
+  } catch (error) {
+    console.error("Unable to fetch sent meet requests:", error);
+    res.status(500).json({
+      error: "Unable to fetch sent meet requests",
+    });
+  }
 }
+}
+
 
 export { JoinRequestController };
